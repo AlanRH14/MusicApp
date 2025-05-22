@@ -2,4 +2,10 @@
 <resources>
 
     <style name="Theme.MusicApp" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.StartScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/black</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/animated_icon_splash</item>
+        <item name="postSplashScreenTheme">@style/Theme.MusicApp</item>
+    </style>
 </resources>
