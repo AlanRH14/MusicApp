@@ -3,7 +3,7 @@
     android:drawable="@drawable/ic_logo">
 
     <target
-        android:name="ic_logo"
+        android:name="animatedIcon"
         android:animation="@animator/animator_splash" />
 
 </animated-vector>
