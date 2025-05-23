@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <propertyValuesHolder
+        android:propertyName="scaleX"
+        android:valueFrom="0"
+        android:valueTo="0.7"
+        android:valueType="floatType" />
+
+    <propertyValuesHolder
+        android:propertyName="scaleY"
+        android:valueFrom="0"
+        android:valueTo="0.7"
+        android:valueType="floatType" />
+
+</objectAnimator>
