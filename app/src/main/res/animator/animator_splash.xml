@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="1000"
+    android:interpolator="@anim/animation">
+
+    <propertyValuesHolder
+        android:propertyName="scaleX"
+        android:valueFrom="-0.4"
+        android:valueTo="0.4"
+        android:valueType="floatType" />
+
+    <propertyValuesHolder
+        android:propertyName="scaleY"
+        android:valueFrom="-0.4"
+        android:valueTo="0.4"
+        android:valueType="floatType" />
+
+</objectAnimator>
