@@ -15,6 +15,10 @@ fun HomeScreen(
     val state by viewModel.state.collectAsState()
 
     if (state.isLoading) {
+        //TODO:
+    }
 
+    if (!state.error.isNullOrEmpty()) {
+        //TODO:
     }
 }
