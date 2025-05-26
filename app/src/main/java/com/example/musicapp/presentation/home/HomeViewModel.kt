@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class HomeViewModel : ViewModel() {
 
-    private val _state = MutableStateFlow<HomeState>(HomeState.Loading)
+    private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
 
     private val _event = MutableSharedFlow<HomeEvent>()
