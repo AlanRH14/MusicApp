@@ -9,6 +9,6 @@ class StatusRepository(
 ) {
 
     suspend fun getStatus(): String {
-        return apiService.getSomething().body() ?: "Failed"
+        return apiService.getSomething().body()?.get("status") ?: "Failed"
     }
 }

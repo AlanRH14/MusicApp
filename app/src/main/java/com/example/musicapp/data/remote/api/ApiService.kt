@@ -6,5 +6,5 @@ import retrofit2.http.GET
 interface ApiService {
 
     @GET("/status")
-    suspend fun getSomething(): Response<String>
+    suspend fun getSomething(): Response<Map<String, String>>
 }

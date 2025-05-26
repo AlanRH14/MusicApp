@@ -10,7 +10,7 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class MainViewModel(
-    private val repository: StatusRepository
+    val repository: StatusRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow("")
