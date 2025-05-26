@@ -1,6 +1,6 @@
 package com.example.musicapp.di
 
-import com.example.musicapp.data.remote.ApiService
+import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.utils.Constants.BASE_URL
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
