@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -74,6 +75,19 @@ class MainActivity : ComponentActivity() {
                             text = "This is the main content of the app",
                             style = MaterialTheme.typography.titleLarge
                         )
+
+                        val state = mainViewModel.state.collectAsState()
+                        if (state.value.isNotEmpty()) {
+                            Text(
+                                text = state.value,
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        } else {
+                            Text(
+                                text = "Loading...",
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        }
                     }
                 }
             }
