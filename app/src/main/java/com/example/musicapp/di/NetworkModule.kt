@@ -1,5 +1,6 @@
 package com.example.musicapp.di
 
+import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.utils.Constants.BASE_URL
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -38,4 +39,8 @@ class NetworkModule {
             .addConverterFactory(json.asConverterFactory(contentType = contentType))
             .build()
     }
+
+    @Single
+    fun provideApiService(retrofit: Retrofit): ApiService =
+        retrofit.create(ApiService::class.java)
 }
