@@ -1,51 +1,76 @@
 package com.example.musicapp.presentation.onboarding.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
+import com.example.musicapp.ui.theme.PaddingLarge
 import com.example.musicapp.ui.theme.Shapes
 
 @Composable
-fun OnboardingCard() {
+fun OnboardingCard(modifier: Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
+            .padding(horizontal = PaddingLarge)
             .fillMaxWidth()
             .clip(Shapes.medium)
             .background(MaterialTheme.colorScheme.background)
+            .padding(PaddingLarge),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        Text(
+            text = "From the latest to the greatest hits, Play your favorite track on MusicApp",
+            style = MaterialTheme.typography.headlineLarge
+        )
+
         Row(
             modifier = Modifier
-                .width(100.dp)
-                .height(100.dp)
+                .padding(vertical = PaddingLarge)
+                .width(70.dp)
+                .height(8.dp)
+                .clip(Shapes.small)
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .weight(1F)
                     .background(MaterialTheme.colorScheme.primary)
             )
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .weight(1F)
                     .background(MaterialTheme.colorScheme.surface)
             )
         }
 
-        Button(onClick = {}) {
-            Text(stringResource(R.string.get_started))
+        Button(
+            modifier = Modifier
+                .fillMaxWidth(),
+            onClick = {}
+        ) {
+            Text(
+                text = stringResource(R.string.get_started),
+                style = MaterialTheme.typography.labelLarge
+            )
         }
     }
 }

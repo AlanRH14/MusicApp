@@ -8,12 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
+import com.example.musicapp.presentation.onboarding.components.OnboardingCard
 import com.example.musicapp.presentation.widgets.ErrorScreen
 import com.example.musicapp.presentation.widgets.LoadingScreen
 import kotlinx.coroutines.flow.collectLatest
@@ -58,6 +60,11 @@ fun OnboardingScreen(
             painter = painterResource(R.drawable.ic_welcome),
             contentDescription = stringResource(R.string.onboarding_background_image),
             contentScale = ContentScale.FillBounds
+        )
+
+        OnboardingCard(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
         )
     }
 }
