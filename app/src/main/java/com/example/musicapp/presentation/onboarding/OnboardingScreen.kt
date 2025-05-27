@@ -19,7 +19,7 @@ fun OnboardingScreen(
     viewModel: OnboardingViewModel = koinViewModel()
 ) {
 
-    LaunchedEffect(true) {
+    LaunchedEffect(key1 = true) {
         viewModel.event.collectLatest {
             when (it) {
                 is OnboardingEvent.ShowErrorMessage -> {

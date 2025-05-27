@@ -19,7 +19,7 @@ fun LoginScreen(
     viewModel: LoginViewModel = koinViewModel()
 ) {
 
-    LaunchedEffect(true) {
+    LaunchedEffect(key1 = true) {
         viewModel.event.collectLatest {
             when (it) {
                 is LoginEvent.ShowErrorMessage -> {
