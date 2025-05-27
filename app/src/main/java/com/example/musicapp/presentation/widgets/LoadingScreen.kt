@@ -13,11 +13,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.musicapp.R
 
 @Composable
-fun LoadingScreen(
-    modifier: Modifier = Modifier,
-) {
+fun LoadingScreen() {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally

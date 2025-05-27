@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun ErrorScreen(
-    modifier: Modifier = Modifier,
     errorMessage: String,
     primaryButton: String,
     secondaryButton: String? = null,
@@ -19,7 +18,7 @@ fun ErrorScreen(
     onSecondaryButtonClicked: (() -> Unit)? = null
 ) {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
