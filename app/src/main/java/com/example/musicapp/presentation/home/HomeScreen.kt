@@ -18,7 +18,7 @@ fun HomeScreen(
     navController: NavHostController,
     viewModel: HomeViewModel = koinViewModel()
 ) {
-    LaunchedEffect(true) {
+    LaunchedEffect(key1 = true) {
         viewModel.event.collectLatest {
             when (it) {
                 is HomeEvent.ShowErrorMessage -> {
