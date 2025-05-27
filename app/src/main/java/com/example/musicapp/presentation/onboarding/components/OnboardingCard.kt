@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
@@ -30,20 +31,21 @@ fun OnboardingCard(modifier: Modifier) {
         modifier = modifier
             .padding(horizontal = PaddingLarge)
             .fillMaxWidth()
-            .clip(Shapes.medium)
+            .clip(Shapes.extraLarge)
             .background(MaterialTheme.colorScheme.background)
             .padding(PaddingLarge),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text(
+        HighlightedText(
             modifier = Modifier
                 .padding(PaddingLarge)
                 .fillMaxWidth(),
-            text = stringResource(R.string.onboarding_text),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.headlineLarge
+            rawText = stringResource(R.string.onboarding_text),
+            spanStyle = SpanStyle(color = MaterialTheme.colorScheme.primary),
+            textStyle = MaterialTheme.typography.headlineLarge,
+            textAlign = TextAlign.Center
         )
 
         Row(

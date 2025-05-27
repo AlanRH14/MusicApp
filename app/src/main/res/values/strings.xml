@@ -4,5 +4,10 @@
     <string name="retry">Retry</string>
     <string name="onboarding_background_image">Onboarding background image</string>
     <string name="get_started">Get Started</string>
-    <string name="onboarding_text">From the <highligth>latest</highligth> to the <highligth>greatest</highligth> hits, Play your favorite track on <highligth>MusicApp</highligth> now!</string>
+    <string name="onboarding_text">
+        <![CDATA[
+        From the <highlight>latest</highlight> to the <highlight>greatest</highlight> hits, Play your favorite track on <highlight>MusicApp</highlight> now!
+        ]]>
+    </string>
+    <string name="image_onboarding">Image Onboarding</string>
 </resources>

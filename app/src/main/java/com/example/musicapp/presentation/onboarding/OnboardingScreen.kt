@@ -3,7 +3,9 @@ package com.example.musicapp.presentation.onboarding
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -62,9 +64,20 @@ fun OnboardingScreen(
             contentScale = ContentScale.FillBounds
         )
 
-        OnboardingCard(
+        Column(
             modifier = Modifier
+                .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-        )
+        ) {
+            Image(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally),
+                painter = painterResource(R.drawable.ic_girl),
+                contentScale = ContentScale.Crop,
+                contentDescription = stringResource(R.string.image_onboarding),
+            )
+            OnboardingCard(modifier = Modifier)
+        }
     }
 }
