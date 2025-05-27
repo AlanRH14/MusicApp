@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,7 +32,7 @@ fun OnboardingCard(modifier: Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(Shapes.extraLarge)
+            .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
             .background(MaterialTheme.colorScheme.background)
             .padding(PaddingExtraLarge),
         verticalArrangement = Arrangement.Center,
