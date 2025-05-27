@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
-import com.example.musicapp.presentation.login.LoginScreen
+import com.example.musicapp.presentation.onboarding.OnboardingScreen
 import com.example.musicapp.ui.theme.MusicAppTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
                             .fillMaxSize()
                             .padding(innerPadding)
                     ) {
-                        LoginScreen(navController = navController)
+                        OnboardingScreen(navController = navController)
                     }
                 }
             }

@@ -2,4 +2,5 @@
     <string name="app_name">MusicApp</string>
     <string name="loading">Loading…</string>
     <string name="retry">Retry</string>
+    <string name="onboarding_background_image">Onboarding background image</string>
 </resources>
