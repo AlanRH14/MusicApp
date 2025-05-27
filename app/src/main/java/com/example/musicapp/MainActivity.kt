@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,17 +16,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.compose.rememberNavController
 import com.example.musicapp.presentation.MainViewModel
+import com.example.musicapp.presentation.home.HomeScreen
 import com.example.musicapp.ui.theme.MusicAppTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
     private var isSplashScreenVisible = true
-    private val mainViewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,28 +67,13 @@ class MainActivity : ComponentActivity() {
         setContent {
             MusicAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(
-                        modifier = Modifier.padding(innerPadding)
+                    val navController = rememberNavController()
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
                     ) {
-                        Text(text = "Hello word!")
-
-                        Text(
-                            text = "This is the main content of the app",
-                            style = MaterialTheme.typography.titleLarge
-                        )
-
-                        val state = mainViewModel.state.collectAsState()
-                        if (state.value.isNotEmpty()) {
-                            Text(
-                                text = state.value,
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                        } else {
-                            Text(
-                                text = "Loading...",
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                        }
+                        HomeScreen(navController = navController)
                     }
                 }
             }
