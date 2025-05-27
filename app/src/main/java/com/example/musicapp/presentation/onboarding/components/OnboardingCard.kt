@@ -22,6 +22,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
+import com.example.musicapp.ui.theme.PaddingExtraLarge
 import com.example.musicapp.ui.theme.PaddingLarge
 import com.example.musicapp.ui.theme.Shapes
 
@@ -29,11 +30,10 @@ import com.example.musicapp.ui.theme.Shapes
 fun OnboardingCard(modifier: Modifier) {
     Column(
         modifier = modifier
-            .padding(horizontal = PaddingLarge)
             .fillMaxWidth()
             .clip(Shapes.extraLarge)
             .background(MaterialTheme.colorScheme.background)
-            .padding(PaddingLarge),
+            .padding(PaddingExtraLarge),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
