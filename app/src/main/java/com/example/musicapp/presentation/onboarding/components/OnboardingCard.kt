@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
 import com.example.musicapp.ui.theme.PaddingLarge
@@ -37,7 +38,11 @@ fun OnboardingCard(modifier: Modifier) {
     ) {
 
         Text(
-            text = "From the latest to the greatest hits, Play your favorite track on MusicApp",
+            modifier = Modifier
+                .padding(PaddingLarge)
+                .fillMaxWidth(),
+            text = stringResource(R.string.onboarding_text),
+            textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineLarge
         )
 
