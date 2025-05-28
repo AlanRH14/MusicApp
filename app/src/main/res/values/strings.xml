@@ -10,4 +10,10 @@
         ]]>
     </string>
     <string name="image_onboarding">Image Onboarding</string>
+    <string name="image_back">Image Back</string>
+    <string name="image_logo">Image logo</string>
+    <string name="login_text">Login to your account</string>
+    <string name="email_placeholder">Enter your email</string>
+    <string name="email">Email</string>
+    <string name="email_icon">Email Icon</string>
 </resources>
