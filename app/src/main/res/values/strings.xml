@@ -21,5 +21,6 @@
     <string name="login">Login</string>
     <string name="remember_me">Remember me</string>
     <string name="placeholder_password">Enter your password</string>
-    <string name="already_have_an_account"><![CDATA[ Already have an account? <highlight>Login</highlight>]]></string>
+    <string name="already_have_an_account"><![CDATA[Already have an account? <highlight>Login</highlight>]]></string>
+    <string name="do_not_have_an_account"><![CDATA[Don\'t have an account? <highlight>Register</highlight>]]></string>
 </resources>
