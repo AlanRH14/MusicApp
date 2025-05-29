@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
@@ -16,9 +17,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -27,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
+import com.example.musicapp.ui.theme.MusicAppTheme
 import com.example.musicapp.ui.theme.PaddingLarge
 import com.example.musicapp.ui.theme.Shapes
 
@@ -104,7 +108,7 @@ fun LoginScreenContent(
             value = "",
             onValueChange = {},
             label = { Text(stringResource(R.string.password)) },
-            placeholder = { Text("Enter your password") },
+            placeholder = { Text(stringResource(R.string.placeholder_password)) },
             leadingIcon = {
                 Icon(
                     painter = painterResource(R.drawable.ic_mail),
@@ -120,6 +124,8 @@ fun LoginScreenContent(
             shape = Shapes.medium
         )
 
+        Spacer(modifier = Modifier.size(16.dp))
+
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
                 modifier = Modifier.padding(start = PaddingLarge),
@@ -133,9 +139,43 @@ fun LoginScreenContent(
             )
 
             Text(
-                text = "Remember me",
+                text = stringResource(R.string.remember_me),
                 fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.onPrimary
+            )
+        }
+
+        Spacer(modifier = Modifier.size(16.dp))
+
+        Button(
+            modifier = Modifier
+                .padding(horizontal = PaddingLarge)
+                .fillMaxWidth()
+                .shadow(
+                    8.dp,
+                    Shapes.extraLarge,
+                    ambientColor = MaterialTheme.colorScheme.primary,
+                    spotColor = MaterialTheme.colorScheme.primary
+                ),
+            onClick = {}
+        ) {
+            Text(
+                stringResource(R.string.login),
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+        }
+
+        TextButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(PaddingLarge),
+            onClick = {}
+        ) {
+            Text(
+                text = "Forgot password?",
+                fontSize = 14.sp,
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }
@@ -144,9 +184,11 @@ fun LoginScreenContent(
 @Preview
 @Composable
 fun LoginScreenContentPreview() {
-    LoginScreenContent(
-        onLoginClicked = {},
-        onRegisterClicked = {},
-        onForgotPasswordClicked = {}
-    )
+    MusicAppTheme {
+        LoginScreenContent(
+            onLoginClicked = {},
+            onRegisterClicked = {},
+            onForgotPasswordClicked = {}
+        )
+    }
 }

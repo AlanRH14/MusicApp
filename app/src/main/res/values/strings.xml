@@ -18,4 +18,8 @@
     <string name="email_icon">Email Icon</string>
     <string name="password">Password</string>
     <string name="icon_eye_off">LeadingIcon eye off</string>
+    <string name="login">Login</string>
+    <string name="remember_me">Remember me</string>
+    <string name="placeholder_password">Enter your password</string>
+    <string name="already_have_an_account"><![CDATA[ Already have an account? <highlight>Login</highlight>]]></string>
 </resources>
