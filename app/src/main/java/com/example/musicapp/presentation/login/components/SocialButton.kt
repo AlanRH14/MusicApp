@@ -51,7 +51,7 @@ fun SocialButton(
 
 @Preview
 @Composable
-fun SocialButtonPreview() {
+private fun SocialButtonPreview() {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
