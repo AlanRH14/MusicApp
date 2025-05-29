@@ -67,7 +67,7 @@ fun SocialCard(
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold,
             ),
-            textStyle = MaterialTheme.typography.labelSmall.copy(
+            textStyle = MaterialTheme.typography.labelMedium.copy(
                 color = MaterialTheme.colorScheme.onPrimary
             )
         )

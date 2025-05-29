@@ -30,7 +30,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
-import com.example.musicapp.presentation.onboarding.components.HighlightedText
 import com.example.musicapp.ui.theme.MusicAppTheme
 import com.example.musicapp.ui.theme.PaddingLarge
 import com.example.musicapp.ui.theme.Shapes
@@ -179,6 +178,14 @@ fun LoginScreenContent(
                 color = MaterialTheme.colorScheme.primary
             )
         }
+
+        Spacer(modifier = Modifier.weight(1F))
+
+        SocialCard(
+            stringResource(R.string.do_not_have_an_account),
+            onClick = {},
+            onFbClick = {},
+            onGoogleClick = {})
     }
 }
 

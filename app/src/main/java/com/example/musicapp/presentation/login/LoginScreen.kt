@@ -6,10 +6,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.musicapp.R
+import com.example.musicapp.presentation.login.widget.LoginScreenContent
 import com.example.musicapp.presentation.widgets.ErrorScreen
 import com.example.musicapp.presentation.widgets.LoadingScreen
 import kotlinx.coroutines.flow.collectLatest
@@ -44,10 +43,16 @@ fun LoginScreen(
             onPrimaryButtonClicked = {}
         )
     }
-}
 
-@Preview
-@Composable
-fun LoginScreenPreview() {
-    LoginScreen(navController = rememberNavController())
+    LoginScreenContent(
+        onLoginClicked = {
+
+        },
+        onRegisterClicked = {
+            navController.navigate("")
+        },
+        onForgotPasswordClicked = {
+            navController.navigate("")
+        }
+    )
 }
