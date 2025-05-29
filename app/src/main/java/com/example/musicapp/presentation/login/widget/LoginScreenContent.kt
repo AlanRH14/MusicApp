@@ -157,7 +157,7 @@ fun LoginScreenContent(
                     ambientColor = MaterialTheme.colorScheme.primary,
                     spotColor = MaterialTheme.colorScheme.primary
                 ),
-            onClick = {}
+            onClick = { onLoginClicked() }
         ) {
             Text(
                 stringResource(R.string.login),
@@ -170,7 +170,7 @@ fun LoginScreenContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(PaddingLarge),
-            onClick = {}
+            onClick = { onForgotPasswordClicked() }
         ) {
             Text(
                 text = "Forgot password?",
@@ -183,7 +183,7 @@ fun LoginScreenContent(
 
         SocialCard(
             stringResource(R.string.do_not_have_an_account),
-            onClick = {},
+            onClick = { onRegisterClicked() },
             onFbClick = {},
             onGoogleClick = {})
     }
