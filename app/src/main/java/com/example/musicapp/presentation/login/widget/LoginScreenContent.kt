@@ -3,18 +3,19 @@ package com.example.musicapp.presentation.login.widget
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldColors
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,7 +66,6 @@ fun LoginScreenContent(
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.login_text),
-            fontSize = 32.sp,
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
@@ -75,6 +75,7 @@ fun LoginScreenContent(
 
         OutlinedTextField(
             modifier = Modifier
+                .padding(horizontal = PaddingLarge)
                 .fillMaxWidth(),
             value = "",
             onValueChange = {},
@@ -86,14 +87,57 @@ fun LoginScreenContent(
                     contentDescription = stringResource(R.string.email_icon),
                 )
             },
-            colors = TextFieldDefaults.colors(
-                unfocusedTextColor = MaterialTheme.colorScheme.primary,
+            shape = Shapes.medium,
+            colors = OutlinedTextFieldDefaults.colors().copy(
+                unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
                 focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
+                focusedIndicatorColor = Color.LightGray
             ),
+        )
+
+        Spacer(modifier = Modifier.size(8.dp))
+
+        OutlinedTextField(
+            modifier = Modifier
+                .padding(horizontal = PaddingLarge)
+                .fillMaxWidth(),
+            value = "",
+            onValueChange = {},
+            label = { Text(stringResource(R.string.password)) },
+            placeholder = { Text("Enter your password") },
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.ic_mail),
+                    contentDescription = stringResource(R.string.icon_eye_off)
+                )
+            },
+            trailingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.ic_eye_off),
+                    contentDescription = stringResource(R.string.icon_eye_off)
+                )
+            },
             shape = Shapes.medium
         )
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Checkbox(
+                modifier = Modifier.padding(start = PaddingLarge),
+                checked = false,
+                onCheckedChange = {},
+                colors = CheckboxDefaults.colors(
+                    checkedColor = MaterialTheme.colorScheme.primary,
+                    uncheckedColor = MaterialTheme.colorScheme.primary,
+                    checkmarkColor = MaterialTheme.colorScheme.onPrimary
+                )
+            )
+
+            Text(
+                text = "Remember me",
+                fontSize = 14.sp,
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+        }
     }
 }
 

@@ -16,4 +16,6 @@
     <string name="email_placeholder">Enter your email</string>
     <string name="email">Email</string>
     <string name="email_icon">Email Icon</string>
+    <string name="password">Password</string>
+    <string name="icon_eye_off">LeadingIcon eye off</string>
 </resources>
