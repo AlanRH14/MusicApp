@@ -2,7 +2,6 @@ package com.example.musicapp.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -32,8 +31,7 @@ class LoginViewModel : ViewModel() {
         _state.update { it.copy(isPasswordVisibility = !_state.value.isPasswordVisibility) }
     }
 
-    fun onLoginClicked() {
-    }
+    fun onLoginClicked() {}
 
     fun onRegisterClicked() {
         viewModelScope.launch {
