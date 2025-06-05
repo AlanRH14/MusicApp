@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
+import com.example.musicapp.navigation.RegisterRoute
 import com.example.musicapp.presentation.login.widget.LoginScreenContent
 import com.example.musicapp.presentation.widgets.ErrorScreen
 import com.example.musicapp.presentation.widgets.LoadingScreen
@@ -25,6 +26,10 @@ fun LoginScreen(
             when (it) {
                 is LoginEvent.ShowErrorMessage -> {
                     Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()
+                }
+
+                is LoginEvent.NavigationToRegister -> {
+                    navController.navigate(RegisterRoute)
                 }
             }
         }
