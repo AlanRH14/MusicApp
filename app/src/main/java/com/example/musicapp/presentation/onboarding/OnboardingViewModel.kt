@@ -20,6 +20,7 @@ class OnboardingViewModel : ViewModel() {
     fun onGetStartedClicked() {
         viewModelScope.launch {
             //TODO: Update the storage to no show the onboarding again
+            _event.emit(OnboardingEvent.NavigationToLogin)
         }
     }
 }

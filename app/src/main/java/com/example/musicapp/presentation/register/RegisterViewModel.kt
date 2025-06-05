@@ -15,6 +15,4 @@ class RegisterViewModel : ViewModel() {
 
     private val _event = MutableSharedFlow<RegisterEvent>()
     val event = _event.asSharedFlow()
-
-    fun fetchData() {}
 }
