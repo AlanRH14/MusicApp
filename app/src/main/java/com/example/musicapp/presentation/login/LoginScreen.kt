@@ -20,6 +20,7 @@ fun LoginScreen(
     navController: NavHostController,
     viewModel: LoginViewModel = koinViewModel()
 ) {
+    val state by viewModel.state.collectAsState()
 
     LaunchedEffect(key1 = true) {
         viewModel.event.collectLatest {
@@ -34,8 +35,6 @@ fun LoginScreen(
             }
         }
     }
-
-    val state by viewModel.state.collectAsState()
 
     if (state.isLoading) {
         LoadingScreen()

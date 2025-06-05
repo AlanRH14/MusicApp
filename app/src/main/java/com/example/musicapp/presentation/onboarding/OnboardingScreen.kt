@@ -33,6 +33,9 @@ fun OnboardingScreen(
     navController: NavHostController,
     viewModel: OnboardingViewModel = koinViewModel()
 ) {
+    val state by viewModel.state.collectAsState()
+    var cardHeight by remember { mutableStateOf(0.dp) }
+    val density = LocalDensity.current
 
     LaunchedEffect(key1 = true) {
         viewModel.event.collectLatest {
@@ -43,10 +46,6 @@ fun OnboardingScreen(
             }
         }
     }
-
-    val state by viewModel.state.collectAsState()
-    var cardHeight by remember { mutableStateOf(0.dp) }
-    val density = LocalDensity.current
 
     if (state.isLoading) {
         LoadingScreen()
