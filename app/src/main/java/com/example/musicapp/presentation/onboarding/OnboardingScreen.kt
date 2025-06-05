@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
 import com.example.musicapp.presentation.onboarding.components.OnboardingCard
-import com.example.musicapp.presentation.widgets.ErrorScreen
 import com.example.musicapp.presentation.widgets.LoadingScreen
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
@@ -32,8 +31,11 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun OnboardingScreen(
     navController: NavHostController,
-    viewModel: OnboardingViewModel = koinViewModel()
+    viewModel: OnboardingViewModel = koinViewModel(),
 ) {
+    val state by viewModel.state.collectAsState()
+    var cardHeight by remember { mutableStateOf(0.dp) }
+    val density = LocalDensity.current
 
     LaunchedEffect(key1 = true) {
         viewModel.event.collectLatest {
@@ -45,20 +47,8 @@ fun OnboardingScreen(
         }
     }
 
-    val state by viewModel.state.collectAsState()
-    var cardHeight by remember { mutableStateOf(0.dp) }
-    val density = LocalDensity.current
-
     if (state.isLoading) {
         LoadingScreen()
-    }
-
-    if (!state.errorMessage.isNullOrEmpty()) {
-        ErrorScreen(
-            errorMessage = state.errorMessage ?: "Uknown",
-            primaryButton = stringResource(R.string.retry),
-            onPrimaryButtonClicked = {}
-        )
     }
 
     Box(
@@ -90,11 +80,13 @@ fun OnboardingScreen(
                     .align(Alignment.BottomCenter)
                     .onGloballyPositioned {
                         val heightPX = it.size.height
-                        cardHeight = with(density){
+                        cardHeight = with(density) {
                             heightPX.toDp()
                         }
-
-                    }
+                    },
+                onClick = {
+                    viewModel.onGetStartedClicked()
+                }
             )
         }
     }

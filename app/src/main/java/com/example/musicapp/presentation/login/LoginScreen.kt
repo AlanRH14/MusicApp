@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
+import com.example.musicapp.navigation.RegisterRoute
 import com.example.musicapp.presentation.login.widget.LoginScreenContent
 import com.example.musicapp.presentation.widgets.ErrorScreen
 import com.example.musicapp.presentation.widgets.LoadingScreen
@@ -19,6 +20,7 @@ fun LoginScreen(
     navController: NavHostController,
     viewModel: LoginViewModel = koinViewModel()
 ) {
+    val state by viewModel.state.collectAsState()
 
     LaunchedEffect(key1 = true) {
         viewModel.event.collectLatest {
@@ -26,11 +28,13 @@ fun LoginScreen(
                 is LoginEvent.ShowErrorMessage -> {
                     Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()
                 }
+
+                is LoginEvent.NavigationToRegister -> {
+                    navController.navigate(RegisterRoute)
+                }
             }
         }
     }
-
-    val state by viewModel.state.collectAsState()
 
     if (state.isLoading) {
         LoadingScreen()
@@ -38,7 +42,7 @@ fun LoginScreen(
 
     if (!state.errorMessage.isNullOrEmpty()) {
         ErrorScreen(
-            errorMessage = state.errorMessage ?: "Uknown",
+            errorMessage = state.errorMessage ?: stringResource(R.string.unknown),
             primaryButton = stringResource(R.string.retry),
             onPrimaryButtonClicked = {}
         )

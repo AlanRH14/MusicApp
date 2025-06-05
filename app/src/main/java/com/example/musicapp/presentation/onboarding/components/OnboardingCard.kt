@@ -28,7 +28,10 @@ import com.example.musicapp.ui.theme.PaddingLarge
 import com.example.musicapp.ui.theme.Shapes
 
 @Composable
-fun OnboardingCard(modifier: Modifier) {
+fun OnboardingCard(
+    modifier: Modifier,
+    onClick: () -> Unit
+) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -73,7 +76,7 @@ fun OnboardingCard(modifier: Modifier) {
         Button(
             modifier = Modifier
                 .fillMaxWidth(),
-            onClick = {}
+            onClick = onClick
         ) {
             Text(
                 text = stringResource(R.string.get_started),
