@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
@@ -19,15 +20,24 @@ class LoginViewModel : ViewModel() {
     private val _event = MutableSharedFlow<LoginEvent>()
     val event = _event.asSharedFlow()
 
-    fun fetchData() {}
+    fun onEmailChanged(email: String) {
+        _state.update { it.copy(email = email) }
+    }
+
+    fun onPasswordChanged(pass: String) {
+        _state.update { it.copy(password = pass) }
+    }
+
+    fun onPasswordVisibilityChanged() {
+        _state.update { it.copy(isPasswordVisibility = !_state.value.isPasswordVisibility) }
+    }
 
     fun onLoginClicked() {
-
     }
 
     fun onRegisterClicked() {
         viewModelScope.launch {
-            _event.emit(LoginEvent.ShowErrorMessage("Register clicked"))
+            _event.emit(LoginEvent.NavigationToRegister)
         }
     }
 
