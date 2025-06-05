@@ -17,6 +17,4 @@ fun RegisterScreen(
     LaunchedEffect(key1 = true) {
 
     }
-
-
 }

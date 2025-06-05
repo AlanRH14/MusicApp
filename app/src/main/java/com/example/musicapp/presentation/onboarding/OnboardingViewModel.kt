@@ -15,7 +15,5 @@ class OnboardingViewModel : ViewModel() {
     private val _event = MutableSharedFlow<OnboardingEvent>()
     val event = _event.asSharedFlow()
 
-    fun fetchData() {
-
-    }
+    fun fetchData() {}
 }

@@ -11,7 +11,5 @@ class RegisterViewModel: ViewModel() {
     private val _state = MutableStateFlow(RegisterState())
     val state = _state.asStateFlow()
 
-    fun fetchData() {
-
-    }
+    fun fetchData() {}
 }
