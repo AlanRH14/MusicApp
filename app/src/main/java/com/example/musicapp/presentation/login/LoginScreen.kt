@@ -53,7 +53,7 @@ fun LoginScreen(
 
         },
         onRegisterClicked = {
-            navController.navigate("")
+            navController.navigate(RegisterRoute)
         },
         onForgotPasswordClicked = {
             navController.navigate("")

@@ -23,6 +23,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
+import com.example.musicapp.navigation.LoginRoute
+import com.example.musicapp.navigation.OnboardingRoute
 import com.example.musicapp.presentation.onboarding.components.OnboardingCard
 import com.example.musicapp.presentation.widgets.LoadingScreen
 import kotlinx.coroutines.flow.collectLatest
@@ -42,6 +44,14 @@ fun OnboardingScreen(
             when (it) {
                 is OnboardingEvent.ShowErrorMessage -> {
                     Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()
+                }
+
+                is OnboardingEvent.NavigationToLogin -> {
+                    navController.navigate(LoginRoute) {
+                        popUpTo(OnboardingRoute) {
+                            inclusive = true
+                        }
+                    }
                 }
             }
         }
