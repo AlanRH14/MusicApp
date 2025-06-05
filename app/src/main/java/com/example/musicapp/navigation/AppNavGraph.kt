@@ -4,7 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.musicapp.presentation.login.LoginScreen
 import com.example.musicapp.presentation.onboarding.OnboardingScreen
+import com.example.musicapp.presentation.register.RegisterScreen
 
 @Composable
 fun AppNavGraph(
@@ -17,8 +19,12 @@ fun AppNavGraph(
             OnboardingScreen(navController = navController)
         }
 
-        composable<LoginRoute> {  }
+        composable<LoginRoute> {
+            LoginScreen(navController = navController)
+        }
 
-        composable<RegisterRoute> {  }
+        composable<RegisterRoute> {
+            RegisterScreen(navController = navController)
+        }
     }
 }

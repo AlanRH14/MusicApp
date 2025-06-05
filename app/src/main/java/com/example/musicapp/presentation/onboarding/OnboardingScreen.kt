@@ -31,7 +31,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun OnboardingScreen(
     navController: NavHostController,
-    viewModel: OnboardingViewModel = koinViewModel()
+    viewModel: OnboardingViewModel = koinViewModel(),
+    onClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
     var cardHeight by remember { mutableStateOf(0.dp) }
@@ -83,8 +84,10 @@ fun OnboardingScreen(
                         cardHeight = with(density) {
                             heightPX.toDp()
                         }
-
-                    }
+                    },
+                onClick = {
+                    viewModel.onGetStartedClicked()
+                }
             )
         }
     }
