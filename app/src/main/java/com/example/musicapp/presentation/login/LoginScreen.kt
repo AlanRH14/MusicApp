@@ -43,7 +43,7 @@ fun LoginScreen(
 
     if (!state.errorMessage.isNullOrEmpty()) {
         ErrorScreen(
-            errorMessage = state.errorMessage ?: "Uknown",
+            errorMessage = state.errorMessage ?: stringResource(R.string.unknown),
             primaryButton = stringResource(R.string.retry),
             onPrimaryButtonClicked = {}
         )

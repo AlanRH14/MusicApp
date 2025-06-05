@@ -1,4 +1,5 @@
 package com.example.musicapp.presentation.register
 
-class RegisterState {
-}
+data class RegisterState(
+    val loading: Boolean = false
+)

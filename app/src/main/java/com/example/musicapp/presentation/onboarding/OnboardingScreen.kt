@@ -53,14 +53,6 @@ fun OnboardingScreen(
         LoadingScreen()
     }
 
-    if (!state.errorMessage.isNullOrEmpty()) {
-        ErrorScreen(
-            errorMessage = state.errorMessage ?: "Uknown",
-            primaryButton = stringResource(R.string.retry),
-            onPrimaryButtonClicked = {}
-        )
-    }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -90,7 +82,7 @@ fun OnboardingScreen(
                     .align(Alignment.BottomCenter)
                     .onGloballyPositioned {
                         val heightPX = it.size.height
-                        cardHeight = with(density){
+                        cardHeight = with(density) {
                             heightPX.toDp()
                         }
 
