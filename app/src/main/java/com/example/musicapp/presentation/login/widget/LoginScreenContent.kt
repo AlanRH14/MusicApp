@@ -108,7 +108,7 @@ fun LoginScreenContent(
             value = "",
             onValueChange = {},
             label = { Text(stringResource(R.string.password)) },
-            placeholder = { Text(stringResource(R.string.placeholder_password)) },
+            placeholder = { Text(stringResource(R.string.password_placeholder)) },
             leadingIcon = {
                 Icon(
                     painter = painterResource(R.drawable.ic_mail),
