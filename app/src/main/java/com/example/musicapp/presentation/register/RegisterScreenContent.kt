@@ -46,8 +46,74 @@ fun RegisterScreenContent() {
                 .fillMaxWidth(),
             value = "",
             onValueChange = {},
+            label = { Text(stringResource(R.string.name)) },
+            placeholder = { Text("Enter your email") },
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.ic_mail),
+                    contentDescription = stringResource(R.string.email_icon),
+                )
+            },
+            shape = Shapes.medium,
+            colors = OutlinedTextFieldDefaults.colors().copy(
+                unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
+                focusedTextColor = MaterialTheme.colorScheme.onPrimary,
+                focusedIndicatorColor = Color.LightGray
+            ),
+        )
+
+        OutlinedTextField(
+            modifier = Modifier
+                .padding(horizontal = PaddingLarge)
+                .fillMaxWidth(),
+            value = "",
+            onValueChange = {},
             label = { Text(stringResource(R.string.email)) },
-            placeholder = { Text(stringResource(R.string.email_placeholder)) },
+            placeholder = { stringResource(R.string.email_placeholder) },
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.ic_mail),
+                    contentDescription = stringResource(R.string.email_icon),
+                )
+            },
+            shape = Shapes.medium,
+            colors = OutlinedTextFieldDefaults.colors().copy(
+                unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
+                focusedTextColor = MaterialTheme.colorScheme.onPrimary,
+                focusedIndicatorColor = Color.LightGray
+            ),
+        )
+
+        OutlinedTextField(
+            modifier = Modifier
+                .padding(horizontal = PaddingLarge)
+                .fillMaxWidth(),
+            value = "",
+            onValueChange = {},
+            label = { Text(stringResource(R.string.password)) },
+            placeholder = { Text(stringResource(R.string.password_placeholder)) },
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.ic_mail),
+                    contentDescription = stringResource(R.string.email_icon),
+                )
+            },
+            shape = Shapes.medium,
+            colors = OutlinedTextFieldDefaults.colors().copy(
+                unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
+                focusedTextColor = MaterialTheme.colorScheme.onPrimary,
+                focusedIndicatorColor = Color.LightGray
+            ),
+        )
+
+        OutlinedTextField(
+            modifier = Modifier
+                .padding(horizontal = PaddingLarge)
+                .fillMaxWidth(),
+            value = "",
+            onValueChange = {},
+            label = { Text(stringResource(R.string.confirm_password)) },
+            placeholder = { Text(stringResource(R.string.confirm_password)) },
             leadingIcon = {
                 Icon(
                     painter = painterResource(R.drawable.ic_mail),
