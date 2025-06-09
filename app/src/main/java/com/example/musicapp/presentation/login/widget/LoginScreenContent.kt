@@ -2,7 +2,6 @@ package com.example.musicapp.presentation.login.widget
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -37,6 +36,10 @@ import com.example.musicapp.ui.theme.Shapes
 
 @Composable
 fun LoginScreenContent(
+    email: String,
+    password: String,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
     onLoginClicked: () -> Unit,
     onRegisterClicked: () -> Unit,
     onForgotPasswordClicked: () -> Unit,
@@ -55,7 +58,6 @@ fun LoginScreenContent(
         )
 
         Spacer(modifier = Modifier.size(16.dp))
-
 
         Image(
             modifier = Modifier
@@ -81,8 +83,8 @@ fun LoginScreenContent(
             modifier = Modifier
                 .padding(horizontal = PaddingLarge)
                 .fillMaxWidth(),
-            value = "",
-            onValueChange = {},
+            value = email,
+            onValueChange = { onEmailChange(it) },
             label = { Text(stringResource(R.string.email)) },
             placeholder = { Text(stringResource(R.string.email_placeholder)) },
             leadingIcon = {
@@ -105,8 +107,8 @@ fun LoginScreenContent(
             modifier = Modifier
                 .padding(horizontal = PaddingLarge)
                 .fillMaxWidth(),
-            value = "",
-            onValueChange = {},
+            value = password,
+            onValueChange = { onPasswordChange(it) },
             label = { Text(stringResource(R.string.password)) },
             placeholder = { Text(stringResource(R.string.password_placeholder)) },
             leadingIcon = {
@@ -194,10 +196,14 @@ fun LoginScreenContent(
 private fun LoginScreenContentPreview() {
     MusicAppTheme {
         LoginScreenContent(
+            email = "",
+            password = "",
             onLoginClicked = {},
             onRegisterClicked = {},
             onForgotPasswordClicked = {},
-            onBackClicked = {}
+            onBackClicked = {},
+            onEmailChange = {},
+            onPasswordChange = {}
         )
     }
 }

@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
 import com.example.musicapp.navigation.LoginRoute
-import com.example.musicapp.navigation.OnboardingRoute
 import com.example.musicapp.presentation.onboarding.components.OnboardingCard
 import com.example.musicapp.presentation.widgets.LoadingScreen
 import kotlinx.coroutines.flow.collectLatest
@@ -51,10 +50,6 @@ fun OnboardingScreen(
                 }
             }
         }
-    }
-
-    if (state.isLoading) {
-        LoadingScreen()
     }
 
     Box(
@@ -95,5 +90,9 @@ fun OnboardingScreen(
                 }
             )
         }
+    }
+
+    if (state.isLoading) {
+        LoadingScreen()
     }
 }

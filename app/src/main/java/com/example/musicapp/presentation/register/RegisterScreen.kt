@@ -35,6 +35,15 @@ fun RegisterScreen(
         }
     }
 
+    RegisterScreenContent(
+        onRegisterClicked = {
+            viewModel.onRegisterClicked()
+        },
+        onLoginClicked = {
+            viewModel.onLoginClicked()
+        }
+    )
+
     if (state.loading) {
         LoadingScreen()
     }
@@ -46,13 +55,4 @@ fun RegisterScreen(
             onPrimaryButtonClicked = {}
         )
     }
-
-    RegisterScreenContent(
-        onRegisterClicked = {
-            viewModel.onRegisterClicked()
-        },
-        onLoginClicked = {
-            viewModel.onLoginClicked()
-        }
-    )
 }
