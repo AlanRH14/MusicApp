@@ -32,6 +32,10 @@ fun LoginScreen(
                 is LoginEvent.NavigationToRegister -> {
                     navController.navigate(RegisterRoute)
                 }
+
+                is LoginEvent.NavigationToBack -> {
+                    navController.popBackStack()
+                }
             }
         }
     }
@@ -55,6 +59,7 @@ fun LoginScreen(
         },
         onForgotPasswordClicked = {
             viewModel.onForgotPasswordClicked()
-        }
+        },
+        onBackClicked = { viewModel.onBackClicked() }
     )
 }
