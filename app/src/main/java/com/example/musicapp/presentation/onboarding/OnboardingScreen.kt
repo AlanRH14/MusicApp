@@ -53,10 +53,6 @@ fun OnboardingScreen(
         }
     }
 
-    if (state.isLoading) {
-        LoadingScreen()
-    }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -95,5 +91,9 @@ fun OnboardingScreen(
                 }
             )
         }
+    }
+
+    if (state.isLoading) {
+        LoadingScreen()
     }
 }

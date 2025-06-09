@@ -47,11 +47,17 @@ class LoginViewModel(
 
             when (response) {
                 is Resource.Success -> {
+                    _state.update { it.copy(isLoading = false) }
                     _event.emit(LoginEvent.NavigateToHome)
                 }
 
                 is Resource.Error -> {
-                    _state.update { it.copy(errorMessage = response.message) }
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            errorMessage = response.message
+                        )
+                    }
                 }
             }
         }
