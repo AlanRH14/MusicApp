@@ -26,6 +26,10 @@ fun RegisterScreen(
                 is RegisterEvent.ShowErrorMessage -> {
                     Toast.makeText(navController.context, event.message, Toast.LENGTH_SHORT).show()
                 }
+
+                is RegisterEvent.NavigateToLogin -> {
+                    navController.popBackStack()
+                }
             }
         }
     }
@@ -41,4 +45,13 @@ fun RegisterScreen(
             onPrimaryButtonClicked = {}
         )
     }
+
+    RegisterScreenContent(
+        onRegisterClicked = {
+            viewModel.onRegisterClicked()
+        },
+        onLoginClicked = {
+            viewModel.onLoginClicked()
+        }
+    )
 }

@@ -52,18 +52,14 @@ fun LoginScreenContent(
 
         Spacer(modifier = Modifier.size(16.dp))
 
-        Box(
+
+        Image(
             modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Image(
-                modifier = Modifier
-                    .size(120.dp)
-                    .align(Alignment.Center),
-                painter = painterResource(R.drawable.ic_logo),
-                contentDescription = stringResource(R.string.image_logo),
-            )
-        }
+                .size(120.dp)
+                .align(Alignment.CenterHorizontally),
+            painter = painterResource(R.drawable.ic_logo),
+            contentDescription = stringResource(R.string.image_logo),
+        )
 
         Spacer(modifier = Modifier.size(16.dp))
 
@@ -152,8 +148,8 @@ fun LoginScreenContent(
                 .padding(horizontal = PaddingLarge)
                 .fillMaxWidth()
                 .shadow(
-                    8.dp,
-                    Shapes.extraLarge,
+                    elevation = 8.dp,
+                    shape = Shapes.extraLarge,
                     ambientColor = MaterialTheme.colorScheme.primary,
                     spotColor = MaterialTheme.colorScheme.primary
                 ),
@@ -182,7 +178,7 @@ fun LoginScreenContent(
         Spacer(modifier = Modifier.weight(1F))
 
         SocialCard(
-            stringResource(R.string.do_not_have_an_account),
+            stringRes = stringResource(R.string.do_not_have_an_account),
             onClick = onRegisterClicked,
             onFbClick = {},
             onGoogleClick = {})
