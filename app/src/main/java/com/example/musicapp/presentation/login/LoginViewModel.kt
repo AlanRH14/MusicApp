@@ -23,8 +23,8 @@ class LoginViewModel : ViewModel() {
         _state.update { it.copy(email = email) }
     }
 
-    fun onPasswordChanged(pass: String) {
-        _state.update { it.copy(password = pass) }
+    fun onPasswordChanged(password: String) {
+        _state.update { it.copy(password = password) }
     }
 
     fun onPasswordVisibilityChanged() {
