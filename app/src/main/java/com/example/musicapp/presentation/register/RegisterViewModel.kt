@@ -23,6 +23,8 @@ class RegisterViewModel : ViewModel() {
     }
 
     fun onLoginClicked() {
-        viewModelScope.launch {  }
+        viewModelScope.launch {
+            _event.emit(RegisterEvent.NavigateToLogin)
+        }
     }
 }

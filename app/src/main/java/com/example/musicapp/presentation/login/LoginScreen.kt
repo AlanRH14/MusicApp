@@ -49,14 +49,12 @@ fun LoginScreen(
     }
 
     LoginScreenContent(
-        onLoginClicked = {
-
-        },
+        onLoginClicked = {},
         onRegisterClicked = {
-            navController.navigate(RegisterRoute)
+            viewModel.onRegisterClicked()
         },
         onForgotPasswordClicked = {
-            navController.navigate("")
+            viewModel.onForgotPasswordClicked()
         }
     )
 }
