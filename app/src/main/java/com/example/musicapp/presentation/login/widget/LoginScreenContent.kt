@@ -1,6 +1,7 @@
 package com.example.musicapp.presentation.login.widget
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,7 +39,8 @@ import com.example.musicapp.ui.theme.Shapes
 fun LoginScreenContent(
     onLoginClicked: () -> Unit,
     onRegisterClicked: () -> Unit,
-    onForgotPasswordClicked: () -> Unit
+    onForgotPasswordClicked: () -> Unit,
+    onBackClicked: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -46,6 +48,8 @@ fun LoginScreenContent(
             .padding(PaddingLarge)
     ) {
         Image(
+            modifier = Modifier
+                .clickable { onBackClicked() },
             painter = painterResource(R.drawable.ic_back),
             contentDescription = stringResource(R.string.image_back),
         )
@@ -192,7 +196,8 @@ private fun LoginScreenContentPreview() {
         LoginScreenContent(
             onLoginClicked = {},
             onRegisterClicked = {},
-            onForgotPasswordClicked = {}
+            onForgotPasswordClicked = {},
+            onBackClicked = {}
         )
     }
 }

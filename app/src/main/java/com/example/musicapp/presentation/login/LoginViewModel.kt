@@ -44,4 +44,10 @@ class LoginViewModel : ViewModel() {
             _event.emit(LoginEvent.ShowErrorMessage("Forgot Password clicked"))
         }
     }
+
+    fun onBackClicked() {
+        viewModelScope.launch {
+            _event.emit(LoginEvent.NavigationToBack)
+        }
+    }
 }
