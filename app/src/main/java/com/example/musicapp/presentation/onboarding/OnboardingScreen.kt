@@ -47,11 +47,7 @@ fun OnboardingScreen(
                 }
 
                 is OnboardingEvent.NavigationToLogin -> {
-                    navController.navigate(LoginRoute) {
-                        popUpTo(OnboardingRoute) {
-                            inclusive = true
-                        }
-                    }
+                    navController.navigate(LoginRoute)
                 }
             }
         }
