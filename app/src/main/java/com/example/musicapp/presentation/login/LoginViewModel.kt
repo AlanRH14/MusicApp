@@ -2,7 +2,9 @@ package com.example.musicapp.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.musicapp.data.model.LoginRequest
 import com.example.musicapp.data.remote.repository.AuthenticationRepository
+import com.example.musicapp.utils.Resource
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -34,9 +36,24 @@ class LoginViewModel(
         _state.update { it.copy(isPasswordVisibility = !_state.value.isPasswordVisibility) }
     }
 
-    fun onLoginClicked() {
+    fun onLoginClicked(
+        email: String,
+        password: String,
+    ) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
+
+            val response = repository.login(LoginRequest(email = email, password = password))
+
+            when (response) {
+                is Resource.Success -> {
+                    _event.emit(LoginEvent.NavigateToHome)
+                }
+
+                is Resource.Error -> {
+                    _state.update { it.copy(errorMessage = response.message) }
+                }
+            }
         }
     }
 

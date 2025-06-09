@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
+import com.example.musicapp.navigation.HomeRoute
 import com.example.musicapp.navigation.RegisterRoute
 import com.example.musicapp.presentation.login.widget.LoginScreenContent
 import com.example.musicapp.presentation.widgets.ErrorScreen
@@ -36,12 +37,25 @@ fun LoginScreen(
                 is LoginEvent.NavigationToBack -> {
                     navController.popBackStack()
                 }
+
+                is LoginEvent.NavigateToHome -> {
+                    navController.navigate(HomeRoute)
+                }
             }
         }
     }
 
     LoginScreenContent(
-        onLoginClicked = { viewModel.onLoginClicked() },
+        email = state.email ?: "",
+        password = state.password ?: "",
+        onEmailChange = { viewModel.onEmailChanged(it) },
+        onPasswordChange = { viewModel.onPasswordChanged(it) },
+        onLoginClicked = {
+            viewModel.onLoginClicked(
+                email = state.email ?: "",
+                password = state.password ?: ""
+            )
+        },
         onRegisterClicked = {
             viewModel.onRegisterClicked()
         },

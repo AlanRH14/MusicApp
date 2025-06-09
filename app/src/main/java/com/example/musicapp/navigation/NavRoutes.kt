@@ -12,3 +12,6 @@ object LoginRoute : NavRoutes
 
 @Serializable
 object RegisterRoute : NavRoutes
+
+@Serializable
+object HomeRoute: NavRoutes

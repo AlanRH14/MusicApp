@@ -2,6 +2,7 @@ package com.example.musicapp.presentation.widgets
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -25,6 +26,7 @@ fun ErrorScreen(
     ) {
 
         Text(text = errorMessage)
+
         Button(onClick = onPrimaryButtonClicked) {
             Text(text = primaryButton)
         }
