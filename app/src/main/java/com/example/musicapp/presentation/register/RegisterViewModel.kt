@@ -19,12 +19,20 @@ class RegisterViewModel : ViewModel() {
     private val _event = MutableSharedFlow<RegisterEvent>()
     val event = _event.asSharedFlow()
 
+    fun onNameChange(name: String) {
+        _state.update { it.copy(name = name) }
+    }
+
     fun onEmailChanged(email: String) {
         _state.update { it.copy(email = email) }
     }
 
     fun onPasswordChanged(password: String) {
         _state.update { it.copy(password = password) }
+    }
+
+    fun onConfirmPassword(confirmPassword: String) {
+        _state.update { it.copy(confirmPassword = confirmPassword) }
     }
 
     fun onPasswordVisibilityChanged() {

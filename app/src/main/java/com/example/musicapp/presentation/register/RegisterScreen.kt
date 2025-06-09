@@ -47,7 +47,9 @@ fun RegisterScreen(
     }
 
     RegisterScreenContent(
-        onRegisterClicked = {},
+        onRegisterClicked = {
+            viewModel.onRegisterClicked()
+        },
         onLoginClicked = {
             viewModel.onLoginClicked()
         }
