@@ -2,6 +2,7 @@ package com.example.musicapp.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.musicapp.data.remote.repository.AuthenticationRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -11,7 +12,9 @@ import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
-class LoginViewModel : ViewModel() {
+class LoginViewModel(
+    private val repository: AuthenticationRepository
+) : ViewModel() {
 
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
@@ -31,7 +34,11 @@ class LoginViewModel : ViewModel() {
         _state.update { it.copy(isPasswordVisibility = !_state.value.isPasswordVisibility) }
     }
 
-    fun onLoginClicked() {}
+    fun onLoginClicked() {
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+        }
+    }
 
     fun onRegisterClicked() {
         viewModelScope.launch {

@@ -40,6 +40,17 @@ fun LoginScreen(
         }
     }
 
+    LoginScreenContent(
+        onLoginClicked = { viewModel.onLoginClicked() },
+        onRegisterClicked = {
+            viewModel.onRegisterClicked()
+        },
+        onForgotPasswordClicked = {
+            viewModel.onForgotPasswordClicked()
+        },
+        onBackClicked = { viewModel.onBackClicked() }
+    )
+
     if (state.isLoading) {
         LoadingScreen()
     }
@@ -51,15 +62,4 @@ fun LoginScreen(
             onPrimaryButtonClicked = {}
         )
     }
-
-    LoginScreenContent(
-        onLoginClicked = {},
-        onRegisterClicked = {
-            viewModel.onRegisterClicked()
-        },
-        onForgotPasswordClicked = {
-            viewModel.onForgotPasswordClicked()
-        },
-        onBackClicked = { viewModel.onBackClicked() }
-    )
 }
