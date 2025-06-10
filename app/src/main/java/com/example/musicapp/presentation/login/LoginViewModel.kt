@@ -21,41 +21,69 @@ class LoginViewModel(
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
 
-    private val _event = MutableSharedFlow<LoginEvent>()
-    val event = _event.asSharedFlow()
+    private val _effect = MutableSharedFlow<LoginEffect>()
+    val effect = _effect.asSharedFlow()
 
-    fun onEmailChanged(email: String) {
-        _state.update { it.copy(email = email) }
+    fun onEvent(event: LoginUIEvent) {
+        when (event) {
+            is LoginUIEvent.OnEmailChange -> updateEmail(event.email)
+            is LoginUIEvent.OnPasswordChange -> updatePassword(event.password)
+            is LoginUIEvent.IsPasswordVisibility -> togglePasswordVisibility()
+            is LoginUIEvent.OnLoginClicked -> login()
+            is LoginUIEvent.OnRegisterClicked -> navigateToRegister()
+            is LoginUIEvent.OnForgotPasswordClicked -> handleForgotPassword()
+            is LoginUIEvent.OnBackClicked -> navigateBack()
+            is LoginUIEvent.OnDismissed -> dismissError()
+        }
     }
 
-    fun onPasswordChanged(password: String) {
-        _state.update { it.copy(password = password) }
+    private fun updateEmail(email: String) {
+        _state.update {
+            it.copy(
+                email = email,
+                isEmailError = false
+            )
+        }
     }
 
-    fun onPasswordVisibilityChanged() {
-        _state.update { it.copy(isPasswordVisibility = !_state.value.isPasswordVisibility) }
+    private fun updatePassword(password: String) {
+        _state.update {
+            it.copy(
+                password = password,
+                isPasswordError = false
+            )
+        }
     }
 
-    fun onLoginClicked(
-        email: String,
-        password: String,
-    ) {
+    private fun togglePasswordVisibility() {
+        _state.update { it.copy(isPasswordVisibility = !it.isPasswordVisibility) }
+    }
+
+    private fun login() {
         viewModelScope.launch {
+            if (validateInputs()) return@launch
+
             _state.update { it.copy(isLoading = true) }
 
-            val response = repository.login(LoginRequest(email = email, password = password))
+            val response =
+                repository.login(
+                    LoginRequest(
+                        email = state.value.email,
+                        password = state.value.password
+                    )
+                )
 
             when (response) {
                 is Resource.Success -> {
                     _state.update { it.copy(isLoading = false) }
-                    _event.emit(LoginEvent.NavigateToHome)
+                    _effect.emit(LoginEffect.NavigateToHome)
                 }
 
                 is Resource.Error -> {
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            errorMessage = response.message
+                            errorMessage = response.message,
                         )
                     }
                 }
@@ -63,21 +91,38 @@ class LoginViewModel(
         }
     }
 
-    fun onRegisterClicked() {
+    private fun validateInputs(): Boolean {
+        val isEmailValid = _state.value.email.isNullOrEmpty()
+        val isPasswordValid = _state.value.password.isNullOrEmpty()
+
+        _state.update {
+            it.copy(
+                isEmailError = isPasswordValid,
+                isPasswordError = isPasswordValid
+            )
+        }
+        return isEmailValid && isPasswordValid
+    }
+
+    private fun navigateToRegister() {
         viewModelScope.launch {
-            _event.emit(LoginEvent.NavigationToRegister)
+            _effect.emit(LoginEffect.NavigationToRegister)
         }
     }
 
-    fun onForgotPasswordClicked() {
+    private fun handleForgotPassword() {
         viewModelScope.launch {
-            _event.emit(LoginEvent.ShowErrorMessage("Forgot Password clicked"))
+            _effect.emit(LoginEffect.ShowErrorMessage("Forgot Password clicked"))
         }
     }
 
-    fun onBackClicked() {
+    private fun navigateBack() {
         viewModelScope.launch {
-            _event.emit(LoginEvent.NavigationToBack)
+            _effect.emit(LoginEffect.NavigationToBack)
         }
+    }
+
+    private fun dismissError() {
+        _state.update { it.copy(errorMessage = null) }
     }
 }

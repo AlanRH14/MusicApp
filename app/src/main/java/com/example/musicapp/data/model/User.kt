@@ -1,7 +1,9 @@
 package com.example.musicapp.data.model
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class User(
     @SerialName("id") val id: String? = null,
     @SerialName("email") val email: String? = null,

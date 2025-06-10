@@ -1,7 +1,5 @@
 package com.example.musicapp.presentation.login.widget
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,118 +10,62 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
+import com.example.musicapp.presentation.components.MusicAppTextField
+import com.example.musicapp.presentation.login.LoginState
+import com.example.musicapp.presentation.login.LoginUIEvent
 import com.example.musicapp.ui.theme.MusicAppTheme
 import com.example.musicapp.ui.theme.PaddingLarge
 import com.example.musicapp.ui.theme.Shapes
 
 @Composable
 fun LoginScreenContent(
-    email: String,
-    password: String,
-    onEmailChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onLoginClicked: () -> Unit,
-    onRegisterClicked: () -> Unit,
-    onForgotPasswordClicked: () -> Unit,
-    onBackClicked: () -> Unit,
+    state: LoginState,
+    onEvent: (LoginUIEvent) -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(PaddingLarge)
     ) {
-        Image(
-            modifier = Modifier
-                .clickable { onBackClicked() },
-            painter = painterResource(R.drawable.ic_back),
-            contentDescription = stringResource(R.string.image_back),
-        )
+        LoginHeader(onBackClicked = { onEvent(LoginUIEvent.OnBackClicked) })
 
         Spacer(modifier = Modifier.size(16.dp))
 
-        Image(
-            modifier = Modifier
-                .size(120.dp)
-                .align(Alignment.CenterHorizontally),
-            painter = painterResource(R.drawable.ic_logo),
-            contentDescription = stringResource(R.string.image_logo),
-        )
-
-        Spacer(modifier = Modifier.size(16.dp))
-
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.login_text),
-            color = MaterialTheme.colorScheme.onPrimary,
-            style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Center,
-        )
-
-        Spacer(modifier = Modifier.size(16.dp))
-
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(horizontal = PaddingLarge)
-                .fillMaxWidth(),
-            value = email,
-            onValueChange = { onEmailChange(it) },
-            label = { Text(stringResource(R.string.email)) },
-            placeholder = { Text(stringResource(R.string.email_placeholder)) },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_mail),
-                    contentDescription = stringResource(R.string.email_icon),
-                )
-            },
-            shape = Shapes.medium,
-            colors = OutlinedTextFieldDefaults.colors().copy(
-                unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedIndicatorColor = Color.LightGray
-            ),
+        MusicAppTextField(
+            value = state.email ?: "",
+            onValueChange = { onEvent(LoginUIEvent.OnEmailChange(it)) },
+            label = stringResource(R.string.email),
+            placeholder = stringResource(R.string.email_placeholder),
+            leadingIcon = painterResource(R.drawable.ic_mail),
+            leadingDescription = stringResource(R.string.email_icon),
+            isError = state.isEmailError,
         )
 
         Spacer(modifier = Modifier.size(8.dp))
 
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(horizontal = PaddingLarge)
-                .fillMaxWidth(),
-            value = password,
-            onValueChange = { onPasswordChange(it) },
-            label = { Text(stringResource(R.string.password)) },
-            placeholder = { Text(stringResource(R.string.password_placeholder)) },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_mail),
-                    contentDescription = stringResource(R.string.icon_eye_off)
-                )
-            },
-            trailingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_eye_off),
-                    contentDescription = stringResource(R.string.icon_eye_off)
-                )
-            },
-            shape = Shapes.medium
+        MusicAppTextField(
+            value = state.password ?: "",
+            onValueChange = { onEvent(LoginUIEvent.OnPasswordChange(it)) },
+            label = stringResource(R.string.password),
+            placeholder = stringResource(R.string.password_placeholder),
+            leadingIcon = painterResource(R.drawable.ic_mail),
+            leadingDescription = stringResource(R.string.icon_eye_off),
+            trailingIcon = painterResource(R.drawable.ic_eye_off),
+            trailingDescription = stringResource(R.string.icon_eye_off),
+            isError = state.isPasswordError,
         )
 
         Spacer(modifier = Modifier.size(16.dp))
@@ -159,7 +101,7 @@ fun LoginScreenContent(
                     ambientColor = MaterialTheme.colorScheme.primary,
                     spotColor = MaterialTheme.colorScheme.primary
                 ),
-            onClick = onLoginClicked
+            onClick = { onEvent(LoginUIEvent.OnLoginClicked) }
         ) {
             Text(
                 stringResource(R.string.login),
@@ -172,10 +114,10 @@ fun LoginScreenContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(PaddingLarge),
-            onClick = onForgotPasswordClicked
+            onClick = { onEvent(LoginUIEvent.OnForgotPasswordClicked) }
         ) {
             Text(
-                text = "Forgot password?",
+                text = stringResource(R.string.forgot_password),
                 fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -185,9 +127,10 @@ fun LoginScreenContent(
 
         SocialCard(
             stringRes = stringResource(R.string.do_not_have_an_account),
-            onClick = onRegisterClicked,
+            onClick = { onEvent(LoginUIEvent.OnRegisterClicked) },
             onFbClick = {},
-            onGoogleClick = {})
+            onGoogleClick = {}
+        )
     }
 }
 
@@ -196,14 +139,8 @@ fun LoginScreenContent(
 private fun LoginScreenContentPreview() {
     MusicAppTheme {
         LoginScreenContent(
-            email = "",
-            password = "",
-            onLoginClicked = {},
-            onRegisterClicked = {},
-            onForgotPasswordClicked = {},
-            onBackClicked = {},
-            onEmailChange = {},
-            onPasswordChange = {}
+            state = LoginState(),
+            onEvent = {}
         )
     }
 }

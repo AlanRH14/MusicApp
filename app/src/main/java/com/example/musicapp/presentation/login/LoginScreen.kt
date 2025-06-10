@@ -23,22 +23,22 @@ fun LoginScreen(
 ) {
     val state by viewModel.state.collectAsState()
 
-    LaunchedEffect(key1 = true) {
-        viewModel.event.collectLatest {
+    LaunchedEffect(key1 = viewModel) {
+        viewModel.effect.collectLatest {
             when (it) {
-                is LoginEvent.ShowErrorMessage -> {
+                is LoginEffect.ShowErrorMessage -> {
                     Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()
                 }
 
-                is LoginEvent.NavigationToRegister -> {
+                is LoginEffect.NavigationToRegister -> {
                     navController.navigate(RegisterRoute)
                 }
 
-                is LoginEvent.NavigationToBack -> {
+                is LoginEffect.NavigationToBack -> {
                     navController.popBackStack()
                 }
 
-                is LoginEvent.NavigateToHome -> {
+                is LoginEffect.NavigateToHome -> {
                     navController.navigate(HomeRoute)
                 }
             }
@@ -46,30 +46,18 @@ fun LoginScreen(
     }
 
     LoginScreenContent(
-        email = state.email ?: "",
-        password = state.password ?: "",
-        onEmailChange = { viewModel.onEmailChanged(it) },
-        onPasswordChange = { viewModel.onPasswordChanged(it) },
-        onLoginClicked = {
-            viewModel.onLoginClicked(
-                email = state.email ?: "",
-                password = state.password ?: ""
-            )
-        },
-        onRegisterClicked = {
-            viewModel.onRegisterClicked()
-        },
-        onForgotPasswordClicked = {
-            viewModel.onForgotPasswordClicked()
-        },
-        onBackClicked = { viewModel.onBackClicked() }
+        state = state,
+        onEvent = viewModel::onEvent
     )
 
     if (state.isLoading) {
         LoadingScreen()
     }
 
-    if (!state.errorMessage.isNullOrEmpty()) {
+    if (!state.errorMessage.isNullOrEmpty()
+        && !state.isEmailError
+        && !state.isPasswordError
+    ) {
         ErrorScreen(
             errorMessage = state.errorMessage ?: stringResource(R.string.unknown),
             primaryButton = stringResource(R.string.retry),

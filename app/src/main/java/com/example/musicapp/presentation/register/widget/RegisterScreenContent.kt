@@ -34,6 +34,14 @@ import com.example.musicapp.ui.theme.Shapes
 
 @Composable
 fun RegisterScreenContent(
+    name: String,
+    email: String,
+    password: String,
+    confirmPassword: String,
+    onChangeName: (String) -> Unit,
+    onChangeEmail: (String) -> Unit,
+    onChangePassword: (String) -> Unit,
+    onChangeConfirmPassword: (String) -> Unit,
     onRegisterClicked: () -> Unit,
     onLoginClicked: () -> Unit,
 ) {
@@ -75,8 +83,8 @@ fun RegisterScreenContent(
             modifier = Modifier
                 .padding(horizontal = PaddingLarge)
                 .fillMaxWidth(),
-            value = "",
-            onValueChange = {},
+            value = name,
+            onValueChange = { onChangeName(it) },
             label = { Text(stringResource(R.string.name)) },
             placeholder = { Text("Enter your email") },
             leadingIcon = {
@@ -97,8 +105,8 @@ fun RegisterScreenContent(
             modifier = Modifier
                 .padding(horizontal = PaddingLarge)
                 .fillMaxWidth(),
-            value = "",
-            onValueChange = {},
+            value = email,
+            onValueChange = { onChangeEmail(it) },
             label = { Text(stringResource(R.string.email)) },
             placeholder = { stringResource(R.string.email_placeholder) },
             leadingIcon = {
@@ -119,8 +127,8 @@ fun RegisterScreenContent(
             modifier = Modifier
                 .padding(horizontal = PaddingLarge)
                 .fillMaxWidth(),
-            value = "",
-            onValueChange = {},
+            value = password,
+            onValueChange = { onChangePassword(it) },
             label = { Text(stringResource(R.string.password)) },
             placeholder = { Text(stringResource(R.string.password_placeholder)) },
             leadingIcon = {
@@ -141,8 +149,8 @@ fun RegisterScreenContent(
             modifier = Modifier
                 .padding(horizontal = PaddingLarge)
                 .fillMaxWidth(),
-            value = "",
-            onValueChange = {},
+            value = confirmPassword,
+            onValueChange = { onChangeConfirmPassword(it) },
             label = { Text(stringResource(R.string.confirm_password)) },
             placeholder = { Text(stringResource(R.string.confirm_password)) },
             leadingIcon = {
@@ -196,6 +204,14 @@ fun RegisterScreenContent(
 fun RegisterScreenContentPreview() {
     MusicAppTheme {
         RegisterScreenContent(
+            name = "",
+            email = "",
+            password = "",
+            confirmPassword = "",
+            onChangeName = {},
+            onChangeEmail = {},
+            onChangePassword = {},
+            onChangeConfirmPassword = {},
             onRegisterClicked = {},
             onLoginClicked = {}
         )
