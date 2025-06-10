@@ -30,22 +30,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
+import com.example.musicapp.presentation.login.LoginState
+import com.example.musicapp.presentation.login.LoginUIEvent
 import com.example.musicapp.ui.theme.MusicAppTheme
 import com.example.musicapp.ui.theme.PaddingLarge
 import com.example.musicapp.ui.theme.Shapes
 
 @Composable
 fun LoginScreenContent(
-    email: String,
-    password: String,
-    isEmailError: Boolean,
-    isPasswordError: Boolean,
-    onEmailChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onLoginClicked: () -> Unit,
-    onRegisterClicked: () -> Unit,
-    onForgotPasswordClicked: () -> Unit,
-    onBackClicked: () -> Unit,
+    state: LoginState,
+    onEvent: (LoginUIEvent) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -54,7 +48,7 @@ fun LoginScreenContent(
     ) {
         Image(
             modifier = Modifier
-                .clickable { onBackClicked() },
+                .clickable { onEvent(LoginUIEvent.OnBackClicked) },
             painter = painterResource(R.drawable.ic_back),
             contentDescription = stringResource(R.string.image_back),
         )
@@ -85,8 +79,8 @@ fun LoginScreenContent(
             modifier = Modifier
                 .padding(horizontal = PaddingLarge)
                 .fillMaxWidth(),
-            value = email,
-            onValueChange = { onEmailChange(it) },
+            value = state.email ?: "",
+            onValueChange = { onEvent(LoginUIEvent.OnEmailChange(it)) },
             label = { Text(stringResource(R.string.email)) },
             placeholder = { Text(stringResource(R.string.email_placeholder)) },
             leadingIcon = {
@@ -95,7 +89,7 @@ fun LoginScreenContent(
                     contentDescription = stringResource(R.string.email_icon),
                 )
             },
-            isError = isEmailError,
+            isError = state.isEmailError,
             shape = Shapes.medium,
             colors = OutlinedTextFieldDefaults.colors().copy(
                 unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
@@ -110,8 +104,8 @@ fun LoginScreenContent(
             modifier = Modifier
                 .padding(horizontal = PaddingLarge)
                 .fillMaxWidth(),
-            value = password,
-            onValueChange = { onPasswordChange(it) },
+            value = state.password ?: "",
+            onValueChange = { onEvent(LoginUIEvent.OnPasswordChange(it)) },
             label = { Text(stringResource(R.string.password)) },
             placeholder = { Text(stringResource(R.string.password_placeholder)) },
             leadingIcon = {
@@ -126,7 +120,7 @@ fun LoginScreenContent(
                     contentDescription = stringResource(R.string.icon_eye_off)
                 )
             },
-            isError = isPasswordError,
+            isError = state.isPasswordError,
             shape = Shapes.medium
         )
 
@@ -163,7 +157,7 @@ fun LoginScreenContent(
                     ambientColor = MaterialTheme.colorScheme.primary,
                     spotColor = MaterialTheme.colorScheme.primary
                 ),
-            onClick = onLoginClicked
+            onClick = { onEvent(LoginUIEvent.OnLoginClicked) }
         ) {
             Text(
                 stringResource(R.string.login),
@@ -176,7 +170,7 @@ fun LoginScreenContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(PaddingLarge),
-            onClick = onForgotPasswordClicked
+            onClick = { onEvent(LoginUIEvent.OnForgotPasswordClicked) }
         ) {
             Text(
                 text = "Forgot password?",
@@ -189,7 +183,7 @@ fun LoginScreenContent(
 
         SocialCard(
             stringRes = stringResource(R.string.do_not_have_an_account),
-            onClick = onRegisterClicked,
+            onClick = { onEvent(LoginUIEvent.OnRegisterClicked) },
             onFbClick = {},
             onGoogleClick = {})
     }
@@ -200,16 +194,8 @@ fun LoginScreenContent(
 private fun LoginScreenContentPreview() {
     MusicAppTheme {
         LoginScreenContent(
-            email = "",
-            password = "",
-            isEmailError = false,
-            isPasswordError = false,
-            onLoginClicked = {},
-            onRegisterClicked = {},
-            onForgotPasswordClicked = {},
-            onBackClicked = {},
-            onEmailChange = {},
-            onPasswordChange = {}
+            state = LoginState(),
+            onEvent = {}
         )
     }
 }
