@@ -70,18 +70,10 @@ class LoginViewModel(
                 }
 
                 is Resource.Error -> {
-                    var isEmailError = false
-                    var isPasswordError = false
-                    if (response.message == "Invalid email or password") {
-                        isEmailError = true
-                        isPasswordError = true
-                    }
                     _state.update {
                         it.copy(
                             isLoading = false,
                             errorMessage = response.message,
-                            isEmailError = isEmailError,
-                            isPasswordError = isPasswordError,
                         )
                     }
                 }
