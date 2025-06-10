@@ -54,7 +54,10 @@ fun LoginScreen(
         LoadingScreen()
     }
 
-    if (!state.errorMessage.isNullOrEmpty()) {
+    if (!state.errorMessage.isNullOrEmpty()
+        && !state.isEmailError
+        && !state.isPasswordError
+    ) {
         ErrorScreen(
             errorMessage = state.errorMessage ?: stringResource(R.string.unknown),
             primaryButton = stringResource(R.string.retry),

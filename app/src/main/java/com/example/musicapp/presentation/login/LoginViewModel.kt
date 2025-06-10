@@ -29,7 +29,7 @@ class LoginViewModel(
             is LoginUIEvent.OnEmailChange -> updateEmail(event.email)
             is LoginUIEvent.OnPasswordChange -> updatePassword(event.password)
             is LoginUIEvent.IsPasswordVisibility -> togglePasswordVisibility()
-            is LoginUIEvent.OnLoginClicked -> onLoginClicked()
+            is LoginUIEvent.OnLoginClicked -> login()
             is LoginUIEvent.OnRegisterClicked -> navigateToRegister()
             is LoginUIEvent.OnForgotPasswordClicked -> handleForgotPassword()
             is LoginUIEvent.OnBackClicked -> navigateBack()
@@ -37,11 +37,11 @@ class LoginViewModel(
         }
     }
 
-    fun updateEmail(email: String) {
+    private fun updateEmail(email: String) {
         _state.update { it.copy(email = email) }
     }
 
-    fun updatePassword(password: String) {
+    private fun updatePassword(password: String) {
         _state.update { it.copy(password = password) }
     }
 
@@ -49,7 +49,7 @@ class LoginViewModel(
         _state.update { it.copy(isPasswordVisibility = !it.isPasswordVisibility) }
     }
 
-    fun onLoginClicked() {
+    private fun login() {
         viewModelScope.launch {
             if (validateInputs()) return@launch
 
@@ -70,10 +70,18 @@ class LoginViewModel(
                 }
 
                 is Resource.Error -> {
+                    var isEmailError = false
+                    var isPasswordError = false
+                    if (response.message == "Invalid email or password") {
+                        isEmailError = true
+                        isPasswordError = true
+                    }
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            errorMessage = response.message
+                            errorMessage = response.message,
+                            isEmailError = isEmailError,
+                            isPasswordError = isPasswordError,
                         )
                     }
                 }
@@ -94,19 +102,19 @@ class LoginViewModel(
         return isEmailValid && isPasswordValid
     }
 
-    fun navigateToRegister() {
+    private fun navigateToRegister() {
         viewModelScope.launch {
             _effect.emit(LoginEffect.NavigationToRegister)
         }
     }
 
-    fun handleForgotPassword() {
+    private fun handleForgotPassword() {
         viewModelScope.launch {
             _effect.emit(LoginEffect.ShowErrorMessage("Forgot Password clicked"))
         }
     }
 
-    fun navigateBack() {
+    private fun navigateBack() {
         viewModelScope.launch {
             _effect.emit(LoginEffect.NavigationToBack)
         }

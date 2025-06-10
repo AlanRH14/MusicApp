@@ -90,6 +90,11 @@ fun LoginScreenContent(
                 )
             },
             isError = state.isEmailError,
+            supportingText = {
+                if (state.isEmailError) {
+                    Text(stringResource(R.string.email_placeholder))
+                }
+            },
             shape = Shapes.medium,
             colors = OutlinedTextFieldDefaults.colors().copy(
                 unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
@@ -121,6 +126,11 @@ fun LoginScreenContent(
                 )
             },
             isError = state.isPasswordError,
+            supportingText = {
+                if (state.isPasswordError) {
+                    Text(stringResource(R.string.password_placeholder))
+                }
+            },
             shape = Shapes.medium
         )
 
@@ -173,7 +183,7 @@ fun LoginScreenContent(
             onClick = { onEvent(LoginUIEvent.OnForgotPasswordClicked) }
         ) {
             Text(
-                text = "Forgot password?",
+                text = stringResource(R.string.forgot_password),
                 fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -185,7 +195,8 @@ fun LoginScreenContent(
             stringRes = stringResource(R.string.do_not_have_an_account),
             onClick = { onEvent(LoginUIEvent.OnRegisterClicked) },
             onFbClick = {},
-            onGoogleClick = {})
+            onGoogleClick = {}
+        )
     }
 }
 
