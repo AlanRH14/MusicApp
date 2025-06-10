@@ -5,4 +5,6 @@ sealed class LoginEvent {
     data object NavigationToRegister : LoginEvent()
     data object NavigationToBack : LoginEvent()
     data object NavigateToHome : LoginEvent()
+    data object EmptyEmail: LoginEvent()
+    data object EmptyPassword: LoginEvent()
 }

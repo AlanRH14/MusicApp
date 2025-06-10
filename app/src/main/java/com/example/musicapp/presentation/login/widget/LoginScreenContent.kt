@@ -38,6 +38,8 @@ import com.example.musicapp.ui.theme.Shapes
 fun LoginScreenContent(
     email: String,
     password: String,
+    isEmailError: Boolean,
+    isPasswordError: Boolean,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onLoginClicked: () -> Unit,
@@ -93,6 +95,7 @@ fun LoginScreenContent(
                     contentDescription = stringResource(R.string.email_icon),
                 )
             },
+            isError = isEmailError,
             shape = Shapes.medium,
             colors = OutlinedTextFieldDefaults.colors().copy(
                 unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
@@ -123,6 +126,7 @@ fun LoginScreenContent(
                     contentDescription = stringResource(R.string.icon_eye_off)
                 )
             },
+            isError = isPasswordError,
             shape = Shapes.medium
         )
 
@@ -198,6 +202,8 @@ private fun LoginScreenContentPreview() {
         LoginScreenContent(
             email = "",
             password = "",
+            isEmailError = false,
+            isPasswordError = false,
             onLoginClicked = {},
             onRegisterClicked = {},
             onForgotPasswordClicked = {},

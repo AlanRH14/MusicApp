@@ -41,22 +41,33 @@ class LoginViewModel(
         password: String,
     ) {
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
+            if (_state.value.email.isNullOrEmpty()) {
+                _event.emit(LoginEvent.EmptyEmail)
+            }
 
-            val response = repository.login(LoginRequest(email = email, password = password))
+            if (_state.value.password.isNullOrEmpty()) {
+                _event.emit(LoginEvent.EmptyPassword)
+            }
 
-            when (response) {
-                is Resource.Success -> {
-                    _state.update { it.copy(isLoading = false) }
-                    _event.emit(LoginEvent.NavigateToHome)
-                }
+            if (!_state.value.email.isNullOrEmpty() && !_state.value.password.isNullOrEmpty()) {
+                _state.update { it.copy(isLoading = true) }
 
-                is Resource.Error -> {
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            errorMessage = response.message
-                        )
+                val response =
+                    repository.login(LoginRequest(email = email, password = password))
+
+                when (response) {
+                    is Resource.Success -> {
+                        _state.update { it.copy(isLoading = false) }
+                        _event.emit(LoginEvent.NavigateToHome)
+                    }
+
+                    is Resource.Error -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                errorMessage = response.message
+                            )
+                        }
                     }
                 }
             }

@@ -5,6 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
@@ -22,6 +25,8 @@ fun LoginScreen(
     viewModel: LoginViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()
+    var isEmailError by remember { mutableStateOf(false) }
+    var isPasswordError by remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = true) {
         viewModel.event.collectLatest {
@@ -41,6 +46,14 @@ fun LoginScreen(
                 is LoginEvent.NavigateToHome -> {
                     navController.navigate(HomeRoute)
                 }
+
+                is LoginEvent.EmptyEmail -> {
+                    isEmailError = true
+                }
+
+                is LoginEvent.EmptyPassword -> {
+                    isPasswordError = true
+                }
             }
         }
     }
@@ -48,6 +61,8 @@ fun LoginScreen(
     LoginScreenContent(
         email = state.email ?: "",
         password = state.password ?: "",
+        isEmailError = isEmailError,
+        isPasswordError = isPasswordError,
         onEmailChange = { viewModel.onEmailChanged(it) },
         onPasswordChange = { viewModel.onPasswordChanged(it) },
         onLoginClicked = {
