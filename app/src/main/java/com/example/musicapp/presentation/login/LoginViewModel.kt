@@ -38,11 +38,21 @@ class LoginViewModel(
     }
 
     private fun updateEmail(email: String) {
-        _state.update { it.copy(email = email) }
+        _state.update {
+            it.copy(
+                email = email,
+                isEmailError = false
+            )
+        }
     }
 
     private fun updatePassword(password: String) {
-        _state.update { it.copy(password = password) }
+        _state.update {
+            it.copy(
+                password = password,
+                isPasswordError = false
+            )
+        }
     }
 
     private fun togglePasswordVisibility() {
