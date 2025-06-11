@@ -1,9 +1,9 @@
 package com.example.musicapp.presentation.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -61,11 +61,14 @@ fun MusicAppTextField(
         },
         trailingIcon = {
             trailingIcon?.let { icon ->
-                Icon(
-                    modifier = Modifier.clickable { onShowPasswordClicked() },
-                    painter = if (isPasswordVisible) icon else painterResource(R.drawable.ic_eye),
-                    contentDescription = trailingDescription
-                )
+                IconButton(
+                    onClick = onShowPasswordClicked,
+                ) {
+                    Icon(
+                        painter = if (isPasswordVisible) icon else painterResource(R.drawable.ic_eye),
+                        contentDescription = trailingDescription
+                    )
+                }
             }
         },
         visualTransformation = if (isPasswordVisible) {

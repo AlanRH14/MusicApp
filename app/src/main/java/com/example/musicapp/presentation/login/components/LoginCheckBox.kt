@@ -28,7 +28,7 @@ fun LoginCheckBox(
         Checkbox(
             modifier = Modifier.padding(start = PaddingLarge),
             checked = checked,
-            onCheckedChange = { onCheckedChange(it) },
+            onCheckedChange = onCheckedChange,
             colors = colors
         )
 

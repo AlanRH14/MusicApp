@@ -9,6 +9,6 @@ data class User(
     @SerialName("email") val email: String? = null,
     @SerialName("name") val name: String? = null,
     @SerialName("profilePicture") val profilePicture: String? = null,
-    @SerialName("createdAt") val createdAt: Int? = null,
-    @SerialName("updateAt") val updateAt: Int? = null
+    @SerialName("createdAt") val createdAt: Long? = null,
+    @SerialName("updateAt") val updateAt: Long? = null
 )
