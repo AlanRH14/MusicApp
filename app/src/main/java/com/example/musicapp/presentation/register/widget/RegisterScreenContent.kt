@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
 import com.example.musicapp.presentation.components.MusicAppTextField
 import com.example.musicapp.presentation.login.widget.SocialCard
-import com.example.musicapp.presentation.register.RegisterEvent
 import com.example.musicapp.presentation.register.RegisterState
+import com.example.musicapp.presentation.register.RegisterUIEffect
 import com.example.musicapp.ui.theme.MusicAppTheme
 import com.example.musicapp.ui.theme.PaddingLarge
 import com.example.musicapp.ui.theme.Shapes
@@ -34,12 +34,7 @@ import com.example.musicapp.ui.theme.Shapes
 @Composable
 fun RegisterScreenContent(
     state: RegisterState,
-    onChangeName: (RegisterEvent) -> Unit,
-    onChangeEmail: (String) -> Unit,
-    onChangePassword: (String) -> Unit,
-    onChangeConfirmPassword: (String) -> Unit,
-    onRegisterClicked: () -> Unit,
-    onLoginClicked: () -> Unit,
+    onEvent: (RegisterUIEffect) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -48,7 +43,7 @@ fun RegisterScreenContent(
     ) {
         Image(
             modifier = Modifier
-                .clickable { onLoginClicked() },
+                .clickable { onEvent(RegisterUIEffect.OnBackClicked) },
             painter = painterResource(R.drawable.ic_back),
             contentDescription = stringResource(R.string.image_back)
         )
@@ -77,7 +72,7 @@ fun RegisterScreenContent(
 
         MusicAppTextField(
             value = state.name ?: "",
-            onValueChange = { onChangeName(it) },
+            onValueChange = { onEvent(RegisterUIEffect.OnNameUpdate(it)) },
             label = stringResource(R.string.name),
             placeholder = stringResource(R.string.name_placeholder),
             leadingIcon = painterResource(R.drawable.ic_mail),
@@ -86,7 +81,7 @@ fun RegisterScreenContent(
 
         MusicAppTextField(
             value = state.email ?: "",
-            onValueChange = { onChangeEmail(it) },
+            onValueChange = { onEvent(RegisterUIEffect.OnEmailUpdate(it)) },
             label = stringResource(R.string.email),
             placeholder = stringResource(R.string.email_placeholder),
             leadingIcon = painterResource(R.drawable.ic_mail),
@@ -95,7 +90,7 @@ fun RegisterScreenContent(
 
         MusicAppTextField(
             value = state.password ?: "",
-            onValueChange = { onChangePassword(it) },
+            onValueChange = { onEvent(RegisterUIEffect.OnPasswordUpdate(it)) },
             label = stringResource(R.string.password),
             placeholder = stringResource(R.string.password_placeholder),
             leadingIcon = painterResource(R.drawable.ic_mail),
@@ -106,7 +101,7 @@ fun RegisterScreenContent(
 
         MusicAppTextField(
             value = state.confirmPassword ?: "",
-            onValueChange = { onChangeConfirmPassword(it) },
+            onValueChange = { onEvent(RegisterUIEffect.OnConfirmPasswordUpdate(it)) },
             label = stringResource(R.string.confirm_password),
             placeholder = stringResource(R.string.confirm_password),
             leadingIcon = painterResource(R.drawable.ic_mail),
@@ -127,7 +122,7 @@ fun RegisterScreenContent(
                     ambientColor = MaterialTheme.colorScheme.primary,
                     spotColor = MaterialTheme.colorScheme.primary
                 ),
-            onClick = {},
+            onClick = { onEvent(RegisterUIEffect.OnRegisterClicked) },
         ) {
             Text(
                 text = stringResource(R.string.register),
@@ -140,7 +135,7 @@ fun RegisterScreenContent(
 
         SocialCard(
             stringRes = stringResource(R.string.already_have_an_account),
-            onClick = onLoginClicked,
+            onClick = { onEvent(RegisterUIEffect.OnLoginClicked) },
             onFbClick = {},
             onGoogleClick = {},
         )
@@ -153,12 +148,7 @@ fun RegisterScreenContentPreview() {
     MusicAppTheme {
         RegisterScreenContent(
             state = RegisterState(),
-            onChangeName = {},
-            onChangeEmail = {},
-            onChangePassword = {},
-            onChangeConfirmPassword = {},
-            onRegisterClicked = {},
-            onLoginClicked = {}
+            onEvent = {},
         )
     }
 }
