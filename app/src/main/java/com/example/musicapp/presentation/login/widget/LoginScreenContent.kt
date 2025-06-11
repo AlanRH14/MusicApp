@@ -55,7 +55,7 @@ fun LoginScreenContent(
 
         MusicAppTextField(
             value = state.password ?: "",
-            onValueChange = { onEvent(LoginUIEvent.OnPasswordChange(it)) },
+            onValueChange = { onEvent(LoginUIEvent.OnPasswordUpdate(it)) },
             label = stringResource(R.string.password),
             placeholder = stringResource(R.string.password_placeholder),
             leadingIcon = painterResource(R.drawable.ic_lock),

@@ -2,7 +2,7 @@ package com.example.musicapp.presentation.login
 
 sealed interface LoginUIEvent {
     data class OnEmailUpdate(val email: String) : LoginUIEvent
-    data class OnPasswordChange(val password: String) : LoginUIEvent
+    data class OnPasswordUpdate(val password: String) : LoginUIEvent
     data object OnTogglePasswordVisibility : LoginUIEvent
     data object OnLoginClicked : LoginUIEvent
     data object OnRememberMeActive : LoginUIEvent

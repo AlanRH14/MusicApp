@@ -27,7 +27,7 @@ class LoginViewModel(
     fun onEvent(event: LoginUIEvent) {
         when (event) {
             is LoginUIEvent.OnEmailUpdate -> updateEmail(event.email)
-            is LoginUIEvent.OnPasswordChange -> updatePassword(event.password)
+            is LoginUIEvent.OnPasswordUpdate -> updatePassword(event.password)
             is LoginUIEvent.OnTogglePasswordVisibility -> togglePasswordVisibility()
             is LoginUIEvent.OnLoginClicked -> login()
             is LoginUIEvent.OnRememberMeActive -> updateCheck()
