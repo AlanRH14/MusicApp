@@ -16,8 +16,10 @@ class RegisterViewModel : ViewModel() {
     private val _state = MutableStateFlow(RegisterState())
     val state = _state.asStateFlow()
 
-    private val _event = MutableSharedFlow<RegisterEvent>()
+    private val _event = MutableSharedFlow<RegisterEffect>()
     val event = _event.asSharedFlow()
+
+
 
     fun onNameChange(name: String) {
         _state.update { it.copy(name = name) }
@@ -45,7 +47,7 @@ class RegisterViewModel : ViewModel() {
 
     fun onLoginClicked() {
         viewModelScope.launch {
-            _event.emit(RegisterEvent.NavigateToLogin)
+            _event.emit(RegisterEffect.NavigateToLogin)
         }
     }
 }

@@ -26,7 +26,7 @@ import com.example.musicapp.R
 import com.example.musicapp.presentation.components.MusicAppTextField
 import com.example.musicapp.presentation.login.widget.SocialCard
 import com.example.musicapp.presentation.register.RegisterState
-import com.example.musicapp.presentation.register.RegisterUIEffect
+import com.example.musicapp.presentation.register.RegisterUIEvent
 import com.example.musicapp.ui.theme.MusicAppTheme
 import com.example.musicapp.ui.theme.PaddingLarge
 import com.example.musicapp.ui.theme.Shapes
@@ -34,7 +34,7 @@ import com.example.musicapp.ui.theme.Shapes
 @Composable
 fun RegisterScreenContent(
     state: RegisterState,
-    onEvent: (RegisterUIEffect) -> Unit,
+    onEvent: (RegisterUIEvent) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -43,7 +43,7 @@ fun RegisterScreenContent(
     ) {
         Image(
             modifier = Modifier
-                .clickable { onEvent(RegisterUIEffect.OnBackClicked) },
+                .clickable { onEvent(RegisterUIEvent.OnBackClicked) },
             painter = painterResource(R.drawable.ic_back),
             contentDescription = stringResource(R.string.image_back)
         )
@@ -72,7 +72,7 @@ fun RegisterScreenContent(
 
         MusicAppTextField(
             value = state.name ?: "",
-            onValueChange = { onEvent(RegisterUIEffect.OnNameUpdate(it)) },
+            onValueChange = { onEvent(RegisterUIEvent.OnNameUpdate(it)) },
             label = stringResource(R.string.name),
             placeholder = stringResource(R.string.name_placeholder),
             leadingIcon = painterResource(R.drawable.ic_mail),
@@ -81,7 +81,7 @@ fun RegisterScreenContent(
 
         MusicAppTextField(
             value = state.email ?: "",
-            onValueChange = { onEvent(RegisterUIEffect.OnEmailUpdate(it)) },
+            onValueChange = { onEvent(RegisterUIEvent.OnEmailUpdate(it)) },
             label = stringResource(R.string.email),
             placeholder = stringResource(R.string.email_placeholder),
             leadingIcon = painterResource(R.drawable.ic_mail),
@@ -90,7 +90,7 @@ fun RegisterScreenContent(
 
         MusicAppTextField(
             value = state.password ?: "",
-            onValueChange = { onEvent(RegisterUIEffect.OnPasswordUpdate(it)) },
+            onValueChange = { onEvent(RegisterUIEvent.OnPasswordUpdate(it)) },
             label = stringResource(R.string.password),
             placeholder = stringResource(R.string.password_placeholder),
             leadingIcon = painterResource(R.drawable.ic_mail),
@@ -101,7 +101,7 @@ fun RegisterScreenContent(
 
         MusicAppTextField(
             value = state.confirmPassword ?: "",
-            onValueChange = { onEvent(RegisterUIEffect.OnConfirmPasswordUpdate(it)) },
+            onValueChange = { onEvent(RegisterUIEvent.OnConfirmPasswordUpdate(it)) },
             label = stringResource(R.string.confirm_password),
             placeholder = stringResource(R.string.confirm_password),
             leadingIcon = painterResource(R.drawable.ic_mail),
@@ -122,7 +122,7 @@ fun RegisterScreenContent(
                     ambientColor = MaterialTheme.colorScheme.primary,
                     spotColor = MaterialTheme.colorScheme.primary
                 ),
-            onClick = { onEvent(RegisterUIEffect.OnRegisterClicked) },
+            onClick = { onEvent(RegisterUIEvent.OnRegisterClicked) },
         ) {
             Text(
                 text = stringResource(R.string.register),
@@ -135,7 +135,7 @@ fun RegisterScreenContent(
 
         SocialCard(
             stringRes = stringResource(R.string.already_have_an_account),
-            onClick = { onEvent(RegisterUIEffect.OnLoginClicked) },
+            onClick = { onEvent(RegisterUIEvent.OnLoginClicked) },
             onFbClick = {},
             onGoogleClick = {},
         )

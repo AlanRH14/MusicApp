@@ -1,0 +1,11 @@
+package com.example.musicapp.presentation.register
+
+sealed interface RegisterUIEvent {
+    data class OnNameUpdate(val name: String) : RegisterUIEvent
+    data class OnEmailUpdate(val email: String) : RegisterUIEvent
+    data class OnPasswordUpdate(val password: String) : RegisterUIEvent
+    data class OnConfirmPasswordUpdate(val confirmPassword: String) : RegisterUIEvent
+    data object OnBackClicked : RegisterUIEvent
+    data object OnRegisterClicked : RegisterUIEvent
+    data object OnLoginClicked : RegisterUIEvent
+}

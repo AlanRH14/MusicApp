@@ -24,11 +24,11 @@ fun RegisterScreen(
     LaunchedEffect(key1 = true) {
         viewModel.event.collectLatest { event ->
             when (event) {
-                is RegisterEvent.ShowErrorMessage -> {
+                is RegisterEffect.ShowErrorMessage -> {
                     Toast.makeText(navController.context, event.message, Toast.LENGTH_SHORT).show()
                 }
 
-                is RegisterEvent.NavigateToLogin -> {
+                is RegisterEffect.NavigateToLogin -> {
                     navController.popBackStack()
                 }
             }
@@ -37,16 +37,7 @@ fun RegisterScreen(
 
     RegisterScreenContent(
         state = state,
-        onChangeName = { name -> viewModel.onNameChange(name = name) },
-        onChangeEmail = { email -> viewModel.onEmailChanged(email) },
-        onChangePassword = { pass -> viewModel.onPasswordChanged(pass) },
-        onChangeConfirmPassword = { confirmPass -> viewModel.onConfirmPassword(confirmPassword = confirmPass) },
-        onRegisterClicked = {
-            viewModel.onRegisterClicked()
-        },
-        onLoginClicked = {
-            viewModel.onLoginClicked()
-        }
+        onEvent = {},
     )
 
     if (state.loading) {
