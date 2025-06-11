@@ -5,6 +5,7 @@ sealed class LoginUIEvent {
     data class OnPasswordChange(val password: String) : LoginUIEvent()
     data object IsPasswordVisibility : LoginUIEvent()
     data object OnLoginClicked : LoginUIEvent()
+    data object OnRememberMeActive : LoginUIEvent()
     data object OnRegisterClicked : LoginUIEvent()
     data object OnForgotPasswordClicked : LoginUIEvent()
     data object OnBackClicked : LoginUIEvent()

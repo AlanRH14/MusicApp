@@ -73,8 +73,8 @@ fun LoginScreenContent(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
                 modifier = Modifier.padding(start = PaddingLarge),
-                checked = false,
-                onCheckedChange = {},
+                checked = state.rememberMeActive,
+                onCheckedChange = { onEvent(LoginUIEvent.OnRememberMeActive) },
                 colors = CheckboxDefaults.colors(
                     checkedColor = MaterialTheme.colorScheme.primary,
                     uncheckedColor = MaterialTheme.colorScheme.primary,
