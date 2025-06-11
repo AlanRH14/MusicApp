@@ -61,7 +61,7 @@ class LoginViewModel(
 
     private fun login() {
         viewModelScope.launch {
-            if (validateInputs()) return@launch
+            if (!validateInputs()) return@launch
 
             _state.update { it.copy(isLoading = true) }
 
@@ -92,8 +92,8 @@ class LoginViewModel(
     }
 
     private fun validateInputs(): Boolean {
-        val isEmailValid = _state.value.email.isNullOrEmpty()
-        val isPasswordValid = _state.value.password.isNullOrEmpty()
+        val isEmailValid = !_state.value.email.isNullOrEmpty()
+        val isPasswordValid = !_state.value.password.isNullOrEmpty()
 
         _state.update {
             it.copy(
@@ -108,6 +108,10 @@ class LoginViewModel(
         viewModelScope.launch {
             _effect.emit(LoginEffect.NavigationToRegister)
         }
+    }
+
+    private fun updateCheck() {
+        _state.update { it.copy(rememberMeActive = !_state.value.rememberMeActive) }
     }
 
     private fun handleForgotPassword() {
