@@ -37,7 +37,7 @@ fun RegisterScreen(
 
     RegisterScreenContent(
         state = state,
-        onEvent = {},
+        onEvent = viewModel::onEvent,
     )
 
     if (state.loading) {

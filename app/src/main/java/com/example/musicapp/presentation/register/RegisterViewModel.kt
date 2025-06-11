@@ -19,33 +19,49 @@ class RegisterViewModel : ViewModel() {
     private val _event = MutableSharedFlow<RegisterEffect>()
     val event = _event.asSharedFlow()
 
+    fun onEvent(event: RegisterUIEvent) {
+        when (event) {
+            is RegisterUIEvent.OnNameUpdate -> onNameUpdate(event.name)
+            is RegisterUIEvent.OnEmailUpdate -> onEmailUpdate(event.email)
+            is RegisterUIEvent.OnPasswordUpdate -> onPasswordUpdate(event.password)
+            is RegisterUIEvent.OnConfirmPasswordUpdate -> onConfirmPasswordUpdate(event.confirmPassword)
+            is RegisterUIEvent.OnTogglePasswordVisibility -> togglePasswordVisibility()
+            is RegisterUIEvent.OnToggleConfirmPasswordVisibility -> toggleConfirmPasswordVisibility()
+            is RegisterUIEvent.OnBackClicked -> navigateBack()
+            is RegisterUIEvent.OnRegisterClicked -> register()
+            is RegisterUIEvent.OnLoginClicked -> navigateBack()
+        }
+    }
 
-
-    fun onNameChange(name: String) {
+    private fun onNameUpdate(name: String) {
         _state.update { it.copy(name = name) }
     }
 
-    fun onEmailChanged(email: String) {
+    private fun onEmailUpdate(email: String) {
         _state.update { it.copy(email = email) }
     }
 
-    fun onPasswordChanged(password: String) {
+    private fun onPasswordUpdate(password: String) {
         _state.update { it.copy(password = password) }
     }
 
-    fun onConfirmPassword(confirmPassword: String) {
+    private fun onConfirmPasswordUpdate(confirmPassword: String) {
         _state.update { it.copy(confirmPassword = confirmPassword) }
     }
 
-    fun onPasswordVisibilityChanged() {
+    private fun togglePasswordVisibility() {
         _state.update { it.copy(isPasswordVisible = !_state.value.isPasswordVisible) }
     }
 
-    fun onRegisterClicked() {
+    private fun toggleConfirmPasswordVisibility() {
+        _state.update { it.copy(isPasswordVisible = !_state.value.isConfirmPasswordVisible) }
+    }
+
+    private fun register() {
         // TODO: Handle register click
     }
 
-    fun onLoginClicked() {
+    private fun navigateBack() {
         viewModelScope.launch {
             _event.emit(RegisterEffect.NavigateToLogin)
         }
