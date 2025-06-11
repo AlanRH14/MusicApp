@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
 import com.example.musicapp.presentation.components.MusicAppTextField
 import com.example.musicapp.presentation.login.widget.SocialCard
+import com.example.musicapp.presentation.register.RegisterEvent
 import com.example.musicapp.presentation.register.RegisterState
 import com.example.musicapp.ui.theme.MusicAppTheme
 import com.example.musicapp.ui.theme.PaddingLarge
@@ -33,7 +34,7 @@ import com.example.musicapp.ui.theme.Shapes
 @Composable
 fun RegisterScreenContent(
     state: RegisterState,
-    onChangeName: (String) -> Unit,
+    onChangeName: (RegisterEvent) -> Unit,
     onChangeEmail: (String) -> Unit,
     onChangePassword: (String) -> Unit,
     onChangeConfirmPassword: (String) -> Unit,
