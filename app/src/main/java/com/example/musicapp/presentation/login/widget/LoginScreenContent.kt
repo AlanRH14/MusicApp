@@ -58,10 +58,11 @@ fun LoginScreenContent(
             onValueChange = { onEvent(LoginUIEvent.OnPasswordChange(it)) },
             label = stringResource(R.string.password),
             placeholder = stringResource(R.string.password_placeholder),
-            leadingIcon = painterResource(R.drawable.ic_mail),
+            leadingIcon = painterResource(R.drawable.ic_lock),
             leadingDescription = stringResource(R.string.icon_eye_off),
             trailingIcon = painterResource(R.drawable.ic_eye_off),
             trailingDescription = stringResource(R.string.icon_eye_off),
+            onShowPasswordClicked = { onEvent(LoginUIEvent.OnTogglePasswordVisibility) },
             isError = state.isPasswordError,
         )
 
