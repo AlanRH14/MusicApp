@@ -61,7 +61,7 @@ fun LoginScreen(
         ErrorScreen(
             errorMessage = state.errorMessage ?: stringResource(R.string.unknown),
             primaryButton = stringResource(R.string.retry),
-            onPrimaryButtonClicked = {}
+            onPrimaryButtonClicked = { viewModel.onEvent(LoginUIEvent.OnDismissed) }
         )
     }
 }

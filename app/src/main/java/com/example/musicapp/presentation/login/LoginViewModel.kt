@@ -28,8 +28,9 @@ class LoginViewModel(
         when (event) {
             is LoginUIEvent.OnEmailChange -> updateEmail(event.email)
             is LoginUIEvent.OnPasswordChange -> updatePassword(event.password)
-            is LoginUIEvent.IsPasswordVisibility -> togglePasswordVisibility()
+            is LoginUIEvent.OnTogglePasswordVisibility -> togglePasswordVisibility()
             is LoginUIEvent.OnLoginClicked -> login()
+            is LoginUIEvent.OnRememberMeActive -> updateCheck()
             is LoginUIEvent.OnRegisterClicked -> navigateToRegister()
             is LoginUIEvent.OnForgotPasswordClicked -> handleForgotPassword()
             is LoginUIEvent.OnBackClicked -> navigateBack()
@@ -61,7 +62,7 @@ class LoginViewModel(
 
     private fun login() {
         viewModelScope.launch {
-            if (validateInputs()) return@launch
+            if (invalidateInputs()) return@launch
 
             _state.update { it.copy(isLoading = true) }
 
@@ -91,7 +92,7 @@ class LoginViewModel(
         }
     }
 
-    private fun validateInputs(): Boolean {
+    private fun invalidateInputs(): Boolean {
         val isEmailValid = _state.value.email.isNullOrEmpty()
         val isPasswordValid = _state.value.password.isNullOrEmpty()
 
@@ -108,6 +109,10 @@ class LoginViewModel(
         viewModelScope.launch {
             _effect.emit(LoginEffect.NavigationToRegister)
         }
+    }
+
+    private fun updateCheck() {
+        _state.update { it.copy(rememberMeActive = !_state.value.rememberMeActive) }
     }
 
     private fun handleForgotPassword() {
