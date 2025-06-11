@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
+import com.example.musicapp.presentation.components.MusicAppTextField
 import com.example.musicapp.presentation.login.widget.SocialCard
 import com.example.musicapp.ui.theme.MusicAppTheme
 import com.example.musicapp.ui.theme.PaddingLarge
@@ -79,92 +80,44 @@ fun RegisterScreenContent(
 
         Spacer(modifier = Modifier.size(16.dp))
 
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(horizontal = PaddingLarge)
-                .fillMaxWidth(),
+        MusicAppTextField(
             value = name,
             onValueChange = { onChangeName(it) },
-            label = { Text(stringResource(R.string.name)) },
-            placeholder = { Text("Enter your email") },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_mail),
-                    contentDescription = stringResource(R.string.email_icon),
-                )
-            },
-            shape = Shapes.medium,
-            colors = OutlinedTextFieldDefaults.colors().copy(
-                unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedIndicatorColor = Color.LightGray
-            ),
+            label = stringResource(R.string.name),
+            placeholder = stringResource(R.string.name_placeholder),
+            leadingIcon = painterResource(R.drawable.ic_mail),
+            leadingDescription = stringResource(R.string.email_icon),
         )
 
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(horizontal = PaddingLarge)
-                .fillMaxWidth(),
+        MusicAppTextField(
             value = email,
             onValueChange = { onChangeEmail(it) },
-            label = { Text(stringResource(R.string.email)) },
-            placeholder = { stringResource(R.string.email_placeholder) },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_mail),
-                    contentDescription = stringResource(R.string.email_icon),
-                )
-            },
-            shape = Shapes.medium,
-            colors = OutlinedTextFieldDefaults.colors().copy(
-                unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedIndicatorColor = Color.LightGray
-            ),
+            label = stringResource(R.string.email),
+            placeholder = stringResource(R.string.email_placeholder),
+            leadingIcon = painterResource(R.drawable.ic_mail),
+            leadingDescription = stringResource(R.string.email_icon),
         )
 
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(horizontal = PaddingLarge)
-                .fillMaxWidth(),
+        MusicAppTextField(
             value = password,
             onValueChange = { onChangePassword(it) },
-            label = { Text(stringResource(R.string.password)) },
-            placeholder = { Text(stringResource(R.string.password_placeholder)) },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_mail),
-                    contentDescription = stringResource(R.string.email_icon),
-                )
-            },
-            shape = Shapes.medium,
-            colors = OutlinedTextFieldDefaults.colors().copy(
-                unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedIndicatorColor = Color.LightGray
-            ),
+            label = stringResource(R.string.password),
+            placeholder = stringResource(R.string.password_placeholder),
+            leadingIcon = painterResource(R.drawable.ic_mail),
+            leadingDescription = stringResource(R.string.email_icon),
+            trailingIcon = painterResource(R.drawable.ic_eye_off),
+            trailingDescription = stringResource(R.string.icon_eye_off),
         )
 
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(horizontal = PaddingLarge)
-                .fillMaxWidth(),
+        MusicAppTextField(
             value = confirmPassword,
             onValueChange = { onChangeConfirmPassword(it) },
-            label = { Text(stringResource(R.string.confirm_password)) },
-            placeholder = { Text(stringResource(R.string.confirm_password)) },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_mail),
-                    contentDescription = stringResource(R.string.email_icon),
-                )
-            },
-            shape = Shapes.medium,
-            colors = OutlinedTextFieldDefaults.colors().copy(
-                unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedIndicatorColor = Color.LightGray
-            ),
+            label = stringResource(R.string.confirm_password),
+            placeholder = stringResource(R.string.confirm_password),
+            leadingIcon = painterResource(R.drawable.ic_mail),
+            leadingDescription = stringResource(R.string.email_icon),
+            trailingIcon = painterResource(R.drawable.ic_eye_off),
+            trailingDescription = stringResource(R.string.icon_eye_off),
         )
 
         Spacer(modifier = Modifier.size(16.dp))
