@@ -13,8 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import com.example.musicapp.R
 import com.example.musicapp.ui.theme.PaddingLarge
 import com.example.musicapp.ui.theme.Shapes
 
@@ -61,7 +63,7 @@ fun MusicAppTextField(
             trailingIcon?.let { icon ->
                 Icon(
                     modifier = Modifier.clickable { onShowPasswordClicked() },
-                    painter = icon,
+                    painter = if (isPasswordVisible) icon else painterResource(R.drawable.ic_eye),
                     contentDescription = trailingDescription
                 )
             }
