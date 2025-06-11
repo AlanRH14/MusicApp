@@ -10,16 +10,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -27,23 +23,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
+import com.example.musicapp.presentation.components.MusicAppTextField
 import com.example.musicapp.presentation.login.widget.SocialCard
+import com.example.musicapp.presentation.register.RegisterState
+import com.example.musicapp.presentation.register.RegisterUIEvent
 import com.example.musicapp.ui.theme.MusicAppTheme
 import com.example.musicapp.ui.theme.PaddingLarge
 import com.example.musicapp.ui.theme.Shapes
 
 @Composable
 fun RegisterScreenContent(
-    name: String,
-    email: String,
-    password: String,
-    confirmPassword: String,
-    onChangeName: (String) -> Unit,
-    onChangeEmail: (String) -> Unit,
-    onChangePassword: (String) -> Unit,
-    onChangeConfirmPassword: (String) -> Unit,
-    onRegisterClicked: () -> Unit,
-    onLoginClicked: () -> Unit,
+    state: RegisterState,
+    onEvent: (RegisterUIEvent) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -52,7 +43,7 @@ fun RegisterScreenContent(
     ) {
         Image(
             modifier = Modifier
-                .clickable { onLoginClicked() },
+                .clickable { onEvent(RegisterUIEvent.OnBackClicked) },
             painter = painterResource(R.drawable.ic_back),
             contentDescription = stringResource(R.string.image_back)
         )
@@ -79,92 +70,44 @@ fun RegisterScreenContent(
 
         Spacer(modifier = Modifier.size(16.dp))
 
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(horizontal = PaddingLarge)
-                .fillMaxWidth(),
-            value = name,
-            onValueChange = { onChangeName(it) },
-            label = { Text(stringResource(R.string.name)) },
-            placeholder = { Text("Enter your email") },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_mail),
-                    contentDescription = stringResource(R.string.email_icon),
-                )
-            },
-            shape = Shapes.medium,
-            colors = OutlinedTextFieldDefaults.colors().copy(
-                unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedIndicatorColor = Color.LightGray
-            ),
+        MusicAppTextField(
+            value = state.name ?: "",
+            onValueChange = { onEvent(RegisterUIEvent.OnNameUpdate(it)) },
+            label = stringResource(R.string.name),
+            placeholder = stringResource(R.string.name_placeholder),
+            leadingIcon = painterResource(R.drawable.ic_mail),
+            leadingDescription = stringResource(R.string.email_icon),
         )
 
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(horizontal = PaddingLarge)
-                .fillMaxWidth(),
-            value = email,
-            onValueChange = { onChangeEmail(it) },
-            label = { Text(stringResource(R.string.email)) },
-            placeholder = { stringResource(R.string.email_placeholder) },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_mail),
-                    contentDescription = stringResource(R.string.email_icon),
-                )
-            },
-            shape = Shapes.medium,
-            colors = OutlinedTextFieldDefaults.colors().copy(
-                unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedIndicatorColor = Color.LightGray
-            ),
+        MusicAppTextField(
+            value = state.email ?: "",
+            onValueChange = { onEvent(RegisterUIEvent.OnEmailUpdate(it)) },
+            label = stringResource(R.string.email),
+            placeholder = stringResource(R.string.email_placeholder),
+            leadingIcon = painterResource(R.drawable.ic_mail),
+            leadingDescription = stringResource(R.string.email_icon),
         )
 
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(horizontal = PaddingLarge)
-                .fillMaxWidth(),
-            value = password,
-            onValueChange = { onChangePassword(it) },
-            label = { Text(stringResource(R.string.password)) },
-            placeholder = { Text(stringResource(R.string.password_placeholder)) },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_mail),
-                    contentDescription = stringResource(R.string.email_icon),
-                )
-            },
-            shape = Shapes.medium,
-            colors = OutlinedTextFieldDefaults.colors().copy(
-                unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedIndicatorColor = Color.LightGray
-            ),
+        MusicAppTextField(
+            value = state.password ?: "",
+            onValueChange = { onEvent(RegisterUIEvent.OnPasswordUpdate(it)) },
+            label = stringResource(R.string.password),
+            placeholder = stringResource(R.string.password_placeholder),
+            leadingIcon = painterResource(R.drawable.ic_mail),
+            leadingDescription = stringResource(R.string.email_icon),
+            trailingIcon = painterResource(R.drawable.ic_eye_off),
+            trailingDescription = stringResource(R.string.icon_eye_off),
         )
 
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(horizontal = PaddingLarge)
-                .fillMaxWidth(),
-            value = confirmPassword,
-            onValueChange = { onChangeConfirmPassword(it) },
-            label = { Text(stringResource(R.string.confirm_password)) },
-            placeholder = { Text(stringResource(R.string.confirm_password)) },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_mail),
-                    contentDescription = stringResource(R.string.email_icon),
-                )
-            },
-            shape = Shapes.medium,
-            colors = OutlinedTextFieldDefaults.colors().copy(
-                unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedIndicatorColor = Color.LightGray
-            ),
+        MusicAppTextField(
+            value = state.confirmPassword ?: "",
+            onValueChange = { onEvent(RegisterUIEvent.OnConfirmPasswordUpdate(it)) },
+            label = stringResource(R.string.confirm_password),
+            placeholder = stringResource(R.string.confirm_password),
+            leadingIcon = painterResource(R.drawable.ic_mail),
+            leadingDescription = stringResource(R.string.email_icon),
+            trailingIcon = painterResource(R.drawable.ic_eye_off),
+            trailingDescription = stringResource(R.string.icon_eye_off),
         )
 
         Spacer(modifier = Modifier.size(16.dp))
@@ -179,7 +122,7 @@ fun RegisterScreenContent(
                     ambientColor = MaterialTheme.colorScheme.primary,
                     spotColor = MaterialTheme.colorScheme.primary
                 ),
-            onClick = {},
+            onClick = { onEvent(RegisterUIEvent.OnRegisterClicked) },
         ) {
             Text(
                 text = stringResource(R.string.register),
@@ -192,7 +135,7 @@ fun RegisterScreenContent(
 
         SocialCard(
             stringRes = stringResource(R.string.already_have_an_account),
-            onClick = onLoginClicked,
+            onClick = { onEvent(RegisterUIEvent.OnLoginClicked) },
             onFbClick = {},
             onGoogleClick = {},
         )
@@ -204,16 +147,8 @@ fun RegisterScreenContent(
 fun RegisterScreenContentPreview() {
     MusicAppTheme {
         RegisterScreenContent(
-            name = "",
-            email = "",
-            password = "",
-            confirmPassword = "",
-            onChangeName = {},
-            onChangeEmail = {},
-            onChangePassword = {},
-            onChangeConfirmPassword = {},
-            onRegisterClicked = {},
-            onLoginClicked = {}
+            state = RegisterState(),
+            onEvent = {},
         )
     }
 }

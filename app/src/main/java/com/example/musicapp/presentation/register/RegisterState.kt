@@ -7,5 +7,6 @@ data class RegisterState(
     val email: String? = null,
     val password: String? = null,
     val confirmPassword: String? = null,
-    val isPasswordVisible: Boolean = false
+    val isPasswordVisible: Boolean = false,
+    val isConfirmPasswordVisible: Boolean = false
 )

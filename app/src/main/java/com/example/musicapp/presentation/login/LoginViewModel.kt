@@ -26,11 +26,11 @@ class LoginViewModel(
 
     fun onEvent(event: LoginUIEvent) {
         when (event) {
-            is LoginUIEvent.OnEmailChange -> updateEmail(event.email)
-            is LoginUIEvent.OnPasswordChange -> updatePassword(event.password)
+            is LoginUIEvent.OnEmailUpdate -> onEmailUpdate(event.email)
+            is LoginUIEvent.OnPasswordUpdate -> onPasswordUpdate(event.password)
             is LoginUIEvent.OnTogglePasswordVisibility -> togglePasswordVisibility()
             is LoginUIEvent.OnLoginClicked -> login()
-            is LoginUIEvent.OnRememberMeActive -> updateCheck()
+            is LoginUIEvent.OnRememberMeActive -> checkUpdate()
             is LoginUIEvent.OnRegisterClicked -> navigateToRegister()
             is LoginUIEvent.OnForgotPasswordClicked -> handleForgotPassword()
             is LoginUIEvent.OnBackClicked -> navigateBack()
@@ -38,7 +38,7 @@ class LoginViewModel(
         }
     }
 
-    private fun updateEmail(email: String) {
+    private fun onEmailUpdate(email: String) {
         _state.update {
             it.copy(
                 email = email,
@@ -47,7 +47,7 @@ class LoginViewModel(
         }
     }
 
-    private fun updatePassword(password: String) {
+    private fun onPasswordUpdate(password: String) {
         _state.update {
             it.copy(
                 password = password,
@@ -111,7 +111,7 @@ class LoginViewModel(
         }
     }
 
-    private fun updateCheck() {
+    private fun checkUpdate() {
         _state.update { it.copy(rememberMeActive = !_state.value.rememberMeActive) }
     }
 
