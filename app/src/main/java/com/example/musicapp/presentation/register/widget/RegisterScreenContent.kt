@@ -25,16 +25,14 @@ import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
 import com.example.musicapp.presentation.components.MusicAppTextField
 import com.example.musicapp.presentation.login.widget.SocialCard
+import com.example.musicapp.presentation.register.RegisterState
 import com.example.musicapp.ui.theme.MusicAppTheme
 import com.example.musicapp.ui.theme.PaddingLarge
 import com.example.musicapp.ui.theme.Shapes
 
 @Composable
 fun RegisterScreenContent(
-    name: String,
-    email: String,
-    password: String,
-    confirmPassword: String,
+    state: RegisterState,
     onChangeName: (String) -> Unit,
     onChangeEmail: (String) -> Unit,
     onChangePassword: (String) -> Unit,
@@ -77,7 +75,7 @@ fun RegisterScreenContent(
         Spacer(modifier = Modifier.size(16.dp))
 
         MusicAppTextField(
-            value = name,
+            value = state.name ?: "",
             onValueChange = { onChangeName(it) },
             label = stringResource(R.string.name),
             placeholder = stringResource(R.string.name_placeholder),
@@ -86,7 +84,7 @@ fun RegisterScreenContent(
         )
 
         MusicAppTextField(
-            value = email,
+            value = state.email ?: "",
             onValueChange = { onChangeEmail(it) },
             label = stringResource(R.string.email),
             placeholder = stringResource(R.string.email_placeholder),
@@ -95,7 +93,7 @@ fun RegisterScreenContent(
         )
 
         MusicAppTextField(
-            value = password,
+            value = state.password ?: "",
             onValueChange = { onChangePassword(it) },
             label = stringResource(R.string.password),
             placeholder = stringResource(R.string.password_placeholder),
@@ -106,7 +104,7 @@ fun RegisterScreenContent(
         )
 
         MusicAppTextField(
-            value = confirmPassword,
+            value = state.confirmPassword ?: "",
             onValueChange = { onChangeConfirmPassword(it) },
             label = stringResource(R.string.confirm_password),
             placeholder = stringResource(R.string.confirm_password),
@@ -153,10 +151,7 @@ fun RegisterScreenContent(
 fun RegisterScreenContentPreview() {
     MusicAppTheme {
         RegisterScreenContent(
-            name = "",
-            email = "",
-            password = "",
-            confirmPassword = "",
+            state = RegisterState(),
             onChangeName = {},
             onChangeEmail = {},
             onChangePassword = {},

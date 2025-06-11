@@ -36,10 +36,7 @@ fun RegisterScreen(
     }
 
     RegisterScreenContent(
-        name = state.name ?: "",
-        email = state.email ?: "",
-        password = state.password ?: "",
-        confirmPassword = state.confirmPassword ?: "",
+        state = state,
         onChangeName = { name -> viewModel.onNameChange(name = name) },
         onChangeEmail = { email -> viewModel.onEmailChanged(email) },
         onChangePassword = { pass -> viewModel.onPasswordChanged(pass) },
