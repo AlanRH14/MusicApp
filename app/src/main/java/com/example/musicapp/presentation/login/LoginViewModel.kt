@@ -75,6 +75,10 @@ class LoginViewModel(
                 )
 
             when (response) {
+                is Resource.Loading -> {
+                    _state.update { it.copy(isLoading = true) }
+                }
+
                 is Resource.Success -> {
                     _state.update { it.copy(isLoading = false) }
                     _effect.emit(LoginEffect.NavigateToHome)
