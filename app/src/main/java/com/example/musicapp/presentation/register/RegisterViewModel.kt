@@ -77,20 +77,20 @@ class RegisterViewModel(
     }
 
     private fun invalidateTextFields(): Boolean {
-        val name = _state.value.name.isNullOrEmpty()
-        val email = _state.value.email.isNullOrEmpty() && _state.value.email.emailFormatValid()
-        val password = _state.value.password.isNullOrEmpty()
-        val confirmPassword = _state.value.confirmPassword.isNullOrEmpty()
+        val isNameValid = _state.value.name.isNullOrEmpty()
+        val isEmailValid = _state.value.email.isNullOrEmpty() || !_state.value.email.emailFormatValid()
+        val isPasswordValid = _state.value.password.isNullOrEmpty()
+        val isConfirmPasswordValid = _state.value.confirmPassword.isNullOrEmpty()
 
         _state.update {
             it.copy(
-                isNameValid = name,
-                isEmailValid = email,
-                isPasswordValid = password,
-                isConfirmPasswordValid = confirmPassword,
+                isNameValid = isNameValid,
+                isEmailValid = isEmailValid,
+                isPasswordValid = isPasswordValid,
+                isConfirmPasswordValid = isConfirmPasswordValid,
             )
         }
 
-        return name && email && password && confirmPassword
+        return isNameValid || isEmailValid || isPasswordValid || isConfirmPasswordValid
     }
 }
