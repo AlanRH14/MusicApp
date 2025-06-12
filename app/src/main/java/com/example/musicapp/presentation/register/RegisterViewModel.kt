@@ -2,6 +2,8 @@ package com.example.musicapp.presentation.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.musicapp.data.remote.repository.AuthenticationRepository
+import com.example.musicapp.utils.emailFormatValid
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -11,7 +13,9 @@ import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
-class RegisterViewModel : ViewModel() {
+class RegisterViewModel(
+    private val authenticationRepository: AuthenticationRepository
+) : ViewModel() {
 
     private val _state = MutableStateFlow(RegisterState())
     val state = _state.asStateFlow()
@@ -58,12 +62,35 @@ class RegisterViewModel : ViewModel() {
     }
 
     private fun register() {
-        // TODO: Handle register click
+        viewModelScope.launch {
+            if (invalidateTextFields()) return@launch
+
+            _state.update { it.copy(isLoading = true) }
+            val response = authenticationRepository.register()
+        }
     }
 
     private fun navigateBack() {
         viewModelScope.launch {
             _event.emit(RegisterEffect.NavigateToLogin)
         }
+    }
+
+    private fun invalidateTextFields(): Boolean {
+        val name = _state.value.name.isNullOrEmpty()
+        val email = _state.value.email.isNullOrEmpty() && _state.value.email.emailFormatValid()
+        val password = _state.value.password.isNullOrEmpty()
+        val confirmPassword = _state.value.confirmPassword.isNullOrEmpty()
+
+        _state.update {
+            it.copy(
+                isNameValid = name,
+                isEmailValid = email,
+                isPasswordValid = password,
+                isConfirmPasswordValid = confirmPassword,
+            )
+        }
+
+        return name && email && password && confirmPassword
     }
 }

@@ -12,6 +12,8 @@ class AuthenticationRepository(
 ) {
 
     suspend fun login(loginRequest: LoginRequest): Resource<LoginResponse> {
+        Resource.Loading
+
         return try {
             val response = apiService.login(loginRequest)
             if (response.isSuccessful) {
@@ -24,5 +26,9 @@ class AuthenticationRepository(
         } catch (e: Exception) {
             Resource.Error(message = "Network error: ${e.message}")
         }
+    }
+
+    suspend fun register(): Resource<LoginResponse> {
+        return Resource.Success(LoginResponse())
     }
 }

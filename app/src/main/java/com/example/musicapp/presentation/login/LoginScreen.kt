@@ -55,8 +55,6 @@ fun LoginScreen(
     }
 
     if (!state.errorMessage.isNullOrEmpty()
-        && !state.isEmailError
-        && !state.isPasswordError
     ) {
         ErrorScreen(
             errorMessage = state.errorMessage ?: stringResource(R.string.unknown),

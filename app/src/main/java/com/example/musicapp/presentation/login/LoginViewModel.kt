@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.musicapp.data.model.LoginRequest
 import com.example.musicapp.data.remote.repository.AuthenticationRepository
 import com.example.musicapp.utils.Resource
+import com.example.musicapp.utils.emailFormatValid
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -15,7 +16,7 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class LoginViewModel(
-    private val repository: AuthenticationRepository
+    private val authenticationRepository: AuthenticationRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(LoginState())
@@ -42,7 +43,7 @@ class LoginViewModel(
         _state.update {
             it.copy(
                 email = email,
-                isEmailError = false
+                isEmailError = email.isEmpty()
             )
         }
     }
@@ -51,7 +52,7 @@ class LoginViewModel(
         _state.update {
             it.copy(
                 password = password,
-                isPasswordError = false
+                isPasswordError = password.isEmpty()
             )
         }
     }
@@ -64,10 +65,8 @@ class LoginViewModel(
         viewModelScope.launch {
             if (invalidateInputs()) return@launch
 
-            _state.update { it.copy(isLoading = true) }
-
             val response =
-                repository.login(
+                authenticationRepository.login(
                     LoginRequest(
                         email = state.value.email,
                         password = state.value.password
@@ -75,6 +74,10 @@ class LoginViewModel(
                 )
 
             when (response) {
+                is Resource.Loading -> {
+                    _state.update { it.copy(isLoading = true) }
+                }
+
                 is Resource.Success -> {
                     _state.update { it.copy(isLoading = false) }
                     _effect.emit(LoginEffect.NavigateToHome)
@@ -93,16 +96,17 @@ class LoginViewModel(
     }
 
     private fun invalidateInputs(): Boolean {
-        val isEmailValid = _state.value.email.isNullOrEmpty()
+        val isEmailValid = _state.value.email.isNullOrEmpty() || !_state.value.email.emailFormatValid()
         val isPasswordValid = _state.value.password.isNullOrEmpty()
 
         _state.update {
             it.copy(
-                isEmailError = isPasswordValid,
+                isEmailError = isEmailValid,
                 isPasswordError = isPasswordValid
             )
         }
-        return isEmailValid && isPasswordValid
+
+        return isEmailValid || isPasswordValid
     }
 
     private fun navigateToRegister() {
