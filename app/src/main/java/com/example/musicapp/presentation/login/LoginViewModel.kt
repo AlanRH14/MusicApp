@@ -43,7 +43,7 @@ class LoginViewModel(
         _state.update {
             it.copy(
                 email = email,
-                isEmailError = false
+                isEmailError = email.isEmpty()
             )
         }
     }
@@ -52,7 +52,7 @@ class LoginViewModel(
         _state.update {
             it.copy(
                 password = password,
-                isPasswordError = false
+                isPasswordError = password.isEmpty()
             )
         }
     }
@@ -96,8 +96,7 @@ class LoginViewModel(
     }
 
     private fun invalidateInputs(): Boolean {
-        val isEmailValid =
-            _state.value.email.isNullOrEmpty() || !_state.value.email.emailFormatValid()
+        val isEmailValid = _state.value.email.isNullOrEmpty() || !_state.value.email.emailFormatValid()
         val isPasswordValid = _state.value.password.isNullOrEmpty()
 
         _state.update {
@@ -106,7 +105,8 @@ class LoginViewModel(
                 isPasswordError = isPasswordValid
             )
         }
-        return isEmailValid && isPasswordValid
+
+        return isEmailValid || isPasswordValid
     }
 
     private fun navigateToRegister() {
