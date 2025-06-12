@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.musicapp.data.model.LoginRequest
 import com.example.musicapp.data.remote.repository.AuthenticationRepository
 import com.example.musicapp.utils.Resource
+import com.example.musicapp.utils.emailFormatValid
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -64,8 +65,6 @@ class LoginViewModel(
         viewModelScope.launch {
             if (invalidateInputs()) return@launch
 
-            _state.update { it.copy(isLoading = true) }
-
             val response =
                 authenticationRepository.login(
                     LoginRequest(
@@ -97,12 +96,13 @@ class LoginViewModel(
     }
 
     private fun invalidateInputs(): Boolean {
-        val isEmailValid = _state.value.email.isNullOrEmpty()
+        val isEmailValid =
+            _state.value.email.isNullOrEmpty() || !_state.value.email.emailFormatValid()
         val isPasswordValid = _state.value.password.isNullOrEmpty()
 
         _state.update {
             it.copy(
-                isEmailError = isPasswordValid,
+                isEmailError = isEmailValid,
                 isPasswordError = isPasswordValid
             )
         }
