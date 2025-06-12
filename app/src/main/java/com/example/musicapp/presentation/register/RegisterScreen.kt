@@ -40,7 +40,7 @@ fun RegisterScreen(
         onEvent = viewModel::onEvent,
     )
 
-    if (state.loading) {
+    if (state.isLoading) {
         LoadingScreen()
     }
 

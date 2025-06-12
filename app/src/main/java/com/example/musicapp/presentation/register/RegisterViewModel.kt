@@ -2,6 +2,7 @@ package com.example.musicapp.presentation.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.musicapp.utils.emailFormatValid
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -59,7 +60,9 @@ class RegisterViewModel : ViewModel() {
 
     private fun register() {
         viewModelScope.launch {
+            if (invalidateTextFields()) return@launch
 
+            _state.update { it.copy(isLoading = true) }
         }
     }
 
@@ -71,9 +74,18 @@ class RegisterViewModel : ViewModel() {
 
     private fun invalidateTextFields(): Boolean {
         val name = _state.value.name.isNullOrEmpty()
-        val email = _state.value.email.isNullOrEmpty()
+        val email = _state.value.email.isNullOrEmpty() && _state.value.email.emailFormatValid()
         val password = _state.value.password.isNullOrEmpty()
         val confirmPassword = _state.value.confirmPassword.isNullOrEmpty()
+
+        _state.update {
+            it.copy(
+                isNameValid = name,
+                isEmailValid = email,
+                isPasswordValid = password,
+                isConfirmPasswordValid = confirmPassword,
+            )
+        }
 
         return name && email && password && confirmPassword
     }
