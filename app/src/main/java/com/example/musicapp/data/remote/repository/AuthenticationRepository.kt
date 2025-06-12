@@ -12,6 +12,8 @@ class AuthenticationRepository(
 ) {
 
     suspend fun login(loginRequest: LoginRequest): Resource<LoginResponse> {
+        Resource.Loading
+
         return try {
             val response = apiService.login(loginRequest)
             if (response.isSuccessful) {

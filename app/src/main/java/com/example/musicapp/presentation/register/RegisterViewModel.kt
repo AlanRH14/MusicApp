@@ -66,7 +66,7 @@ class RegisterViewModel(
             if (invalidateTextFields()) return@launch
 
             _state.update { it.copy(isLoading = true) }
-            val response =  authenticationRepository.register()
+            val response = authenticationRepository.register()
         }
     }
 
