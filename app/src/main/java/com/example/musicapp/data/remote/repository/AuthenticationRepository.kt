@@ -25,4 +25,8 @@ class AuthenticationRepository(
             Resource.Error(message = "Network error: ${e.message}")
         }
     }
+
+    suspend fun register(): Resource<LoginResponse> {
+        return Resource.Success(LoginResponse())
+    }
 }

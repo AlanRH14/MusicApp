@@ -15,7 +15,7 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class LoginViewModel(
-    private val repository: AuthenticationRepository
+    private val authenticationRepository: AuthenticationRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(LoginState())
@@ -67,7 +67,7 @@ class LoginViewModel(
             _state.update { it.copy(isLoading = true) }
 
             val response =
-                repository.login(
+                authenticationRepository.login(
                     LoginRequest(
                         email = state.value.email,
                         password = state.value.password
