@@ -58,12 +58,23 @@ class RegisterViewModel : ViewModel() {
     }
 
     private fun register() {
-        // TODO: Handle register click
+        viewModelScope.launch {
+
+        }
     }
 
     private fun navigateBack() {
         viewModelScope.launch {
             _event.emit(RegisterEffect.NavigateToLogin)
         }
+    }
+
+    private fun invalidateTextFields(): Boolean {
+        val name = _state.value.name.isNullOrEmpty()
+        val email = _state.value.email.isNullOrEmpty()
+        val password = _state.value.password.isNullOrEmpty()
+        val confirmPassword = _state.value.confirmPassword.isNullOrEmpty()
+
+        return name && email && password && confirmPassword
     }
 }
