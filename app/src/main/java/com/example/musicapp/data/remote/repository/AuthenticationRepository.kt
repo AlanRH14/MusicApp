@@ -1,7 +1,8 @@
 package com.example.musicapp.data.remote.repository
 
-import com.example.musicapp.data.model.LoginRequest
+import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.LoginResponse
+import com.example.musicapp.data.model.request.RegisterRequest
 import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.utils.Resource
 import org.koin.core.annotation.Single
@@ -28,7 +29,7 @@ class AuthenticationRepository(
         }
     }
 
-    suspend fun register(): Resource<LoginResponse> {
+    suspend fun register(registerRequest: RegisterRequest): Resource<LoginResponse> {
         return Resource.Success(LoginResponse())
     }
 }

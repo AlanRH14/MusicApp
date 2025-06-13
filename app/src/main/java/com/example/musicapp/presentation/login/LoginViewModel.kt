@@ -2,7 +2,7 @@ package com.example.musicapp.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.musicapp.data.model.LoginRequest
+import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.remote.repository.AuthenticationRepository
 import com.example.musicapp.utils.Resource
 import com.example.musicapp.utils.emailFormatValid
