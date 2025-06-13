@@ -12,6 +12,7 @@ import androidx.core.app.NotificationCompat
 import com.example.musicapp.MainActivity
 import com.example.musicapp.R
 import com.example.musicapp.data.model.Song
+import com.example.musicapp.data.service.MusicAppPlaybackService
 
 class MusicAppNotificationHelper(private val mContext: Context) {
 
@@ -72,6 +73,8 @@ class MusicAppNotificationHelper(private val mContext: Context) {
             .setAutoCancel(false)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
+
+        val prevIntent = Intent(mContext, MainActivity::class.java).apply {}
         /*
         addAction(
                 NotificationCompat.Action(
