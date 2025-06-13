@@ -2,6 +2,7 @@ package com.example.musicapp.presentation.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.musicapp.data.model.request.RegisterRequest
 import com.example.musicapp.data.remote.repository.AuthenticationRepository
 import com.example.musicapp.utils.emailFormatValid
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -66,7 +67,11 @@ class RegisterViewModel(
             if (invalidateTextFields()) return@launch
 
             _state.update { it.copy(isLoading = true) }
-            val response = authenticationRepository.register()
+            val response = authenticationRepository.register(
+                RegisterRequest(
+
+                )
+            )
         }
     }
 

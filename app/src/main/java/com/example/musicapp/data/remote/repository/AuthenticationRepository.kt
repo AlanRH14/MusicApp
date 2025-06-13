@@ -33,9 +33,11 @@ class AuthenticationRepository(
         return try {
             val response = apiService.register(registerRequest)
             if (response.isSuccessful) {
-                Resource.Success(data = LoginResponse())
+                response.body()?.let { res ->
+                    Resource.Success(data = res)
+                } ?: Resource.Success(data = LoginResponse())
             } else {
-                Resource.Error(message = "Register failed")
+                Resource.Error(message = "Registration failed")
             }
         } catch (e: Exception) {
             Resource.Error(message = "Error: ${e.message}")
