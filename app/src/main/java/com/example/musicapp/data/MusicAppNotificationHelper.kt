@@ -69,8 +69,9 @@ class MusicAppNotificationHelper(private val mContext: Context) {
             )
             .setOngoing(true)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-
-
+            .setAutoCancel(false)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
         /*
         addAction(
                 NotificationCompat.Action(
