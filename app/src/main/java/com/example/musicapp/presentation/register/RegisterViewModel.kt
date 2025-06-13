@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.data.model.request.RegisterRequest
 import com.example.musicapp.data.remote.repository.AuthenticationRepository
+import com.example.musicapp.utils.Resource
 import com.example.musicapp.utils.emailFormatValid
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -69,9 +70,31 @@ class RegisterViewModel(
             _state.update { it.copy(isLoading = true) }
             val response = authenticationRepository.register(
                 RegisterRequest(
-
+                    email = _state.value.email,
+                    password = _state.value.password,
+                    name = _state.value.name
                 )
             )
+
+            when (response) {
+                is Resource.Loading -> {
+                    _state.update { it.copy(isLoading = true) }
+                }
+
+                is Resource.Success -> {
+                    _state.update { it.copy(isLoading = false) }
+                    _event.emit(RegisterEffect.NavigateToHome)
+                }
+
+                is Resource.Error -> {
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            errorMessage = response.message
+                        )
+                    }
+                }
+            }
         }
     }
 
@@ -83,7 +106,8 @@ class RegisterViewModel(
 
     private fun invalidateTextFields(): Boolean {
         val isNameValid = _state.value.name.isNullOrEmpty()
-        val isEmailValid = _state.value.email.isNullOrEmpty() || !_state.value.email.emailFormatValid()
+        val isEmailValid =
+            _state.value.email.isNullOrEmpty() || !_state.value.email.emailFormatValid()
         val isPasswordValid = _state.value.password.isNullOrEmpty()
         val isConfirmPasswordValid = _state.value.confirmPassword.isNullOrEmpty()
 
