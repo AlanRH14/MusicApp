@@ -74,7 +74,9 @@ class MusicAppNotificationHelper(private val mContext: Context) {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
 
-        val prevIntent = Intent(mContext, MainActivity::class.java).apply {}
+        val prevIntent = Intent(mContext, MainActivity::class.java).apply {
+            action = MusicAppPlaybackService.ACTION_PREVIOUS
+        }
         /*
         addAction(
                 NotificationCompat.Action(
