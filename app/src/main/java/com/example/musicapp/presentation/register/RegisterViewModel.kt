@@ -40,19 +40,39 @@ class RegisterViewModel(
     }
 
     private fun onNameUpdate(name: String) {
-        _state.update { it.copy(name = name) }
+        _state.update {
+            it.copy(
+                name = name,
+                isNameValid = name.isEmpty()
+            )
+        }
     }
 
     private fun onEmailUpdate(email: String) {
-        _state.update { it.copy(email = email) }
+        _state.update {
+            it.copy(
+                email = email,
+                isEmailValid = email.isEmpty()
+            )
+        }
     }
 
     private fun onPasswordUpdate(password: String) {
-        _state.update { it.copy(password = password) }
+        _state.update {
+            it.copy(
+                password = password,
+                isPasswordValid = password.isEmpty()
+            )
+        }
     }
 
     private fun onConfirmPasswordUpdate(confirmPassword: String) {
-        _state.update { it.copy(confirmPassword = confirmPassword) }
+        _state.update {
+            it.copy(
+                confirmPassword = confirmPassword,
+                isPasswordVisible = confirmPassword.isEmpty()
+            )
+        }
     }
 
     private fun togglePasswordVisibility() {
