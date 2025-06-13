@@ -1,5 +1,6 @@
-package com.example.musicapp.data.model
+package com.example.musicapp.data.model.reponse
 
+import com.example.musicapp.data.model.User
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

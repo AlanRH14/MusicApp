@@ -1,7 +1,7 @@
 package com.example.musicapp.data.remote.repository
 
 import com.example.musicapp.data.model.request.LoginRequest
-import com.example.musicapp.data.model.LoginResponse
+import com.example.musicapp.data.model.reponse.LoginResponse
 import com.example.musicapp.data.model.request.RegisterRequest
 import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.utils.Resource

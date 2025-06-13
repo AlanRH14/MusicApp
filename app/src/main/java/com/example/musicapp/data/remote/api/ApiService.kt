@@ -1,7 +1,7 @@
 package com.example.musicapp.data.remote.api
 
 import com.example.musicapp.data.model.request.LoginRequest
-import com.example.musicapp.data.model.LoginResponse
+import com.example.musicapp.data.model.reponse.LoginResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
