@@ -19,17 +19,26 @@ class AuthenticationRepository(
             val response = apiService.login(loginRequest)
             if (response.isSuccessful) {
                 response.body()?.let { res ->
-                    Resource.Success(res)
-                } ?: Resource.Success(LoginResponse())
+                    Resource.Success(data = res)
+                } ?: Resource.Success(data = LoginResponse())
             } else {
                 Resource.Error(message = "Login failed")
             }
         } catch (e: Exception) {
-            Resource.Error(message = "Network error: ${e.message}")
+            Resource.Error(message = "Error: ${e.message}")
         }
     }
 
     suspend fun register(registerRequest: RegisterRequest): Resource<LoginResponse> {
-        return Resource.Success(LoginResponse())
+        return try {
+            val response = apiService.register(registerRequest)
+            if (response.isSuccessful) {
+                Resource.Success(data = LoginResponse())
+            } else {
+                Resource.Error(message = "Register failed")
+            }
+        } catch (e: Exception) {
+            Resource.Error(message = "Error: ${e.message}")
+        }
     }
 }
