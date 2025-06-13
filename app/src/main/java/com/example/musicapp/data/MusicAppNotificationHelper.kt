@@ -80,7 +80,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
                     PendingIntent.getBroadcast(
                         mContext,
                         0,
-                        Intent(MusicAppPlayService.ACTION_PAUSE),
+                        Intent(MusicAppPlaybackService.ACTION_PAUSE),
                         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                     )
                 )
