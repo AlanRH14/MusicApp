@@ -3,8 +3,15 @@ package com.example.musicapp.data
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
+import android.support.v4.media.session.MediaSessionCompat
+import androidx.core.app.NotificationCompat
+import com.example.musicapp.MainActivity
+import com.example.musicapp.R
+import com.example.musicapp.data.model.Song
 
 class MusicAppNotificationHelper(private val mContext: Context) {
 
@@ -32,5 +39,50 @@ class MusicAppNotificationHelper(private val mContext: Context) {
                 notificationManager.createNotificationChannel(channel)
             }
         }
+    }
+
+    fun createPlayerNotification(
+        song: Song,
+        mediasSession: MediaSessionCompat,
+        callback: (Notification) -> Unit,
+    ) {
+        val intent = Intent(mContext, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }
+
+        val pendingIntent = PendingIntent.getActivity(
+            mContext,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val notificationBuilder = NotificationCompat.Builder(mContext, CHANNEL_ID)
+            .setContentTitle(song.title)
+            .setContentText(song.artist.name)
+            .setSmallIcon(R.drawable.ic_profile)
+            .setContentIntent(pendingIntent)
+            .setStyle(
+                androidx.media.app.NotificationCompat.MediaStyle()
+                    .setMediaSession(mediasSession.sessionToken)
+                    .setShowActionsInCompactView(0)
+            )
+            .setOngoing(true)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+
+
+        /*
+        addAction(
+                NotificationCompat.Action(
+                    R.drawable.ic_pause,
+                    "Pause",
+                    PendingIntent.getBroadcast(
+                        mContext,
+                        0,
+                        Intent(MusicAppPlayService.ACTION_PAUSE),
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+                )
+            ).build()*/
     }
 }
