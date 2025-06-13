@@ -77,6 +77,7 @@ fun RegisterScreenContent(
             placeholder = stringResource(R.string.name_placeholder),
             leadingIcon = painterResource(R.drawable.ic_mail),
             leadingDescription = stringResource(R.string.email_icon),
+            isError = state.isNameValid
         )
 
         MusicAppTextField(
@@ -86,6 +87,7 @@ fun RegisterScreenContent(
             placeholder = stringResource(R.string.email_placeholder),
             leadingIcon = painterResource(R.drawable.ic_mail),
             leadingDescription = stringResource(R.string.email_icon),
+            isError = state.isEmailValid
         )
 
         MusicAppTextField(
@@ -97,6 +99,7 @@ fun RegisterScreenContent(
             leadingDescription = stringResource(R.string.email_icon),
             trailingIcon = painterResource(R.drawable.ic_eye_off),
             trailingDescription = stringResource(R.string.icon_eye_off),
+            isError = state.isPasswordValid
         )
 
         MusicAppTextField(
@@ -108,6 +111,7 @@ fun RegisterScreenContent(
             leadingDescription = stringResource(R.string.email_icon),
             trailingIcon = painterResource(R.drawable.ic_eye_off),
             trailingDescription = stringResource(R.string.icon_eye_off),
+            isError = state.isConfirmPasswordValid
         )
 
         Spacer(modifier = Modifier.size(16.dp))
