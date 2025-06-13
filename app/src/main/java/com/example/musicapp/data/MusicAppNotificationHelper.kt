@@ -9,9 +9,9 @@ import android.os.Build
 class MusicAppNotificationHelper(private val mContext: Context) {
 
     companion object {
-        const val CHANNEL_ID = "musicapp_notification_channel"
-        const val CHANNEL_NAME = "Notification Channel"
-        const val CHANNEL_DESCRIPTION = "Channel for MusicApp playback notifications"
+        private const val CHANNEL_ID = "musicapp_notification_channel"
+        private const val CHANNEL_NAME = "Notification Channel"
+        private const val CHANNEL_DESCRIPTION = "Channel for MusicApp playback notifications"
         const val NOTIFICATION_ID = 1
 
         fun createNotificationChannel(mContext: Context) {
