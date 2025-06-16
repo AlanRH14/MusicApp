@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AlbumDto(
-    @SerialName("artist") val artist: Artist,
+    @SerialName("artist") val artistDto: ArtistDto,
     @SerialName("coverImage") val coverImage: String,
     @SerialName("genre") val genre: String,
     @SerialName("id") val id: String,

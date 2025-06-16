@@ -60,7 +60,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
 
         val notificationBuilder = NotificationCompat.Builder(mContext, CHANNEL_ID)
             .setContentTitle(song.title)
-            .setContentText(song.artist.name)
+            .setContentText(song.artistDto.name)
             .setSmallIcon(R.drawable.ic_profile)
             .setContentIntent(pendingIntent)
             .setStyle(
