@@ -1,17 +1,18 @@
 package com.example.musicapp.data.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Song(
-    val artist: Artist,
-    val audioUrl: String,
-    val coverImage: String,
-    val createdAt: Long,
-    val duration: Int,
-    val genre: String,
-    val id: String,
-    val releaseDate: Long,
-    val title: String,
-    val updateAt: Long,
+    @SerialName("artist") val artist: Artist,
+    @SerialName("audioUrl") val audioUrl: String,
+    @SerialName("coverImage") val coverImage: String,
+    @SerialName("createdAt") val createdAt: Long,
+    @SerialName("duration") val duration: Int,
+    @SerialName("genre") val genre: String,
+    @SerialName("id") val id: String,
+    @SerialName("releaseDate") val releaseDate: Long,
+    @SerialName("title") val title: String,
+    @SerialName("updateAt") val updateAt: Long,
 )
