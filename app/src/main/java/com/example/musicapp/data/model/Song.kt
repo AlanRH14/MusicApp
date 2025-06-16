@@ -1,5 +1,8 @@
 package com.example.musicapp.data.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Song(
     val artist: Artist,
     val audioUrl: String,

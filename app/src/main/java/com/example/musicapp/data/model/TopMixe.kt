@@ -1,6 +1,5 @@
 package com.example.musicapp.data.model
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -17,7 +16,7 @@ data class TopMixe(
     @SerialName("releaseDate")
     val releaseDate: Long?,
     @SerialName("songs")
-    val songs: List<SongX>?,
+    val songs: List<Song>?,
     @SerialName("title")
     val title: String?
 )
