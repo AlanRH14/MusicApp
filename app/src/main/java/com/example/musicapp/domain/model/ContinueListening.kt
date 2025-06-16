@@ -1,13 +1,14 @@
 package com.example.musicapp.domain.model
 
-import com.example.musicapp.data.model.SongDto
-
-data class Album(
+data class ContinueListening(
     val artist: Artist,
+    val audioUrl: String,
     val coverImage: String,
+    val createdAt: Long,
+    val duration: Int,
     val genre: String,
     val id: String,
     val releaseDate: Long,
-    val song: List<SongDto>,
-    val title: String
+    val title: String,
+    val updatedAt: Long
 )
