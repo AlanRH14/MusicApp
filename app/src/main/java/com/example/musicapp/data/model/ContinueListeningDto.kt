@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ContinueListening(
+data class ContinueListeningDto(
     @SerialName("artist")
     val artistDto: ArtistDto?,
     @SerialName("audioUrl")
