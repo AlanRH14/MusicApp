@@ -9,8 +9,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
 import com.example.musicapp.presentation.home.widget.HomeContent
-import com.example.musicapp.presentation.widgets.ErrorScreen
-import com.example.musicapp.presentation.widgets.LoadingScreen
+import com.example.musicapp.presentation.common.widgets.ErrorScreen
+import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
