@@ -1,11 +1,14 @@
 package com.example.musicapp.domain.model
 
-data class Album(
+data class Song(
     val artist: Artist,
+    val audioUrl: String,
     val coverImage: String,
+    val createdAt: Long,
+    val duration: Int,
     val genre: String,
     val id: String,
     val releaseDate: Long,
-    val song: List<Song>,
-    val title: String
+    val title: String,
+    val updateAt: Long,
 )
