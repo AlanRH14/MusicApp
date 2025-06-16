@@ -64,7 +64,7 @@ androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref="media3
 androidx-media = { module = "androidx.media:media", version.ref="mediaVesrion"}
 
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", name = "coil-compose", version.ref = "coilVersion" }
-coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", name = "coil-compose", version.ref = "coilVersion" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", name = "coil-network", version.ref = "coilVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
