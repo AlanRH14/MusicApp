@@ -10,6 +10,6 @@ data class AlbumDto(
     @SerialName("genre") val genre: String,
     @SerialName("id") val id: String,
     @SerialName("releaseDate") val releaseDate: Long,
-    @SerialName("songs") val songs: List<Song>,
+    @SerialName("songs") val songDtos: List<SongDto>,
     @SerialName("title") val title: String
 )

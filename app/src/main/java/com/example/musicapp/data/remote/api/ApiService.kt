@@ -1,6 +1,6 @@
 package com.example.musicapp.data.remote.api
 
-import com.example.musicapp.data.model.HomeResponse
+import com.example.musicapp.data.model.HomeResponseDto
 import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.reponse.LoginResponse
 import com.example.musicapp.data.model.request.RegisterRequest
@@ -25,5 +25,5 @@ interface ApiService {
     ): Response<LoginResponse>
 
     @GET("/home")
-    suspend fun getHome(): Response<HomeResponse>
+    suspend fun getHome(): Response<HomeResponseDto>
 }

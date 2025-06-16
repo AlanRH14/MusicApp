@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Song(
+data class SongDto(
     @SerialName("artist") val artistDto: ArtistDto,
     @SerialName("audioUrl") val audioUrl: String,
     @SerialName("coverImage") val coverImage: String,

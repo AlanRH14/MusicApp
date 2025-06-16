@@ -11,7 +11,7 @@ import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
 import com.example.musicapp.MainActivity
 import com.example.musicapp.R
-import com.example.musicapp.data.model.Song
+import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.service.MusicAppPlaybackService
 
 class MusicAppNotificationHelper(private val mContext: Context) {
@@ -43,7 +43,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
     }
 
     fun createPlayerNotification(
-        song: Song,
+        songDto: SongDto,
         mediasSession: MediaSessionCompat,
         callback: (Notification) -> Unit,
     ) {
@@ -59,8 +59,8 @@ class MusicAppNotificationHelper(private val mContext: Context) {
         )
 
         val notificationBuilder = NotificationCompat.Builder(mContext, CHANNEL_ID)
-            .setContentTitle(song.title)
-            .setContentText(song.artistDto.name)
+            .setContentTitle(songDto.title)
+            .setContentText(songDto.artistDto.name)
             .setSmallIcon(R.drawable.ic_profile)
             .setContentIntent(pendingIntent)
             .setStyle(
