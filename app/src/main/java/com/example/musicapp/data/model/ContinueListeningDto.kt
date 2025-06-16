@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ContinueListeningDto(
     @SerialName("artist")
-    val artistDto: ArtistDto?,
+    val artist: ArtistDto?,
     @SerialName("audioUrl")
     val audioUrl: String?,
     @SerialName("coverImage")

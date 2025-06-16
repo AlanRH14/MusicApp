@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SongDto(
-    @SerialName("artist") val artistDto: ArtistDto,
+    @SerialName("artist") val artist: ArtistDto,
     @SerialName("audioUrl") val audioUrl: String,
     @SerialName("coverImage") val coverImage: String,
     @SerialName("createdAt") val createdAt: Long,
