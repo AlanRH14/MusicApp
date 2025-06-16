@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class HomeResponse(
     @SerialName("continueListening")
-    val continueListening: List<ContinueListening>?,
+    val continueListening: List<ContinueListening>? = null,
     @SerialName("recommendedSongs")
-    val recommendedSongs: List<Song>?,
+    val recommendedSongs: List<Song>? = null,
     @SerialName("topMixes")
-    val topMixes: List<Album>?
+    val topMixes: List<Album>? = null
 )
