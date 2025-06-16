@@ -14,7 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
 import com.example.musicapp.ui.theme.PaddingLarge
@@ -34,7 +36,7 @@ fun HomeHeader(
         Image(
             modifier = Modifier
                 .clip(CircleShape)
-                .size(24.dp),
+                .size(48.dp),
             painter = userImage,
             contentDescription = stringResource(R.string.user_image)
         )
@@ -43,7 +45,7 @@ fun HomeHeader(
 
         Column {
             Text(
-                text = "Welcome Back!",
+                text = stringResource(R.string.welcome_back),
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.titleMedium
             )
@@ -52,9 +54,18 @@ fun HomeHeader(
 
             Text(
                 text = userName,
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7F),
                 style = MaterialTheme.typography.titleMedium
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun HomeHeaderPreview() {
+    HomeHeader(
+        userName = "LordMiau",
+        userImage = painterResource(R.drawable.ic_profile)
+    )
 }
