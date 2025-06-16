@@ -17,7 +17,8 @@ import com.example.musicapp.utils.Constants.GRID_CELLS_SIZE
 
 @Composable
 fun ColumnScope.ContinueListeningSection(
-    songs: List<Song>
+    songs: List<Song>,
+    onItemClicked: (String) -> Unit
 ) {
     Text(
         text = "Continue Listening",
@@ -29,7 +30,8 @@ fun ColumnScope.ContinueListeningSection(
     LazyVerticalGrid(columns = GridCells.Fixed(GRID_CELLS_SIZE)) {
         items(songs, key = { it.id }) { song ->
             ContinueListeningItem(
-                song = song
+                song = song,
+                onItemClicked = onItemClicked
             )
         }
     }

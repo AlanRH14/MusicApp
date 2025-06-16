@@ -24,5 +24,7 @@ fun HomeContent(
             userImage = "",
             userImageDefault = R.drawable.ic_profile,
         )
+
+        ContinueListeningSection()
     }
 }
