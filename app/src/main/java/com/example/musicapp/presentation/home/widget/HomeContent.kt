@@ -22,7 +22,7 @@ fun HomeContent(
     ) {
         HomeHeader(
             userName = state.userDto.name,
-            painterResource(R.drawable.ic_profile)
+            userImage = painterResource(R.drawable.ic_profile)
         )
     }
 }
