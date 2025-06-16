@@ -1,6 +1,5 @@
 package com.example.musicapp.data.model
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
