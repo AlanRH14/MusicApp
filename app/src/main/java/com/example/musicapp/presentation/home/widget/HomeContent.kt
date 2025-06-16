@@ -21,7 +21,7 @@ fun HomeContent(
             .fillMaxSize()
     ) {
         HomeHeader(
-            userName = state.userDto.name ?: "",
+            userName = state.userDto.name,
             painterResource(R.drawable.ic_profile)
         )
     }
