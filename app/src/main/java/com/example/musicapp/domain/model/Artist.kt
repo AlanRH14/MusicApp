@@ -1,4 +1,4 @@
-package com.example.musicapp.data.model
+package com.example.musicapp.domain.model
 
 data class Artist(
     val bio: String,

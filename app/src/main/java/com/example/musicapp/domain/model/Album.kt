@@ -1,4 +1,4 @@
-package com.example.musicapp.data.model
+package com.example.musicapp.domain.model
 
 data class Album(
     val artist: Artist,
@@ -6,6 +6,6 @@ data class Album(
     val genre: String,
     val id: String,
     val releaseDate: Long,
-    val songs: List<Song>,
+    val song: List<Song>,
     val title: String
 )
