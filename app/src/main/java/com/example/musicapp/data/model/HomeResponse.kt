@@ -8,7 +8,7 @@ data class HomeResponse(
     @SerialName("continueListening")
     val continueListening: List<ContinueListening>?,
     @SerialName("recommendedSongs")
-    val recommendedSongs: List<RecommendedSong>?,
+    val recommendedSongs: List<Song>?,
     @SerialName("topMixes")
-    val topMixes: List<TopMixe>?
+    val topMixes: List<Album>?
 )
