@@ -64,8 +64,8 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.annotations)
     ksp(libs.koin.ksp.compiler)
-    implementation (libs.koin.androidx.navigation)
-    implementation (libs.koin.androidx.compose)
+    implementation(libs.koin.androidx.navigation)
+    implementation(libs.koin.androidx.compose)
 
     implementation(libs.retrofit)
     implementation(libs.logging.interceptor)
@@ -80,4 +80,7 @@ dependencies {
     implementation(libs.androidx.media3.session)
     implementation(libs.androidx.media3.ui)
     implementation(libs.androidx.media)
+
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 }
