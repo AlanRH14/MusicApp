@@ -25,6 +25,9 @@ fun HomeContent(
             userImageDefault = R.drawable.ic_profile,
         )
 
-        ContinueListeningSection()
+        ContinueListeningSection(
+            songs = state.data.continueListening,
+            onItemClicked = {}
+        )
     }
 }
