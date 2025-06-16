@@ -1,10 +1,13 @@
-package com.example.musicapp.data.model
+package com.example.musicapp.data.model.reponse
 
+import com.example.musicapp.data.model.AlbumDto
+import com.example.musicapp.data.model.ContinueListeningDto
+import com.example.musicapp.data.model.SongDto
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HomeResponseDto(
+data class HomeResponse(
     @SerialName("continueListening")
     val continueListeningDto: List<ContinueListeningDto>? = null,
     @SerialName("recommendedSongs")

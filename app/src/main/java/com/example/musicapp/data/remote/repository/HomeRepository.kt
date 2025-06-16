@@ -1,6 +1,6 @@
 package com.example.musicapp.data.remote.repository
 
-import com.example.musicapp.data.model.HomeResponseDto
+import com.example.musicapp.data.model.reponse.HomeResponse
 import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.utils.Resource
 import org.koin.core.annotation.Single
@@ -10,7 +10,7 @@ class HomeRepository(
     private val apiService: ApiService
 ) {
 
-    suspend fun getHomeData(): Resource<HomeResponseDto> {
+    suspend fun getHomeData(): Resource<HomeResponse> {
         Resource.Loading
 
         return try {
@@ -20,7 +20,7 @@ class HomeRepository(
                     Resource.Success(data = res)
                 } ?: Resource.Success(data = response)
             }
-            Resource.Success(data = HomeResponseDto())
+            Resource.Success(data = HomeResponse())
         } catch (e: Exception) {
             Resource.Error("")
         }
