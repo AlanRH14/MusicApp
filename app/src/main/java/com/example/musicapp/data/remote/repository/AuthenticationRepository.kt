@@ -30,6 +30,8 @@ class AuthenticationRepository(
     }
 
     suspend fun register(registerRequest: RegisterRequest): Resource<LoginResponse> {
+        Resource.Loading
+
         return try {
             val response = apiService.register(registerRequest)
             if (response.isSuccessful) {

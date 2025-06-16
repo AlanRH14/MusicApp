@@ -87,7 +87,6 @@ class RegisterViewModel(
         viewModelScope.launch {
             if (invalidateTextFields()) return@launch
 
-            _state.update { it.copy(isLoading = true) }
             val response = authenticationRepository.register(
                 RegisterRequest(
                     email = _state.value.email,
