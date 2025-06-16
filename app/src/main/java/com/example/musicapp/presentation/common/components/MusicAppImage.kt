@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.components
+package com.example.musicapp.presentation.common.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
-import com.example.musicapp.presentation.components.MusicAppTextField
+import com.example.musicapp.presentation.common.components.MusicAppTextField
 import com.example.musicapp.presentation.login.LoginState
 import com.example.musicapp.presentation.login.LoginUIEvent
 import com.example.musicapp.presentation.login.components.LoginCheckBox
