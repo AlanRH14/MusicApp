@@ -23,10 +23,13 @@ class HomeViewModel(
     private val _event = MutableSharedFlow<HomeEvent>()
     val event = _event.asSharedFlow()
 
-    fun getHome() {
+    init {
+        getHome()
+    }
+
+    private fun getHome() {
         viewModelScope.launch {
-            val data = homeRepository.getHomeData()
-            when (data) {
+            when (val data = homeRepository.getHomeData()) {
                 is Resource.Loading -> {
                     _state.update { it.copy(isLoading = true) }
                 }
