@@ -11,8 +11,8 @@ import com.example.musicapp.R
 import com.example.musicapp.navigation.HomeRoute
 import com.example.musicapp.navigation.LoginRoute
 import com.example.musicapp.presentation.register.widget.RegisterScreenContent
-import com.example.musicapp.presentation.widgets.ErrorScreen
-import com.example.musicapp.presentation.widgets.LoadingScreen
+import com.example.musicapp.presentation.common.widgets.ErrorScreen
+import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 

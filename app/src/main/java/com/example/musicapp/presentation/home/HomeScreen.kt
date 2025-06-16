@@ -8,8 +8,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
-import com.example.musicapp.presentation.widgets.ErrorScreen
-import com.example.musicapp.presentation.widgets.LoadingScreen
+import com.example.musicapp.presentation.home.widget.HomeContent
+import com.example.musicapp.presentation.common.widgets.ErrorScreen
+import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
@@ -18,6 +19,8 @@ fun HomeScreen(
     navController: NavHostController,
     viewModel: HomeViewModel = koinViewModel()
 ) {
+    val state by viewModel.state.collectAsState()
+
     LaunchedEffect(key1 = true) {
         viewModel.event.collectLatest {
             when (it) {
@@ -28,7 +31,11 @@ fun HomeScreen(
         }
     }
 
-    val state by viewModel.state.collectAsState()
+    HomeContent(
+        state = state,
+        onSongClicked = {},
+        onAlbumClicked = {}
+    )
 
     if (state.isLoading) {
         LoadingScreen()
