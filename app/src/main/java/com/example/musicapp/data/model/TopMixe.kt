@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class TopMixe(
     @SerialName("artist")
-    val artist: ArtistX?,
+    val artist: Artist?,
     @SerialName("coverImage")
     val coverImage: String?,
     @SerialName("genre")

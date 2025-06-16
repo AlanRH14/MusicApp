@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ArtistX(
+data class Artist(
     @SerialName("bio")
     val bio: String?,
     @SerialName("createdAt")
