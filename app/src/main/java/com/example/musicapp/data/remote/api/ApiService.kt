@@ -1,5 +1,6 @@
 package com.example.musicapp.data.remote.api
 
+import com.example.musicapp.data.model.HomeResponse
 import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.reponse.LoginResponse
 import com.example.musicapp.data.model.request.RegisterRequest
@@ -22,4 +23,7 @@ interface ApiService {
     suspend fun register(
         @Body registerRequest: RegisterRequest
     ): Response<LoginResponse>
+
+    @GET("/home")
+    suspend fun getHome(): Response<HomeResponse>
 }
