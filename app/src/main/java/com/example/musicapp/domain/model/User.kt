@@ -1,10 +1,10 @@
 package com.example.musicapp.domain.model
 
 data class User(
-    val id: String,
-    val email: String,
-    val name: String,
-    val profilePicture: String,
-    val createdAt: Long,
-    val updateAt: Long,
+    val id: String = "",
+    val email: String = "",
+    val name: String = "",
+    val profilePicture: String = "",
+    val createdAt: Long = 0L,
+    val updateAt: Long = 0L,
 )

@@ -11,8 +11,8 @@ import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
 import com.example.musicapp.MainActivity
 import com.example.musicapp.R
-import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.service.MusicAppPlaybackService
+import com.example.musicapp.domain.model.Song
 
 class MusicAppNotificationHelper(private val mContext: Context) {
 
@@ -43,7 +43,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
     }
 
     fun createPlayerNotification(
-        songDto: SongDto,
+        songDto: Song,
         mediasSession: MediaSessionCompat,
         callback: (Notification) -> Unit,
     ) {
