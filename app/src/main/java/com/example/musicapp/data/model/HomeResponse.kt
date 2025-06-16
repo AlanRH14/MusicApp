@@ -10,5 +10,5 @@ data class HomeResponse(
     @SerialName("recommendedSongs")
     val recommendedSongs: List<Song>? = null,
     @SerialName("topMixes")
-    val topMixes: List<Album>? = null
+    val topMixes: List<AlbumDto>? = null
 )
