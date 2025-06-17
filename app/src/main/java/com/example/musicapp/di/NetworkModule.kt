@@ -6,43 +6,39 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.core.annotation.Module
-import org.koin.core.annotation.Single
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
-@Module
-class NetworkModule {
-    private val json = Json {
-        coerceInputValues = true
-        ignoreUnknownKeys = true
-    }
+private val json = Json {
+    coerceInputValues = true
+    ignoreUnknownKeys = true
+}
 
-    @Single
-    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor().apply {
+private val contentType = "application/json".toMediaType()
+
+val networkModule = module {
+    single {
+        HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
     }
 
-    @Single
-    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
+    single {
+        OkHttpClient.Builder()
+            .addInterceptor(get<HttpLoggingInterceptor>())
             .build()
     }
 
-    @Single
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        val contentType = "application/json".toMediaType()
-        return Retrofit.Builder()
+    single {
+        Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(json.asConverterFactory(contentType = contentType))
+            .client(get<OkHttpClient>())
+            .addConverterFactory(json.asConverterFactory(contentType))
             .build()
     }
 
-    @Single
-    fun provideApiService(retrofit: Retrofit): ApiService =
-        retrofit.create(ApiService::class.java)
+    single {
+        get<Retrofit>().create(ApiService::class.java)
+    }
 }

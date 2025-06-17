@@ -2,16 +2,14 @@ package com.example.musicapp.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.musicapp.data.remote.repository.StatusRepository
+import com.example.musicapp.data.remote.repository.StatusRepositoryImpl
 import com.example.musicapp.utils.ResponseState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.koin.android.annotation.KoinViewModel
 
-@KoinViewModel
 class MainViewModel(
-    val repository: StatusRepository
+    val repository: StatusRepositoryImpl
 ) : ViewModel() {
 
     private val _state = MutableStateFlow("")

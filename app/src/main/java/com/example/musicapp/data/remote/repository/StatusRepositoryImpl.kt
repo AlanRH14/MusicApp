@@ -4,10 +4,8 @@ import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.utils.ResponseState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import org.koin.core.annotation.Single
 
-@Single
-class StatusRepository(
+class StatusRepositoryImpl(
     private val apiService: ApiService
 ) {
 
