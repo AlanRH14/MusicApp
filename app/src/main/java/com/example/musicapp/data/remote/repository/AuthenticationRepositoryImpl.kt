@@ -4,15 +4,16 @@ import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.reponse.LoginResponse
 import com.example.musicapp.data.model.request.RegisterRequest
 import com.example.musicapp.data.remote.api.ApiService
+import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.utils.Resource
 import org.koin.core.annotation.Single
 
 @Single
 class AuthenticationRepositoryImpl(
     private val apiService: ApiService
-) {
+): AuthenticationRepository {
 
-    suspend fun login(loginRequest: LoginRequest): Resource<LoginResponse> {
+    override suspend fun login(loginRequest: LoginRequest): Resource<LoginResponse> {
         Resource.Loading
 
         return try {
@@ -29,7 +30,7 @@ class AuthenticationRepositoryImpl(
         }
     }
 
-    suspend fun register(registerRequest: RegisterRequest): Resource<LoginResponse> {
+    override suspend fun register(registerRequest: RegisterRequest): Resource<LoginResponse> {
         Resource.Loading
 
         return try {
