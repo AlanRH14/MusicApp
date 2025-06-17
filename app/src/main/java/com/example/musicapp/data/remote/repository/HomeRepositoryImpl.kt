@@ -6,7 +6,7 @@ import com.example.musicapp.utils.Resource
 import org.koin.core.annotation.Single
 
 @Single
-class HomeRepository(
+class HomeRepositoryImpl(
     private val apiService: ApiService
 ) {
 

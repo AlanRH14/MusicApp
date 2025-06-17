@@ -2,7 +2,7 @@ package com.example.musicapp.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.musicapp.data.remote.repository.HomeRepository
+import com.example.musicapp.data.remote.repository.HomeRepositoryImpl
 import com.example.musicapp.utils.Resource
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +14,7 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class HomeViewModel(
-    private val homeRepository: HomeRepository
+    private val homeRepositoryImpl: HomeRepositoryImpl
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
@@ -29,7 +29,7 @@ class HomeViewModel(
 
     private fun getHome() {
         viewModelScope.launch {
-            when (val data = homeRepository.getHomeData()) {
+            when (val data = homeRepositoryImpl.getHomeData()) {
                 is Resource.Loading -> {
                     _state.update { it.copy(isLoading = true) }
                 }
