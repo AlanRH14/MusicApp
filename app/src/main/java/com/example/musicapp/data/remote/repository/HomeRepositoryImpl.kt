@@ -2,15 +2,16 @@ package com.example.musicapp.data.remote.repository
 
 import com.example.musicapp.data.model.reponse.HomeResponse
 import com.example.musicapp.data.remote.api.ApiService
+import com.example.musicapp.domain.repository.HomeRepository
 import com.example.musicapp.utils.Resource
 import org.koin.core.annotation.Single
 
 @Single
 class HomeRepositoryImpl(
     private val apiService: ApiService
-) {
+): HomeRepository {
 
-    suspend fun getHomeData(): Resource<HomeResponse> {
+    override suspend fun getHomeData(): Resource<HomeResponse> {
         Resource.Loading
 
         return try {
