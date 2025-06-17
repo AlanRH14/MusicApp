@@ -3,7 +3,7 @@ package com.example.musicapp.presentation.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.data.model.request.LoginRequest
-import com.example.musicapp.data.remote.repository.AuthenticationRepository
+import com.example.musicapp.data.remote.repository.AuthenticationRepositoryImpl
 import com.example.musicapp.utils.Resource
 import com.example.musicapp.utils.emailFormatValid
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,7 +16,7 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class LoginViewModel(
-    private val authenticationRepository: AuthenticationRepository
+    private val authenticationRepositoryImpl: AuthenticationRepositoryImpl
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(LoginState())
@@ -66,7 +66,7 @@ class LoginViewModel(
             if (invalidateInputs()) return@launch
 
             val response =
-                authenticationRepository.login(
+                authenticationRepositoryImpl.login(
                     LoginRequest(
                         email = state.value.email,
                         password = state.value.password

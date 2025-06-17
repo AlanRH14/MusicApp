@@ -3,7 +3,7 @@ package com.example.musicapp.presentation.register
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.data.model.request.RegisterRequest
-import com.example.musicapp.data.remote.repository.AuthenticationRepository
+import com.example.musicapp.data.remote.repository.AuthenticationRepositoryImpl
 import com.example.musicapp.utils.Resource
 import com.example.musicapp.utils.emailFormatValid
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,7 +16,7 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class RegisterViewModel(
-    private val authenticationRepository: AuthenticationRepository
+    private val authenticationRepositoryImpl: AuthenticationRepositoryImpl
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(RegisterState())
@@ -87,7 +87,7 @@ class RegisterViewModel(
         viewModelScope.launch {
             if (invalidateTextFields()) return@launch
 
-            val response = authenticationRepository.register(
+            val response = authenticationRepositoryImpl.register(
                 RegisterRequest(
                     email = _state.value.email,
                     password = _state.value.password,

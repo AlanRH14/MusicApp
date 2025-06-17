@@ -8,7 +8,7 @@ import com.example.musicapp.utils.Resource
 import org.koin.core.annotation.Single
 
 @Single
-class AuthenticationRepository(
+class AuthenticationRepositoryImpl(
     private val apiService: ApiService
 ) {
 
