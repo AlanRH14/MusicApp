@@ -8,7 +8,6 @@ import com.example.musicapp.domain.repository.HomeRepository
 import com.example.musicapp.utils.Resource
 import org.koin.core.annotation.Single
 
-@Single
 class HomeRepositoryImpl(
     private val apiService: ApiService,
     private val apiHomeMapper: HomeApiMapperImpl

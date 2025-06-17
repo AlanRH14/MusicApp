@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
-@KoinViewModel
 class RegisterViewModel(
     private val repository: AuthenticationRepository
 ) : ViewModel() {
