@@ -7,13 +7,13 @@ import com.example.musicapp.domain.model.Home
 import com.example.musicapp.domain.model.Song
 
 class HomeApiMapperImpl(
-    private val apiArtist: ApiMapper<SongDto, Song>
+    private val apiSongMapper: ApiMapper<SongDto, Song>
 ) : ApiMapper<HomeResponse, Home> {
 
     override fun mapToDomain(apiDto: HomeResponse): Home {
         return Home(
             continueListening = apiDto.continueListening?.map { continueListening ->
-                apiArtist.mapToDomain(
+                apiSongMapper.mapToDomain(
                     continueListening
                 )
             } ?: emptyList(),
