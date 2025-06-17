@@ -33,15 +33,15 @@ class AuthenticationRepositoryImpl(
         }
     }
 
-    override suspend fun register(registerRequest: RegisterRequest): Resource<LoginResponse> {
+    override suspend fun register(registerRequest: RegisterRequest): Resource<Login> {
         Resource.Loading
 
         return try {
             val response = apiService.register(registerRequest)
             if (response.isSuccessful) {
                 response.body()?.let { res ->
-                    Resource.Success(data = res)
-                } ?: Resource.Success(data = LoginResponse())
+                    Resource.Success(data = apiLoginMapper.mapToDomain(apiDto = res))
+                } ?: Resource.Success(data = Login())
             } else {
                 Resource.Error(message = "Registration failed")
             }

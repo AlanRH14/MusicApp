@@ -10,5 +10,5 @@ interface AuthenticationRepository {
 
     suspend fun login(loginRequest: LoginRequest): Resource<Login>
 
-    suspend fun register(registerRequest: RegisterRequest): Resource<LoginResponse>
+    suspend fun register(registerRequest: RegisterRequest): Resource<Login>
 }
