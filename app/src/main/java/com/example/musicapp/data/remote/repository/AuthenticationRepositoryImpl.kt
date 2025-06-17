@@ -1,5 +1,6 @@
 package com.example.musicapp.data.remote.repository
 
+import com.example.musicapp.common.music.ApiMapper
 import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.reponse.LoginResponse
 import com.example.musicapp.data.model.request.RegisterRequest
@@ -8,9 +9,11 @@ import com.example.musicapp.domain.model.Login
 import com.example.musicapp.domain.model.User
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.utils.Resource
+import org.koin.core.annotation.Named
 
 class AuthenticationRepositoryImpl(
     private val apiService: ApiService,
+    private val apiLoginMapper: ApiMapper<LoginResponse, Login>
 ) : AuthenticationRepository {
 
     override suspend fun login(loginRequest: LoginRequest): Resource<Login> {
@@ -20,7 +23,7 @@ class AuthenticationRepositoryImpl(
             val response = apiService.login(loginRequest)
             if (response.isSuccessful) {
                 response.body()?.let { res ->
-                    Resource.Success(data = mapToDomain(apiDto = res))
+                    Resource.Success(data = apiLoginMapper.mapToDomain(apiDto = res))
                 } ?: Resource.Success(data = Login())
             } else {
                 Resource.Error(message = "Login failed")
@@ -37,7 +40,7 @@ class AuthenticationRepositoryImpl(
             val response = apiService.register(registerRequest)
             if (response.isSuccessful) {
                 response.body()?.let { res ->
-                    Resource.Success(data = mapToDomain(apiDto = res))
+                    Resource.Success(data = apiLoginMapper.mapToDomain(apiDto = res))
                 } ?: Resource.Success(data = Login())
             } else {
                 Resource.Error(message = "Registration failed")
@@ -45,12 +48,5 @@ class AuthenticationRepositoryImpl(
         } catch (e: Exception) {
             Resource.Error(message = "Error: ${e.message}")
         }
-    }
-
-    private fun mapToDomain(apiDto: LoginResponse): Login {
-        return Login(
-            token = apiDto.token ?: "",
-            user = User()
-        )
     }
 }

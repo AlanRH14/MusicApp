@@ -10,6 +10,6 @@ import com.example.musicapp.domain.model.User
 import org.koin.dsl.module
 
 val apiMapperModule = module {
-    single<ApiMapper<UserDto, User>> { UserApiMapperImpl() }
+    single<ApiMapper<UserDto, User>>() { UserApiMapperImpl() }
     single<ApiMapper<LoginResponse, Login>> { LoginApiMapperImpl(get()) }
 }

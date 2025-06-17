@@ -8,7 +8,7 @@ import org.koin.dsl.module
 
 val repositoryModule = module {
     single<AuthenticationRepository> {
-        AuthenticationRepositoryImpl(apiService = get(),)
+        AuthenticationRepositoryImpl(apiService = get(), apiLoginMapper = get() )
     }
 
     single<HomeRepository> {
