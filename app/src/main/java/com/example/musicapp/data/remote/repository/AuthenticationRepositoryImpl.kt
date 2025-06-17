@@ -8,7 +8,6 @@ import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.domain.model.Login
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.utils.Resource
-import org.koin.core.annotation.Single
 
 class AuthenticationRepositoryImpl(
     private val apiService: ApiService,
