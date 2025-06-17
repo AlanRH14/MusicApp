@@ -1,16 +1,19 @@
 package com.example.musicapp.data.mapper_impl.login
 
 import com.example.musicapp.common.music.ApiMapper
+import com.example.musicapp.data.model.UserDto
 import com.example.musicapp.data.model.reponse.LoginResponse
 import com.example.musicapp.domain.model.Login
+import com.example.musicapp.domain.model.User
 
-class LoginApiMapperImpl: ApiMapper<LoginResponse, Login> {
+class LoginApiMapperImpl(
+    private val apiUserMapper: ApiMapper<UserDto, User>
+) : ApiMapper<LoginResponse, Login> {
 
     override fun mapToDomain(apiDto: LoginResponse): Login {
         return Login(
             token = apiDto.token ?: "",
-            user = us
-
+            user = apiUserMapper.mapToDomain(apiDto.user ?: UserDto())
         )
     }
 }
