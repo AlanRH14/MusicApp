@@ -1,11 +1,9 @@
-package com.example.musicapp.data.mapper_impl
+package com.example.musicapp.data.mapper_impl.song
 
 import com.example.musicapp.common.music.ApiMapper
 import com.example.musicapp.data.model.ArtistDto
 import com.example.musicapp.data.model.SongDto
-import com.example.musicapp.data.model.reponse.HomeResponse
 import com.example.musicapp.domain.model.Artist
-import com.example.musicapp.domain.model.Home
 import com.example.musicapp.domain.model.Song
 
 class SongApiMapperImpl(
