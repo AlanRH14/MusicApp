@@ -1,6 +1,5 @@
 package com.example.musicapp.domain.repository
 
-import com.example.musicapp.data.model.reponse.LoginResponse
 import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.request.RegisterRequest
 import com.example.musicapp.domain.model.Login
