@@ -1,11 +1,12 @@
 package com.example.musicapp
 
 import android.app.Application
-import com.example.musicapp.di.NetworkModule
+import com.example.musicapp.di.apiMapperModule
+import com.example.musicapp.di.appModule
+import com.example.musicapp.di.networkModule
+import com.example.musicapp.di.repositoryModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
-import org.koin.ksp.generated.defaultModule
-import org.koin.ksp.generated.module
 
 
 class MusicApp : Application() {
@@ -14,7 +15,12 @@ class MusicApp : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@MusicApp)
-            modules(defaultModule, NetworkModule().module)
+            modules(
+                networkModule,
+                apiMapperModule,
+                repositoryModule,
+                appModule
+            )
         }
     }
 }
