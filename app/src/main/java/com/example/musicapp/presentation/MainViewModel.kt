@@ -7,7 +7,6 @@ import com.example.musicapp.utils.ResponseState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.koin.android.annotation.KoinViewModel
 
 class MainViewModel(
     val repository: StatusRepositoryImpl
