@@ -10,7 +10,6 @@ import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.utils.Resource
 import org.koin.core.annotation.Single
 
-@Single
 class AuthenticationRepositoryImpl(
     private val apiService: ApiService,
     private val apiLoginMapper: ApiMapper<LoginResponse, Login>

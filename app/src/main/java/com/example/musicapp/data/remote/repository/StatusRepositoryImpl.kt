@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.koin.core.annotation.Single
 
-@Single
 class StatusRepositoryImpl(
     private val apiService: ApiService
 ) {
