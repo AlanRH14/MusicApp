@@ -15,9 +15,9 @@ class PreferencesHandle<T>(
     private val dataStore: DataStore<Preferences>
 ) : BasePreferences<T> {
 
-    override suspend fun saveState(key: PreferencesKey<T>, data: T) {
+    override suspend fun saveState(key: PreferencesKey<T>, value: T) {
         dataStore.edit { preferences ->
-            preferences[key.preferencesKey] = data
+            preferences[key.preferencesKey] = value
         }
     }
 
