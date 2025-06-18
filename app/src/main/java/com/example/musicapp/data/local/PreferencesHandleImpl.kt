@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import okio.IOException
 
-class PreferencesHandle<T>(
+class PreferencesHandleImpl<T>(
     private val dataStore: DataStore<Preferences>
 ) : BasePreferences<T> {
 
