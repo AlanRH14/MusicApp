@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.example.musicapp.domain.repository.MusicAppPreferences
+import com.example.musicapp.domain.repository.BasePreferences
 import com.example.musicapp.utils.Constants.PREFERENCES_NAME
 import com.example.musicapp.utils.Constants.TOKEN_PREFERENCES_KEY
 import com.example.musicapp.utils.Constants.USER_NAME_PREFERENCES_KEY
@@ -18,11 +18,11 @@ import okio.IOException
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFERENCES_NAME)
 
-class MusicAppPreferencesImpl(
+class BasePreferencesImpl<T>(
     private val dataStore: DataStore<Preferences>
-) : MusicAppPreferences {
+) : BasePreferences<T> {
 
-    private object PreferencesKey {
+    /*private object PreferencesKey {
         val tokenKey = stringPreferencesKey(name = TOKEN_PREFERENCES_KEY)
         val userName = stringPreferencesKey(name = USER_NAME_PREFERENCES_KEY)
     }
@@ -63,5 +63,13 @@ class MusicAppPreferencesImpl(
             }.map { preferences ->
                 preferences[PreferencesKey.userName] ?: ""
             }
+    }*/
+
+    override suspend fun saveState(key: Preferences.Key<T>, data: T) {
+        TODO("Not yet implemented")
+    }
+
+    override fun readState(key: Preferences.Key<T>): Flow<T> {
+        TODO("Not yet implemented")
     }
 }
