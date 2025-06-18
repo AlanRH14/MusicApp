@@ -67,11 +67,20 @@ class BasePreferencesImpl<T>(
 
     override suspend fun saveState(key: Preferences.Key<T>, data: T) {
         dataStore.edit { preferences ->
-            preferences[key]
+            preferences[key] = data
         }
     }
 
-    override fun readState(key: Preferences.Key<T>): Flow<T> {
-        TODO("Not yet implemented")
+    override fun readState(key: Preferences.Key<T>, defaultValue: T): Flow<T> {
+        return dataStore.data
+            .catch { exception ->
+                if (exception is IOException) {
+                    emit(emptyPreferences())
+                } else {
+                    throw exception
+                }
+            }.map { preferences ->
+                preferences[key] ?: defaultValue
+            }
     }
 }

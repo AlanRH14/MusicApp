@@ -7,5 +7,5 @@ interface BasePreferences<T> {
 
     suspend fun saveState(key: Preferences.Key<T>, data: T)
 
-    fun readState(key: Preferences.Key<T>): Flow<T>
+    fun readState(key: Preferences.Key<T>, defaultValue: T): Flow<T>
 }
