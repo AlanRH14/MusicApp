@@ -24,6 +24,7 @@ media3Version= "1.7.1"
 mediaVesrion = "1.7.0"
 
 coilVersion = "3.0.4"
+dataStoreVersion = "1.1.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -65,6 +66,8 @@ androidx-media = { module = "androidx.media:media", version.ref="mediaVesrion"}
 
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", name = "coil-compose", version.ref = "coilVersion" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", name = "coil-network", version.ref = "coilVersion" }
+
+data-store = { module = "androidx.datastore:datastore-preferences", name = "data-store", version.ref = "dataStoreVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
