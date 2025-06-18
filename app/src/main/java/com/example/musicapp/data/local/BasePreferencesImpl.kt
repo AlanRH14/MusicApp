@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import okio.IOException
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFERENCES_NAME)
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFERENCES_NAME)
 
 class BasePreferencesImpl<T>(
     private val dataStore: DataStore<Preferences>
@@ -66,7 +66,9 @@ class BasePreferencesImpl<T>(
     }*/
 
     override suspend fun saveState(key: Preferences.Key<T>, data: T) {
-        TODO("Not yet implemented")
+        dataStore.edit { preferences ->
+            preferences[key]
+        }
     }
 
     override fun readState(key: Preferences.Key<T>): Flow<T> {
