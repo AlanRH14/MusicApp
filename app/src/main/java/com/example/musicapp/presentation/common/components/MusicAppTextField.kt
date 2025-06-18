@@ -32,6 +32,7 @@ fun MusicAppTextField(
     trailingDescription: String? = null,
     isPasswordVisible: Boolean = true,
     onShowPasswordClicked: () -> Unit = {},
+    singleLine: Boolean = true,
     isError: Boolean = false,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors().copy(
         unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
@@ -46,6 +47,7 @@ fun MusicAppTextField(
         value = value,
         onValueChange = onValueChange,
         label = { Text(label) },
+        singleLine = singleLine,
         placeholder = { Text(placeholder) },
         leadingIcon = {
             Icon(
