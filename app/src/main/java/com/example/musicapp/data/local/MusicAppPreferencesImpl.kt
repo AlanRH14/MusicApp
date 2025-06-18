@@ -18,9 +18,9 @@ import okio.IOException
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFERENCES_NAME)
 
-class MusicAppPreferencesImpl(private val mContext: Context) : MusicAppPreferences {
-
-    private val dataStore = mContext.dataStore
+class MusicAppPreferencesImpl(
+    private val dataStore: DataStore<Preferences>
+) : MusicAppPreferences {
 
     private object PreferencesKey {
         val tokenKey = stringPreferencesKey(name = TOKEN_PREFERENCES_KEY)
