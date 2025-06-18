@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val repository: AuthenticationRepository
+    private val repository: AuthenticationRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(LoginState())

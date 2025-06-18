@@ -1,6 +1,6 @@
 package com.example.musicapp.data.mapper_impl.song
 
-import com.example.musicapp.common.music.ApiMapper
+import com.example.musicapp.common.ApiMapper
 import com.example.musicapp.data.model.ArtistDto
 import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.domain.model.Artist

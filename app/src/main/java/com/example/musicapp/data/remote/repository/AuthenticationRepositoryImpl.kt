@@ -1,15 +1,13 @@
 package com.example.musicapp.data.remote.repository
 
-import com.example.musicapp.common.music.ApiMapper
+import com.example.musicapp.common.ApiMapper
 import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.reponse.LoginResponse
 import com.example.musicapp.data.model.request.RegisterRequest
 import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.domain.model.Login
-import com.example.musicapp.domain.model.User
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.utils.Resource
-import org.koin.core.annotation.Named
 
 class AuthenticationRepositoryImpl(
     private val apiService: ApiService,
