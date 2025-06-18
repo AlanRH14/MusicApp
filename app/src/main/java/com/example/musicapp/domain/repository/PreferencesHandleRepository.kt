@@ -3,7 +3,7 @@ package com.example.musicapp.domain.repository
 import com.example.musicapp.common.PreferencesKey
 import kotlinx.coroutines.flow.Flow
 
-interface BasePreferences<T> {
+interface PreferencesHandleRepository<T> {
 
     suspend fun saveState(key: PreferencesKey<T>, value: T)
 
