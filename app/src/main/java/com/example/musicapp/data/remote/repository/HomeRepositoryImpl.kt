@@ -1,14 +1,18 @@
 package com.example.musicapp.data.remote.repository
 
+import com.example.musicapp.common.music.ApiMapper
 import com.example.musicapp.data.mapper_impl.home.HomeApiMapperImpl
+import com.example.musicapp.data.model.reponse.HomeResponse
+import com.example.musicapp.data.model.reponse.LoginResponse
 import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.domain.model.Home
+import com.example.musicapp.domain.model.Login
 import com.example.musicapp.domain.repository.HomeRepository
 import com.example.musicapp.utils.Resource
 
 class HomeRepositoryImpl(
     private val apiService: ApiService,
-    private val apiHomeMapper: HomeApiMapperImpl
+    private val apiHomeMapper: ApiMapper<HomeResponse, Home>
 ) : HomeRepository {
 
     override suspend fun getHomeData(): Resource<Home> {
