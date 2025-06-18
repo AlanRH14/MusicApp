@@ -4,23 +4,24 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
+import com.example.musicapp.common.PreferencesKey
 import com.example.musicapp.domain.repository.BasePreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import okio.IOException
 
-class BasePreferencesImpl<T>(
+class PreferencesHandle<T>(
     private val dataStore: DataStore<Preferences>
 ) : BasePreferences<T> {
 
-    override suspend fun saveState(key: Preferences.Key<T>, data: T) {
+    override suspend fun saveState(key: PreferencesKey<T>, data: T) {
         dataStore.edit { preferences ->
-            preferences[key] = data
+            preferences[key.preferencesKey] = data
         }
     }
 
-    override fun readState(key: Preferences.Key<T>, defaultValue: T): Flow<T> {
+    override fun readState(key: PreferencesKey<T>, defaultValue: T): Flow<T> {
         return dataStore.data
             .catch { exception ->
                 if (exception is IOException) {
@@ -29,7 +30,7 @@ class BasePreferencesImpl<T>(
                     throw exception
                 }
             }.map { preferences ->
-                preferences[key] ?: defaultValue
+                preferences[key.preferencesKey] ?: defaultValue
             }
     }
 }
