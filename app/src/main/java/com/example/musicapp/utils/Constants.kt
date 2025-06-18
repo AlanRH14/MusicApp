@@ -5,5 +5,6 @@ object Constants {
     const val GRID_CELLS_SIZE = 2
 
     const val PREFERENCES_NAME = "musicapp_preferences"
-    const val ONBOARDING_PREFERENCES_KEY = "onboarding_completed"
+    const val TOKEN_PREFERENCES_KEY = "token"
+    const val USER_NAME_PREFERENCES_KEY = "user_name"
 }
