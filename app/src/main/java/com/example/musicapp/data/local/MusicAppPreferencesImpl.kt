@@ -11,6 +11,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.example.musicapp.domain.repository.MusicAppPreferences
 import com.example.musicapp.utils.Constants.PREFERENCES_NAME
 import com.example.musicapp.utils.Constants.TOKEN_PREFERENCES_KEY
+import com.example.musicapp.utils.Constants.USER_NAME_PREFERENCES_KEY
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -24,6 +25,7 @@ class MusicAppPreferencesImpl(private val mContext: Context) : MusicAppPreferenc
 
     private object PreferencesKey {
         val tokenKey = stringPreferencesKey(name = TOKEN_PREFERENCES_KEY)
+        val userName = stringPreferencesKey(name = USER_NAME_PREFERENCES_KEY)
     }
 
     override suspend fun saveTokenState(token: String) {
@@ -41,16 +43,26 @@ class MusicAppPreferencesImpl(private val mContext: Context) : MusicAppPreferenc
                     throw exception
                 }
             }.map { preferences ->
-                val onboardingState = preferences[PreferencesKey.tokenKey] ?: ""
-                onboardingState
+                preferences[PreferencesKey.tokenKey] ?: ""
             }
     }
 
     override suspend fun saveUserNameState(userName: String) {
-        TODO("Not yet implemented")
+        dataStore.edit { preferences ->
+            preferences[PreferencesKey.userName] = userName
+        }
     }
 
     override fun readUserNameState(): Flow<String> {
-        TODO("Not yet implemented")
+        return dataStore.data
+            .catch { exception ->
+                if (exception is IOException) {
+                    emit(emptyPreferences())
+                } else {
+                    throw exception
+                }
+            }.map { preferences ->
+                preferences[PreferencesKey.userName] ?: ""
+            }
     }
 }
