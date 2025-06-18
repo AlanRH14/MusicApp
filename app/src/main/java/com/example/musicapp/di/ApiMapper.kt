@@ -7,9 +7,10 @@ import com.example.musicapp.data.model.UserDto
 import com.example.musicapp.data.model.reponse.LoginResponse
 import com.example.musicapp.domain.model.Login
 import com.example.musicapp.domain.model.User
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val apiMapperModule = module {
-    single<ApiMapper<UserDto, User>>() { UserApiMapperImpl() }
-    single<ApiMapper<LoginResponse, Login>> { LoginApiMapperImpl(get()) }
+    single<ApiMapper<UserDto, User>>(named("UserApiMapper")) { UserApiMapperImpl() }
+    single<ApiMapper<LoginResponse, Login>>(named("LoginApiMapper")) { LoginApiMapperImpl(get(named("UserApiMapper"))) }
 }
