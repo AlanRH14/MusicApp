@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import okio.IOException
 
-class DataStoreHandleRepositoryHandleImpl<T>(
+class DataStoreHandleRepositoryImpl<T>(
     private val dataStore: DataStore<Preferences>
 ) : DataStoreHandleRepository<T> {
 
