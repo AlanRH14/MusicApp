@@ -1,69 +1,18 @@
 package com.example.musicapp.data.local
 
-import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import com.example.musicapp.domain.repository.BasePreferences
-import com.example.musicapp.utils.Constants.PREFERENCES_NAME
-import com.example.musicapp.utils.Constants.TOKEN_PREFERENCES_KEY
-import com.example.musicapp.utils.Constants.USER_NAME_PREFERENCES_KEY
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import okio.IOException
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFERENCES_NAME)
-
 class BasePreferencesImpl<T>(
     private val dataStore: DataStore<Preferences>
 ) : BasePreferences<T> {
-
-    /*private object PreferencesKey {
-        val tokenKey = stringPreferencesKey(name = TOKEN_PREFERENCES_KEY)
-        val userName = stringPreferencesKey(name = USER_NAME_PREFERENCES_KEY)
-    }
-
-    override suspend fun saveTokenState(token: String) {
-        dataStore.edit { preferences ->
-            preferences[PreferencesKey.tokenKey] = token
-        }
-    }
-
-    override fun readTokenState(): Flow<String> {
-        return dataStore.data
-            .catch { exception ->
-                if (exception is IOException) {
-                    emit(emptyPreferences())
-                } else {
-                    throw exception
-                }
-            }.map { preferences ->
-                preferences[PreferencesKey.tokenKey] ?: ""
-            }
-    }
-
-    override suspend fun saveUserNameState(userName: String) {
-        dataStore.edit { preferences ->
-            preferences[PreferencesKey.userName] = userName
-        }
-    }
-
-    override fun readUserNameState(): Flow<String> {
-        return dataStore.data
-            .catch { exception ->
-                if (exception is IOException) {
-                    emit(emptyPreferences())
-                } else {
-                    throw exception
-                }
-            }.map { preferences ->
-                preferences[PreferencesKey.userName] ?: ""
-            }
-    }*/
 
     override suspend fun saveState(key: Preferences.Key<T>, data: T) {
         dataStore.edit { preferences ->
