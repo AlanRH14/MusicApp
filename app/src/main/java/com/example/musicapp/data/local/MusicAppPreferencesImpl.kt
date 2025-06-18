@@ -32,7 +32,7 @@ class MusicAppPreferencesImpl(private val mContext: Context) : MusicAppPreferenc
         }
     }
 
-    override fun readOnboardingState(): Flow<String> {
+    override fun readTokenState(): Flow<String> {
         return dataStore.data
             .catch { exception ->
                 if (exception is IOException) {
