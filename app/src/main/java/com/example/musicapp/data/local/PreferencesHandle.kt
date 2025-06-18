@@ -21,7 +21,7 @@ class PreferencesHandle<T>(
         }
     }
 
-    override fun readState(key: PreferencesKey<T>, defaultValue: T): Flow<T> {
+    override fun readState(key: PreferencesKey<T>): Flow<T> {
         return dataStore.data
             .catch { exception ->
                 if (exception is IOException) {
@@ -30,7 +30,7 @@ class PreferencesHandle<T>(
                     throw exception
                 }
             }.map { preferences ->
-                preferences[key.preferencesKey] ?: defaultValue
+                preferences[key.preferencesKey] ?: key.defaultValue
             }
     }
 }
