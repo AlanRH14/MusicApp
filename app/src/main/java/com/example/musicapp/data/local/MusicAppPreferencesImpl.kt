@@ -45,4 +45,12 @@ class MusicAppPreferencesImpl(private val mContext: Context) : MusicAppPreferenc
                 onboardingState
             }
     }
+
+    override suspend fun saveUserNameState(userName: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun readUserNameState(): Flow<String> {
+        TODO("Not yet implemented")
+    }
 }
