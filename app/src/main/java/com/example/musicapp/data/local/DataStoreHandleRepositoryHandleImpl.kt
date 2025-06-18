@@ -5,15 +5,15 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import com.example.musicapp.common.PreferencesKey
-import com.example.musicapp.domain.repository.PreferencesHandleRepository
+import com.example.musicapp.domain.repository.DataStoreHandleRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import okio.IOException
 
-class PreferencesHandleRepositoryHandleImpl<T>(
+class DataStoreHandleRepositoryHandleImpl<T>(
     private val dataStore: DataStore<Preferences>
-) : PreferencesHandleRepository<T> {
+) : DataStoreHandleRepository<T> {
 
     override suspend fun saveState(key: PreferencesKey<T>, value: T) {
         dataStore.edit { preferences ->
