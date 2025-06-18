@@ -13,6 +13,6 @@ val repositoryModule = module {
     }
 
     single<HomeRepository> {
-        HomeRepositoryImpl(apiService = get(), apiHomeMapper = get())
+        HomeRepositoryImpl(apiService = get(), apiHomeMapper = get(named("HomeApiMapper")))
     }
 }
