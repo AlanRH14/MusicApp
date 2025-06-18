@@ -6,5 +6,5 @@ interface MusicAppPreferences {
 
     suspend fun saveTokenState(token: String)
 
-    fun readOnboardingState(): Flow<Boolean>
+    fun readOnboardingState(): Flow<String>
 }

@@ -32,7 +32,7 @@ class MusicAppPreferencesImpl(private val mContext: Context) : MusicAppPreferenc
         }
     }
 
-    override fun readOnboardingState(): Flow<Boolean> {
+    override fun readOnboardingState(): Flow<String> {
         return dataStore.data
             .catch { exception ->
                 if (exception is IOException) {
@@ -41,7 +41,7 @@ class MusicAppPreferencesImpl(private val mContext: Context) : MusicAppPreferenc
                     throw exception
                 }
             }.map { preferences ->
-                val onboardingState = preferences[PreferencesKey.tokenKey] ?: false
+                val onboardingState = preferences[PreferencesKey.tokenKey] ?: ""
                 onboardingState
             }
     }
