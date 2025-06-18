@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface MusicAppPreferences {
 
-    suspend fun saveOnboardingState(completed: Boolean)
+    suspend fun saveTokenState(token: String)
 
     fun readOnboardingState(): Flow<Boolean>
 }

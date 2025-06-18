@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.musicapp.domain.repository.MusicAppPreferences
 import com.example.musicapp.utils.Constants.PREFERENCES_NAME
@@ -22,12 +23,12 @@ class MusicAppPreferencesImpl(private val mContext: Context) : MusicAppPreferenc
     private val dataStore = mContext.dataStore
 
     private object PreferencesKey {
-        val tokenKey = booleanPreferencesKey(name = TOKEN_PREFERENCES_KEY)
+        val tokenKey = stringPreferencesKey(name = TOKEN_PREFERENCES_KEY)
     }
 
-    override suspend fun saveOnboardingState(completed: Boolean) {
+    override suspend fun saveTokenState(token: String) {
         dataStore.edit { preferences ->
-            preferences[PreferencesKey.tokenKey] = completed
+            preferences[PreferencesKey.tokenKey] = token
         }
     }
 
