@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class OnboardingViewModel(
@@ -21,9 +22,10 @@ class OnboardingViewModel(
 
     fun isUserLoggedIn() {
         viewModelScope.launch {
-            dataStoreHandle.readState(key = ConstantsPreferences.TokenPreferences).collect {
-
-            }
+            dataStoreHandle.readState(key = ConstantsPreferences.TokenPreferences)
+                .collect { isUserLoggedIn ->
+                    _state.update { it.copy(isUserLoggedIn = isUserLoggedIn.isNotEmpty()) }
+                }
         }
     }
 
