@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.domain.repository.HomeRepository
 import com.example.musicapp.common.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -26,7 +27,7 @@ class HomeViewModel(
     }
 
     private fun getHome() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             when (val data = repository.getHomeData()) {
                 is Resource.Loading -> {
                     _state.update { it.copy(isLoading = true) }

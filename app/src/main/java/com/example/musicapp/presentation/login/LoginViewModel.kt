@@ -8,6 +8,7 @@ import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.common.Resource
 import com.example.musicapp.utils.emailFormatValid
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -63,7 +64,7 @@ class LoginViewModel(
     }
 
     private fun login() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             if (invalidateInputs()) return@launch
 
             val response =
