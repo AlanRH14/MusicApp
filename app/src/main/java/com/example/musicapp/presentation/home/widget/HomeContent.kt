@@ -23,8 +23,8 @@ fun HomeContent(
             .fillMaxSize()
     ) {
         HomeHeader(
-            userName = state.userDto.name,
-            userImage = "",
+            userName = state.user.name,
+            userImage = state.user.profilePicture,
             userImageDefault = R.drawable.ic_profile,
         )
 
