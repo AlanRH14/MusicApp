@@ -28,6 +28,7 @@ import com.example.musicapp.navigation.LoginRoute
 import com.example.musicapp.presentation.onboarding.components.OnboardingCard
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import com.example.musicapp.presentation.onboarding.mvi.OnboardingEffect
+import com.example.musicapp.presentation.onboarding.mvi.OnboardingUIEvent
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
