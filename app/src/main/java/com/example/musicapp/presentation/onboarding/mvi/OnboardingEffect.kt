@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.onboarding.components
+package com.example.musicapp.presentation.onboarding.mvi
 
 sealed class OnboardingEffect {
     data class ShowErrorMessage(val message: String) : OnboardingEffect()
