@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import com.example.musicapp.R
 import com.example.musicapp.presentation.home.mvi.HomeState
 import com.example.musicapp.presentation.home.component.HomeHeader
-import com.example.musicapp.ui.theme.PaddingDefault
+import com.example.musicapp.ui.theme.PaddingLarge
 
 @Composable
 fun HomeContent(
@@ -19,12 +19,12 @@ fun HomeContent(
 
     Column(
         modifier = Modifier
-            .padding(horizontal = PaddingDefault)
+            .padding(horizontal = PaddingLarge)
             .fillMaxSize()
     ) {
         HomeHeader(
-            userName = state.userDto.name,
-            userImage = "",
+            userName = state.user.name,
+            userImage = state.user.profilePicture,
             userImageDefault = R.drawable.ic_profile,
         )
 
