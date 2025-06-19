@@ -6,6 +6,6 @@ import com.example.musicapp.domain.model.User
 data class HomeState(
     val isLoading: Boolean = false,
     val userDto: User = User(),
-    val data: Home = Home(),
+    val homData: Home = Home(),
     val error: String? = null
 )

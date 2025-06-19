@@ -38,7 +38,7 @@ class HomeViewModel(
                 is Resource.Success -> {
                     _state.update {
                         it.copy(
-                            data = data.data,
+                            homData = data.data,
                             isLoading = false
                         )
                     }

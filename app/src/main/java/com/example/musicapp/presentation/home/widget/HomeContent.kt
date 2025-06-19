@@ -26,7 +26,7 @@ fun HomeContent(
         )
 
         ContinueListeningSection(
-            songs = state.data.continueListening,
+            songs = state.homData.continueListening,
             onItemClicked = {}
         )
     }
