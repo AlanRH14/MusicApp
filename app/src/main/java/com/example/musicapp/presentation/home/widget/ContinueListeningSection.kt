@@ -1,7 +1,7 @@
 package com.example.musicapp.presentation.home.widget
 
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -16,11 +16,12 @@ import com.example.musicapp.ui.theme.PaddingDefault
 import com.example.musicapp.utils.Constants.GRID_CELLS_SIZE
 
 @Composable
-fun ColumnScope.ContinueListeningSection(
+fun ContinueListeningSection(
     songs: List<Song>,
     onItemClicked: (String) -> Unit
 ) {
     Text(
+        modifier = Modifier.padding(horizontal = PaddingDefault),
         text = "Continue Listening",
         style = MaterialTheme.typography.titleMedium
     )
