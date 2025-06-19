@@ -18,9 +18,7 @@ val repositoryModule = module {
     }
 
     single<DataStoreHandle> {
-        DataStoreHandleImpl(
-
-        )
+        DataStoreHandleImpl(get())
     }
 
     single<HomeRepository> {
