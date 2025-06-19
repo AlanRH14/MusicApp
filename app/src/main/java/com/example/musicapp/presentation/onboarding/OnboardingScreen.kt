@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
+import com.example.musicapp.navigation.HomeRoute
 import com.example.musicapp.navigation.LoginRoute
 import com.example.musicapp.presentation.onboarding.components.OnboardingCard
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
@@ -39,14 +40,20 @@ fun OnboardingScreen(
     val density = LocalDensity.current
 
     LaunchedEffect(key1 = true) {
-        viewModel.event.collectLatest {
+        viewModel.onEvent(OnboardingUIEvent.CheckAuthStatus)
+
+        viewModel.effect.collectLatest {
             when (it) {
-                is OnboardingEvent.ShowErrorMessage -> {
+                is OnboardingEffect.ShowErrorMessage -> {
                     Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()
                 }
 
-                is OnboardingEvent.NavigationToLogin -> {
+                is OnboardingEffect.NavigationToLogin -> {
                     navController.navigate(LoginRoute)
+                }
+
+                is OnboardingEffect.NavigateToHome -> {
+                    navController.navigate(HomeRoute)
                 }
             }
         }
@@ -85,9 +92,7 @@ fun OnboardingScreen(
                             heightPX.toDp()
                         }
                     },
-                onClick = {
-                    viewModel.onGetStartedClicked()
-                }
+                onEvent = viewModel::onEvent
             )
         }
     }

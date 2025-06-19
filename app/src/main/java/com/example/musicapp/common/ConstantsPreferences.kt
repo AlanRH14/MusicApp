@@ -1,8 +1,7 @@
-package com.example.musicapp.data.local
+package com.example.musicapp.common
 
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.example.musicapp.common.PreferencesKey
 import com.example.musicapp.utils.Constants.TOKEN_PREFERENCES_KEY
 import com.example.musicapp.utils.Constants.USER_NAME_PREFERENCES_KEY
 

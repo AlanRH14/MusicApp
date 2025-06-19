@@ -23,6 +23,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
+import com.example.musicapp.presentation.onboarding.OnboardingUIEvent
 import com.example.musicapp.ui.theme.PaddingExtraLarge
 import com.example.musicapp.ui.theme.PaddingLarge
 import com.example.musicapp.ui.theme.Shapes
@@ -30,7 +31,7 @@ import com.example.musicapp.ui.theme.Shapes
 @Composable
 fun OnboardingCard(
     modifier: Modifier,
-    onClick: () -> Unit
+    onEvent: (OnboardingUIEvent) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -76,7 +77,7 @@ fun OnboardingCard(
         Button(
             modifier = Modifier
                 .fillMaxWidth(),
-            onClick = onClick
+            onClick = { onEvent(OnboardingUIEvent.OnGetStartedClicked) }
         ) {
             Text(
                 text = stringResource(R.string.get_started),

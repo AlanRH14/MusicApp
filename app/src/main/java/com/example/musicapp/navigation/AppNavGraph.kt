@@ -12,7 +12,7 @@ import com.example.musicapp.presentation.register.RegisterScreen
 @Composable
 fun AppNavGraph(
     navController: NavHostController,
-    startDestination: NavRoutes
+    startDestination: NavRoutes,
 ) {
 
     NavHost(navController = navController, startDestination = startDestination) {

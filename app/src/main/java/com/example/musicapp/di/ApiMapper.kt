@@ -20,14 +20,24 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val apiMapperModule = module {
-    single<ApiMapper<UserDto, User>>(named("UserApiMapper")) { UserApiMapperImpl() }
+    single<ApiMapper<UserDto, User>>(named("UserApiMapper")) {
+        UserApiMapperImpl()
+    }
 
-    single<ApiMapper<LoginResponse, Login>>(named("LoginApiMapper")) { LoginApiMapperImpl(get(named("UserApiMapper"))) }
+    single<ApiMapper<LoginResponse, Login>>(named("LoginApiMapper")) {
+        LoginApiMapperImpl(get(named("UserApiMapper")))
+    }
 
 
-    single<ApiMapper<ArtistDto, Artist>>(named("ArtistApiMapper")) { ArtistApiMapperImpl() }
+    single<ApiMapper<ArtistDto, Artist>>(named("ArtistApiMapper")) {
+        ArtistApiMapperImpl()
+    }
 
-    single<ApiMapper<SongDto, Song>>(named("SongApiMapper")) { SongApiMapperImpl(get(named("ArtistApiMapper"))) }
+    single<ApiMapper<SongDto, Song>>(named("SongApiMapper")) {
+        SongApiMapperImpl(get(named("ArtistApiMapper")))
+    }
 
-    single<ApiMapper<HomeResponse, Home>>(named("HomeApiMapper")) { HomeApiMapperImpl(get(named("SongApiMapper"))) }
+    single<ApiMapper<HomeResponse, Home>>(named("HomeApiMapper")) {
+        HomeApiMapperImpl(get(named("SongApiMapper")))
+    }
 }

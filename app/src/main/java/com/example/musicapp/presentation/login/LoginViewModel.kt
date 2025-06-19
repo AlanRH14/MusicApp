@@ -2,8 +2,10 @@ package com.example.musicapp.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.musicapp.common.ConstantsPreferences
 import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.domain.repository.AuthenticationRepository
+import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.utils.Resource
 import com.example.musicapp.utils.emailFormatValid
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,6 +17,7 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val repository: AuthenticationRepository,
+    private val dataStoreHandle: DataStoreHandle,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(LoginState())
@@ -78,6 +81,12 @@ class LoginViewModel(
 
                 is Resource.Success -> {
                     _state.update { it.copy(isLoading = false) }
+                    if (response.data.token.isNotEmpty()) {
+                        dataStoreHandle.saveState(
+                            key = ConstantsPreferences.TokenPreferences,
+                            value = response.data.token
+                        )
+                    }
                     _effect.emit(LoginEffect.NavigateToHome)
                 }
 
