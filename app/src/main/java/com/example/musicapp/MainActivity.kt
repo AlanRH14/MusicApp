@@ -18,7 +18,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.musicapp.navigation.AppNavGraph
 import com.example.musicapp.navigation.HomeRoute
 import com.example.musicapp.navigation.OnboardingRoute
-import com.example.musicapp.presentation.home.HomeScreen
 import com.example.musicapp.presentation.onboarding.OnboardingViewModel
 import com.example.musicapp.ui.theme.MusicAppTheme
 import kotlinx.coroutines.CoroutineScope
@@ -93,3 +92,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
