@@ -20,6 +20,12 @@ class OnboardingViewModel(
     private val _event = MutableSharedFlow<OnboardingEffect>()
     val event = _event.asSharedFlow()
 
+    fun onEvent(event: OnboardingUIEvent) {
+        when (event) {
+            is OnboardingUIEvent.OnGetStartedClicked -> navigationToLogin()
+        }
+    }
+
     fun isUserLoggedIn() {
         viewModelScope.launch {
             dataStoreHandle.readState(key = ConstantsPreferences.TokenPreferences)
@@ -29,7 +35,7 @@ class OnboardingViewModel(
         }
     }
 
-    fun onGetStartedClicked() {
+    private fun navigationToLogin() {
         viewModelScope.launch {
             _event.emit(OnboardingEffect.NavigationToLogin)
         }
