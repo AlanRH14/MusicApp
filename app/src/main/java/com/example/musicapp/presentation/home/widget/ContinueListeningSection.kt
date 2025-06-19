@@ -1,7 +1,6 @@
 package com.example.musicapp.presentation.home.widget
 
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -22,7 +21,7 @@ fun ContinueListeningSection(
 ) {
     Text(
         text = "Continue Listening",
-        style = MaterialTheme.typography.titleMedium
+        style = MaterialTheme.typography.titleLarge
     )
 
     Spacer(modifier = Modifier.size(PaddingDefault))
