@@ -40,6 +40,8 @@ fun OnboardingScreen(
     val density = LocalDensity.current
 
     LaunchedEffect(key1 = true) {
+        viewModel.onEvent(OnboardingUIEvent.CheckAuthStatus)
+
         viewModel.effect.collectLatest {
             when (it) {
                 is OnboardingEffect.ShowErrorMessage -> {
