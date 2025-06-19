@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.musicapp.R
-import com.example.musicapp.presentation.home.HomeState
+import com.example.musicapp.presentation.home.mvi.HomeState
 import com.example.musicapp.presentation.home.component.HomeHeader
 
 @Composable
