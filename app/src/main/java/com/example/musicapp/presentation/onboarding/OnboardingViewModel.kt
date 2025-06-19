@@ -35,7 +35,12 @@ class OnboardingViewModel(
                 .collect { token ->
                     val isLoggedIn = token.isNotEmpty()
 
-                    _state.update { it.copy(isUserLoggedIn = isLoggedIn) }
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            isUserLoggedIn = isLoggedIn
+                        )
+                    }
 
                     if (isLoggedIn) {
                         _effect.emit(OnboardingEffect.NavigateToHome)
