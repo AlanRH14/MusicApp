@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
+import com.example.musicapp.navigation.HomeRoute
 import com.example.musicapp.navigation.LoginRoute
 import com.example.musicapp.presentation.onboarding.components.OnboardingCard
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
@@ -47,6 +48,10 @@ fun OnboardingScreen(
 
                 is OnboardingEffect.NavigationToLogin -> {
                     navController.navigate(LoginRoute)
+                }
+
+                is OnboardingEffect.NavigateToHome -> {
+                    navController.navigate(HomeRoute)
                 }
             }
         }
