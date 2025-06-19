@@ -39,7 +39,7 @@ fun OnboardingScreen(
     val density = LocalDensity.current
 
     LaunchedEffect(key1 = true) {
-        viewModel.event.collectLatest {
+        viewModel.effect.collectLatest {
             when (it) {
                 is OnboardingEffect.ShowErrorMessage -> {
                     Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()

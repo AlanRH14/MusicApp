@@ -18,7 +18,7 @@ class OnboardingViewModel(
     val state = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<OnboardingEffect>()
-    val event = _effect.asSharedFlow()
+    val effect = _effect.asSharedFlow()
 
     fun onEvent(event: OnboardingUIEvent) {
         when (event) {
