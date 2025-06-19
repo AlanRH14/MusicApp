@@ -50,7 +50,7 @@ fun ContinueListeningItem(
         Text(
             text = song.title,
             maxLines = 1,
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onPrimary
         )
     }
