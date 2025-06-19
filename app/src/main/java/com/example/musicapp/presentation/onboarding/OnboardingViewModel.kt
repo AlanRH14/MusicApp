@@ -17,8 +17,8 @@ class OnboardingViewModel(
     private val _state = MutableStateFlow(OnboardingState())
     val state = _state.asStateFlow()
 
-    private val _event = MutableSharedFlow<OnboardingEffect>()
-    val event = _event.asSharedFlow()
+    private val _effect = MutableSharedFlow<OnboardingEffect>()
+    val event = _effect.asSharedFlow()
 
     fun onEvent(event: OnboardingUIEvent) {
         when (event) {
@@ -38,7 +38,7 @@ class OnboardingViewModel(
                     _state.update { it.copy(isUserLoggedIn = isLoggedIn) }
 
                     if (isLoggedIn) {
-                        _event.emit(OnboardingEffect.NavigateToHome)
+                        _effect.emit(OnboardingEffect.NavigateToHome)
                     }
                 }
         }
@@ -46,7 +46,7 @@ class OnboardingViewModel(
 
     private fun navigationToLogin() {
         viewModelScope.launch {
-            _event.emit(OnboardingEffect.NavigationToLogin)
+            _effect.emit(OnboardingEffect.NavigationToLogin)
         }
     }
 }
