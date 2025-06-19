@@ -23,7 +23,9 @@ class HomeViewModel(
     val event = _event.asSharedFlow()
 
     fun onEvent(event: HomeUIEvent) {
-
+        when (event) {
+            is HomeUIEvent.GetHomeData -> getHome()
+        }
     }
 
     init {
