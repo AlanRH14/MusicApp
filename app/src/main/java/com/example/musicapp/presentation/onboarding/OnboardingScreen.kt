@@ -85,9 +85,7 @@ fun OnboardingScreen(
                             heightPX.toDp()
                         }
                     },
-                onClick = {
-                    viewModel.onGetStartedClicked()
-                }
+                onClick = viewModel::onEvent
             )
         }
     }
