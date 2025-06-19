@@ -5,7 +5,7 @@ import com.example.musicapp.data.model.reponse.HomeResponse
 import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.domain.model.Home
 import com.example.musicapp.domain.repository.HomeRepository
-import com.example.musicapp.utils.Resource
+import com.example.musicapp.common.Resource
 
 class HomeRepositoryImpl(
     private val apiService: ApiService,
