@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.login
+package com.example.musicapp.presentation.login.mvi
 
 sealed interface LoginEffect {
     data class ShowErrorMessage(val message: String) : LoginEffect
