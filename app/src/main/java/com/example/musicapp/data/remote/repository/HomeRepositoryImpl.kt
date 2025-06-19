@@ -21,8 +21,9 @@ class HomeRepositoryImpl(
                 response.body()?.let { res ->
                     Resource.Success(data = apiHomeMapper.mapToDomain(apiDto = res))
                 } ?: Resource.Success(data = Home())
+            }else {
+                Resource.Success(data = Home())
             }
-            Resource.Success(data = Home())
         } catch (e: Exception) {
             Resource.Error("")
         }
