@@ -22,7 +22,7 @@ class HomeViewModel(
     private val _event = MutableSharedFlow<HomeEffect>()
     val event = _event.asSharedFlow()
 
-    fun onEvent() {
+    fun onEvent(event: HomeUIEvent) {
 
     }
 
