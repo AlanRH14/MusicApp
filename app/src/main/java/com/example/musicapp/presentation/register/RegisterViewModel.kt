@@ -6,6 +6,7 @@ import com.example.musicapp.data.model.request.RegisterRequest
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.common.Resource
 import com.example.musicapp.presentation.register.mvi.RegisterEffect
+import com.example.musicapp.presentation.register.mvi.RegisterState
 import com.example.musicapp.utils.emailFormatValid
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
