@@ -2,8 +2,8 @@ package com.example.musicapp.common
 
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.example.musicapp.utils.Constants.TOKEN_PREFERENCES_KEY
-import com.example.musicapp.utils.Constants.USER_NAME_PREFERENCES_KEY
+import com.example.musicapp.utils.PreferencesConstants.TOKEN_PREFERENCES_KEY
+import com.example.musicapp.utils.PreferencesConstants.USER_NAME_PREFERENCES_KEY
 
 internal sealed class ConstantsPreferences<T> : PreferencesKey<T> {
 
