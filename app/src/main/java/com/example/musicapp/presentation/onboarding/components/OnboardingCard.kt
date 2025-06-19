@@ -31,7 +31,7 @@ import com.example.musicapp.ui.theme.Shapes
 @Composable
 fun OnboardingCard(
     modifier: Modifier,
-    onClick: (OnboardingUIEvent) -> Unit
+    onEvent: (OnboardingUIEvent) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -77,7 +77,7 @@ fun OnboardingCard(
         Button(
             modifier = Modifier
                 .fillMaxWidth(),
-            onClick = { onClick(OnboardingUIEvent.OnGetStartedClicked) }
+            onClick = { onEvent(OnboardingUIEvent.OnGetStartedClicked) }
         ) {
             Text(
                 text = stringResource(R.string.get_started),
