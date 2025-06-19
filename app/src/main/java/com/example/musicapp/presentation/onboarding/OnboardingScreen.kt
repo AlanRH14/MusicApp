@@ -41,11 +41,11 @@ fun OnboardingScreen(
     LaunchedEffect(key1 = true) {
         viewModel.event.collectLatest {
             when (it) {
-                is OnboardingEvent.ShowErrorMessage -> {
+                is OnboardingEffect.ShowErrorMessage -> {
                     Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()
                 }
 
-                is OnboardingEvent.NavigationToLogin -> {
+                is OnboardingEffect.NavigationToLogin -> {
                     navController.navigate(LoginRoute)
                 }
             }
