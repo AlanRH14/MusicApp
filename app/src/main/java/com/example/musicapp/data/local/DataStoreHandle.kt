@@ -11,17 +11,17 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import okio.IOException
 
-class DataStoreHandleRepositoryImpl<T>(
+class DataStoreHandle(
     private val dataStore: DataStore<Preferences>
-) : DataStoreHandleRepository<T> {
+) : DataStoreHandleRepository {
 
-    override suspend fun saveState(key: PreferencesKey<T>, value: T) {
+    override suspend fun <T> saveState(key: PreferencesKey<T>, value: T) {
         dataStore.edit { preferences ->
             preferences[key.preferencesKey] = value
         }
     }
 
-    override fun readState(key: PreferencesKey<T>): Flow<T> {
+    override fun <T> readState(key: PreferencesKey<T>): Flow<T> {
         return dataStore.data
             .catch { exception ->
                 if (exception is IOException) {
