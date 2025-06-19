@@ -28,10 +28,6 @@ class HomeViewModel(
         }
     }
 
-    init {
-        getHome()
-    }
-
     private fun getHome() {
         viewModelScope.launch(Dispatchers.IO) {
             when (val data = repository.getHomeData()) {
