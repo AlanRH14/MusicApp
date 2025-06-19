@@ -9,7 +9,7 @@ import org.koin.dsl.module
 
 val appModule = module {
     viewModel { OnboardingViewModel() }
-    viewModel { LoginViewModel(get()) }
+    viewModel { LoginViewModel(get(), get()) }
     viewModel { RegisterViewModel(get()) }
     viewModel { HomeViewModel(get()) }
 }
