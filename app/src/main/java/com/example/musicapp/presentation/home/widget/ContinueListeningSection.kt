@@ -21,7 +21,6 @@ fun ContinueListeningSection(
     onItemClicked: (String) -> Unit
 ) {
     Text(
-        modifier = Modifier.padding(horizontal = PaddingDefault),
         text = "Continue Listening",
         style = MaterialTheme.typography.titleMedium
     )

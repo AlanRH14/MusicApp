@@ -3,6 +3,7 @@ package com.example.musicapp.presentation.home.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,7 +20,6 @@ import com.example.musicapp.R
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.presentation.common.components.MusicAppImage
 import com.example.musicapp.ui.theme.PaddingDefault
-import com.example.musicapp.ui.theme.PaddingSmall
 import com.example.musicapp.ui.theme.Shapes
 
 @Composable
@@ -29,9 +29,8 @@ fun ContinueListeningItem(
 ) {
     Row(
         modifier = Modifier
-            .padding(PaddingSmall)
-            .fillMaxWidth()
             .padding(PaddingDefault)
+            .fillMaxWidth()
             .clip(Shapes.small)
             .background(Color.Gray)
             .clickable { onItemClicked(song.id) },
@@ -46,6 +45,8 @@ fun ContinueListeningItem(
             placeHolder = {},
             contentDescription = stringResource(R.string.continue_listening_image),
         )
+
+        Spacer(modifier = Modifier.size(4.dp))
 
         Text(
             text = song.title,
