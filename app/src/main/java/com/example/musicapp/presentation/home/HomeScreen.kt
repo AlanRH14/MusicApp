@@ -22,6 +22,8 @@ fun HomeScreen(
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(key1 = true) {
+        viewModel.onEvent(HomeUIEvent.GetHomeData)
+
         viewModel.event.collectLatest {
             when (it) {
                 is HomeEffect.ShowErrorMessage -> {
