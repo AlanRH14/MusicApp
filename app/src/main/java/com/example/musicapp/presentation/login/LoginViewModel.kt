@@ -2,7 +2,7 @@ package com.example.musicapp.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.musicapp.common.ConstantsPreferences
+import com.example.musicapp.domain.ConstantsPreferences
 import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.domain.repository.DataStoreHandle

@@ -2,7 +2,7 @@ package com.example.musicapp.presentation.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.musicapp.common.ConstantsPreferences
+import com.example.musicapp.domain.ConstantsPreferences
 import com.example.musicapp.domain.repository.DataStoreHandle
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
