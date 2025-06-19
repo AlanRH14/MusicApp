@@ -22,19 +22,24 @@ class OnboardingViewModel(
 
     fun onEvent(event: OnboardingUIEvent) {
         when (event) {
+            is OnboardingUIEvent.CheckAuthStatus -> isUserLoggedIn()
             is OnboardingUIEvent.OnGetStartedClicked -> navigationToLogin()
         }
     }
 
-    init {
-        isUserLoggedIn()
-    }
-
     private fun isUserLoggedIn() {
         viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+
             dataStoreHandle.readState(key = ConstantsPreferences.TokenPreferences)
-                .collect { isUserLoggedIn ->
-                    _state.update { it.copy(isUserLoggedIn = isUserLoggedIn.isNotEmpty()) }
+                .collect { token ->
+                    val isLoggedIn = token.isNotEmpty()
+
+                    _state.update { it.copy(isUserLoggedIn = isLoggedIn) }
+
+                    if (isLoggedIn) {
+                        _event.emit(OnboardingEffect.NavigateToHome)
+                    }
                 }
         }
     }
