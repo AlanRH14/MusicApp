@@ -7,17 +7,23 @@ import androidx.navigation.compose.composable
 import com.example.musicapp.presentation.home.HomeScreen
 import com.example.musicapp.presentation.login.LoginScreen
 import com.example.musicapp.presentation.onboarding.OnboardingScreen
+import com.example.musicapp.presentation.onboarding.OnboardingViewModel
 import com.example.musicapp.presentation.register.RegisterScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AppNavGraph(
     navController: NavHostController,
-    startDestination: NavRoutes
+    startDestination: NavRoutes,
+    onboardingVM: OnboardingViewModel = koinViewModel(),
 ) {
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable<OnboardingRoute> {
-            OnboardingScreen(navController = navController)
+            OnboardingScreen(
+                navController = navController,
+                viewModel = onboardingVM
+            )
         }
 
         composable<LoginRoute> {

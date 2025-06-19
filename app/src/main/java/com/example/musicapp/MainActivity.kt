@@ -9,20 +9,27 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.example.musicapp.navigation.AppNavGraph
+import com.example.musicapp.navigation.HomeRoute
 import com.example.musicapp.navigation.OnboardingRoute
+import com.example.musicapp.presentation.home.HomeScreen
+import com.example.musicapp.presentation.onboarding.OnboardingViewModel
 import com.example.musicapp.ui.theme.MusicAppTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
     private var isSplashScreenVisible = true
+    private val onboardingVM by viewModel<OnboardingViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,9 +76,11 @@ class MainActivity : ComponentActivity() {
                             .fillMaxSize()
                             .padding(innerPadding)
                     ) {
+                        val state by onboardingVM.state.collectAsState()
                         AppNavGraph(
                             navController = navController,
-                            startDestination = OnboardingRoute
+                            startDestination = if (state.isUserLoggedIn) HomeRoute else OnboardingRoute,
+                            onboardingVM = onboardingVM
                         )
                     }
                 }

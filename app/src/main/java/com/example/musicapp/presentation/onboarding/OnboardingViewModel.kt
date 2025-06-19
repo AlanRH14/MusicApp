@@ -26,7 +26,11 @@ class OnboardingViewModel(
         }
     }
 
-    fun isUserLoggedIn() {
+    init {
+        isUserLoggedIn()
+    }
+
+    private fun isUserLoggedIn() {
         viewModelScope.launch {
             dataStoreHandle.readState(key = ConstantsPreferences.TokenPreferences)
                 .collect { isUserLoggedIn ->
