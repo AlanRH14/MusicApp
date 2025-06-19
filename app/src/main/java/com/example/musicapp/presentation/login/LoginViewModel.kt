@@ -2,12 +2,16 @@ package com.example.musicapp.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.musicapp.common.ConstantsPreferences
+import com.example.musicapp.data.local.ConstantsPreferences
 import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.domain.repository.DataStoreHandle
-import com.example.musicapp.utils.Resource
+import com.example.musicapp.common.Resource
+import com.example.musicapp.presentation.login.mvi.LoginEffect
+import com.example.musicapp.presentation.login.mvi.LoginState
+import com.example.musicapp.presentation.login.mvi.LoginUIEvent
 import com.example.musicapp.utils.emailFormatValid
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -63,7 +67,7 @@ class LoginViewModel(
     }
 
     private fun login() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             if (invalidateInputs()) return@launch
 
             val response =

@@ -7,7 +7,7 @@ import com.example.musicapp.data.model.request.RegisterRequest
 import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.domain.model.Login
 import com.example.musicapp.domain.repository.AuthenticationRepository
-import com.example.musicapp.utils.Resource
+import com.example.musicapp.common.Resource
 
 class AuthenticationRepositoryImpl(
     private val apiService: ApiService,

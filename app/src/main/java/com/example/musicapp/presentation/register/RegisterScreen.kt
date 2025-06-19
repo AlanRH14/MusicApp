@@ -13,6 +13,7 @@ import com.example.musicapp.navigation.LoginRoute
 import com.example.musicapp.presentation.register.widget.RegisterScreenContent
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
+import com.example.musicapp.presentation.register.mvi.RegisterEffect
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 

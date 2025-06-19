@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.login
+package com.example.musicapp.presentation.login.mvi
 
 sealed interface LoginUIEvent {
     data class OnEmailUpdate(val email: String) : LoginUIEvent

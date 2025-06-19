@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.login
+package com.example.musicapp.presentation.login.mvi
 
 data class LoginState(
     val isLoading: Boolean = false,

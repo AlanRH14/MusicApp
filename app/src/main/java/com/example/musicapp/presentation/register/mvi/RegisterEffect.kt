@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.register
+package com.example.musicapp.presentation.register.mvi
 
 sealed interface RegisterEffect {
     data class ShowErrorMessage(val message: String) : RegisterEffect

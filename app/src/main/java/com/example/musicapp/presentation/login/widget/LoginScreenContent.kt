@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
 import com.example.musicapp.presentation.common.components.MusicAppTextField
-import com.example.musicapp.presentation.login.LoginState
-import com.example.musicapp.presentation.login.LoginUIEvent
+import com.example.musicapp.presentation.login.mvi.LoginState
+import com.example.musicapp.presentation.login.mvi.LoginUIEvent
 import com.example.musicapp.presentation.login.components.LoginCheckBox
 import com.example.musicapp.ui.theme.MusicAppTheme
 import com.example.musicapp.ui.theme.PaddingLarge

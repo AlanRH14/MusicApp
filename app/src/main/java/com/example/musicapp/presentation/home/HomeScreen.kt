@@ -11,6 +11,8 @@ import com.example.musicapp.R
 import com.example.musicapp.presentation.home.widget.HomeContent
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
+import com.example.musicapp.presentation.home.mvi.HomeEffect
+import com.example.musicapp.presentation.home.mvi.HomeUIEvent
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
@@ -22,9 +24,11 @@ fun HomeScreen(
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(key1 = true) {
+        viewModel.onEvent(HomeUIEvent.GetHomeData)
+
         viewModel.event.collectLatest {
             when (it) {
-                is HomeEvent.ShowErrorMessage -> {
+                is HomeEffect.ShowErrorMessage -> {
                     Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()
                 }
             }

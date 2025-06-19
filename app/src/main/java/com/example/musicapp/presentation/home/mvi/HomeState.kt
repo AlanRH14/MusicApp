@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.home
+package com.example.musicapp.presentation.home.mvi
 
 import com.example.musicapp.domain.model.Home
 import com.example.musicapp.domain.model.User
@@ -6,6 +6,6 @@ import com.example.musicapp.domain.model.User
 data class HomeState(
     val isLoading: Boolean = false,
     val userDto: User = User(),
-    val data: Home = Home(),
+    val homData: Home = Home(),
     val error: String? = null
 )

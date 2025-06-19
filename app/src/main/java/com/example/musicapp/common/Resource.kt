@@ -1,4 +1,4 @@
-package com.example.musicapp.utils
+package com.example.musicapp.common
 
 sealed interface Resource<out T> {
     data object Loading : Resource<Nothing>

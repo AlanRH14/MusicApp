@@ -2,11 +2,13 @@ package com.example.musicapp.presentation.home.widget
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.musicapp.R
-import com.example.musicapp.presentation.home.HomeState
+import com.example.musicapp.presentation.home.mvi.HomeState
 import com.example.musicapp.presentation.home.component.HomeHeader
+import com.example.musicapp.ui.theme.PaddingDefault
 
 @Composable
 fun HomeContent(
@@ -17,6 +19,7 @@ fun HomeContent(
 
     Column(
         modifier = Modifier
+            .padding(horizontal = PaddingDefault)
             .fillMaxSize()
     ) {
         HomeHeader(
@@ -26,7 +29,7 @@ fun HomeContent(
         )
 
         ContinueListeningSection(
-            songs = state.data.continueListening,
+            songs = state.homData.continueListening,
             onItemClicked = {}
         )
     }

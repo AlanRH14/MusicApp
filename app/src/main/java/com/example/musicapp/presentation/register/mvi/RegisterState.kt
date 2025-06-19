@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.register
+package com.example.musicapp.presentation.register.mvi
 
 data class RegisterState(
     val isLoading: Boolean = false,

@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.register
+package com.example.musicapp.presentation.register.mvi
 
 sealed interface RegisterUIEvent {
     data class OnNameUpdate(val name: String) : RegisterUIEvent

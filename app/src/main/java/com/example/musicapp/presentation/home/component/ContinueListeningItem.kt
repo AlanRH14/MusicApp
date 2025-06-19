@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -33,7 +34,8 @@ fun ContinueListeningItem(
             .padding(PaddingDefault)
             .clip(Shapes.small)
             .background(Color.Gray)
-            .clickable { onItemClicked(song.id) }
+            .clickable { onItemClicked(song.id) },
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         MusicAppImage(
             modifier = Modifier
@@ -48,7 +50,7 @@ fun ContinueListeningItem(
         Text(
             text = song.title,
             maxLines = 1,
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onPrimary
         )
     }

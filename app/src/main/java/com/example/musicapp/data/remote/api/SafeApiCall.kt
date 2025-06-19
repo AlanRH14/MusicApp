@@ -1,6 +1,6 @@
 package com.example.musicapp.data.remote.api
 
-import com.example.musicapp.utils.Resource
+import com.example.musicapp.common.Resource
 import retrofit2.Response
 
 suspend fun <T> safeApiCall(

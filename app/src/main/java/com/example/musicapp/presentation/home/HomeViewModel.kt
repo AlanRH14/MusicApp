@@ -3,7 +3,11 @@ package com.example.musicapp.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.domain.repository.HomeRepository
-import com.example.musicapp.utils.Resource
+import com.example.musicapp.common.Resource
+import com.example.musicapp.presentation.home.mvi.HomeEffect
+import com.example.musicapp.presentation.home.mvi.HomeState
+import com.example.musicapp.presentation.home.mvi.HomeUIEvent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -18,15 +22,17 @@ class HomeViewModel(
     private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
 
-    private val _event = MutableSharedFlow<HomeEvent>()
+    private val _event = MutableSharedFlow<HomeEffect>()
     val event = _event.asSharedFlow()
 
-    init {
-        getHome()
+    fun onEvent(event: HomeUIEvent) {
+        when (event) {
+            is HomeUIEvent.GetHomeData -> getHome()
+        }
     }
 
     private fun getHome() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             when (val data = repository.getHomeData()) {
                 is Resource.Loading -> {
                     _state.update { it.copy(isLoading = true) }
@@ -35,7 +41,7 @@ class HomeViewModel(
                 is Resource.Success -> {
                     _state.update {
                         it.copy(
-                            data = data.data,
+                            homData = data.data,
                             isLoading = false
                         )
                     }

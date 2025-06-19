@@ -1,5 +1,6 @@
 package com.example.musicapp.presentation.common.components
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -26,6 +27,7 @@ fun MusicAppImage(
         modifier = modifier,
         model = imageRequest,
         loading = { placeHolder() },
+        onError = { Log.e("LordMiau", "Error load image ${it.result.throwable.message}")},
         contentDescription = contentDescription,
         contentScale = contentScale
     )

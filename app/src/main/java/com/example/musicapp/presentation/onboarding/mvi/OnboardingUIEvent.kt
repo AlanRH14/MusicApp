@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.onboarding
+package com.example.musicapp.presentation.onboarding.mvi
 
 sealed interface OnboardingUIEvent {
     data object CheckAuthStatus : OnboardingUIEvent
