@@ -15,15 +15,11 @@ import org.koin.androidx.compose.koinViewModel
 fun AppNavGraph(
     navController: NavHostController,
     startDestination: NavRoutes,
-    onboardingVM: OnboardingViewModel = koinViewModel(),
 ) {
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable<OnboardingRoute> {
-            OnboardingScreen(
-                navController = navController,
-                viewModel = onboardingVM
-            )
+            OnboardingScreen(navController = navController,)
         }
 
         composable<LoginRoute> {

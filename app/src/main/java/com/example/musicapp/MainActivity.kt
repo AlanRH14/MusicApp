@@ -75,11 +75,9 @@ class MainActivity : ComponentActivity() {
                             .fillMaxSize()
                             .padding(innerPadding)
                     ) {
-                        val state by onboardingVM.state.collectAsState()
                         AppNavGraph(
                             navController = navController,
-                            startDestination = if (state.isUserLoggedIn) HomeRoute else OnboardingRoute,
-                            onboardingVM = onboardingVM
+                            startDestination = OnboardingRoute,
                         )
                     }
                 }
