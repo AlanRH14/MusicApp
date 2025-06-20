@@ -2,7 +2,7 @@ package com.example.musicapp.presentation.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.musicapp.data.local.ConstantsPreferences
+import com.example.musicapp.data.local.preferences.ConstantsPreferences
 import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.presentation.onboarding.mvi.OnboardingEffect
 import com.example.musicapp.presentation.onboarding.mvi.OnboardingState

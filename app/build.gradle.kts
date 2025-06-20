@@ -85,4 +85,8 @@ dependencies {
     implementation(libs.coil.network.okhttp)
 
     implementation(libs.data.store)
+
+    implementation(libs.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 }
