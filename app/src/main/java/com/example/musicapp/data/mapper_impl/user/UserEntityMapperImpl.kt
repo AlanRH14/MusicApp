@@ -9,9 +9,9 @@ class UserEntityMapperImpl : ApiMapper<LoginResponse, UserEntity> {
 
     override fun mapToDomain(apiDto: LoginResponse): UserEntity {
         return UserEntity(
-            token = apiDto.id ?: "",
-            name = apiDto.name ?: "",
-            profilePicture = apiDto.profilePicture ?: ""
+            token = apiDto.token ?: "",
+            name = apiDto.user?.name ?: "",
+            profilePicture = apiDto.user?.profilePicture ?: ""
         )
     }
 }
