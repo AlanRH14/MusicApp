@@ -1,11 +1,12 @@
 package com.example.musicapp.di
 
 import com.example.musicapp.common.ApiMapper
+import com.example.musicapp.data.local.database.entities.UserEntity
 import com.example.musicapp.data.mapper_impl.artist.ArtistApiMapperImpl
 import com.example.musicapp.data.mapper_impl.home.HomeApiMapperImpl
-import com.example.musicapp.data.mapper_impl.login.LoginApiMapperImpl
 import com.example.musicapp.data.mapper_impl.song.SongApiMapperImpl
 import com.example.musicapp.data.mapper_impl.user.UserApiMapperImpl
+import com.example.musicapp.data.mapper_impl.user.UserEntityMapperImpl
 import com.example.musicapp.data.model.ArtistDto
 import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.model.UserDto
@@ -24,8 +25,8 @@ val apiMapperModule = module {
         UserApiMapperImpl()
     }
 
-    single<ApiMapper<LoginResponse, Login>>(named("LoginApiMapper")) {
-        LoginApiMapperImpl(get(named("UserApiMapper")))
+    single<ApiMapper<LoginResponse, UserEntity>>(named("LoginApiMapper")) {
+        UserEntityMapperImpl()
     }
 
 
