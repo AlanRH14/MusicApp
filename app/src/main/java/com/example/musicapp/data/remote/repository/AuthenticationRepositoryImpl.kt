@@ -33,7 +33,7 @@ class AuthenticationRepositoryImpl(
         }
     }
 
-    override suspend fun register(registerRequest: RegisterRequest): Resource<Login> {
+    override suspend fun register(registerRequest: RegisterRequest): Resource<User> {
         Resource.Loading
 
         return try {
