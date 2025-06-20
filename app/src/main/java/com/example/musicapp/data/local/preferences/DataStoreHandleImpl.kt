@@ -1,4 +1,4 @@
-package com.example.musicapp.data.local
+package com.example.musicapp.data.local.preferences
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
