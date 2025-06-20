@@ -8,13 +8,15 @@ import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.domain.model.Login
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.common.Resource
+import com.example.musicapp.data.local.database.entities.UserEntity
+import com.example.musicapp.domain.model.User
 
 class AuthenticationRepositoryImpl(
     private val apiService: ApiService,
-    private val apiLoginMapper: ApiMapper<LoginResponse, Login>
+    private val apiLoginMapper: ApiMapper<LoginResponse, UserEntity>
 ) : AuthenticationRepository {
 
-    override suspend fun login(loginRequest: LoginRequest): Resource<Login> {
+    override suspend fun login(loginRequest: LoginRequest): Resource<User> {
         Resource.Loading
 
         return try {
