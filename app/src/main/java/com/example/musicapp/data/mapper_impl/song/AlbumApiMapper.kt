@@ -8,7 +8,7 @@ import com.example.musicapp.domain.model.Album
 import com.example.musicapp.domain.model.Artist
 import com.example.musicapp.domain.model.Song
 
-class AlbumApiMapper(
+class AlbumApiMapperImpl(
     private val apiArtistMapper: ApiMapper<ArtistDto, Artist>,
     private val apiSongMapper: ApiMapper<SongDto, Song>
 ) : ApiMapper<AlbumDto, Album> {

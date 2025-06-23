@@ -4,14 +4,16 @@ import com.example.musicapp.common.ApiMapper
 import com.example.musicapp.data.local.database.entities.UserEntity
 import com.example.musicapp.data.mapper_impl.artist.ArtistApiMapperImpl
 import com.example.musicapp.data.mapper_impl.home.HomeApiMapperImpl
+import com.example.musicapp.data.mapper_impl.song.AlbumApiMapperImpl
 import com.example.musicapp.data.mapper_impl.song.SongApiMapperImpl
 import com.example.musicapp.data.mapper_impl.user.UserApiMapperImpl
 import com.example.musicapp.data.mapper_impl.user.UserEntityMapperImpl
+import com.example.musicapp.data.model.AlbumDto
 import com.example.musicapp.data.model.ArtistDto
 import com.example.musicapp.data.model.SongDto
-import com.example.musicapp.data.model.UserDto
 import com.example.musicapp.data.model.reponse.HomeResponse
 import com.example.musicapp.data.model.reponse.LoginResponse
+import com.example.musicapp.domain.model.Album
 import com.example.musicapp.domain.model.Artist
 import com.example.musicapp.domain.model.Home
 import com.example.musicapp.domain.model.Song
@@ -37,7 +39,17 @@ val apiMapperModule = module {
         SongApiMapperImpl(get(named("ArtistApiMapper")))
     }
 
+    single<ApiMapper<AlbumDto, Album>>(named("AlbumApiMapper")) {
+        AlbumApiMapperImpl(
+            get(named("ArtistApiMapper")),
+            get(named("SongApiMapper"))
+        )
+    }
+
     single<ApiMapper<HomeResponse, Home>>(named("HomeApiMapper")) {
-        HomeApiMapperImpl(get(named("SongApiMapper")))
+        HomeApiMapperImpl(
+            get(named("SongApiMapper")),
+            get(named("AlbumApiMapper"))
+        )
     }
 }
