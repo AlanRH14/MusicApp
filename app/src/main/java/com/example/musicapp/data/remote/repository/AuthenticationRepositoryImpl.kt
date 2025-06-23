@@ -4,10 +4,8 @@ import com.example.musicapp.common.ApiMapper
 import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.reponse.LoginResponse
 import com.example.musicapp.data.model.request.RegisterRequest
-import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.common.Resource
-import com.example.musicapp.data.local.database.UserDao
 import com.example.musicapp.data.local.database.entities.UserEntity
 import com.example.musicapp.data.local.datasource.UserLocalDataSource
 import com.example.musicapp.data.remote.datasource.RemoteAuthDataSource
