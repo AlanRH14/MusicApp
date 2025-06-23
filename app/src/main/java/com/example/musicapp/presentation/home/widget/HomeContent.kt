@@ -34,7 +34,8 @@ fun HomeContent(
         )
 
         TopMixesSection(
-            albums = state.homData.topMixes.
+            albums = state.homData.topMixes,
+            onAlbumClicked = {}
         )
     }
 }
