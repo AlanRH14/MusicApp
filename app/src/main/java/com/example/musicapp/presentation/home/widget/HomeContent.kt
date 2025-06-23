@@ -10,13 +10,13 @@ import androidx.compose.ui.Modifier
 import com.example.musicapp.R
 import com.example.musicapp.presentation.home.mvi.HomeState
 import com.example.musicapp.presentation.home.component.HomeHeader
+import com.example.musicapp.presentation.home.mvi.HomeUIEvent
 import com.example.musicapp.ui.theme.PaddingLarge
 
 @Composable
 fun HomeContent(
     state: HomeState,
-    onSongClicked: (String) -> Unit,
-    onAlbumClicked: (String) -> Unit,
+    onEvent: (HomeUIEvent) -> Unit,
 ) {
 
     Column(
@@ -32,14 +32,14 @@ fun HomeContent(
 
         ContinueListeningSection(
             songs = state.homData.continueListening,
-            onItemClicked = onSongClicked
+            onItemClicked = { onEvent(HomeUIEvent.GetHomeData) }
         )
 
         Spacer(modifier = Modifier.size(PaddingLarge))
 
         TopMixesSection(
             albums = state.homData.topMixes,
-            onAlbumClicked = onAlbumClicked
+            onAlbumClicked = { onEvent(HomeUIEvent.GetHomeData) }
         )
 
         Spacer(modifier = Modifier.size(PaddingLarge))

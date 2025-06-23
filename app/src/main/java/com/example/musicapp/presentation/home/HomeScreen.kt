@@ -37,8 +37,7 @@ fun HomeScreen(
 
     HomeContent(
         state = state,
-        onSongClicked = {},
-        onAlbumClicked = {}
+        onEvent = viewModel::onEvent,
     )
 
     if (state.isLoading) {
