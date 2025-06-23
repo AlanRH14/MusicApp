@@ -20,6 +20,7 @@ import com.example.musicapp.R
 import com.example.musicapp.domain.model.Album
 import com.example.musicapp.presentation.common.components.MusicAppImage
 import com.example.musicapp.ui.theme.PaddingDefault
+import com.example.musicapp.ui.theme.PaddingSmall
 import com.example.musicapp.ui.theme.Shapes
 
 @Composable
@@ -30,6 +31,7 @@ fun AlbumItem(
     Box(
         modifier = Modifier
             .size(150.dp)
+            .padding(PaddingSmall)
             .clip(Shapes.small)
             .background(Color.Gray)
             .clickable { onAlbumClicked(album.id) }
