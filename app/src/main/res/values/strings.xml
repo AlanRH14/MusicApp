@@ -37,4 +37,5 @@
     <string name="album_item_image">Album Item Image</string>
     <string name="recommendation">Recommendation</string>
     <string name="top_mixes">Top Mixes</string>
+    <string name="song_recommendation_image">Song Recommendation Image</string>
 </resources>

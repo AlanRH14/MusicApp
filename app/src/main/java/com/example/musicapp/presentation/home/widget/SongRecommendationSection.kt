@@ -45,7 +45,7 @@ fun SongRecommendationSection(
                 pathImage = song.coverImage,
                 imageDefault = R.drawable.ic_logo,
                 placeHolder = {},
-                contentDescription = "Song Recommendation Image",
+                contentDescription = stringResource(R.string.song_recommendation_image),
             )
         }
     }
