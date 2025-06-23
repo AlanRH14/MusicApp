@@ -42,6 +42,7 @@ fun SongRecommendationSection(
             Box(
                 modifier = Modifier
                     .size(200.dp)
+                    .padding(PaddingSmall)
                     .clip(Shapes.medium)
                     .background(Color.Gray)
                     .clickable { onRecommendationClicked(song.id) }
@@ -49,7 +50,6 @@ fun SongRecommendationSection(
                 MusicAppImage(
                     modifier = Modifier
                         .size(200.dp)
-                        .padding(PaddingSmall)
                         .clip(Shapes.medium),
                     pathImage = song.coverImage,
                     imageDefault = R.drawable.ic_logo,
