@@ -13,9 +13,7 @@ class HomeApiMapperImpl(
     override fun mapToDomain(apiDto: HomeResponse): Home {
         return Home(
             continueListening = apiDto.continueListening?.map { continueListening ->
-                apiSongMapper.mapToDomain(
-                    continueListening
-                )
+                apiSongMapper.mapToDomain(continueListening)
             } ?: emptyList(),
             recommendedSong = emptyList(),
             topMixes = emptyList(),
