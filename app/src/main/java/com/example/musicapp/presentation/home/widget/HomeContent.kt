@@ -15,8 +15,8 @@ import com.example.musicapp.ui.theme.PaddingLarge
 @Composable
 fun HomeContent(
     state: HomeState,
-    onSongClicked: () -> Unit,
-    onAlbumClicked: () -> Unit,
+    onSongClicked: (String) -> Unit,
+    onAlbumClicked: (String) -> Unit,
 ) {
 
     Column(
@@ -32,14 +32,14 @@ fun HomeContent(
 
         ContinueListeningSection(
             songs = state.homData.continueListening,
-            onItemClicked = {}
+            onItemClicked = onSongClicked
         )
 
         Spacer(modifier = Modifier.size(PaddingLarge))
 
         TopMixesSection(
             albums = state.homData.topMixes,
-            onAlbumClicked = {}
+            onAlbumClicked = onAlbumClicked
         )
 
         Spacer(modifier = Modifier.size(PaddingLarge))
