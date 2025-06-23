@@ -7,7 +7,6 @@ import com.example.musicapp.data.remote.datasource.RemoteAuthDataSourceImpl
 import org.koin.dsl.module
 
 val DatasourceModule = module {
-
     single<RemoteAuthDataSource> {
         RemoteAuthDataSourceImpl(get())
     }
