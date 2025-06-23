@@ -1,4 +1,4 @@
-package com.example.musicapp.data
+package com.example.musicapp.data.service
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -11,7 +11,6 @@ import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
 import com.example.musicapp.MainActivity
 import com.example.musicapp.R
-import com.example.musicapp.data.service.MusicAppPlaybackService
 import com.example.musicapp.domain.model.Song
 
 class MusicAppNotificationHelper(private val mContext: Context) {
@@ -43,6 +42,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
     }
 
     fun createPlayerNotification(
+        isPlaying: Boolean,
         songDto: Song,
         mediasSession: MediaSessionCompat,
         callback: (Notification) -> Unit,
@@ -77,18 +77,77 @@ class MusicAppNotificationHelper(private val mContext: Context) {
         val prevIntent = Intent(mContext, MainActivity::class.java).apply {
             action = MusicAppPlaybackService.ACTION_PREVIOUS
         }
-        /*
-        addAction(
+        val nextIntent = Intent(mContext, MainActivity::class.java).apply {
+            action = MusicAppPlaybackService.ACTION_NEXT
+        }
+        val playIntent = Intent(mContext, MainActivity::class.java).apply {
+            action = MusicAppPlaybackService.ACTION_PLAY
+        }
+        val pauseIntent = Intent(mContext, MusicAppPlaybackService.ACTION_PAUSE::class.java).apply {
+            action = MusicAppPlaybackService.ACTION_PAUSE
+        }
+
+        val prevPendingIntent = PendingIntent.getActivity(
+            mContext,
+            0,
+            prevIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val prevNextIntent = PendingIntent.getActivity(
+            mContext,
+            0,
+            nextIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val prevPlayIntent = PendingIntent.getActivity(
+            mContext,
+            0,
+            playIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val prevPauseIntent = PendingIntent.getActivity(
+            mContext,
+            0,
+            pauseIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        notificationBuilder.addAction(
+            NotificationCompat.Action(
+                android.R.drawable.ic_media_previous,
+                "Previous",
+                prevPendingIntent
+            )
+        )
+
+        notificationBuilder.addAction(
+            NotificationCompat.Action(
+                android.R.drawable.ic_media_next,
+                "Next",
+                prevNextIntent
+            )
+        )
+
+        if (isPlaying) {
+            notificationBuilder.addAction(
                 NotificationCompat.Action(
-                    R.drawable.ic_pause,
-                    "Pause",
-                    PendingIntent.getBroadcast(
-                        mContext,
-                        0,
-                        Intent(MusicAppPlaybackService.ACTION_PAUSE),
-                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                    )
+                    android.R.drawable.ic_media_play,
+                    "Play",
+                    prevPlayIntent
                 )
-            ).build()*/
+            )
+        } else {
+            notificationBuilder.addAction(
+                NotificationCompat.Action(
+                    android.R.drawable.ic_media_pause,
+                    "Pause",
+                    prevPauseIntent
+                )
+            )
+        }
+
+        val notification = notificationBuilder.build()
+        notification.flags = Notification.FLAG_NO_CLEAR or Notification.FLAG_ONGOING_EVENT
+        callback(notification)
     }
 }
