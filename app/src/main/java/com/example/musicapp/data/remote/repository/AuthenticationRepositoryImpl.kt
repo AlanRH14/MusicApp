@@ -4,32 +4,31 @@ import com.example.musicapp.common.ApiMapper
 import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.reponse.LoginResponse
 import com.example.musicapp.data.model.request.RegisterRequest
-import com.example.musicapp.data.remote.api.ApiService
-import com.example.musicapp.domain.model.Login
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.database.entities.UserEntity
+import com.example.musicapp.data.local.datasource.UserLocalDataSource
+import com.example.musicapp.data.remote.datasource.RemoteAuthDataSource
 import com.example.musicapp.domain.model.User
 
 class AuthenticationRepositoryImpl(
-    private val apiService: ApiService,
-    private val apiLoginMapper: ApiMapper<LoginResponse, UserEntity>
+    private val remoteDataSource: RemoteAuthDataSource,
+    private val localDataSource: UserLocalDataSource,
+    private val apiLoginMapper: ApiMapper<LoginResponse, UserEntity>,
+    private val apiUserMapper: ApiMapper<UserEntity, User>,
 ) : AuthenticationRepository {
 
     override suspend fun login(loginRequest: LoginRequest): Resource<User> {
         Resource.Loading
-
         return try {
-            val response = apiService.login(loginRequest)
-            if (response.isSuccessful) {
-                response.body()?.let { res ->
-                    Resource.Success(data = apiLoginMapper.mapToDomain(apiDto = res))
-                } ?: Resource.Success(data = Login())
-            } else {
-                Resource.Error(message = "Login failed")
-            }
+            val response = remoteDataSource.login(loginRequest)
+            val entity = apiLoginMapper.mapToDomain(apiDto = response)
+            localDataSource.savaUser(user = entity)
+            Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
         } catch (e: Exception) {
-            Resource.Error(message = "Error: ${e.message}")
+            localDataSource.getUser()?.let { userEntity ->
+                Resource.Success(apiUserMapper.mapToDomain(apiDto = userEntity))
+            } ?: Resource.Error(message = "Error: ${e.message}")
         }
     }
 
@@ -37,14 +36,10 @@ class AuthenticationRepositoryImpl(
         Resource.Loading
 
         return try {
-            val response = apiService.register(registerRequest)
-            if (response.isSuccessful) {
-                response.body()?.let { res ->
-                    Resource.Success(data = apiLoginMapper.mapToDomain(apiDto = res))
-                } ?: Resource.Success(data = Login())
-            } else {
-                Resource.Error(message = "Registration failed")
-            }
+            val response = remoteDataSource.register(registerRequest)
+            val entity = apiLoginMapper.mapToDomain(apiDto = response)
+            localDataSource.savaUser(user = entity)
+            Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
         } catch (e: Exception) {
             Resource.Error(message = "Error: ${e.message}")
         }

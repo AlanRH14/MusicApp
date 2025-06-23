@@ -20,7 +20,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val apiMapperModule = module {
-    single<ApiMapper<UserDto, User>>(named("UserApiMapper")) {
+    single<ApiMapper<UserEntity, User>>(named("UserApiMapper")) {
         UserApiMapperImpl()
     }
 
