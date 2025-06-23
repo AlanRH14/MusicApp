@@ -1,4 +1,4 @@
-package com.example.musicapp.data
+package com.example.musicapp.data.service
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -11,7 +11,6 @@ import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
 import com.example.musicapp.MainActivity
 import com.example.musicapp.R
-import com.example.musicapp.data.service.MusicAppPlaybackService
 import com.example.musicapp.domain.model.Song
 
 class MusicAppNotificationHelper(private val mContext: Context) {
