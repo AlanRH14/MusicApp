@@ -26,7 +26,7 @@ fun HomeScreen(
     LaunchedEffect(key1 = true) {
         viewModel.onEvent(HomeUIEvent.GetHomeData)
 
-        viewModel.event.collectLatest {
+        viewModel.effect.collectLatest {
             when (it) {
                 is HomeEffect.ShowErrorMessage -> {
                     Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()

@@ -23,7 +23,7 @@ class HomeViewModel(
     val state = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<HomeEffect>()
-    val event = _effect.asSharedFlow()
+    val effect = _effect.asSharedFlow()
 
     fun onEvent(event: HomeUIEvent) {
         when (event) {
