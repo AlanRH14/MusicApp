@@ -8,10 +8,10 @@ class UserLocalDataSourceImpl(
 ): UserLocalDataSource {
 
     override suspend fun savaUser(user: UserEntity) {
-        TODO("Not yet implemented")
+        userDao.insert(entities = user)
     }
 
     override suspend fun getUser(): UserEntity? {
-        TODO("Not yet implemented")
+        userDao.fetUserLocalData()
     }
 }
