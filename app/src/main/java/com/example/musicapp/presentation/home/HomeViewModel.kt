@@ -30,6 +30,7 @@ class HomeViewModel(
             is HomeUIEvent.GetHomeData -> getHome()
             is HomeUIEvent.OnSongClicked -> showMessageTest("OnSongClicked")
             is HomeUIEvent.OnAlbumClicked -> showMessageTest("OnAlbumClicked")
+            is HomeUIEvent.OnSongRecommendationClicked -> showMessageTest("OnSongRecommendationClicked")
         }
     }
 
