@@ -32,7 +32,7 @@ fun HomeContent(
 
         ContinueListeningSection(
             songs = state.homData.continueListening,
-            onItemClicked = { onEvent(HomeUIEvent.GetHomeData) }
+            onSongClicked = { onEvent(HomeUIEvent.GetHomeData) }
         )
 
         Spacer(modifier = Modifier.size(PaddingLarge))
