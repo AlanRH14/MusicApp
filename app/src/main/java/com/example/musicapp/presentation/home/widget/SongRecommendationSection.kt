@@ -38,7 +38,8 @@ fun SongRecommendationSection(
         items(items = songs, key = { it.id }) { song ->
             MusicAppImage(
                 modifier = Modifier
-                    .size(150.dp)
+                    .size(200.dp)
+                    .padding(PaddingSmall)
                     .clickable { onRecommendationClicked(song.id) }
                     .clip(Shapes.medium),
                 pathImage = song.coverImage,
