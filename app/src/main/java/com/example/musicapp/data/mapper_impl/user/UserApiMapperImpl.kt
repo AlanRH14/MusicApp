@@ -1,13 +1,15 @@
 package com.example.musicapp.data.mapper_impl.user
 
 import com.example.musicapp.common.ApiMapper
+import com.example.musicapp.data.local.database.entities.UserEntity
 import com.example.musicapp.data.model.UserDto
 import com.example.musicapp.domain.model.User
 
-class UserApiMapperImpl : ApiMapper<UserDto, User> {
+class UserApiMapperImpl : ApiMapper<UserEntity, User> {
 
-    override fun mapToDomain(apiDto: UserDto): User {
+    override fun mapToDomain(apiDto: UserEntity): User {
         return User(
+            token = apiDto.token ?: "",
             id = apiDto.id ?: "",
             email = apiDto.email ?: "",
             name = apiDto.name ?: "",
