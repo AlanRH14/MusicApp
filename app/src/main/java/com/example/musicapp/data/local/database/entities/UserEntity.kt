@@ -1,6 +1,7 @@
 package com.example.musicapp.data.local.database.entities
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.musicapp.utils.DatabaseConstants.USER_TABLE
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -8,7 +9,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Entity(tableName = USER_TABLE)
 data class UserEntity(
-    @SerialName("token") val token: String? = null,
+    @PrimaryKey
+    @SerialName("token") val token: String,
     @SerialName("id") val id: String? = null,
     @SerialName("email") val email: String? = null,
     @SerialName("name") val name: String? = null,
