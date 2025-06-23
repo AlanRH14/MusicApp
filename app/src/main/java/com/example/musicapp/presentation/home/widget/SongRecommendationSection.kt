@@ -21,7 +21,7 @@ import com.example.musicapp.ui.theme.PaddingSmall
 import com.example.musicapp.ui.theme.Shapes
 
 @Composable
-fun RecommendationSection(
+fun SongRecommendationSection(
     songs: List<Song>,
     onRecommendationClicked: (String) -> Unit
 ) {
