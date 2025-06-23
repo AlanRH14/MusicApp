@@ -22,8 +22,8 @@ class HomeViewModel(
     private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
 
-    private val _event = MutableSharedFlow<HomeEffect>()
-    val event = _event.asSharedFlow()
+    private val _effect = MutableSharedFlow<HomeEffect>()
+    val event = _effect.asSharedFlow()
 
     fun onEvent(event: HomeUIEvent) {
         when (event) {
@@ -63,7 +63,7 @@ class HomeViewModel(
 
     private fun showMessageTest(eventMessage: String) {
         viewModelScope.launch {
-            _event.emit(HomeEffect.ShowErrorMessage(message = eventMessage))
+            _effect.emit(HomeEffect.ShowErrorMessage(message = eventMessage))
         }
     }
 }
