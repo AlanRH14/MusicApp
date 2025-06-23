@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.musicapp.di.apiMapperModule
 import com.example.musicapp.di.appModule
 import com.example.musicapp.di.dataStoreModule
+import com.example.musicapp.di.databaseModule
 import com.example.musicapp.di.datasourceModule
 import com.example.musicapp.di.networkModule
 import com.example.musicapp.di.repositoryModule
@@ -23,6 +24,7 @@ class MusicApp : Application() {
             modules(
                 networkModule,
                 apiMapperModule,
+                databaseModule,
                 datasourceModule,
                 repositoryModule,
                 dataStoreModule,
