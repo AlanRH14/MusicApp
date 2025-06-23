@@ -9,6 +9,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.example.musicapp.R
 import com.example.musicapp.domain.model.Album
 import com.example.musicapp.presentation.home.component.AlbumItem
 import com.example.musicapp.ui.theme.PaddingDefault
@@ -21,7 +23,7 @@ fun TopMixesSection(
 ) {
 
     Text(
-        text = "Top Mixes",
+        text = stringResource(R.string.top_mixes),
         style = MaterialTheme.typography.titleLarge
     )
 

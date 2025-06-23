@@ -36,4 +36,5 @@
     <string name="continue_listening">Continue Listening</string>
     <string name="album_item_image">Album Item Image</string>
     <string name="recommendation">Recommendation</string>
+    <string name="top_mixes">Top Mixes</string>
 </resources>
