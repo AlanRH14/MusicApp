@@ -42,6 +42,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
     }
 
     fun createPlayerNotification(
+        isPlaying: Boolean,
         songDto: Song,
         mediasSession: MediaSessionCompat,
         callback: (Notification) -> Unit,
@@ -122,9 +123,27 @@ class MusicAppNotificationHelper(private val mContext: Context) {
         notificationBuilder.addAction(
             NotificationCompat.Action(
                 android.R.drawable.ic_media_next,
-                "Pause",
+                "Next",
                 prevNextIntent
             )
         ).build()
+
+        if (isPlaying) {
+            notificationBuilder.addAction(
+                NotificationCompat.Action(
+                    android.R.drawable.ic_media_play,
+                    "Play",
+                    prevPlayIntent
+                )
+            ).build()
+        } else {
+            notificationBuilder.addAction(
+                NotificationCompat.Action(
+                    android.R.drawable.ic_media_pause,
+                    "Pause",
+                    prevPauseIntent
+                )
+            ).build()
+        }
     }
 }
