@@ -9,6 +9,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.example.musicapp.R
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.presentation.home.component.ContinueListeningItem
 import com.example.musicapp.ui.theme.PaddingDefault
@@ -20,7 +22,7 @@ fun ContinueListeningSection(
     onItemClicked: (String) -> Unit
 ) {
     Text(
-        text = "Continue Listening",
+        text = stringResource(R.string.continue_listening),
         style = MaterialTheme.typography.titleLarge
     )
 
