@@ -19,7 +19,7 @@ import com.example.musicapp.utils.Constants.GRID_CELLS_SIZE
 @Composable
 fun ContinueListeningSection(
     songs: List<Song>,
-    onItemClicked: (String) -> Unit
+    onSongClicked: (String) -> Unit
 ) {
     Text(
         text = stringResource(R.string.continue_listening),
@@ -32,7 +32,7 @@ fun ContinueListeningSection(
         items(songs, key = { it.id }) { song ->
             ContinueListeningItem(
                 song = song,
-                onItemClicked = onItemClicked
+                onItemClicked = onSongClicked
             )
         }
     }

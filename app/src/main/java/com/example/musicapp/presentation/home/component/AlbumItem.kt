@@ -67,6 +67,9 @@ fun AlbumItem(
 }
 
 private fun createRandomColor(): Color {
-    val random = (0..255).random()
-    return Color(random)
+    val red = (0..255).random()
+    val blue = (0..255).random()
+    val green = (0..255).random()
+
+    return Color(red = red, blue = blue, green = green)
 }

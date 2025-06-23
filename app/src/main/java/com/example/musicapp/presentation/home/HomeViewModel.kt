@@ -22,12 +22,15 @@ class HomeViewModel(
     private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
 
-    private val _event = MutableSharedFlow<HomeEffect>()
-    val event = _event.asSharedFlow()
+    private val _effect = MutableSharedFlow<HomeEffect>()
+    val effect = _effect.asSharedFlow()
 
     fun onEvent(event: HomeUIEvent) {
         when (event) {
             is HomeUIEvent.GetHomeData -> getHome()
+            is HomeUIEvent.OnSongClicked -> showMessageTest("OnSongClicked")
+            is HomeUIEvent.OnAlbumClicked -> showMessageTest("OnAlbumClicked")
+            is HomeUIEvent.OnSongRecommendationClicked -> showMessageTest("OnSongRecommendationClicked")
         }
     }
 
@@ -56,6 +59,12 @@ class HomeViewModel(
                     }
                 }
             }
+        }
+    }
+
+    private fun showMessageTest(eventMessage: String) {
+        viewModelScope.launch {
+            _effect.emit(HomeEffect.ShowErrorMessage(message = eventMessage))
         }
     }
 }

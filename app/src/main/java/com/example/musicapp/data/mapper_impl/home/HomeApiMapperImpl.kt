@@ -15,12 +15,14 @@ class HomeApiMapperImpl(
 
     override fun mapToDomain(apiDto: HomeResponse): Home {
         return Home(
-            continueListening = apiDto.continueListening?.map { continueListening ->
-                apiSongMapper.mapToDomain(continueListening)
+            continueListening = apiDto.continueListening?.map { song ->
+                apiSongMapper.mapToDomain(song)
             } ?: emptyList(),
-            recommendedSong = emptyList(),
             topMixes = apiDto.topMixes?.map { album ->
                 apiAlbumMapper.mapToDomain(album)
+            } ?: emptyList(),
+            recommendedSong = apiDto.recommendedSong?.map { song ->
+                apiSongMapper.mapToDomain(song)
             } ?: emptyList(),
         )
     }
