@@ -47,7 +47,7 @@ fun HomeContent(
 
         RecommendationSection(
             songs = state.homData.recommendedSong,
-            onRecommendationClicked = onEvent(HomeUIEvent.OnSongClicked())
+            onRecommendationClicked = { onEvent(HomeUIEvent.OnSongClicked(it)) }
         )
     }
 }
