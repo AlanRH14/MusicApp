@@ -34,18 +34,16 @@ class OnboardingViewModel(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
 
-            dataStoreHandle.readState(key = ConstantsPreferences.TokenPreferences)
-                .collect { token ->
-                    val isLoggedIn = token.isNotEmpty()
-
+            dataStoreHandle.readState(key = ConstantsPreferences.UserIsLoggedPreferences)
+                .collect { userIsLogged ->
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            isUserLoggedIn = isLoggedIn
+                            isUserLoggedIn = userIsLogged
                         )
                     }
 
-                    if (isLoggedIn) {
+                    if (userIsLogged) {
                         _effect.emit(OnboardingEffect.NavigateToHome)
                     }
                 }

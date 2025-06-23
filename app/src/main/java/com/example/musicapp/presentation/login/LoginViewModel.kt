@@ -87,8 +87,8 @@ class LoginViewModel(
                     _state.update { it.copy(isLoading = false) }
                     if (response.data.token.isNotEmpty()) {
                         dataStoreHandle.saveState(
-                            key = ConstantsPreferences.TokenPreferences,
-                            value = response.data.token
+                            key = ConstantsPreferences.UserIsLoggedPreferences,
+                            value = true
                         )
                     }
                     _effect.emit(LoginEffect.NavigateToHome)
