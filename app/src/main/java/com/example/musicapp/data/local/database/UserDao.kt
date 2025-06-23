@@ -5,5 +5,5 @@ import com.example.musicapp.data.local.database.entities.UserEntity
 
 interface UserDao: MusicAppDao<UserEntity> {
     @Query("""SELECT * FROM user_table""")
-    fun fetUserLocalData(): UserEntity?
+    fun getUserLocalData(): UserEntity?
 }

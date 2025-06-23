@@ -12,6 +12,6 @@ class UserLocalDataSourceImpl(
     }
 
     override suspend fun getUser(): UserEntity? {
-        userDao.fetUserLocalData()
+        userDao.getUserLocalData()
     }
 }
