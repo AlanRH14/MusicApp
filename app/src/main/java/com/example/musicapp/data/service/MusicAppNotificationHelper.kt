@@ -118,7 +118,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
                 "Previous",
                 prevPendingIntent
             )
-        ).build()
+        )
 
         notificationBuilder.addAction(
             NotificationCompat.Action(
@@ -126,7 +126,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
                 "Next",
                 prevNextIntent
             )
-        ).build()
+        )
 
         if (isPlaying) {
             notificationBuilder.addAction(
@@ -135,7 +135,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
                     "Play",
                     prevPlayIntent
                 )
-            ).build()
+            )
         } else {
             notificationBuilder.addAction(
                 NotificationCompat.Action(
@@ -143,7 +143,11 @@ class MusicAppNotificationHelper(private val mContext: Context) {
                     "Pause",
                     prevPauseIntent
                 )
-            ).build()
+            )
         }
+
+        val notification = notificationBuilder.build()
+        notification.flags = Notification.FLAG_NO_CLEAR or Notification.FLAG_ONGOING_EVENT
+        callback(notification)
     }
 }
