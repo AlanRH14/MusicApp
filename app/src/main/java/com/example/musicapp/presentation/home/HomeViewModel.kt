@@ -28,6 +28,8 @@ class HomeViewModel(
     fun onEvent(event: HomeUIEvent) {
         when (event) {
             is HomeUIEvent.GetHomeData -> getHome()
+            is HomeUIEvent.OnSongClicked -> showMessageTest("OnSongClicked")
+            is HomeUIEvent.OnAlbumClicked -> showMessageTest("OnAlbumClicked")
         }
     }
 
@@ -56,6 +58,12 @@ class HomeViewModel(
                     }
                 }
             }
+        }
+    }
+
+    private fun showMessageTest(eventMessage: String) {
+        viewModelScope.launch {
+            _event.emit(HomeEffect.ShowErrorMessage(message = eventMessage))
         }
     }
 }
