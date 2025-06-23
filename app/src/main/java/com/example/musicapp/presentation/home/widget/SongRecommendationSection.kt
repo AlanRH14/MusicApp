@@ -1,6 +1,8 @@
 package com.example.musicapp.presentation.home.widget
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -11,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
@@ -36,17 +39,24 @@ fun SongRecommendationSection(
         modifier = Modifier.padding(PaddingSmall)
     ) {
         items(items = songs, key = { it.id }) { song ->
-            MusicAppImage(
+            Box(
                 modifier = Modifier
                     .size(200.dp)
-                    .padding(PaddingSmall)
+                    .clip(Shapes.medium)
+                    .background(Color.Gray)
                     .clickable { onRecommendationClicked(song.id) }
-                    .clip(Shapes.medium),
-                pathImage = song.coverImage,
-                imageDefault = R.drawable.ic_logo,
-                placeHolder = {},
-                contentDescription = stringResource(R.string.song_recommendation_image),
-            )
+            ) {
+                MusicAppImage(
+                    modifier = Modifier
+                        .size(200.dp)
+                        .padding(PaddingSmall)
+                        .clip(Shapes.medium),
+                    pathImage = song.coverImage,
+                    imageDefault = R.drawable.ic_logo,
+                    placeHolder = {},
+                    contentDescription = stringResource(R.string.song_recommendation_image),
+                )
+            }
         }
     }
 }
