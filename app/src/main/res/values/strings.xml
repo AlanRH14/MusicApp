@@ -35,4 +35,5 @@
     <string name="continue_listening_image">Continue Listening Image</string>
     <string name="continue_listening">Continue Listening</string>
     <string name="album_item_image">Album Item Image</string>
+    <string name="recommendation">Recommendation</string>
 </resources>

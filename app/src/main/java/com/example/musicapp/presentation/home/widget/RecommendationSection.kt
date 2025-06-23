@@ -9,6 +9,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.example.musicapp.R
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.presentation.home.component.AlbumItem
 import com.example.musicapp.ui.theme.PaddingDefault
@@ -19,7 +21,7 @@ fun RecommendationSection(
     songs: List<Song>,
 ) {
     Text(
-        text = "Recommendation",
+        text = stringResource(R.string.recommendation),
         style = MaterialTheme.typography.titleLarge
     )
 
