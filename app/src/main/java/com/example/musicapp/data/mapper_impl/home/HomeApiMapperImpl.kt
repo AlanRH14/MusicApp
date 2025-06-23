@@ -18,10 +18,10 @@ class HomeApiMapperImpl(
             continueListening = apiDto.continueListening?.map { continueListening ->
                 apiSongMapper.mapToDomain(continueListening)
             } ?: emptyList(),
-            recommendedSong = emptyList(),
             topMixes = apiDto.topMixes?.map { album ->
                 apiAlbumMapper.mapToDomain(album)
             } ?: emptyList(),
+            recommendedSong = emptyList(),
         )
     }
 }
