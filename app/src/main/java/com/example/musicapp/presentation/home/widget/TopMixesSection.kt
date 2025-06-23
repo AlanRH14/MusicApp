@@ -8,12 +8,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.musicapp.domain.model.Song
+import com.example.musicapp.domain.model.Album
+import com.example.musicapp.presentation.home.component.AlbumItem
 import com.example.musicapp.ui.theme.PaddingDefault
 
 @Composable
 fun TopMixesSection(
-    songs: List<Song>
+    albums: List<Album>
 ) {
 
     Text(
@@ -24,8 +25,10 @@ fun TopMixesSection(
     Spacer(modifier = Modifier.size(PaddingDefault))
 
     LazyRow {
-        items(songs, key = { it.id }) {
+        items(albums, key = { it.id }) {
+            AlbumItem(
 
+            )
         }
     }
 }
