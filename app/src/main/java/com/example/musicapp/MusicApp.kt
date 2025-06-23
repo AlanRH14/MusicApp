@@ -22,7 +22,7 @@ class MusicApp : Application() {
             modules(
                 networkModule,
                 apiMapperModule,
-                dataStoreModule,
+                datas
                 repositoryModule,
                 dataStoreModule,
                 appModule
