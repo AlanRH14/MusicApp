@@ -32,5 +32,9 @@ fun HomeContent(
             songs = state.homData.continueListening,
             onItemClicked = {}
         )
+
+        TopMixesSection(
+            albums = state.homData.topMixes.
+        )
     }
 }

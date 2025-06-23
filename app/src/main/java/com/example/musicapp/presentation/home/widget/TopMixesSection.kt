@@ -14,7 +14,8 @@ import com.example.musicapp.ui.theme.PaddingDefault
 
 @Composable
 fun TopMixesSection(
-    albums: List<Album>
+    albums: List<Album>,
+    onAlbumClicked: (String) -> Unit
 ) {
 
     Text(
@@ -25,9 +26,10 @@ fun TopMixesSection(
     Spacer(modifier = Modifier.size(PaddingDefault))
 
     LazyRow {
-        items(albums, key = { it.id }) {
+        items(albums, key = { it.id }) { album ->
             AlbumItem(
-
+                album = album,
+                onAlbumClicked = onAlbumClicked
             )
         }
     }
