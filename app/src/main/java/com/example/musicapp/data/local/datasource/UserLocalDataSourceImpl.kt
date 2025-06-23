@@ -1,6 +1,6 @@
 package com.example.musicapp.data.local.datasource
 
-import com.example.musicapp.data.local.database.UserDao
+import com.example.musicapp.data.local.database.dao.UserDao
 import com.example.musicapp.data.local.database.entities.UserEntity
 
 class UserLocalDataSourceImpl(

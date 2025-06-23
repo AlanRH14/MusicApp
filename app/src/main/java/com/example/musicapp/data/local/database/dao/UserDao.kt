@@ -1,4 +1,4 @@
-package com.example.musicapp.data.local.database
+package com.example.musicapp.data.local.database.dao
 
 import androidx.room.Query
 import com.example.musicapp.data.local.database.entities.UserEntity
