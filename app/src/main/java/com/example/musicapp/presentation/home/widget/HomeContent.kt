@@ -32,14 +32,14 @@ fun HomeContent(
 
         ContinueListeningSection(
             songs = state.homData.continueListening,
-            onSongClicked = { onEvent(HomeUIEvent.GetHomeData) }
+            onSongClicked = { id -> onEvent(HomeUIEvent.OnSongClicked(id)) }
         )
 
         Spacer(modifier = Modifier.size(PaddingLarge))
 
         TopMixesSection(
             albums = state.homData.topMixes,
-            onAlbumClicked = { onEvent(HomeUIEvent.GetHomeData) }
+            onAlbumClicked = { id -> onEvent(HomeUIEvent.OnAlbumClicked(id)) }
         )
 
         Spacer(modifier = Modifier.size(PaddingLarge))
