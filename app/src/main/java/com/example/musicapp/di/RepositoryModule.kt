@@ -15,7 +15,7 @@ val repositoryModule = module {
             remoteDataSource = get(),
             localDataSource = get(),
             apiLoginMapper = get(named("LoginApiMapper")),
-            apiUserMapper = get(named(""))
+            apiUserMapper = get(named("UserApiMapper"))
         )
     }
 
