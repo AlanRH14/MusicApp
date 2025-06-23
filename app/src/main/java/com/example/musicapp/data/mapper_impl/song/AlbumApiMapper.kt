@@ -20,7 +20,7 @@ class AlbumApiMapper(
             genre = apiDto.genre ?: "",
             id = apiDto.id ?: "",
             releaseDate = apiDto.releaseDate ?: 0L,
-            song = apiDto.song?.map { song ->
+            songs = apiDto.song?.map { song ->
                 apiSongMapper.mapToDomain(apiDto = song)
             } ?: emptyList(),
             title = apiDto.title ?: ""
