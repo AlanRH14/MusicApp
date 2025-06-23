@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.musicapp.di.apiMapperModule
 import com.example.musicapp.di.appModule
 import com.example.musicapp.di.dataStoreModule
+import com.example.musicapp.di.datasourceModule
 import com.example.musicapp.di.networkModule
 import com.example.musicapp.di.repositoryModule
 import org.koin.android.ext.koin.androidContext
@@ -22,7 +23,7 @@ class MusicApp : Application() {
             modules(
                 networkModule,
                 apiMapperModule,
-                datas
+                datasourceModule,
                 repositoryModule,
                 dataStoreModule,
                 appModule

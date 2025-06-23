@@ -6,7 +6,7 @@ import com.example.musicapp.utils.DatabaseConstants.DATABASE
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-val DatabaseModule = module {
+val databaseModule = module {
     single {
         Room.databaseBuilder(
             androidContext(),
