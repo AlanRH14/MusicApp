@@ -14,10 +14,4 @@ internal sealed class ConstantsPreferences<T> : PreferencesKey<T> {
         override val defaultValue: Boolean = false
         override val preferencesKey: Preferences.Key<Boolean> = booleanPreferencesKey(key)
     }
-
-    data object UserPreferences : ConstantsPreferences<String>() {
-        override val key: String = USER_NAME_PREFERENCES_KEY
-        override val defaultValue: String = ""
-        override val preferencesKey: Preferences.Key<String> = stringPreferencesKey(key)
-    }
 }
