@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.musicapp.R
+import com.example.musicapp.domain.model.Home
 import com.example.musicapp.presentation.home.mvi.HomeState
 import com.example.musicapp.presentation.home.component.HomeHeader
 import com.example.musicapp.presentation.home.mvi.HomeUIEvent
@@ -43,5 +44,10 @@ fun HomeContent(
         )
 
         Spacer(modifier = Modifier.size(PaddingLarge))
+
+        RecommendationSection(
+            songs = state.homData.recommendedSong,
+            onRecommendationClicked = onEvent(HomeUIEvent.OnSongClicked())
+        )
     }
 }

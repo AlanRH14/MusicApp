@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.presentation.common.components.MusicAppImage
-import com.example.musicapp.presentation.home.component.AlbumItem
 import com.example.musicapp.ui.theme.PaddingDefault
 import com.example.musicapp.ui.theme.PaddingSmall
 import com.example.musicapp.ui.theme.Shapes
