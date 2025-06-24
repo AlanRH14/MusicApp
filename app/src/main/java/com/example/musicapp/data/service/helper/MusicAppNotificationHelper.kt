@@ -1,4 +1,4 @@
-package com.example.musicapp.data.service
+package com.example.musicapp.data.service.helper
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -11,6 +11,7 @@ import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
 import com.example.musicapp.MainActivity
 import com.example.musicapp.R
+import com.example.musicapp.data.service.MusicAppPlaybackService
 import com.example.musicapp.domain.model.Song
 
 class MusicAppNotificationHelper(private val mContext: Context) {
@@ -149,5 +150,9 @@ class MusicAppNotificationHelper(private val mContext: Context) {
         val notification = notificationBuilder.build()
         notification.flags = Notification.FLAG_NO_CLEAR or Notification.FLAG_ONGOING_EVENT
         callback(notification)
+    }
+
+    fun loadAlbumIcon() {
+
     }
 }
