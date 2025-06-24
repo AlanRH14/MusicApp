@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.example.musicapp.MainActivity
 import com.example.musicapp.R
 import com.example.musicapp.data.service.MusicAppPlaybackService
@@ -186,6 +187,17 @@ class MusicAppNotificationHelper(private val mContext: Context) {
                     callback(builder.build())
                 }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun updateNotification(notification: Notification) {
+        notification.flags = Notification.FLAG_NO_CLEAR or Notification.FLAG_ONGOING_EVENT
+        try {
+            NotificationManagerCompat.from(mContext).notify(NOTIFICATION_ID, notification)
+        } catch (e: SecurityException) {
+            e.printStackTrace()
         } catch (e: Exception) {
             e.printStackTrace()
         }
