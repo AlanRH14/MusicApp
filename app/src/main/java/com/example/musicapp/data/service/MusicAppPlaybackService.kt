@@ -236,6 +236,27 @@ class MusicAppPlaybackService : Service() {
         }
     }
 
+    fun pauseSong() {
+        try {
+            _player.update {
+                it.copy(
+                    isPlaying = false,
+                    currentPosition = exoPlayer.currentPosition,
+                    duration = exoPlayer.duration
+                )
+            }
+        } catch (e: Exception) {
+            _player.update {
+                it.copy(
+                    error = e.message,
+                    isBuffering = false,
+                    currentSong = null
+                )
+            }
+            e.printStackTrace()
+        }
+    }
+
     override fun onBind(intent: Intent?): IBinder {
         return binder
     }
