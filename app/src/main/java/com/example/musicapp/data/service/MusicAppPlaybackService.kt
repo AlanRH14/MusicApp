@@ -15,6 +15,36 @@ class MusicAppPlaybackService : Service() {
         const val ACTION_PREPARE_SONG = "com.example.musicapp.ACTION_PREPAPRE_SONG"
     }
 
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        return when (intent?.action) {
+            ACTION_PLAY -> {
+                0
+            }
+
+            ACTION_PAUSE -> {
+                0
+            }
+
+            ACTION_STOP -> {
+                0
+            }
+
+            ACTION_PREVIOUS -> {
+                0
+            }
+
+            ACTION_NEXT -> {
+                0
+            }
+
+            ACTION_PREPARE_SONG -> {
+                0
+            }
+
+            else -> 0
+        }
+    }
+
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
