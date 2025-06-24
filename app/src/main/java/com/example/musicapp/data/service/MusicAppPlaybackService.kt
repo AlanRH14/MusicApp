@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
+import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.media.session.MediaButtonReceiver
@@ -207,6 +208,12 @@ class MusicAppPlaybackService : Service() {
                 duration = song.duration.toLong()
             )
         }
+
+        val metaBuilder = MediaMetadataCompat.Builder()
+            .putString(MediaMetadataCompat.METADATA_KEY_TITLE, song.title)
+            .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, song.artist.name)
+            .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, song.duration.toLong())
+            .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, song.coverImage)
     }
 
     override fun onBind(intent: Intent?): IBinder {
