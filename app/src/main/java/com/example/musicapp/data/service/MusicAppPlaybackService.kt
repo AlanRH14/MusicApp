@@ -199,7 +199,14 @@ class MusicAppPlaybackService : Service() {
     }
 
     fun playSong(song: Song) {
-
+        _player.update {
+            it.copy(
+                isPlaying = true,
+                currentSong = song,
+                currentPosition = 0L,
+                duration = song.duration.toLong()
+            )
+        }
     }
 
     override fun onBind(intent: Intent?): IBinder {
