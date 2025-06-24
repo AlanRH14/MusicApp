@@ -213,7 +213,8 @@ class MusicAppPlaybackService : Service() {
             .putString(MediaMetadataCompat.METADATA_KEY_TITLE, song.title)
             .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, song.artist.name)
             .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, song.duration.toLong())
-            .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, song.coverImage)
+            .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON_URI, song.coverImage)
+            .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, song.id)
     }
 
     override fun onBind(intent: Intent?): IBinder {
