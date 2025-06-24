@@ -6,9 +6,12 @@ import android.content.Intent
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
+import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import androidx.core.net.toUri
 import androidx.media.session.MediaButtonReceiver
+import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import com.example.musicapp.data.service.helper.MusicAppNotificationHelper
@@ -45,7 +48,40 @@ class MusicAppPlaybackService : Service() {
     private lateinit var mediaSession: MediaSessionCompat
     private val notificationHelper: MusicAppNotificationHelper by inject()
 
-    val playerListener = object : Player.Listener {}
+    val playerListener = object : Player.Listener {
+        override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+            super.onPlayerStateChanged(playWhenReady, playbackState)
+
+            when(playbackState) {
+                Player.STATE_BUFFERING -> {
+                    _player.update {
+                        it.copy(
+                            isBuffering = true,
+                            isPlaying = false
+                        )
+                    }
+                }
+
+                Player.STATE_READY -> {
+                    _player.update {
+                        it.copy(
+                            isBuffering = false,
+                            isPlaying = playWhenReady
+                        )
+                    }
+                }
+
+                Player.STATE_ENDED -> {
+                    _player.update {
+                        it.copy(
+                            isBuffering = false,
+                            isPlaying = false
+                        )
+                    }
+                }
+            }
+        }
+    }
     val mediaSessionCallback = object : MediaSessionCompat.Callback() {}
 
     private val _player = MutableStateFlow(PlayerState())
@@ -162,14 +198,18 @@ class MusicAppPlaybackService : Service() {
         when (intent?.action) {
             ACTION_PLAY -> {
                 val song = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    intent.getParcelableExtra("my_key", Song::class.java)
+                    intent.getParcelableExtra("SONG", Song::class.java)
                 } else {
-                    intent.getParcelableExtra("my_key")
+                    intent.getParcelableExtra("SONG")
+                }
+
+                if (song != null) {
+                    playSong(song)
                 }
             }
 
             ACTION_PAUSE -> {
-                0
+                pauseSong()
             }
 
             ACTION_STOP -> {
@@ -192,6 +232,82 @@ class MusicAppPlaybackService : Service() {
         }
 
         return START_STICKY
+    }
+
+    fun playSong(song: Song) {
+        try {
+            _player.update {
+                it.copy(
+                    isPlaying = true,
+                    currentSong = song,
+                    currentPosition = 0L,
+                    duration = song.duration.toLong()
+                )
+            }
+
+            val metaBuilder = MediaMetadataCompat.Builder()
+                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, song.title)
+                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, song.artist.name)
+                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, song.duration.toLong())
+                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON_URI, song.coverImage)
+                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, song.id)
+
+            mediaSession.setMetadata(metaBuilder.build())
+            val mediaItem = MediaItem.fromUri(song.coverImage.toUri())
+            exoPlayer.setMediaItem(mediaItem)
+            exoPlayer.prepare()
+            exoPlayer.playWhenReady = true
+        } catch (e: Exception) {
+            _player.update {
+                it.copy(
+                    error = e.message,
+                    isBuffering = false,
+                    currentSong = null
+                )
+            }
+            e.printStackTrace()
+        }
+    }
+
+    fun pauseSong() {
+        try {
+            _player.update {
+                it.copy(
+                    isPlaying = false,
+                    currentPosition = exoPlayer.currentPosition,
+                    duration = exoPlayer.duration
+                )
+            }
+        } catch (e: Exception) {
+            _player.update {
+                it.copy(
+                    error = e.message,
+                    isBuffering = false,
+                    currentSong = null
+                )
+            }
+            e.printStackTrace()
+        }
+    }
+
+    fun resumeSong() {
+        try {
+            _player.update {
+                it.copy(
+                    isPlaying = true,
+                    currentPosition = exoPlayer.currentPosition,
+                    duration = exoPlayer.duration
+                )
+            }
+        } catch (e: Exception) {
+            _player.update {
+                it.copy(
+                    error = e.message,
+                    isBuffering = false,
+                    currentSong = null
+                )
+            }
+        }
     }
 
     override fun onBind(intent: Intent?): IBinder {
