@@ -202,27 +202,31 @@ class MusicAppPlaybackService : Service() {
     }
 
     fun playSong(song: Song) {
-        _player.update {
-            it.copy(
-                isPlaying = true,
-                currentSong = song,
-                currentPosition = 0L,
-                duration = song.duration.toLong()
-            )
+        try {
+            _player.update {
+                it.copy(
+                    isPlaying = true,
+                    currentSong = song,
+                    currentPosition = 0L,
+                    duration = song.duration.toLong()
+                )
+            }
+
+            val metaBuilder = MediaMetadataCompat.Builder()
+                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, song.title)
+                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, song.artist.name)
+                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, song.duration.toLong())
+                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON_URI, song.coverImage)
+                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, song.id)
+
+            mediaSession.setMetadata(metaBuilder.build())
+            val mediaItem = MediaItem.fromUri(song.coverImage.toUri())
+            exoPlayer.setMediaItem(mediaItem)
+            exoPlayer.prepare()
+            exoPlayer.playWhenReady = true
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
-        val metaBuilder = MediaMetadataCompat.Builder()
-            .putString(MediaMetadataCompat.METADATA_KEY_TITLE, song.title)
-            .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, song.artist.name)
-            .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, song.duration.toLong())
-            .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON_URI, song.coverImage)
-            .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, song.id)
-
-        mediaSession.setMetadata(metaBuilder.build())
-        val mediaItem = MediaItem.fromUri(song.coverImage.toUri())
-        exoPlayer.setMediaItem(mediaItem)
-        exoPlayer.prepare()
-        exoPlayer.playWhenReady = true
     }
 
     override fun onBind(intent: Intent?): IBinder {
