@@ -6,6 +6,8 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
@@ -152,7 +154,17 @@ class MusicAppNotificationHelper(private val mContext: Context) {
         callback(notification)
     }
 
-    fun loadAlbumIcon() {
-
+    fun loadAlbumIcon(
+        builder: NotificationCompat.Builder,
+        url: String,
+        function: (Notification) -> Unit
+    ) {
+        try {
+            val bitmap = BitmapFactory.decodeResource(mContext.resources, R.drawable.ic_profile)
+            builder.setLargeIcon(bitmap)
+            function(builder.build())
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }
