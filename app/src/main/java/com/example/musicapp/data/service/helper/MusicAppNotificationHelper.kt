@@ -6,7 +6,6 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.support.v4.media.session.MediaSessionCompat
@@ -46,7 +45,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
 
     fun createPlayerNotification(
         isPlaying: Boolean,
-        songDto: Song,
+        song: Song,
         mediasSession: MediaSessionCompat,
         callback: (Notification) -> Unit,
     ) {
@@ -62,8 +61,8 @@ class MusicAppNotificationHelper(private val mContext: Context) {
         )
 
         val notificationBuilder = NotificationCompat.Builder(mContext, CHANNEL_ID)
-            .setContentTitle(songDto.title)
-            .setContentText(songDto.artist.name)
+            .setContentTitle(song.title)
+            .setContentText(song.artist.name)
             .setSmallIcon(R.drawable.ic_profile)
             .setContentIntent(pendingIntent)
             .setStyle(
@@ -152,7 +151,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
         val notification = notificationBuilder.build()
         notification.flags = Notification.FLAG_NO_CLEAR or Notification.FLAG_ONGOING_EVENT
         callback(notification)
-        loadAlbumIcon(notificationBuilder, songDto.coverImage, callback)
+        loadAlbumIcon(notificationBuilder, song.coverImage, callback)
     }
 
     fun loadAlbumIcon(
