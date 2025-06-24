@@ -154,7 +154,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
         loadAlbumIcon(notificationBuilder, song.coverImage, callback)
     }
 
-    fun loadAlbumIcon(
+    private fun loadAlbumIcon(
         builder: NotificationCompat.Builder,
         url: String,
         function: (Notification) -> Unit
