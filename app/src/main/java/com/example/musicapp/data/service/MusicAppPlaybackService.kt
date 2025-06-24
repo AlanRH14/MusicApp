@@ -37,6 +37,15 @@ class MusicAppPlaybackService : Service() {
     val playerListener = object : Player.Listener {}
     val mediaSessionCallback = object : MediaSessionCompat.Callback() {}
 
+    override fun onCreate() {
+        super.onCreate()
+
+        exoPlayer = ExoPlayer.Builder(this).build().also {
+            it.playWhenReady = true
+            it.addListener(playerListener)
+        }
+    }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
             ACTION_PLAY -> {
