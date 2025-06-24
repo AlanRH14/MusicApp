@@ -4,12 +4,15 @@ import android.app.Notification
 import android.app.Service
 import android.content.Intent
 import android.os.Binder
+import android.os.Build
 import android.os.IBinder
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import androidx.media.session.MediaButtonReceiver
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import com.example.musicapp.data.service.helper.MusicAppNotificationHelper
+import com.example.musicapp.domain.model.Song
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -48,7 +51,8 @@ class MusicAppPlaybackService : Service() {
     private val _player = MutableStateFlow(PlayerState())
     val player = _player.asStateFlow()
 
-    var positionUpdateJob: Job? = null
+    private var positionUpdateJob: Job? = null
+    private var notificationJob: Job? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -92,7 +96,8 @@ class MusicAppPlaybackService : Service() {
     }
 
     var isForegroundService = false
-    val currentNotification = Notification
+    var currentNotification: Notification? = null
+
     fun startForegroundServiceIfNeeded() {
         val currentSong = player.value.currentSong ?: return
 
@@ -101,25 +106,66 @@ class MusicAppPlaybackService : Service() {
                 player.value.isPlaying,
                 currentSong,
                 mediaSession
-            ) {}
-            isForegroundService = true
+            ) {
+                try {
+                    currentNotification = it
+                    startForeground(
+                        MusicAppNotificationHelper.NOTIFICATION_ID,
+                        it
+                    )
+                    isForegroundService = true
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
         } else {
             updateNotification()
         }
     }
 
     fun stopForegroundServiceIfNeeded() {
-
+        if (isForegroundService) {
+            try {
+                mediaSession.isActive = false
+                stopForeground(STOP_FOREGROUND_REMOVE)
+                isForegroundService = false
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     fun updateNotification() {
-
+        notificationJob?.cancel()
+        notificationJob = serviceScope.launch {
+            delay(500)
+            notificationHelper.createPlayerNotification(
+                player.value.isPlaying,
+                player.value.currentSong ?: return@launch,
+                mediaSession
+            ) {
+                try {
+                    currentNotification = it
+                    notificationHelper.updateNotification(it)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (intent != null) {
+            MediaButtonReceiver.handleIntent(mediaSession, intent)
+        }
+
         when (intent?.action) {
             ACTION_PLAY -> {
-                0
+                val song = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    intent.getParcelableExtra("my_key", Song::class.java)
+                } else {
+                    intent.getParcelableExtra("my_key")
+                }
             }
 
             ACTION_PAUSE -> {
