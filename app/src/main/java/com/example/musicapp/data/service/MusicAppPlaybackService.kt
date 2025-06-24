@@ -58,6 +58,12 @@ class MusicAppPlaybackService : Service() {
                     ).build()
             )
         }
+
+
+    }
+
+    private fun startPositionUpdate() {
+
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
