@@ -13,8 +13,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 class MusicAppPlaybackService : Service() {
@@ -66,12 +69,23 @@ class MusicAppPlaybackService : Service() {
                     ).build()
             )
         }
-
-
     }
 
     private fun startPositionUpdate() {
-
+        positionUpdateJob?.cancel()
+        positionUpdateJob = serviceScope.launch {
+            while (true) {
+                if (exoPlayer.isPlaying) {
+                    _player.update {
+                        it.copy(
+                            currentPosition = exoPlayer.currentPosition,
+                            duration = exoPlayer.duration
+                        )
+                    }
+                    delay(1000)
+                }
+            }
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
