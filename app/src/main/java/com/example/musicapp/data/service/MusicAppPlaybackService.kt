@@ -220,7 +220,9 @@ class MusicAppPlaybackService : Service() {
 
         mediaSession.setMetadata(metaBuilder.build())
         val mediaItem = MediaItem.fromUri(song.coverImage.toUri())
+        exoPlayer.setMediaItem(mediaItem)
         exoPlayer.prepare()
+        exoPlayer.playWhenReady = true
     }
 
     override fun onBind(intent: Intent?): IBinder {
