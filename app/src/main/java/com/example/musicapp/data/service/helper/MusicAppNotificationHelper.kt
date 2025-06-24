@@ -1,4 +1,4 @@
-package com.example.musicapp.data.service
+package com.example.musicapp.data.service.helper
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -6,12 +6,21 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.example.musicapp.MainActivity
 import com.example.musicapp.R
+import com.example.musicapp.data.service.MusicAppPlaybackService
 import com.example.musicapp.domain.model.Song
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.net.URL
 
 class MusicAppNotificationHelper(private val mContext: Context) {
 
@@ -41,9 +50,11 @@ class MusicAppNotificationHelper(private val mContext: Context) {
         }
     }
 
+    val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+
     fun createPlayerNotification(
         isPlaying: Boolean,
-        songDto: Song,
+        song: Song,
         mediasSession: MediaSessionCompat,
         callback: (Notification) -> Unit,
     ) {
@@ -59,8 +70,8 @@ class MusicAppNotificationHelper(private val mContext: Context) {
         )
 
         val notificationBuilder = NotificationCompat.Builder(mContext, CHANNEL_ID)
-            .setContentTitle(songDto.title)
-            .setContentText(songDto.artist.name)
+            .setContentTitle(song.title)
+            .setContentText(song.artist.name)
             .setSmallIcon(R.drawable.ic_profile)
             .setContentIntent(pendingIntent)
             .setStyle(
@@ -149,5 +160,46 @@ class MusicAppNotificationHelper(private val mContext: Context) {
         val notification = notificationBuilder.build()
         notification.flags = Notification.FLAG_NO_CLEAR or Notification.FLAG_ONGOING_EVENT
         callback(notification)
+        loadAlbumIcon(notificationBuilder, song.coverImage, callback)
+    }
+
+    private fun loadAlbumIcon(
+        builder: NotificationCompat.Builder,
+        url: String,
+        callback: (Notification) -> Unit
+    ) {
+        try {
+            scope.launch {
+                val bitmap = withContext(Dispatchers.IO) {
+                    try {
+                        val uri = URL(url)
+                        val connection = uri.openConnection()
+                        connection.connect()
+                        val input = connection.getInputStream()
+                        BitmapFactory.decodeStream(input)
+                    } catch (e: Exception) {
+                        null
+                    }
+                }
+
+                bitmap?.let {
+                    builder.setLargeIcon(it)
+                    callback(builder.build())
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun updateNotification(notification: Notification) {
+        notification.flags = Notification.FLAG_NO_CLEAR or Notification.FLAG_ONGOING_EVENT
+        try {
+            NotificationManagerCompat.from(mContext).notify(NOTIFICATION_ID, notification)
+        } catch (e: SecurityException) {
+            e.printStackTrace()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }
