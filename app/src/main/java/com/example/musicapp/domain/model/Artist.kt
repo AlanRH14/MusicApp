@@ -1,5 +1,8 @@
 package com.example.musicapp.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Artist(
     val bio: String = "",
     val createdAt: Long = 0L,
