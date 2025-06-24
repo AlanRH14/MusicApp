@@ -9,7 +9,9 @@ import android.os.IBinder
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import androidx.core.net.toUri
 import androidx.media.session.MediaButtonReceiver
+import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import com.example.musicapp.data.service.helper.MusicAppNotificationHelper
@@ -217,6 +219,8 @@ class MusicAppPlaybackService : Service() {
             .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, song.id)
 
         mediaSession.setMetadata(metaBuilder.build())
+        val mediaItem = MediaItem.fromUri(song.coverImage.toUri())
+        exoPlayer.prepare()
     }
 
     override fun onBind(intent: Intent?): IBinder {
