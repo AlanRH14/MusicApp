@@ -2,6 +2,7 @@ package com.example.musicapp.data.service
 
 import android.app.Service
 import android.content.Intent
+import android.os.Binder
 import android.os.IBinder
 
 class MusicAppPlaybackService : Service() {
@@ -15,8 +16,14 @@ class MusicAppPlaybackService : Service() {
         const val ACTION_PREPARE_SONG = "com.example.musicapp.ACTION_PREPAPRE_SONG"
     }
 
+    inner class MusicBinder() : Binder() {
+        fun getService(): MusicAppPlaybackService = this@MusicAppPlaybackService
+    }
+
+    private val binder = MusicBinder()
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-         when (intent?.action) {
+        when (intent?.action) {
             ACTION_PLAY -> {
                 0
             }
@@ -47,7 +54,7 @@ class MusicAppPlaybackService : Service() {
         return START_STICKY
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
+    override fun onBind(intent: Intent?): IBinder {
+        return binder
     }
 }
