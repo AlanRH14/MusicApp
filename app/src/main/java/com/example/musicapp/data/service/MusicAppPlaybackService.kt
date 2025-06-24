@@ -16,7 +16,7 @@ class MusicAppPlaybackService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        return when (intent?.action) {
+         when (intent?.action) {
             ACTION_PLAY -> {
                 0
             }
@@ -43,6 +43,8 @@ class MusicAppPlaybackService : Service() {
 
             else -> 0
         }
+
+        return START_STICKY
     }
 
     override fun onBind(intent: Intent?): IBinder? {
