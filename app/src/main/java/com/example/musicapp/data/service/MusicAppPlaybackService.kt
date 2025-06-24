@@ -215,6 +215,8 @@ class MusicAppPlaybackService : Service() {
             .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, song.duration.toLong())
             .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON_URI, song.coverImage)
             .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, song.id)
+
+        mediaSession.setMetadata(metaBuilder.build())
     }
 
     override fun onBind(intent: Intent?): IBinder {
