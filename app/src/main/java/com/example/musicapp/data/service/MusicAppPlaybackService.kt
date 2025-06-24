@@ -4,6 +4,7 @@ import android.app.Notification
 import android.app.Service
 import android.content.Intent
 import android.os.Binder
+import android.os.Build
 import android.os.IBinder
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
@@ -11,6 +12,7 @@ import androidx.media.session.MediaButtonReceiver
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import com.example.musicapp.data.service.helper.MusicAppNotificationHelper
+import com.example.musicapp.domain.model.Song
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -159,7 +161,11 @@ class MusicAppPlaybackService : Service() {
 
         when (intent?.action) {
             ACTION_PLAY -> {
-                0
+                val song = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    intent.getParcelableExtra("my_key", Song::class.java)
+                } else {
+                    intent.getParcelableExtra("my_key")
+                }
             }
 
             ACTION_PAUSE -> {
