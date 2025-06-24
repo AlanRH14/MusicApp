@@ -18,14 +18,3 @@ data class Song(
     val title: String,
     val updateAt: Long,
 ): Parcelable
-
-@Parcelize
-data class MyData(val name: String, val age: Int) : Parcelable {
-    override fun describeContents(): Int {
-        TODO("Not yet implemented")
-    }
-
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        TODO("Not yet implemented")
-    }
-}
