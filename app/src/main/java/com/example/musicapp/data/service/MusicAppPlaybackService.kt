@@ -48,7 +48,7 @@ class MusicAppPlaybackService : Service() {
     private val _player = MutableStateFlow(PlayerState())
     val player = _player.asStateFlow()
 
-    var positionUpdateJob: Job? = null
+    private var positionUpdateJob: Job? = null
 
     override fun onCreate() {
         super.onCreate()
