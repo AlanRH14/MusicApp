@@ -152,6 +152,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
         val notification = notificationBuilder.build()
         notification.flags = Notification.FLAG_NO_CLEAR or Notification.FLAG_ONGOING_EVENT
         callback(notification)
+        loadAlbumIcon(notificationBuilder, songDto.coverImage, callback)
     }
 
     fun loadAlbumIcon(
