@@ -90,8 +90,16 @@ class MusicAppPlaybackService : Service() {
         }
     }
 
-    fun startForegroundServiceIfNeeded() {
+    val isForegroundService = false
 
+    fun startForegroundServiceIfNeeded() {
+        val currentSong = player.value.currentSong ?: return
+
+        if (!isForegroundService) {
+
+        } else {
+            updateServiceGroup()
+        }
     }
 
     fun stopForegroundServiceIfNeeded() {
