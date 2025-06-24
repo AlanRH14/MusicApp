@@ -90,7 +90,7 @@ class MusicAppPlaybackService : Service() {
         }
     }
 
-    val isForegroundService = false
+    var isForegroundService = false
 
     fun startForegroundServiceIfNeeded() {
         val currentSong = player.value.currentSong ?: return
@@ -101,6 +101,7 @@ class MusicAppPlaybackService : Service() {
                 currentSong,
                 mediaSession
             ) {}
+            isForegroundService = true
         } else {
             updateNotification()
         }
