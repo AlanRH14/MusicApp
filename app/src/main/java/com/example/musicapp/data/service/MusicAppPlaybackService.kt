@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import android.support.v4.media.session.MediaSessionCompat
+import android.support.v4.media.session.PlaybackStateCompat
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import com.example.musicapp.data.service.helper.MusicAppNotificationHelper
@@ -43,6 +44,19 @@ class MusicAppPlaybackService : Service() {
         exoPlayer = ExoPlayer.Builder(this).build().also {
             it.playWhenReady = true
             it.addListener(playerListener)
+        }
+
+        mediaSession = MediaSessionCompat(this, "MusicAppPlaybackService").also {
+            it.isActive = true
+            it.setCallback(mediaSessionCallback)
+            it.setPlaybackState(
+                PlaybackStateCompat.Builder().setState(PlaybackStateCompat.STATE_NONE, 0, 0F)
+                    .setActions(
+                        PlaybackStateCompat.ACTION_PLAY or
+                                PlaybackStateCompat.ACTION_PAUSE or
+                                PlaybackStateCompat.ACTION_STOP or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
+                    ).build()
+            )
         }
     }
 
