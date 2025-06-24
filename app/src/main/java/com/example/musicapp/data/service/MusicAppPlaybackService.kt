@@ -48,7 +48,40 @@ class MusicAppPlaybackService : Service() {
     private lateinit var mediaSession: MediaSessionCompat
     private val notificationHelper: MusicAppNotificationHelper by inject()
 
-    val playerListener = object : Player.Listener {}
+    val playerListener = object : Player.Listener {
+        override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+            super.onPlayerStateChanged(playWhenReady, playbackState)
+
+            when(playbackState) {
+                Player.STATE_BUFFERING -> {
+                    _player.update {
+                        it.copy(
+                            isBuffering = true,
+                            isPlaying = false
+                        )
+                    }
+                }
+
+                Player.STATE_READY -> {
+                    _player.update {
+                        it.copy(
+                            isBuffering = false,
+                            isPlaying = playWhenReady
+                        )
+                    }
+                }
+
+                Player.STATE_ENDED -> {
+                    _player.update {
+                        it.copy(
+                            isBuffering = false,
+                            isPlaying = false
+                        )
+                    }
+                }
+            }
+        }
+    }
     val mediaSessionCallback = object : MediaSessionCompat.Callback() {}
 
     private val _player = MutableStateFlow(PlayerState())
