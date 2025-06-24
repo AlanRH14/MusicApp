@@ -14,6 +14,12 @@ import com.example.musicapp.MainActivity
 import com.example.musicapp.R
 import com.example.musicapp.data.service.MusicAppPlaybackService
 import com.example.musicapp.domain.model.Song
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.net.URL
 
 class MusicAppNotificationHelper(private val mContext: Context) {
 
@@ -42,6 +48,8 @@ class MusicAppNotificationHelper(private val mContext: Context) {
             }
         }
     }
+
+    val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     fun createPlayerNotification(
         isPlaying: Boolean,
@@ -157,12 +165,27 @@ class MusicAppNotificationHelper(private val mContext: Context) {
     private fun loadAlbumIcon(
         builder: NotificationCompat.Builder,
         url: String,
-        function: (Notification) -> Unit
+        callback: (Notification) -> Unit
     ) {
         try {
-            val bitmap = BitmapFactory.decodeResource(mContext.resources, R.drawable.ic_profile)
-            builder.setLargeIcon(bitmap)
-            function(builder.build())
+            scope.launch {
+                val bitmap = withContext(Dispatchers.IO) {
+                    try {
+                        val uri = URL(url)
+                        val connection = uri.openConnection()
+                        connection.connect()
+                        val input = connection.getInputStream()
+                        BitmapFactory.decodeStream(input)
+                    } catch (e: Exception) {
+                        null
+                    }
+                }
+
+                bitmap?.let {
+                    builder.setLargeIcon(it)
+                    callback(builder.build())
+                }
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
