@@ -90,6 +90,14 @@ class MusicAppPlaybackService : Service() {
         }
     }
 
+    fun startForegroundServiceIfNeeded() {
+
+    }
+
+    fun stopForegroundServiceIfNeeded() {
+
+    }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
             ACTION_PLAY -> {
