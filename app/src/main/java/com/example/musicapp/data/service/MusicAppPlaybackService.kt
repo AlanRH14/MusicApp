@@ -7,6 +7,7 @@ import android.os.Binder
 import android.os.IBinder
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import androidx.media.session.MediaButtonReceiver
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import com.example.musicapp.data.service.helper.MusicAppNotificationHelper
@@ -144,7 +145,7 @@ class MusicAppPlaybackService : Service() {
                 try {
                     currentNotification = it
                     notificationHelper.updateNotification(it)
-                }catch (e: Exception) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -152,6 +153,10 @@ class MusicAppPlaybackService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (intent != null) {
+            MediaButtonReceiver.handleIntent(mediaSession, intent)
+        }
+
         when (intent?.action) {
             ACTION_PLAY -> {
                 0
