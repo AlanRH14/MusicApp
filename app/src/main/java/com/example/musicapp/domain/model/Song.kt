@@ -5,7 +5,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
-@Serializable
+@Parcelize
 data class Song(
     val artist: Artist,
     val audioUrl: String,
@@ -17,7 +17,7 @@ data class Song(
     val releaseDate: Long,
     val title: String,
     val updateAt: Long,
-)
+): Parcelable
 
 @Parcelize
 data class MyData(val name: String, val age: Int) : Parcelable {
