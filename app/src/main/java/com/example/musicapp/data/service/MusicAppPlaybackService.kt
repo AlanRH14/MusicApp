@@ -207,11 +207,6 @@ class MusicAppPlaybackService : Service() {
                 duration = song.duration.toLong()
             )
         }
-
-        exoPlayer.setMediaItem(song.audioUrl)
-        exoPlayer.prepare()
-        exoPlayer.playWhenReady = true
-        startForegroundServiceIfNeeded()
     }
 
     override fun onBind(intent: Intent?): IBinder {
