@@ -98,11 +98,15 @@ class MusicAppPlaybackService : Service() {
         if (!isForegroundService) {
 
         } else {
-            updateServiceGroup()
+            updateNotification()
         }
     }
 
     fun stopForegroundServiceIfNeeded() {
+
+    }
+
+    fun updateNotification() {
 
     }
 
