@@ -176,7 +176,7 @@ class MusicAppPlaybackService : Service() {
             }
 
             ACTION_PAUSE -> {
-                0
+                pauseSong()
             }
 
             ACTION_STOP -> {
