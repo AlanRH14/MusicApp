@@ -133,7 +133,22 @@ class MusicAppPlaybackService : Service() {
     }
 
     fun updateNotification() {
-
+        notificationJob?.cancel()
+        notificationJob = serviceScope.launch {
+            delay(500)
+            notificationHelper.createPlayerNotification(
+                player.value.isPlaying,
+                player.value.currentSong ?: return@launch,
+                mediaSession
+            ) {
+                try {
+                    currentNotification = it
+                    notificationHelper.updateNotification(it)
+                }catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
