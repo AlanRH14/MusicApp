@@ -1,5 +1,6 @@
 package com.example.musicapp.data.service
 
+import android.app.Notification
 import android.app.Service
 import android.content.Intent
 import android.os.Binder
@@ -91,7 +92,7 @@ class MusicAppPlaybackService : Service() {
     }
 
     var isForegroundService = false
-
+    val currentNotification = Notification
     fun startForegroundServiceIfNeeded() {
         val currentSong = player.value.currentSong ?: return
 
