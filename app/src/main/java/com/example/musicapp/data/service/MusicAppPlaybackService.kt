@@ -162,9 +162,9 @@ class MusicAppPlaybackService : Service() {
         when (intent?.action) {
             ACTION_PLAY -> {
                 val song = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    intent.getParcelableExtra("my_key", Song::class.java)
+                    intent.getParcelableExtra("SONG", Song::class.java)
                 } else {
-                    intent.getParcelableExtra("my_key")
+                    intent.getParcelableExtra("SONG")
                 }
             }
 
