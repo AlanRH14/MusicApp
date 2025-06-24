@@ -225,6 +225,9 @@ class MusicAppPlaybackService : Service() {
             exoPlayer.prepare()
             exoPlayer.playWhenReady = true
         } catch (e: Exception) {
+            _player.update {
+                it.copy()
+            }
             e.printStackTrace()
         }
     }
