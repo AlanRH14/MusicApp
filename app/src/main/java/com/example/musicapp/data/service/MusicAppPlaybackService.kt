@@ -226,7 +226,11 @@ class MusicAppPlaybackService : Service() {
             exoPlayer.playWhenReady = true
         } catch (e: Exception) {
             _player.update {
-                it.copy()
+                it.copy(
+                    error = e.message,
+                    isBuffering = false,
+                    currentSong = null
+                )
             }
             e.printStackTrace()
         }
