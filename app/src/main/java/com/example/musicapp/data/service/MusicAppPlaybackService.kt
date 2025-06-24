@@ -113,9 +113,7 @@ class MusicAppPlaybackService : Service() {
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
-
             }
-
         } else {
             updateNotification()
         }
