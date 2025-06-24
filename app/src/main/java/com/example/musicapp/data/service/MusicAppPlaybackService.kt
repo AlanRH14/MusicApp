@@ -260,10 +260,20 @@ class MusicAppPlaybackService : Service() {
     fun resumeSong() {
         try {
             _player.update {
-                it.copy()
+                it.copy(
+                    isPlaying = true,
+                    currentPosition = exoPlayer.currentPosition,
+                    duration = exoPlayer.duration
+                )
             }
         } catch (e: Exception) {
-
+            _player.update {
+                it.copy(
+                    error = e.message,
+                    isBuffering = false,
+                    currentSong = null
+                )
+            }
         }
     }
 
