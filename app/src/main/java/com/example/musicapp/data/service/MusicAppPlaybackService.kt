@@ -12,6 +12,8 @@ import com.example.musicapp.data.service.helper.MusicAppNotificationHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import org.koin.android.ext.android.inject
 
 class MusicAppPlaybackService : Service() {
@@ -37,6 +39,9 @@ class MusicAppPlaybackService : Service() {
 
     val playerListener = object : Player.Listener {}
     val mediaSessionCallback = object : MediaSessionCompat.Callback() {}
+
+    private val _player = MutableStateFlow(PlayerState())
+    val player = _player.asStateFlow()
 
     override fun onCreate() {
         super.onCreate()
