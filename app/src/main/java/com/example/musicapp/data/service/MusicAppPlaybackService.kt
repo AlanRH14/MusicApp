@@ -96,7 +96,11 @@ class MusicAppPlaybackService : Service() {
         val currentSong = player.value.currentSong ?: return
 
         if (!isForegroundService) {
-
+            notificationHelper.createPlayerNotification(
+                player.value.isPlaying,
+                currentSong,
+                mediaSession
+            ) {}
         } else {
             updateNotification()
         }
