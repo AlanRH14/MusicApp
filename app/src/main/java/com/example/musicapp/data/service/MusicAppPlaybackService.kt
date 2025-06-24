@@ -4,10 +4,13 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
+import android.support.v4.media.session.MediaSessionCompat
 import androidx.media3.exoplayer.ExoPlayer
+import com.example.musicapp.data.service.helper.MusicAppNotificationHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import org.koin.android.ext.android.inject
 
 class MusicAppPlaybackService : Service() {
 
@@ -27,6 +30,8 @@ class MusicAppPlaybackService : Service() {
     private val binder = MusicBinder()
     private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private lateinit var exoPlayer: ExoPlayer
+    private lateinit var mediaSession: MediaSessionCompat
+    private val notificationHelper: MusicAppNotificationHelper by inject()
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
