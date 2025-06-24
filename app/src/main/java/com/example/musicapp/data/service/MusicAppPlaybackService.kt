@@ -257,6 +257,16 @@ class MusicAppPlaybackService : Service() {
         }
     }
 
+    fun resumeSong() {
+        try {
+            _player.update {
+                it.copy()
+            }
+        } catch (e: Exception) {
+
+        }
+    }
+
     override fun onBind(intent: Intent?): IBinder {
         return binder
     }
