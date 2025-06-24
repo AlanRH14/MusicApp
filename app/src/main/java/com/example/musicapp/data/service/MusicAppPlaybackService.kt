@@ -92,7 +92,8 @@ class MusicAppPlaybackService : Service() {
     }
 
     var isForegroundService = false
-    val currentNotification = Notification
+    var currentNotification: Notification? = null
+
     fun startForegroundServiceIfNeeded() {
         val currentSong = player.value.currentSong ?: return
 
@@ -101,8 +102,20 @@ class MusicAppPlaybackService : Service() {
                 player.value.isPlaying,
                 currentSong,
                 mediaSession
-            ) {}
-            isForegroundService = true
+            ) {
+                try {
+                    currentNotification = it
+                    startForeground(
+                        MusicAppNotificationHelper.NOTIFICATION_ID,
+                        it
+                    )
+                    isForegroundService = true
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            }
+
         } else {
             updateNotification()
         }
