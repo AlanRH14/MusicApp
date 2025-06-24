@@ -166,6 +166,10 @@ class MusicAppPlaybackService : Service() {
                 } else {
                     intent.getParcelableExtra("SONG")
                 }
+
+                if (song != null) {
+                    playSong(song)
+                }
             }
 
             ACTION_PAUSE -> {
@@ -192,6 +196,10 @@ class MusicAppPlaybackService : Service() {
         }
 
         return START_STICKY
+    }
+
+    fun playSong(song: Song) {
+
     }
 
     override fun onBind(intent: Intent?): IBinder {
