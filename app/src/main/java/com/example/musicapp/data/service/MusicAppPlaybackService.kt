@@ -49,6 +49,7 @@ class MusicAppPlaybackService : Service() {
     val player = _player.asStateFlow()
 
     private var positionUpdateJob: Job? = null
+    private var notificationJob: Job? = null
 
     override fun onCreate() {
         super.onCreate()
