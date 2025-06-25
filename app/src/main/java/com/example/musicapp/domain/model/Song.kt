@@ -5,8 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Song(
-    val artist: Artist,
-    val audioUrl: String,
+    val artist: Artist = Artist(),
+    val audioUrl: String = "",
     val coverImage: String,
     val createdAt: Long,
     val duration: Int,
