@@ -82,6 +82,8 @@ class MusicAppPlaybackService : Service() {
                         )
                     }
                 }
+
+                else -> Unit
             }
         }
     }
