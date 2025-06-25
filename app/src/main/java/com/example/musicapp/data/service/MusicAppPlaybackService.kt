@@ -103,7 +103,15 @@ class MusicAppPlaybackService : Service() {
     }
 
     private fun updateMediaSessionState() {
-
+        if (exoPlayer.isPlaying || _player.value.currentSong != null) {
+            if (!mediaSession.isActive) {
+                mediaSession.isActive = true
+            }
+        } else {
+            if (mediaSession.isActive) {
+                mediaSession.isActive = false
+            }
+        }
     }
 
     val mediaSessionCallback = object : MediaSessionCompat.Callback() {}
