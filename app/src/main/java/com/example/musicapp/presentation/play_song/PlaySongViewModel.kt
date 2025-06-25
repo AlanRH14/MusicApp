@@ -15,6 +15,8 @@ class PlaySongViewModel() : ViewModel() {
     val effect = _effect.asSharedFlow()
 
     fun onEvent(event: PlaySongUIEvent) {
-
+        when(event) {
+            else -> Unit
+        }
     }
 }
