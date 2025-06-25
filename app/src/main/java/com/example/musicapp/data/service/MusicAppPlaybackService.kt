@@ -47,6 +47,12 @@ class MusicAppPlaybackService : Service() {
     private lateinit var exoPlayer: ExoPlayer
     private lateinit var mediaSession: MediaSessionCompat
     private val notificationHelper: MusicAppNotificationHelper by inject()
+    private val _player = MutableStateFlow(PlayerState())
+    val player = _player.asStateFlow()
+    private var positionUpdateJob: Job? = null
+    private var notificationJob: Job? = null
+    var isForegroundService = false
+    var currentNotification: Notification? = null
 
     val playerListener = object : Player.Listener {
         override fun onPlaybackStateChanged(playbackState: Int) {
@@ -171,12 +177,6 @@ class MusicAppPlaybackService : Service() {
         }
     }
 
-    private val _player = MutableStateFlow(PlayerState())
-    val player = _player.asStateFlow()
-
-    private var positionUpdateJob: Job? = null
-    private var notificationJob: Job? = null
-
     override fun onCreate() {
         super.onCreate()
 
@@ -217,9 +217,6 @@ class MusicAppPlaybackService : Service() {
             }
         }
     }
-
-    var isForegroundService = false
-    var currentNotification: Notification? = null
 
     fun startForegroundServiceIfNeeded() {
         val currentSong = player.value.currentSong ?: return
