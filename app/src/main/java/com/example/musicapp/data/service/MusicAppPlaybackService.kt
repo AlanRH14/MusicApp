@@ -49,9 +49,7 @@ class MusicAppPlaybackService : Service() {
     private val notificationHelper: MusicAppNotificationHelper by inject()
 
     val playerListener = object : Player.Listener {
-        override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-            super.onPlayerStateChanged(playWhenReady, playbackState)
-
+        override fun onPlaybackStateChanged(playbackState: Int) {
             when(playbackState) {
                 Player.STATE_BUFFERING -> {
                     _player.update {
