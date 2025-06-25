@@ -55,7 +55,8 @@ class MusicAppPlaybackService : Service() {
                     _player.update {
                         it.copy(
                             isBuffering = true,
-                            isPlaying = false
+                            currentPosition = exoPlayer.currentPosition,
+                            duration = exoPlayer.duration
                         )
                     }
                 }
@@ -64,7 +65,8 @@ class MusicAppPlaybackService : Service() {
                     _player.update {
                         it.copy(
                             isBuffering = false,
-                            isPlaying = playWhenReady
+                            currentPosition = exoPlayer.currentPosition,
+                            duration = exoPlayer.duration
                         )
                     }
                 }
@@ -73,7 +75,8 @@ class MusicAppPlaybackService : Service() {
                     _player.update {
                         it.copy(
                             isBuffering = false,
-                            isPlaying = false
+                            currentPosition = exoPlayer.currentPosition,
+                            duration = exoPlayer.duration
                         )
                     }
                 }
