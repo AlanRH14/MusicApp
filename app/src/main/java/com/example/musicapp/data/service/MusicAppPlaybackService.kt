@@ -89,9 +89,21 @@ class MusicAppPlaybackService : Service() {
                             duration = 0L
                         )
                     }
+                    updatePlaybackState(PlaybackStateCompat.STATE_STOPPED)
+                    updateMediaSessionState()
                 }
 
-                else -> Unit
+                Player.STATE_IDLE -> {
+                    _player.update {
+                        it.copy(
+                            isBuffering = false,
+                            currentPosition = 0L,
+                            duration = 0L
+                        )
+                    }
+                    updatePlaybackState(PlaybackStateCompat.STATE_NONE)
+                    updateMediaSessionState()
+                }
             }
         }
     }
@@ -122,7 +134,15 @@ class MusicAppPlaybackService : Service() {
         }
     }
 
-    val mediaSessionCallback = object : MediaSessionCompat.Callback() {}
+    val mediaSessionCallback = object : MediaSessionCompat.Callback() {
+        override fun onPlay() {
+            super.onPlay()
+        }
+
+        override fun onPause() {
+            super.onPause()
+        }
+    }
 
     private val _player = MutableStateFlow(PlayerState())
     val player = _player.asStateFlow()
