@@ -1,10 +1,10 @@
 package com.example.musicapp.data.remote.api
 
+import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.model.reponse.HomeResponse
 import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.reponse.LoginResponse
 import com.example.musicapp.data.model.request.RegisterRequest
-import com.example.musicapp.domain.model.Song
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -32,5 +32,5 @@ interface ApiService {
     @GET("/songs/{id}")
     suspend fun getSongByID(
         @Path("id") id: String
-    ): Response<Song>
+    ): Response<SongDto>
 }
