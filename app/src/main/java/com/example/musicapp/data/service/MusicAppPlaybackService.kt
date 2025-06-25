@@ -59,7 +59,7 @@ class MusicAppPlaybackService : Service() {
                             duration = exoPlayer.duration
                         )
                     }
-                    updatePlaybackState()
+                    updatePlaybackState(PlaybackStateCompat.STATE_BUFFERING)
                     updateMediaSessionState()
                 }
 
@@ -88,8 +88,13 @@ class MusicAppPlaybackService : Service() {
         }
     }
 
-    private fun updatePlaybackState() {
-
+    private fun updatePlaybackState(stateBuffering: Int) {
+        PlaybackStateCompat.Builder().setState(stateBuffering, exoPlayer.currentPosition, 1F)
+            .setActions(
+                PlaybackStateCompat.ACTION_PLAY or
+                        PlaybackStateCompat.ACTION_PAUSE or
+                        PlaybackStateCompat.ACTION_STOP or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
+            ).build()
     }
 
     private fun updateMediaSessionState() {
