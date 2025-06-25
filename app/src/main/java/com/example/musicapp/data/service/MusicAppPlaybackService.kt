@@ -232,9 +232,7 @@ class MusicAppPlaybackService : Service() {
                 }
             }
 
-            ACTION_PAUSE -> {
-                pauseSong()
-            }
+            ACTION_PAUSE -> pauseSong()
 
             ACTION_STOP -> {
                 0
