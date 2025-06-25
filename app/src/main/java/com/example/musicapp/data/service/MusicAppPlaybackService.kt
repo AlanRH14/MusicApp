@@ -50,7 +50,7 @@ class MusicAppPlaybackService : Service() {
 
     val playerListener = object : Player.Listener {
         override fun onPlaybackStateChanged(playbackState: Int) {
-            when(playbackState) {
+            when (playbackState) {
                 Player.STATE_BUFFERING -> {
                     _player.update {
                         it.copy(
@@ -60,6 +60,7 @@ class MusicAppPlaybackService : Service() {
                         )
                     }
                     updatePlaybackState()
+                    updateMediaSessionState()
                 }
 
                 Player.STATE_READY -> {
@@ -84,9 +85,15 @@ class MusicAppPlaybackService : Service() {
             }
         }
     }
+
     private fun updatePlaybackState() {
 
     }
+
+    private fun updateMediaSessionState() {
+
+    }
+
     val mediaSessionCallback = object : MediaSessionCompat.Callback() {}
 
     private val _player = MutableStateFlow(PlayerState())
