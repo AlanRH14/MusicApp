@@ -59,6 +59,7 @@ class MusicAppPlaybackService : Service() {
                             duration = exoPlayer.duration
                         )
                     }
+                    updatePlaybackState()
                 }
 
                 Player.STATE_READY -> {
@@ -82,6 +83,9 @@ class MusicAppPlaybackService : Service() {
                 }
             }
         }
+    }
+    private fun updatePlaybackState() {
+
     }
     val mediaSessionCallback = object : MediaSessionCompat.Callback() {}
 
