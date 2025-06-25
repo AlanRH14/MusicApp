@@ -75,8 +75,8 @@ class MusicAppPlaybackService : Service() {
                     _player.update {
                         it.copy(
                             isBuffering = false,
-                            currentPosition = exoPlayer.currentPosition,
-                            duration = exoPlayer.duration
+                            currentPosition = 0L,
+                            duration = 0L
                         )
                     }
                 }
