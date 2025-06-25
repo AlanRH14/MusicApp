@@ -66,10 +66,18 @@ class MusicAppPlaybackService : Service() {
                 Player.STATE_READY -> {
                     _player.update {
                         it.copy(
-                            isBuffering = false,
+                            isBuffering = exoPlayer.isPlaying,
                             currentPosition = exoPlayer.currentPosition,
-                            duration = exoPlayer.duration
+                            duration = exoPlayer.duration,
+                            error = null
                         )
+                    }
+                    if (exoPlayer.isPlaying) {
+                        updatePlaybackState(PlaybackStateCompat.STATE_PLAYING)
+                        updateMediaSessionState()
+                    } else {
+                        updatePlaybackState(PlaybackStateCompat.STATE_PAUSED)
+                        updateMediaSessionState()
                     }
                 }
 
