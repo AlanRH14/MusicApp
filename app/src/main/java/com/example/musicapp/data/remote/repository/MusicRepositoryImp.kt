@@ -7,7 +7,7 @@ import com.example.musicapp.domain.repository.MusicRepository
 
 class MusicRepositoryImp(
     private val apiService: ApiService,
-): MusicRepository {
+) : MusicRepository {
 
     override suspend fun getSongById(): Resource<Song> {
         Resource.Loading
@@ -15,12 +15,14 @@ class MusicRepositoryImp(
         return try {
             val response = apiService.getSongByID("")
             if (response.isSuccessful) {
-                response.body()?.let {
-
+                response.body()?.let { song ->
+                    Resource.Success(Song())
                 } ?: Resource.Success(Song())
             } else {
-                rE
+                throw Exception("Get song by ID failed")
             }
-        } catch (e: Exception)
+        } catch (e: Exception) {
+            Resource.Error(message = "Error: ${e.message}")
+        }
     }
 }
