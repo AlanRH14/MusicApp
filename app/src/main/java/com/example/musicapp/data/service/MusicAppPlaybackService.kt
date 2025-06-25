@@ -73,12 +73,12 @@ class MusicAppPlaybackService : Service() {
                         )
                     }
                     if (exoPlayer.isPlaying) {
+                        startForegroundServiceIfNeeded()
                         updatePlaybackState(PlaybackStateCompat.STATE_PLAYING)
-                        updateMediaSessionState()
                     } else {
                         updatePlaybackState(PlaybackStateCompat.STATE_PAUSED)
-                        updateMediaSessionState()
                     }
+                    updateMediaSessionState()
                 }
 
                 Player.STATE_ENDED -> {
@@ -136,11 +136,38 @@ class MusicAppPlaybackService : Service() {
 
     val mediaSessionCallback = object : MediaSessionCompat.Callback() {
         override fun onPlay() {
-            super.onPlay()
+            resumeSong()
         }
 
         override fun onPause() {
-            super.onPause()
+            pauseSong()
+        }
+
+        override fun onStop() {
+            super.onStop()
+        }
+
+        override fun onSkipToNext() {
+            super.onSkipToNext()
+        }
+
+        override fun onSkipToPrevious() {
+            super.onSkipToPrevious()
+        }
+
+        override fun onSeekTo(pos: Long) {
+            super.onSeekTo(pos)
+            exoPlayer.seekTo(pos)
+            _player.update {
+                it.copy(
+                    currentPosition = pos,
+                    duration = exoPlayer.duration
+                )
+            }
+        }
+
+        override fun onMediaButtonEvent(mediaButtonEvent: Intent?): Boolean {
+            return super.onMediaButtonEvent(mediaButtonEvent)
         }
     }
 
@@ -349,6 +376,7 @@ class MusicAppPlaybackService : Service() {
                     duration = exoPlayer.duration
                 )
             }
+            startForegroundServiceIfNeeded()
         } catch (e: Exception) {
             _player.update {
                 it.copy(
