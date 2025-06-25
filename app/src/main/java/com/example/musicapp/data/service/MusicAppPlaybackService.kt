@@ -47,48 +47,135 @@ class MusicAppPlaybackService : Service() {
     private lateinit var exoPlayer: ExoPlayer
     private lateinit var mediaSession: MediaSessionCompat
     private val notificationHelper: MusicAppNotificationHelper by inject()
+    private val _player = MutableStateFlow(PlayerState())
+    val player = _player.asStateFlow()
+    private var positionUpdateJob: Job? = null
+    private var notificationJob: Job? = null
+    var isForegroundService = false
+    var currentNotification: Notification? = null
 
     val playerListener = object : Player.Listener {
-        override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-            super.onPlayerStateChanged(playWhenReady, playbackState)
-
-            when(playbackState) {
+        override fun onPlaybackStateChanged(playbackState: Int) {
+            when (playbackState) {
                 Player.STATE_BUFFERING -> {
                     _player.update {
                         it.copy(
                             isBuffering = true,
-                            isPlaying = false
+                            currentPosition = exoPlayer.currentPosition,
+                            duration = exoPlayer.duration
                         )
                     }
+                    updatePlaybackState(PlaybackStateCompat.STATE_BUFFERING)
+                    updateMediaSessionState()
                 }
 
                 Player.STATE_READY -> {
                     _player.update {
                         it.copy(
-                            isBuffering = false,
-                            isPlaying = playWhenReady
+                            isBuffering = exoPlayer.isPlaying,
+                            currentPosition = exoPlayer.currentPosition,
+                            duration = exoPlayer.duration,
+                            error = null
                         )
                     }
+                    if (exoPlayer.isPlaying) {
+                        startForegroundServiceIfNeeded()
+                        updatePlaybackState(PlaybackStateCompat.STATE_PLAYING)
+                    } else {
+                        updatePlaybackState(PlaybackStateCompat.STATE_PAUSED)
+                    }
+                    updateMediaSessionState()
                 }
 
                 Player.STATE_ENDED -> {
                     _player.update {
                         it.copy(
                             isBuffering = false,
-                            isPlaying = false
+                            currentPosition = 0L,
+                            duration = 0L
                         )
                     }
+                    updatePlaybackState(PlaybackStateCompat.STATE_STOPPED)
+                    updateMediaSessionState()
+                }
+
+                Player.STATE_IDLE -> {
+                    _player.update {
+                        it.copy(
+                            isBuffering = false,
+                            currentPosition = 0L,
+                            duration = 0L
+                        )
+                    }
+                    updatePlaybackState(PlaybackStateCompat.STATE_NONE)
+                    updateMediaSessionState()
                 }
             }
         }
     }
-    val mediaSessionCallback = object : MediaSessionCompat.Callback() {}
 
-    private val _player = MutableStateFlow(PlayerState())
-    val player = _player.asStateFlow()
+    private fun updatePlaybackState(stateBuffering: Int) {
+        val state = PlaybackStateCompat.Builder().setState(
+            stateBuffering,
+            exoPlayer.currentPosition,
+            1F
+        ).setActions(
+            PlaybackStateCompat.ACTION_PLAY or
+                    PlaybackStateCompat.ACTION_PAUSE or
+                    PlaybackStateCompat.ACTION_STOP or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
+        ).build()
 
-    private var positionUpdateJob: Job? = null
-    private var notificationJob: Job? = null
+        mediaSession.setPlaybackState(state)
+    }
+
+    private fun updateMediaSessionState() {
+        if (exoPlayer.isPlaying || _player.value.currentSong != null) {
+            if (!mediaSession.isActive) {
+                mediaSession.isActive = true
+            }
+        } else {
+            if (mediaSession.isActive) {
+                mediaSession.isActive = false
+            }
+        }
+    }
+
+    val mediaSessionCallback = object : MediaSessionCompat.Callback() {
+        override fun onPlay() {
+            resumeSong()
+        }
+
+        override fun onPause() {
+            pauseSong()
+        }
+
+        override fun onStop() {
+            super.onStop()
+        }
+
+        override fun onSkipToNext() {
+            super.onSkipToNext()
+        }
+
+        override fun onSkipToPrevious() {
+            super.onSkipToPrevious()
+        }
+
+        override fun onSeekTo(pos: Long) {
+            super.onSeekTo(pos)
+            exoPlayer.seekTo(pos)
+            _player.update {
+                it.copy(
+                    currentPosition = pos,
+                    duration = exoPlayer.duration
+                )
+            }
+        }
+
+        override fun onMediaButtonEvent(mediaButtonEvent: Intent?): Boolean {
+            return super.onMediaButtonEvent(mediaButtonEvent)
+        }
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -130,9 +217,6 @@ class MusicAppPlaybackService : Service() {
             }
         }
     }
-
-    var isForegroundService = false
-    var currentNotification: Notification? = null
 
     fun startForegroundServiceIfNeeded() {
         val currentSong = player.value.currentSong ?: return
@@ -208,25 +292,15 @@ class MusicAppPlaybackService : Service() {
                 }
             }
 
-            ACTION_PAUSE -> {
-                pauseSong()
-            }
+            ACTION_PAUSE -> pauseSong()
 
-            ACTION_STOP -> {
-                0
-            }
+            ACTION_STOP -> 0
 
-            ACTION_PREVIOUS -> {
-                0
-            }
+            ACTION_PREVIOUS -> 0
 
-            ACTION_NEXT -> {
-                0
-            }
+            ACTION_NEXT -> 0
 
-            ACTION_PREPARE_SONG -> {
-                0
-            }
+            ACTION_PREPARE_SONG -> 0
 
             else -> 0
         }
@@ -299,6 +373,7 @@ class MusicAppPlaybackService : Service() {
                     duration = exoPlayer.duration
                 )
             }
+            startForegroundServiceIfNeeded()
         } catch (e: Exception) {
             _player.update {
                 it.copy(
