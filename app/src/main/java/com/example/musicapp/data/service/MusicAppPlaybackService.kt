@@ -234,21 +234,13 @@ class MusicAppPlaybackService : Service() {
 
             ACTION_PAUSE -> pauseSong()
 
-            ACTION_STOP -> {
-                0
-            }
+            ACTION_STOP -> 0
 
-            ACTION_PREVIOUS -> {
-                0
-            }
+            ACTION_PREVIOUS -> 0
 
-            ACTION_NEXT -> {
-                0
-            }
+            ACTION_NEXT -> 0
 
-            ACTION_PREPARE_SONG -> {
-                0
-            }
+            ACTION_PREPARE_SONG -> 0
 
             else -> 0
         }
