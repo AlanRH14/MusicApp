@@ -22,7 +22,7 @@ class MusicRepositoryImpl(
                     Resource.Success(apiSongMapper.mapToDomain(apiDto = res))
                 } ?: Resource.Success(Song())
             } else {
-                throw Exception("Get song by ID failed")
+                throw Exception(response.message())
             }
         } catch (e: Exception) {
             Resource.Error(message = "Error: ${e.message}")
