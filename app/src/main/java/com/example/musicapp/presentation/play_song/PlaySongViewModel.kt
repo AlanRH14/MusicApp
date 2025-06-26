@@ -19,7 +19,7 @@ class PlaySongViewModel(
 
     fun onEvent(event: PlaySongUIEvent) {
         when(event) {
-            else -> Unit
+            is PlaySongUIEvent.GetSongByID -> {}
         }
     }
 }
