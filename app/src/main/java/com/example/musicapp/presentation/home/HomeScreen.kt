@@ -51,7 +51,7 @@ fun HomeScreen(
 
     if (!state.error.isNullOrEmpty()) {
         ErrorScreen(
-            errorMessage = state.error ?: "",
+            errorMessage = state.error ?: "Unknown",
             primaryButton = stringResource(R.string.retry),
             onPrimaryButtonClicked = {},
         )
