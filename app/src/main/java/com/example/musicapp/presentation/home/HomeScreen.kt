@@ -31,6 +31,7 @@ fun HomeScreen(
                 is HomeEffect.ShowErrorMessage -> {
                     Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()
                 }
+
             }
         }
     }
