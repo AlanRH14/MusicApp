@@ -7,7 +7,7 @@ import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.domain.repository.MusicRepository
 
-class MusicRepositoryImp(
+class MusicRepositoryImpl(
     private val apiService: ApiService,
     private val apiSongMapper: ApiMapper<SongDto, Song>
 ) : MusicRepository {
