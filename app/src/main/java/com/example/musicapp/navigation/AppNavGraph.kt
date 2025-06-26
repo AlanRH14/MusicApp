@@ -33,8 +33,8 @@ fun AppNavGraph(
             HomeScreen(navController = navController)
         }
 
-        composable<PlaySong> {
-            PlaySongScreen(navController = navController, songID = "")
+        composable<PlaySong> { songID ->
+            PlaySongScreen(navController = navController, songID = songID.id)
         }
     }
 }
