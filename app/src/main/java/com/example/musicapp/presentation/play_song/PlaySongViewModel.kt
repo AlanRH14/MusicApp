@@ -1,11 +1,15 @@
 package com.example.musicapp.presentation.play_song
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.musicapp.common.Resource
 import com.example.musicapp.domain.repository.MusicRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class PlaySongViewModel(
     private val repository: MusicRepository
@@ -18,8 +22,30 @@ class PlaySongViewModel(
     val effect = _effect.asSharedFlow()
 
     fun onEvent(event: PlaySongUIEvent) {
-        when(event) {
+        when (event) {
             is PlaySongUIEvent.GetSongByID -> {}
+        }
+    }
+
+    private fun getSongByID(id: String) {
+        viewModelScope.launch {
+            val response = repository.getSongById(id = id)
+
+            when (response) {
+                is Resource.Loading -> {
+                    _state.update {
+                        it.copy(isLoading = true)
+                    }
+                }
+
+                is Resource.Success -> {
+
+                }
+
+                is Resource.Error -> {
+
+                }
+            }
         }
     }
 }
