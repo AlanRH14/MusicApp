@@ -2,6 +2,7 @@ package com.example.musicapp.presentation.play_song
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.common.Resource
@@ -61,6 +62,12 @@ class PlaySongViewModel(
         ).apply {
             action = MusicAppPlaybackService.ACTION_PLAY
             putExtra(KEY_SONG, song)
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mContext.startForegroundService(intent)
+        } else {
+            mContext.startService(intent)
         }
     }
 }
