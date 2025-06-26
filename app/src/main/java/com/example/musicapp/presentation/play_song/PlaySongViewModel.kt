@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.common.Resource
 import com.example.musicapp.data.service.MusicAppPlaybackService
+import com.example.musicapp.data.service.MusicAppPlaybackService.Companion.KEY_SONG
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.domain.repository.MusicRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -59,7 +60,7 @@ class PlaySongViewModel(
             mContext, MusicAppPlaybackService::class.java
         ).apply {
             action = MusicAppPlaybackService.ACTION_PLAY
-            putExtra("SONG", song)
+            putExtra(KEY_SONG, song)
         }
     }
 }
