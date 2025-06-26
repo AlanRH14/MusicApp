@@ -36,9 +36,7 @@ class PlaySongViewModel(
 
     private fun getSongByID(id: String) {
         viewModelScope.launch {
-            val response = repository.getSongById(id = id)
-
-            when (response) {
+            when (val response = repository.getSongById(id = id)) {
                 is Resource.Loading -> {
                     _state.update {
                         it.copy(isLoading = true)
@@ -46,12 +44,10 @@ class PlaySongViewModel(
                 }
 
                 is Resource.Success -> {
-
+                    playSong(song = response.data)
                 }
 
-                is Resource.Error -> {
-
-                }
+                is Resource.Error -> Unit
             }
         }
     }
