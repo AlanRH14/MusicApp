@@ -19,6 +19,7 @@ fun PlaySongScreen(
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(key1 = true) {
+        viewModel.onEvent(PlaySongUIEvent.GetSongByID(id = songID))
         viewModel.effect.collectLatest { effect ->
             when (effect) {
                 is PlaySongEffect.ShowErrorMessage -> {
