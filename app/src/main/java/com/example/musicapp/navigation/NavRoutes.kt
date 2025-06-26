@@ -17,4 +17,4 @@ object RegisterRoute : NavRoutes
 object HomeRoute: NavRoutes
 
 @Serializable
-data class PlaySong(val id: String): NavRoutes
+data class PlaySong(val songID: String): NavRoutes
