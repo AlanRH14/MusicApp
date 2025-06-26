@@ -33,6 +33,6 @@ val repositoryModule = module {
     }
 
     single<MusicRepository> {
-        MusicRepositoryImp(get(), get())
+        MusicRepositoryImp(apiService = get(), apiSongMapper = get())
     }
 }
