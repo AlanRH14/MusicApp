@@ -1,8 +1,12 @@
 package com.example.musicapp.presentation.play_song
 
+import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.common.Resource
+import com.example.musicapp.data.service.MusicAppPlaybackService
+import com.example.musicapp.domain.model.Song
 import com.example.musicapp.domain.repository.MusicRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,6 +16,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class PlaySongViewModel(
+    private val mContext: Context,
     private val repository: MusicRepository
 ) : ViewModel() {
 
@@ -46,6 +51,15 @@ class PlaySongViewModel(
 
                 }
             }
+        }
+    }
+
+    private fun playSong(song: Song) {
+        val intent = Intent(
+            mContext, MusicAppPlaybackService::class.java
+        ).apply {
+            action = MusicAppPlaybackService.ACTION_PLAY
+            putExtra("SONG", song)
         }
     }
 }
