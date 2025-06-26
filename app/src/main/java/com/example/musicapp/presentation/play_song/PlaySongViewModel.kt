@@ -47,7 +47,14 @@ class PlaySongViewModel(
                     playSong(song = response.data)
                 }
 
-                is Resource.Error -> Unit
+                is Resource.Error -> {
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            error = response.message
+                        )
+                    }
+                }
             }
         }
     }
