@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.domain.repository.HomeRepository
 import com.example.musicapp.common.Resource
+import com.example.musicapp.domain.model.Home
 import com.example.musicapp.presentation.home.mvi.HomeEffect
 import com.example.musicapp.presentation.home.mvi.HomeState
 import com.example.musicapp.presentation.home.mvi.HomeUIEvent
@@ -28,7 +29,7 @@ class HomeViewModel(
     fun onEvent(event: HomeUIEvent) {
         when (event) {
             is HomeUIEvent.GetHomeData -> getHome()
-            is HomeUIEvent.OnSongClicked -> showMessageTest("OnSongClicked")
+            is HomeUIEvent.OnSongClicked -> navigateToPlaySong(songID = event.songID)
             is HomeUIEvent.OnAlbumClicked -> showMessageTest("OnAlbumClicked")
             is HomeUIEvent.OnSongRecommendationClicked -> showMessageTest("OnSongRecommendationClicked")
         }
@@ -65,6 +66,12 @@ class HomeViewModel(
     private fun showMessageTest(eventMessage: String) {
         viewModelScope.launch {
             _effect.emit(HomeEffect.ShowErrorMessage(message = eventMessage))
+        }
+    }
+
+    private fun navigateToPlaySong(songID: String) {
+        viewModelScope.launch {
+            _effect.emit(HomeEffect.OnSongClicked(songID = songID))
         }
     }
 }

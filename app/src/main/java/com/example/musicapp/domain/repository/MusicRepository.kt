@@ -5,5 +5,5 @@ import com.example.musicapp.domain.model.Song
 
 interface MusicRepository {
 
-    suspend fun getSongById(): Resource<Song>
+    suspend fun getSongById(id: String): Resource<Song>
 }

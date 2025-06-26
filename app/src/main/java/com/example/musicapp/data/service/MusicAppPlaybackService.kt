@@ -36,6 +36,8 @@ class MusicAppPlaybackService : Service() {
         const val ACTION_PREVIOUS = "com.example.musicapp.ACTION_PREVIOUS"
         const val ACTION_NEXT = "com.example.musicapp.ACTION_NEXT"
         const val ACTION_PREPARE_SONG = "com.example.musicapp.ACTION_PREPAPRE_SONG"
+
+        const val KEY_SONG = "SONG"
     }
 
     inner class MusicBinder() : Binder() {
@@ -282,9 +284,9 @@ class MusicAppPlaybackService : Service() {
         when (intent?.action) {
             ACTION_PLAY -> {
                 val song = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    intent.getParcelableExtra("SONG", Song::class.java)
+                    intent.getParcelableExtra(KEY_SONG, Song::class.java)
                 } else {
-                    intent.getParcelableExtra("SONG")
+                    intent.getParcelableExtra(KEY_SONG)
                 }
 
                 if (song != null) {

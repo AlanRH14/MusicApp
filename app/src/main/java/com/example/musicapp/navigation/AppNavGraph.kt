@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import com.example.musicapp.presentation.home.HomeScreen
 import com.example.musicapp.presentation.login.LoginScreen
 import com.example.musicapp.presentation.onboarding.OnboardingScreen
+import com.example.musicapp.presentation.play_song.PlaySongScreen
 import com.example.musicapp.presentation.register.RegisterScreen
 
 @Composable
@@ -30,6 +31,10 @@ fun AppNavGraph(
 
         composable<HomeRoute> {
             HomeScreen(navController = navController)
+        }
+
+        composable<PlaySong> { songID ->
+            PlaySongScreen(navController = navController, songID = songID.id)
         }
     }
 }
