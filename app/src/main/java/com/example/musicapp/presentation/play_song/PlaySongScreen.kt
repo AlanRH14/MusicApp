@@ -34,4 +34,6 @@ fun PlaySongScreen(
     if (state.isLoading) {
         LoadingScreen()
     }
+
+    if (state.e)
 }
