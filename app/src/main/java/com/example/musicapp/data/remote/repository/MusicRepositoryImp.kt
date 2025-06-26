@@ -12,14 +12,14 @@ class MusicRepositoryImp(
     private val apiSongMapper: ApiMapper<SongDto, Song>
 ) : MusicRepository {
 
-    override suspend fun getSongById(): Resource<Song> {
+    override suspend fun getSongById(id: String): Resource<Song> {
         Resource.Loading
 
         return try {
-            val response = apiService.getSongByID("")
+            val response = apiService.getSongByID(id = id)
             if (response.isSuccessful) {
-                response.body()?.let { song ->
-                    Resource.Success(apiSongMapper.mapToDomain(apiDto = song))
+                response.body()?.let { res ->
+                    Resource.Success(apiSongMapper.mapToDomain(apiDto = res))
                 } ?: Resource.Success(Song())
             } else {
                 throw Exception("Get song by ID failed")
