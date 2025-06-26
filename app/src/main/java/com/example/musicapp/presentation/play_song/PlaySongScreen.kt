@@ -40,7 +40,7 @@ fun PlaySongScreen(
 
     if (!state.error.isNullOrEmpty()) {
         ErrorScreen(
-            errorMessage = state.error ?: "Not Found",
+            errorMessage = state.error ?: stringResource(R.string.unknown),
             primaryButton = stringResource(R.string.retry),
             onPrimaryButtonClicked = {},
         )
