@@ -45,6 +45,7 @@ class PlaySongViewModel(
 
                 is Resource.Success -> {
                     playSong(song = response.data)
+                    _effect.emit(PlaySongEffect.ShowErrorMessage("Success"))
                 }
 
                 is Resource.Error -> {
