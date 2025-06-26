@@ -15,3 +15,6 @@ object RegisterRoute : NavRoutes
 
 @Serializable
 object HomeRoute: NavRoutes
+
+@Serializable
+object PlaySong: NavRoutes
