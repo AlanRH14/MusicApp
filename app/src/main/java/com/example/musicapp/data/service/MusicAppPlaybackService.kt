@@ -114,6 +114,7 @@ class MusicAppPlaybackService : Service() {
                     updatePlaybackState(PlaybackStateCompat.STATE_NONE)
                 }
             }
+
             updateMediaSessionState()
         }
     }
