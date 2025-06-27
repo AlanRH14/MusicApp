@@ -104,7 +104,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
             prevIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        val prevNextIntent = PendingIntent.getService(
+        val nextPendingIntent = PendingIntent.getService(
             mContext,
             0,
             nextIntent,
@@ -135,7 +135,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
             NotificationCompat.Action(
                 android.R.drawable.ic_media_next,
                 "Next",
-                prevNextIntent
+                nextPendingIntent
             )
         )
 
