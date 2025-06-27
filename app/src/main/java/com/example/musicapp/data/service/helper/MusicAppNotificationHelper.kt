@@ -110,13 +110,13 @@ class MusicAppNotificationHelper(private val mContext: Context) {
             nextIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        val prevPlayIntent = PendingIntent.getService(
+        val playPendingIntent = PendingIntent.getService(
             mContext,
             0,
             playIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        val prevPauseIntent = PendingIntent.getService(
+        val pausePendingIntent = PendingIntent.getService(
             mContext,
             0,
             pauseIntent,
@@ -144,7 +144,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
                 NotificationCompat.Action(
                     android.R.drawable.ic_media_play,
                     "Play",
-                    prevPlayIntent
+                    playPendingIntent
                 )
             )
         } else {
@@ -152,7 +152,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
                 NotificationCompat.Action(
                     android.R.drawable.ic_media_pause,
                     "Pause",
-                    prevPauseIntent
+                    pausePendingIntent
                 )
             )
         }
