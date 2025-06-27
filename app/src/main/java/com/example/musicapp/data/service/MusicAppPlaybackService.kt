@@ -185,10 +185,6 @@ class MusicAppPlaybackService : Service() {
                 )
             }
         }
-
-        override fun onMediaButtonEvent(mediaButtonEvent: Intent?): Boolean {
-            return super.onMediaButtonEvent(mediaButtonEvent)
-        }
     }
 
     override fun onCreate() {
