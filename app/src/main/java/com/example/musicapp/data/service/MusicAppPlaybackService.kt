@@ -122,11 +122,19 @@ class MusicAppPlaybackService : Service() {
     }
 
     private fun updatePlaybackState(stateBuffering: Int) {
-        val state = PlaybackStateCompat.Builder().setState(state, position, 1f).setActions(
-            PlaybackStateCompat.ACTION_PLAY or
-                    PlaybackStateCompat.ACTION_PAUSE or
-                    PlaybackStateCompat.ACTION_STOP or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
-        ).build()
+        val state = PlaybackStateCompat.Builder()
+            .setState(
+                stateBuffering,
+                exoPlayer.currentPosition,
+                1f
+            ).setActions(
+                PlaybackStateCompat.ACTION_PLAY or
+                        PlaybackStateCompat.ACTION_PAUSE or
+                        PlaybackStateCompat.ACTION_STOP or
+                        PlaybackStateCompat.ACTION_SEEK_TO or
+                        PlaybackStateCompat.ACTION_SKIP_TO_NEXT or
+                        PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
+            ).build()
 
         mediaSession.setPlaybackState(state)
     }
@@ -170,7 +178,10 @@ class MusicAppPlaybackService : Service() {
             _player.update {
                 it.copy(
                     currentPosition = pos,
-                    duration = exoPlayer.duration
+                    duration = exoPlayer.duration,
+                    isBuffering = exoPlayer.isLoading,
+                    isPlaying = exoPlayer.isPlaying,
+                    error = null
                 )
             }
         }
