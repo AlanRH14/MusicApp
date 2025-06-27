@@ -110,7 +110,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
             nextIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        val prevPlayIntent = PendingIntent.getActivity(
+        val prevPlayIntent = PendingIntent.getService(
             mContext,
             0,
             playIntent,
