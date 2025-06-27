@@ -64,7 +64,9 @@ class MusicAppPlaybackService : Service() {
                         it.copy(
                             isBuffering = true,
                             currentPosition = exoPlayer.currentPosition,
-                            duration = exoPlayer.duration
+                            duration = exoPlayer.duration,
+                            error = null,
+                            isPlaying = false
                         )
                     }
                     updatePlaybackState(PlaybackStateCompat.STATE_BUFFERING)
@@ -74,10 +76,11 @@ class MusicAppPlaybackService : Service() {
                 Player.STATE_READY -> {
                     _player.update {
                         it.copy(
-                            isBuffering = exoPlayer.isPlaying,
+                            isPlaying = exoPlayer.isPlaying,
                             currentPosition = exoPlayer.currentPosition,
                             duration = exoPlayer.duration,
-                            error = null
+                            error = null,
+                            isBuffering = false
                         )
                     }
                     if (exoPlayer.isPlaying) {
