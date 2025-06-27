@@ -45,7 +45,7 @@ class MusicAppPlaybackService : Service() {
     }
 
     private val binder = MusicBinder()
-    private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private lateinit var exoPlayer: ExoPlayer
     private lateinit var mediaSession: MediaSessionCompat
     private val notificationHelper: MusicAppNotificationHelper by inject()
