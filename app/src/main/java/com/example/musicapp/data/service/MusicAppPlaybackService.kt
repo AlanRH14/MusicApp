@@ -266,7 +266,6 @@ class MusicAppPlaybackService : Service() {
     fun updateNotification() {
         notificationJob?.cancel()
         notificationJob = serviceScope.launch {
-            delay(500)
             notificationHelper.createPlayerNotification(
                 player.value.isPlaying,
                 player.value.currentSong ?: return@launch,
@@ -309,6 +308,10 @@ class MusicAppPlaybackService : Service() {
 
                 if (song != null) {
                     playSong(song)
+                } else {
+                    if (player.value.currentSong != null) {
+                        resumeSong()
+                    }
                 }
             }
 
@@ -332,8 +335,8 @@ class MusicAppPlaybackService : Service() {
         try {
             _player.update {
                 it.copy(
-                    isPlaying = true,
                     currentSong = song,
+                    isBuffering = true,
                     currentPosition = 0L,
                     duration = song.duration.toLong()
                 )
@@ -342,7 +345,7 @@ class MusicAppPlaybackService : Service() {
             val metaBuilder = MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_TITLE, song.title)
                 .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, song.artist.name)
-                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, song.duration.toLong())
+                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, song.coverImage)
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON_URI, song.coverImage)
                 .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, song.id)
 
