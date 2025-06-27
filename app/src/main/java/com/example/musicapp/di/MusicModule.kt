@@ -5,6 +5,6 @@ import org.koin.dsl.module
 
 val musicModule = module {
     single {
-        MusicAppNotificationHelper()
+        MusicAppNotificationHelper(get())
     }
 }
