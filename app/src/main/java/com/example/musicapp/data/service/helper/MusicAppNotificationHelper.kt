@@ -116,7 +116,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
             playIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        val prevPauseIntent = PendingIntent.getActivity(
+        val prevPauseIntent = PendingIntent.getService(
             mContext,
             0,
             pauseIntent,
