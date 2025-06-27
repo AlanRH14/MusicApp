@@ -40,7 +40,7 @@ class MusicAppPlaybackService : Service() {
         const val KEY_SONG = "SONG"
     }
 
-    inner class MusicBinder() : Binder() {
+    inner class MusicBinder : Binder() {
         fun getService(): MusicAppPlaybackService = this@MusicAppPlaybackService
     }
 
