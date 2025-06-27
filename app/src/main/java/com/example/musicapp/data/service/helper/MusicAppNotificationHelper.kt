@@ -98,25 +98,25 @@ class MusicAppNotificationHelper(private val mContext: Context) {
             action = MusicAppPlaybackService.ACTION_PAUSE
         }
 
-        val prevPendingIntent = PendingIntent.getActivity(
+        val prevPendingIntent = PendingIntent.getService(
             mContext,
             0,
             prevIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        val prevNextIntent = PendingIntent.getActivity(
+        val nextPendingIntent = PendingIntent.getService(
             mContext,
             0,
             nextIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        val prevPlayIntent = PendingIntent.getActivity(
+        val playPendingIntent = PendingIntent.getService(
             mContext,
             0,
             playIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        val prevPauseIntent = PendingIntent.getActivity(
+        val pausePendingIntent = PendingIntent.getService(
             mContext,
             0,
             pauseIntent,
@@ -135,24 +135,24 @@ class MusicAppNotificationHelper(private val mContext: Context) {
             NotificationCompat.Action(
                 android.R.drawable.ic_media_next,
                 "Next",
-                prevNextIntent
+                nextPendingIntent
             )
         )
 
         if (isPlaying) {
             notificationBuilder.addAction(
                 NotificationCompat.Action(
-                    android.R.drawable.ic_media_play,
-                    "Play",
-                    prevPlayIntent
+                    android.R.drawable.ic_media_pause,
+                    "Pause",
+                    pausePendingIntent
                 )
             )
         } else {
             notificationBuilder.addAction(
                 NotificationCompat.Action(
-                    android.R.drawable.ic_media_pause,
-                    "Pause",
-                    prevPauseIntent
+                    android.R.drawable.ic_media_play,
+                    "Play",
+                    playPendingIntent
                 )
             )
         }
@@ -193,7 +193,8 @@ class MusicAppNotificationHelper(private val mContext: Context) {
     }
 
     fun updateNotification(notification: Notification) {
-        notification.flags = Notification.FLAG_NO_CLEAR or Notification.FLAG_ONGOING_EVENT
+        notification.flags =
+            notification.flags or Notification.FLAG_NO_CLEAR or Notification.FLAG_ONGOING_EVENT
         try {
             NotificationManagerCompat.from(mContext).notify(NOTIFICATION_ID, notification)
         } catch (e: SecurityException) {

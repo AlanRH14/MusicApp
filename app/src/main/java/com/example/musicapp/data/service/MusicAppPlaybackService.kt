@@ -40,12 +40,12 @@ class MusicAppPlaybackService : Service() {
         const val KEY_SONG = "SONG"
     }
 
-    inner class MusicBinder() : Binder() {
+    inner class MusicBinder : Binder() {
         fun getService(): MusicAppPlaybackService = this@MusicAppPlaybackService
     }
 
     private val binder = MusicBinder()
-    private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private lateinit var exoPlayer: ExoPlayer
     private lateinit var mediaSession: MediaSessionCompat
     private val notificationHelper: MusicAppNotificationHelper by inject()
@@ -64,20 +64,22 @@ class MusicAppPlaybackService : Service() {
                         it.copy(
                             isBuffering = true,
                             currentPosition = exoPlayer.currentPosition,
-                            duration = exoPlayer.duration
+                            duration = exoPlayer.duration,
+                            error = null,
+                            isPlaying = false
                         )
                     }
                     updatePlaybackState(PlaybackStateCompat.STATE_BUFFERING)
-                    updateMediaSessionState()
                 }
 
                 Player.STATE_READY -> {
                     _player.update {
                         it.copy(
-                            isBuffering = exoPlayer.isPlaying,
+                            isPlaying = exoPlayer.isPlaying,
                             currentPosition = exoPlayer.currentPosition,
                             duration = exoPlayer.duration,
-                            error = null
+                            error = null,
+                            isBuffering = false
                         )
                     }
                     if (exoPlayer.isPlaying) {
@@ -86,46 +88,53 @@ class MusicAppPlaybackService : Service() {
                     } else {
                         updatePlaybackState(PlaybackStateCompat.STATE_PAUSED)
                     }
-                    updateMediaSessionState()
                 }
 
                 Player.STATE_ENDED -> {
                     _player.update {
                         it.copy(
-                            isBuffering = false,
+                            isPlaying = false,
                             currentPosition = 0L,
-                            duration = 0L
+                            duration = 0L,
+                            error = null,
+                            isBuffering = false
                         )
                     }
                     updatePlaybackState(PlaybackStateCompat.STATE_STOPPED)
-                    updateMediaSessionState()
                 }
 
                 Player.STATE_IDLE -> {
                     _player.update {
                         it.copy(
-                            isBuffering = false,
+                            isPlaying = false,
                             currentPosition = 0L,
-                            duration = 0L
+                            duration = 0L,
+                            error = null,
+                            isBuffering = false
                         )
                     }
                     updatePlaybackState(PlaybackStateCompat.STATE_NONE)
-                    updateMediaSessionState()
                 }
             }
+
+            updateMediaSessionState()
         }
     }
 
     private fun updatePlaybackState(stateBuffering: Int) {
-        val state = PlaybackStateCompat.Builder().setState(
-            stateBuffering,
-            exoPlayer.currentPosition,
-            1F
-        ).setActions(
-            PlaybackStateCompat.ACTION_PLAY or
-                    PlaybackStateCompat.ACTION_PAUSE or
-                    PlaybackStateCompat.ACTION_STOP or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
-        ).build()
+        val state = PlaybackStateCompat.Builder()
+            .setState(
+                stateBuffering,
+                exoPlayer.currentPosition,
+                1f
+            ).setActions(
+                PlaybackStateCompat.ACTION_PLAY or
+                        PlaybackStateCompat.ACTION_PAUSE or
+                        PlaybackStateCompat.ACTION_STOP or
+                        PlaybackStateCompat.ACTION_SEEK_TO or
+                        PlaybackStateCompat.ACTION_SKIP_TO_NEXT or
+                        PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
+            ).build()
 
         mediaSession.setPlaybackState(state)
     }
@@ -169,13 +178,12 @@ class MusicAppPlaybackService : Service() {
             _player.update {
                 it.copy(
                     currentPosition = pos,
-                    duration = exoPlayer.duration
+                    duration = exoPlayer.duration,
+                    isBuffering = exoPlayer.isLoading,
+                    isPlaying = exoPlayer.isPlaying,
+                    error = null
                 )
             }
-        }
-
-        override fun onMediaButtonEvent(mediaButtonEvent: Intent?): Boolean {
-            return super.onMediaButtonEvent(mediaButtonEvent)
         }
     }
 
@@ -195,10 +203,14 @@ class MusicAppPlaybackService : Service() {
                     .setActions(
                         PlaybackStateCompat.ACTION_PLAY or
                                 PlaybackStateCompat.ACTION_PAUSE or
-                                PlaybackStateCompat.ACTION_STOP or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
+                                PlaybackStateCompat.ACTION_STOP or
+                                PlaybackStateCompat.ACTION_SEEK_TO or
+                                PlaybackStateCompat.ACTION_SKIP_TO_NEXT or
+                                PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
                     ).build()
             )
         }
+        startPositionUpdate()
     }
 
     private fun startPositionUpdate() {
@@ -211,7 +223,8 @@ class MusicAppPlaybackService : Service() {
                             currentPosition = exoPlayer.currentPosition,
                             duration = exoPlayer.duration,
                             isBuffering = exoPlayer.isLoading,
-                            isPlaying = exoPlayer.isPlaying
+                            isPlaying = exoPlayer.isPlaying,
+                            error = null
                         )
                     }
                 }
@@ -229,15 +242,20 @@ class MusicAppPlaybackService : Service() {
                 currentSong,
                 mediaSession
             ) {
-                try {
+                if (!isForegroundService) {
+                    try {
+                        currentNotification = it
+                        startForeground(
+                            MusicAppNotificationHelper.NOTIFICATION_ID,
+                            it
+                        )
+                        isForegroundService = true
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                } else {
                     currentNotification = it
-                    startForeground(
-                        MusicAppNotificationHelper.NOTIFICATION_ID,
-                        it
-                    )
-                    isForegroundService = true
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                    updateNotification()
                 }
             }
         } else {
@@ -245,22 +263,9 @@ class MusicAppPlaybackService : Service() {
         }
     }
 
-    fun stopForegroundServiceIfNeeded() {
-        if (isForegroundService) {
-            try {
-                mediaSession.isActive = false
-                stopForeground(STOP_FOREGROUND_REMOVE)
-                isForegroundService = false
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
-
     fun updateNotification() {
         notificationJob?.cancel()
         notificationJob = serviceScope.launch {
-            delay(500)
             notificationHelper.createPlayerNotification(
                 player.value.isPlaying,
                 player.value.currentSong ?: return@launch,
@@ -272,6 +277,18 @@ class MusicAppPlaybackService : Service() {
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
+            }
+        }
+    }
+
+    fun stopForegroundServiceIfNeeded() {
+        if (isForegroundService) {
+            try {
+                mediaSession.isActive = false
+                stopForeground(STOP_FOREGROUND_REMOVE)
+                isForegroundService = false
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -291,6 +308,10 @@ class MusicAppPlaybackService : Service() {
 
                 if (song != null) {
                     playSong(song)
+                } else {
+                    if (player.value.currentSong != null) {
+                        resumeSong()
+                    }
                 }
             }
 
@@ -314,8 +335,8 @@ class MusicAppPlaybackService : Service() {
         try {
             _player.update {
                 it.copy(
-                    isPlaying = true,
                     currentSong = song,
+                    isBuffering = true,
                     currentPosition = 0L,
                     duration = song.duration.toLong()
                 )
@@ -325,11 +346,12 @@ class MusicAppPlaybackService : Service() {
                 .putString(MediaMetadataCompat.METADATA_KEY_TITLE, song.title)
                 .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, song.artist.name)
                 .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, song.duration.toLong())
+                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, song.coverImage)
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON_URI, song.coverImage)
                 .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, song.id)
 
             mediaSession.setMetadata(metaBuilder.build())
-            val mediaItem = MediaItem.fromUri(song.coverImage.toUri())
+            val mediaItem = MediaItem.fromUri(song.audioUrl.toUri())
             exoPlayer.setMediaItem(mediaItem)
             exoPlayer.prepare()
             exoPlayer.playWhenReady = true
@@ -347,6 +369,7 @@ class MusicAppPlaybackService : Service() {
 
     fun pauseSong() {
         try {
+            exoPlayer.pause()
             _player.update {
                 it.copy(
                     isPlaying = false,
@@ -364,10 +387,12 @@ class MusicAppPlaybackService : Service() {
             }
             e.printStackTrace()
         }
+        updateNotification()
     }
 
     fun resumeSong() {
         try {
+            exoPlayer.play()
             _player.update {
                 it.copy(
                     isPlaying = true,
@@ -384,7 +409,9 @@ class MusicAppPlaybackService : Service() {
                     currentSong = null
                 )
             }
+            e.printStackTrace()
         }
+        updateNotification()
     }
 
     override fun onBind(intent: Intent?): IBinder {
