@@ -98,7 +98,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
             action = MusicAppPlaybackService.ACTION_PAUSE
         }
 
-        val prevPendingIntent = PendingIntent.getActivity(
+        val prevPendingIntent = PendingIntent.getService(
             mContext,
             0,
             prevIntent,
