@@ -142,7 +142,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
         if (isPlaying) {
             notificationBuilder.addAction(
                 NotificationCompat.Action(
-                    android.R.drawable.ic_media_play,
+                    android.R.drawable.ic_media_pause,
                     "Play",
                     playPendingIntent
                 )
