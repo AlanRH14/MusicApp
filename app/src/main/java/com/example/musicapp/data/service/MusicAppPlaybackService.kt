@@ -242,15 +242,20 @@ class MusicAppPlaybackService : Service() {
                 currentSong,
                 mediaSession
             ) {
-                try {
+                if (!isForegroundService) {
+                    try {
+                        currentNotification = it
+                        startForeground(
+                            MusicAppNotificationHelper.NOTIFICATION_ID,
+                            it
+                        )
+                        isForegroundService = true
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                } else {
                     currentNotification = it
-                    startForeground(
-                        MusicAppNotificationHelper.NOTIFICATION_ID,
-                        it
-                    )
-                    isForegroundService = true
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                    updateNotification()
                 }
             }
         } else {
