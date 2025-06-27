@@ -392,6 +392,7 @@ class MusicAppPlaybackService : Service() {
 
     fun resumeSong() {
         try {
+            exoPlayer.play()
             _player.update {
                 it.copy(
                     isPlaying = true,
@@ -408,7 +409,9 @@ class MusicAppPlaybackService : Service() {
                     currentSong = null
                 )
             }
+            e.printStackTrace()
         }
+        updateNotification()
     }
 
     override fun onBind(intent: Intent?): IBinder {
