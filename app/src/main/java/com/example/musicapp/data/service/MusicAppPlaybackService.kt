@@ -223,7 +223,8 @@ class MusicAppPlaybackService : Service() {
                             currentPosition = exoPlayer.currentPosition,
                             duration = exoPlayer.duration,
                             isBuffering = exoPlayer.isLoading,
-                            isPlaying = exoPlayer.isPlaying
+                            isPlaying = exoPlayer.isPlaying,
+                            error = null
                         )
                     }
                 }
