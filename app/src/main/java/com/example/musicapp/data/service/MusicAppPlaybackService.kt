@@ -70,7 +70,6 @@ class MusicAppPlaybackService : Service() {
                         )
                     }
                     updatePlaybackState(PlaybackStateCompat.STATE_BUFFERING)
-                    updateMediaSessionState()
                 }
 
                 Player.STATE_READY -> {
@@ -89,7 +88,6 @@ class MusicAppPlaybackService : Service() {
                     } else {
                         updatePlaybackState(PlaybackStateCompat.STATE_PAUSED)
                     }
-                    updateMediaSessionState()
                 }
 
                 Player.STATE_ENDED -> {
@@ -103,7 +101,6 @@ class MusicAppPlaybackService : Service() {
                         )
                     }
                     updatePlaybackState(PlaybackStateCompat.STATE_STOPPED)
-                    updateMediaSessionState()
                 }
 
                 Player.STATE_IDLE -> {
@@ -115,9 +112,9 @@ class MusicAppPlaybackService : Service() {
                         )
                     }
                     updatePlaybackState(PlaybackStateCompat.STATE_NONE)
-                    updateMediaSessionState()
                 }
             }
+            updateMediaSessionState()
         }
     }
 
