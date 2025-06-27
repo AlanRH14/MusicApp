@@ -350,7 +350,7 @@ class MusicAppPlaybackService : Service() {
                 .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, song.id)
 
             mediaSession.setMetadata(metaBuilder.build())
-            val mediaItem = MediaItem.fromUri(song.coverImage.toUri())
+            val mediaItem = MediaItem.fromUri(song.audioUrl.toUri())
             exoPlayer.setMediaItem(mediaItem)
             exoPlayer.prepare()
             exoPlayer.playWhenReady = true
@@ -368,6 +368,7 @@ class MusicAppPlaybackService : Service() {
 
     fun pauseSong() {
         try {
+            exoPlayer.pause()
             _player.update {
                 it.copy(
                     isPlaying = false,
