@@ -143,16 +143,16 @@ class MusicAppNotificationHelper(private val mContext: Context) {
             notificationBuilder.addAction(
                 NotificationCompat.Action(
                     android.R.drawable.ic_media_pause,
-                    "Play",
-                    playPendingIntent
+                    "Pause",
+                    pausePendingIntent
                 )
             )
         } else {
             notificationBuilder.addAction(
                 NotificationCompat.Action(
-                    android.R.drawable.ic_media_pause,
-                    "Pause",
-                    pausePendingIntent
+                    android.R.drawable.ic_media_play,
+                    "Play",
+                    playPendingIntent
                 )
             )
         }
