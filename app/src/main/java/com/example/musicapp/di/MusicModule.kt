@@ -1,4 +1,7 @@
 package com.example.musicapp.di
 
-class MusicModule {
+import org.koin.dsl.module
+
+val musicModule = module {
+
 }
