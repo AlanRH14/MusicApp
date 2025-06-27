@@ -14,6 +14,7 @@ import androidx.media.session.MediaButtonReceiver
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
+import com.example.musicapp.MusicApp
 import com.example.musicapp.data.service.helper.MusicAppNotificationHelper
 import com.example.musicapp.domain.model.Song
 import kotlinx.coroutines.CoroutineScope
@@ -238,16 +239,13 @@ class MusicAppPlaybackService : Service() {
 
         if (!isForegroundService) {
             notificationHelper.createPlayerNotification(
-                player.value.isPlaying,
-                currentSong,
-                mediaSession
+                player.value.isPlaying, currentSong, mediaSession
             ) {
                 if (!isForegroundService) {
                     try {
                         currentNotification = it
                         startForeground(
-                            MusicAppNotificationHelper.NOTIFICATION_ID,
-                            it
+                            MusicAppNotificationHelper.NOTIFICATION_ID, it
                         )
                         isForegroundService = true
                     } catch (e: Exception) {
