@@ -263,18 +263,6 @@ class MusicAppPlaybackService : Service() {
         }
     }
 
-    fun stopForegroundServiceIfNeeded() {
-        if (isForegroundService) {
-            try {
-                mediaSession.isActive = false
-                stopForeground(STOP_FOREGROUND_REMOVE)
-                isForegroundService = false
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
-
     fun updateNotification() {
         notificationJob?.cancel()
         notificationJob = serviceScope.launch {
@@ -290,6 +278,18 @@ class MusicAppPlaybackService : Service() {
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
+            }
+        }
+    }
+
+    fun stopForegroundServiceIfNeeded() {
+        if (isForegroundService) {
+            try {
+                mediaSession.isActive = false
+                stopForeground(STOP_FOREGROUND_REMOVE)
+                isForegroundService = false
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
