@@ -95,9 +95,11 @@ class MusicAppPlaybackService : Service() {
                 Player.STATE_ENDED -> {
                     _player.update {
                         it.copy(
-                            isBuffering = false,
+                            isPlaying = false,
                             currentPosition = 0L,
-                            duration = 0L
+                            duration = 0L,
+                            error = null,
+                            isBuffering = false
                         )
                     }
                     updatePlaybackState(PlaybackStateCompat.STATE_STOPPED)
