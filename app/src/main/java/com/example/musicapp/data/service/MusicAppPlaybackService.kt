@@ -387,6 +387,7 @@ class MusicAppPlaybackService : Service() {
             }
             e.printStackTrace()
         }
+        updateNotification()
     }
 
     fun resumeSong() {
