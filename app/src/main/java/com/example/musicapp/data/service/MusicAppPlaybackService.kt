@@ -122,11 +122,7 @@ class MusicAppPlaybackService : Service() {
     }
 
     private fun updatePlaybackState(stateBuffering: Int) {
-        val state = PlaybackStateCompat.Builder().setState(
-            stateBuffering,
-            exoPlayer.currentPosition,
-            1F
-        ).setActions(
+        val state = PlaybackStateCompat.Builder().setState(state, position, 1f).setActions(
             PlaybackStateCompat.ACTION_PLAY or
                     PlaybackStateCompat.ACTION_PAUSE or
                     PlaybackStateCompat.ACTION_STOP or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
