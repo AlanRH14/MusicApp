@@ -193,7 +193,8 @@ class MusicAppNotificationHelper(private val mContext: Context) {
     }
 
     fun updateNotification(notification: Notification) {
-        notification.flags = Notification.FLAG_NO_CLEAR or Notification.FLAG_ONGOING_EVENT
+        notification.flags =
+            notification.flags or Notification.FLAG_NO_CLEAR or Notification.FLAG_ONGOING_EVENT
         try {
             NotificationManagerCompat.from(mContext).notify(NOTIFICATION_ID, notification)
         } catch (e: SecurityException) {
