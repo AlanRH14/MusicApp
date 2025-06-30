@@ -35,7 +35,7 @@ class MusicAppPlaybackService : Service() {
         const val ACTION_STOP = "com.example.musicapp.ACTION_STOP"
         const val ACTION_PREVIOUS = "com.example.musicapp.ACTION_PREVIOUS"
         const val ACTION_NEXT = "com.example.musicapp.ACTION_NEXT"
-        const val ACTION_PREPARE_SONG = "com.example.musicapp.ACTION_PREPAPRE_SONG"
+        const val ACTION_PREPARE_SONG = "com.example.musicapp.ACTION_PREPARE_SONG"
 
         const val KEY_SONG = "SONG"
     }
