@@ -14,7 +14,6 @@ import androidx.media.session.MediaButtonReceiver
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
-import com.example.musicapp.MusicApp
 import com.example.musicapp.data.service.helper.MusicAppNotificationHelper
 import com.example.musicapp.domain.model.Song
 import kotlinx.coroutines.CoroutineScope
