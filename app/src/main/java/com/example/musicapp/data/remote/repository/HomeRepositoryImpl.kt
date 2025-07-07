@@ -22,7 +22,7 @@ class HomeRepositoryImpl(
                     Resource.Success(data = apiHomeMapper.mapToDomain(apiDto = res))
                 } ?: Resource.Success(data = Home())
             } else {
-                throw Exception("Get home data failed")
+                throw Exception(response.message())
             }
         } catch (e: Exception) {
             Resource.Error("Error: ${e.message}")
