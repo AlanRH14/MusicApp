@@ -1,8 +1,12 @@
 package com.example.musicapp.presentation.play_song
 
+import android.app.Application
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Build
+import android.os.IBinder
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.common.Resource
@@ -18,8 +22,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class PlaySongViewModel(
-    private val mContext: Context,
-    private val repository: MusicRepository
+    private val mContext: Application,
+    private val repository: MusicRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(PlaySongState())
@@ -27,6 +31,28 @@ class PlaySongViewModel(
 
     private val _effect = MutableSharedFlow<PlaySongEffect>()
     val effect = _effect.asSharedFlow()
+
+
+    private var service: MusicAppPlaybackService? = null
+    private var isServiceBound = false
+    private var currentSong: Song? = null
+
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
+            isServiceBound = true
+            service = (binder as MusicAppPlaybackService.MusicBinder).getService()
+            currentSong?.let {
+                playSong(it)
+            } ?: run {
+                _state.update { it.copy(error = "No song to play") }
+            }
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            isServiceBound = false
+            service = null
+        }
+    }
 
     fun onEvent(event: PlaySongUIEvent) {
         when (event) {
@@ -72,6 +98,14 @@ class PlaySongViewModel(
             mContext.startForegroundService(intent)
         } else {
             mContext.startService(intent)
+        }
+
+        if (!isServiceBound) {
+            mContext.bindService(
+                Intent(mContext, MusicAppPlaybackService::class.java),
+                serviceConnection,
+                Context.BIND_AUTO_CREATE
+            )
         }
     }
 }
