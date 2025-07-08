@@ -116,7 +116,6 @@ class MusicAppPlaybackService : Service() {
                     updatePlaybackState(PlaybackStateCompat.STATE_NONE)
                 }
             }
-
             updateMediaSessionState()
         }
     }
@@ -314,15 +313,15 @@ class MusicAppPlaybackService : Service() {
 
             ACTION_PAUSE -> pauseSong()
 
-            ACTION_STOP -> 0
+            ACTION_STOP -> {}
 
-            ACTION_PREVIOUS -> 0
+            ACTION_PREVIOUS -> {}
 
-            ACTION_NEXT -> 0
+            ACTION_NEXT -> {}
 
-            ACTION_PREPARE_SONG -> 0
+            ACTION_PREPARE_SONG -> {}
 
-            else -> 0
+            else -> {}
         }
 
         return START_STICKY
