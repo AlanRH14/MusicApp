@@ -14,7 +14,6 @@ import androidx.media.session.MediaButtonReceiver
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
-import com.example.musicapp.MusicApp
 import com.example.musicapp.data.service.helper.MusicAppNotificationHelper
 import com.example.musicapp.domain.model.Song
 import kotlinx.coroutines.CoroutineScope
@@ -36,7 +35,7 @@ class MusicAppPlaybackService : Service() {
         const val ACTION_STOP = "com.example.musicapp.ACTION_STOP"
         const val ACTION_PREVIOUS = "com.example.musicapp.ACTION_PREVIOUS"
         const val ACTION_NEXT = "com.example.musicapp.ACTION_NEXT"
-        const val ACTION_PREPARE_SONG = "com.example.musicapp.ACTION_PREPAPRE_SONG"
+        const val ACTION_PREPARE_SONG = "com.example.musicapp.ACTION_PREPARE_SONG"
 
         const val KEY_SONG = "SONG"
     }
@@ -117,7 +116,6 @@ class MusicAppPlaybackService : Service() {
                     updatePlaybackState(PlaybackStateCompat.STATE_NONE)
                 }
             }
-
             updateMediaSessionState()
         }
     }
@@ -141,7 +139,7 @@ class MusicAppPlaybackService : Service() {
     }
 
     private fun updateMediaSessionState() {
-        if (exoPlayer.isPlaying || _player.value.currentSong != null) {
+        if (exoPlayer.isPlaying || player.value.currentSong != null) {
             if (!mediaSession.isActive) {
                 mediaSession.isActive = true
             }
@@ -315,15 +313,15 @@ class MusicAppPlaybackService : Service() {
 
             ACTION_PAUSE -> pauseSong()
 
-            ACTION_STOP -> 0
+            ACTION_STOP -> {}
 
-            ACTION_PREVIOUS -> 0
+            ACTION_PREVIOUS -> {}
 
-            ACTION_NEXT -> 0
+            ACTION_NEXT -> {}
 
-            ACTION_PREPARE_SONG -> 0
+            ACTION_PREPARE_SONG -> {}
 
-            else -> 0
+            else -> {}
         }
 
         return START_STICKY
@@ -353,6 +351,7 @@ class MusicAppPlaybackService : Service() {
             exoPlayer.setMediaItem(mediaItem)
             exoPlayer.prepare()
             exoPlayer.playWhenReady = true
+            updatePlaybackState(PlaybackStateCompat.STATE_PLAYING)
         } catch (e: Exception) {
             _player.update {
                 it.copy(
@@ -375,6 +374,8 @@ class MusicAppPlaybackService : Service() {
                     duration = exoPlayer.duration
                 )
             }
+            updatePlaybackState(PlaybackStateCompat.STATE_PAUSED)
+            updateNotification()
         } catch (e: Exception) {
             _player.update {
                 it.copy(
@@ -385,7 +386,6 @@ class MusicAppPlaybackService : Service() {
             }
             e.printStackTrace()
         }
-        updateNotification()
     }
 
     fun resumeSong() {
@@ -398,6 +398,7 @@ class MusicAppPlaybackService : Service() {
                     duration = exoPlayer.duration
                 )
             }
+            updatePlaybackState(PlaybackStateCompat.STATE_PLAYING)
             startForegroundServiceIfNeeded()
         } catch (e: Exception) {
             _player.update {

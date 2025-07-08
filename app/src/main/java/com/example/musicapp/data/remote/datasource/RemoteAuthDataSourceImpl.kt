@@ -18,7 +18,7 @@ class RemoteAuthDataSourceImpl(
         if (response.isSuccessful) {
             response.body() ?: LoginResponse()
         } else {
-            throw Exception("Login failed")
+            throw Exception(response.message())
         }
     }
 
@@ -27,7 +27,7 @@ class RemoteAuthDataSourceImpl(
         return if (response.isSuccessful) {
             response.body() ?: LoginResponse()
         }else {
-            throw Exception("Registration failed")
+            throw Exception(response.message())
         }
     }
 }
