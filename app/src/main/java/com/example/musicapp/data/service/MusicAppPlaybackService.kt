@@ -139,7 +139,7 @@ class MusicAppPlaybackService : Service() {
     }
 
     private fun updateMediaSessionState() {
-        if (exoPlayer.isPlaying || _player.value.currentSong != null) {
+        if (exoPlayer.isPlaying || player.value.currentSong != null) {
             if (!mediaSession.isActive) {
                 mediaSession.isActive = true
             }
@@ -351,6 +351,7 @@ class MusicAppPlaybackService : Service() {
             exoPlayer.setMediaItem(mediaItem)
             exoPlayer.prepare()
             exoPlayer.playWhenReady = true
+            updatePlaybackState(PlaybackStateCompat.STATE_PLAYING)
         } catch (e: Exception) {
             _player.update {
                 it.copy(
@@ -373,6 +374,8 @@ class MusicAppPlaybackService : Service() {
                     duration = exoPlayer.duration
                 )
             }
+            updatePlaybackState(PlaybackStateCompat.STATE_PAUSED)
+            updateNotification()
         } catch (e: Exception) {
             _player.update {
                 it.copy(
@@ -383,7 +386,6 @@ class MusicAppPlaybackService : Service() {
             }
             e.printStackTrace()
         }
-        updateNotification()
     }
 
     fun resumeSong() {
@@ -396,6 +398,7 @@ class MusicAppPlaybackService : Service() {
                     duration = exoPlayer.duration
                 )
             }
+            updatePlaybackState(PlaybackStateCompat.STATE_PLAYING)
             startForegroundServiceIfNeeded()
         } catch (e: Exception) {
             _player.update {
