@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -32,17 +33,22 @@ class PlaySongViewModel(
     private val _effect = MutableSharedFlow<PlaySongEffect>()
     val effect = _effect.asSharedFlow()
 
-
-    private var service: MusicAppPlaybackService? = null
+    private var playbackService: MusicAppPlaybackService? = null
     private var isServiceBound = false
     private var currentSong: Song? = null
+
+    fun onEvent(event: PlaySongUIEvent) {
+        when (event) {
+            is PlaySongUIEvent.GetSongByID -> getSongByID(event.songID)
+        }
+    }
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
             isServiceBound = true
-            service = (binder as MusicAppPlaybackService.MusicBinder).getService()
+            playbackService = (binder as MusicAppPlaybackService.MusicBinder).getService()
             currentSong?.let {
-                playSong(it)
+                startServiceAndBind(it)
             } ?: run {
                 _state.update { it.copy(error = "No song to play") }
             }
@@ -50,13 +56,17 @@ class PlaySongViewModel(
 
         override fun onServiceDisconnected(name: ComponentName?) {
             isServiceBound = false
-            service = null
+            playbackService = null
         }
     }
 
-    fun onEvent(event: PlaySongUIEvent) {
-        when (event) {
-            is PlaySongUIEvent.GetSongByID -> getSongByID(event.songID)
+    private fun observerPlaybackService() {
+        playbackService?.let { service ->
+            viewModelScope.launch {
+                service.player.collect {
+
+                }
+            }
         }
     }
 
@@ -70,7 +80,7 @@ class PlaySongViewModel(
                 }
 
                 is Resource.Success -> {
-                    playSong(song = response.data)
+                    startServiceAndBind(song = response.data)
                     _effect.emit(PlaySongEffect.ShowErrorMessage("Success"))
                 }
 
@@ -86,7 +96,7 @@ class PlaySongViewModel(
         }
     }
 
-    private fun playSong(song: Song) {
+    private fun startServiceAndBind(song: Song) {
         val intent = Intent(
             mContext, MusicAppPlaybackService::class.java
         ).apply {
