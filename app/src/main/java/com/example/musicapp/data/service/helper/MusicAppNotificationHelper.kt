@@ -94,7 +94,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
         val playIntent = Intent(mContext, MusicAppPlaybackService::class.java).apply {
             action = MusicAppPlaybackService.ACTION_PLAY
         }
-        val pauseIntent = Intent(mContext, MusicAppPlaybackService.ACTION_PAUSE::class.java).apply {
+        val pauseIntent = Intent(mContext, MusicAppPlaybackService::class.java).apply {
             action = MusicAppPlaybackService.ACTION_PAUSE
         }
 
