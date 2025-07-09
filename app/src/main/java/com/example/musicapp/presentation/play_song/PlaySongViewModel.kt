@@ -39,7 +39,6 @@ class PlaySongViewModel(
 
     private var playbackService: MusicAppPlaybackService? = null
     private var isServiceBound = false
-    private var currentSong: Song? = null
 
     fun onEvent(event: PlaySongUIEvent) {
         when (event) {
@@ -51,7 +50,7 @@ class PlaySongViewModel(
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
             isServiceBound = true
             playbackService = (binder as MusicAppPlaybackService.MusicBinder).getService()
-            currentSong?.let {
+            state.value.song?.let {
                 startServiceAndBind(it)
             } ?: run {
                 _state.update { it.copy(error = "No song to play") }
