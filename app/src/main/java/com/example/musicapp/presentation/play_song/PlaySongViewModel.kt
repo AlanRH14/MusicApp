@@ -14,11 +14,11 @@ import com.example.musicapp.data.service.MusicAppPlaybackService
 import com.example.musicapp.data.service.MusicAppPlaybackService.Companion.KEY_SONG
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.domain.repository.MusicRepository
+import com.example.musicapp.presentation.play_song.mvi.PlaySongEffect
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
