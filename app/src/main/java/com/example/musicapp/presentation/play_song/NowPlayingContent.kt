@@ -14,7 +14,10 @@ fun NowPlayingContent(
     title: String,
     isPlayList: Boolean = false
 ) {
-    val msg = if (isPlayList) stringResource(R.string.playing_from_playlist) else stringResource(R.string.now_playing)
+    val msg = if (isPlayList)
+        stringResource(R.string.playing_from_playlist)
+    else
+        stringResource(R.string.now_playing)
 
     Column(
         modifier = Modifier
