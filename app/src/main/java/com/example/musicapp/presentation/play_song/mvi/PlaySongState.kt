@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.play_song
+package com.example.musicapp.presentation.play_song.mvi
 
 import com.example.musicapp.domain.model.Song
 
