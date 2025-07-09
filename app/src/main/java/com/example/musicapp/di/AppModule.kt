@@ -7,6 +7,7 @@ import com.example.musicapp.presentation.play_song.PlaySongViewModel
 import com.example.musicapp.presentation.register.RegisterViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val appModule = module {
@@ -14,5 +15,5 @@ val appModule = module {
     viewModel { LoginViewModel(get(), get()) }
     viewModel { RegisterViewModel(get()) }
     viewModel { HomeViewModel(get()) }
-    viewModel { PlaySongViewModel(androidContext(), get())}
+    viewModel { PlaySongViewModel(get(), get())}
 }
