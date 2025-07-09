@@ -107,6 +107,22 @@ class PlaySongViewModel(
         }
     }
 
+    fun toggleToPause() {
+        playbackService?.let { service ->
+            if (service.player.value.isPlaying) {
+                service.pauseSong()
+            } else {
+                currentSong?.let { song ->
+                    service.playSong(song)
+                } ?: run {
+                    _state.update { it.copy(error = "No song to play") }
+                }
+            }
+        } ?: run {
+            _state.update { it.copy(error = "Playback service not bound") }
+        }
+    }
+
     private fun startServiceAndBind(song: Song) {
         val intent = Intent(
             mContext, MusicAppPlaybackService::class.java
