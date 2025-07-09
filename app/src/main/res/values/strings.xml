@@ -38,4 +38,5 @@
     <string name="recommendation">Recommendation</string>
     <string name="top_mixes">Top Mixes</string>
     <string name="song_recommendation_image">Song Recommendation Image</string>
+    <string name="playing_from_playlist">Playing from Playlist</string>
 </resources>

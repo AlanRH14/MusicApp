@@ -6,13 +6,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.example.musicapp.R
 
 @Composable
 fun NowPlayingContent(
     title: String,
     isPlayList: Boolean = false
 ) {
-    val msg = if (isPlayList) "Playing from Playlist" else "Now Playing"
+    val msg = if (isPlayList) stringResource(R.string.playing_from_playlist) else "Now Playing"
 
     Column(
         modifier = Modifier
