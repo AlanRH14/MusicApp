@@ -9,5 +9,6 @@ data class PlaySongState(
     val currentPosition: Long = 0L,
     val duration: Long = 0L,
     val isBuffering: Boolean = false,
+    val song: Song? = null,
     val error: String? = null
 )

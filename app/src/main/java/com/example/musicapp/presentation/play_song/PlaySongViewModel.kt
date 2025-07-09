@@ -93,8 +93,8 @@ class PlaySongViewModel(
                 }
 
                 is Resource.Success -> {
+                    _state.update { song -> song.copy(song = song.song) }
                     startServiceAndBind(song = response.data)
-                    _effect.emit(PlaySongEffect.ShowErrorMessage("Success"))
                 }
 
                 is Resource.Error -> {
@@ -114,12 +114,16 @@ class PlaySongViewModel(
             if (service.player.value.isPlaying) {
                 service.pauseSong()
             } else {
-                currentSong?.let { song ->
-                    service.playSong(song)
-                } ?: run {
-                    _state.update { it.copy(error = "No song to play") }
-                }
+                service.resumeSong()
             }
+        } ?: run {
+            _state.update { it.copy(error = "Playback service not bound") }
+        }
+    }
+
+    fun seekTo(position: Long) {
+        playbackService?.let { service ->
+            service.mediaSessionCallback.onSeekTo(position)
         } ?: run {
             _state.update { it.copy(error = "Playback service not bound") }
         }
