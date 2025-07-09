@@ -1,5 +1,7 @@
 package com.example.musicapp.presentation.play_song
 
+import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,7 +36,7 @@ fun PlaySongContent(
     }
 }
 
-@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun PlaySongContentPreview() {
     MusicAppTheme {
