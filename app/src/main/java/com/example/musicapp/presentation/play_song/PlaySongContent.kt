@@ -1,6 +1,5 @@
 package com.example.musicapp.presentation.play_song
 
-import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
