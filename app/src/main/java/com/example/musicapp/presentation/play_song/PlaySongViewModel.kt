@@ -65,8 +65,17 @@ class PlaySongViewModel(
     private fun observerPlaybackService() {
         playbackService?.let { service ->
             viewModelScope.launch {
-                service.player.onEach {
-
+                service.player.onEach { player ->
+                    _state.update {
+                        it.copy(
+                            isPlaying = player.isPlaying,
+                            currentSong = player.currentSong,
+                            currentPosition = player.currentPosition.coerceAtLeast(0),
+                            duration = player.duration.coerceAtLeast(0),
+                            isBuffering = player.isBuffering,
+                            error = player.error
+                        )
+                    }
                 }.launchIn(viewModelScope)
             }
         }
