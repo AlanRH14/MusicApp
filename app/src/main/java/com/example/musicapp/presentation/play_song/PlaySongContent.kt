@@ -27,7 +27,10 @@ fun PlaySongContent(
             .background(MaterialTheme.colorScheme.background)
             .padding(PaddingLarge)
     ) {
-
+        NowPlayingContent(
+            title = title,
+            isPlayList = isPlaying
+        )
     }
 }
 
