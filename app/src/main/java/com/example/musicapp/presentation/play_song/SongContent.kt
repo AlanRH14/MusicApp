@@ -27,7 +27,8 @@ fun SongContent(
     duration: Long,
     currentPosition: Long,
     isPlaying: Boolean = false,
-    isBuffering: Boolean
+    isBuffering: Boolean = false,
+    onSeekChange: (newValue: Float) -> Unit = {}
 ) {
     /*val sliderState = SliderState(
         value = currentPosition.toFloat() / duration.toFloat()
@@ -69,7 +70,7 @@ fun SongContent(
             Slider(
                 modifier = Modifier.fillMaxWidth(),
                 value = currentPosition.toFloat(),
-                onValueChange = { newValue -> },
+                onValueChange = onSeekChange,
                 valueRange = 0F..duration.toFloat(),
                 enabled = !isBuffering
             )
