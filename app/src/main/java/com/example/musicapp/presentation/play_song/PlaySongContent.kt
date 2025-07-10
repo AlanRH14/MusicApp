@@ -22,6 +22,7 @@ fun PlaySongContent(
     duration: Long,
     isPlaying: Boolean,
     isBuffering: Boolean,
+    onSeekChange: (newValue: Float) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -43,7 +44,7 @@ fun PlaySongContent(
             currentPosition = currentPosition,
             isPlaying = isPlaying,
             isBuffering = isBuffering,
-            onSeekChange = {}
+            onSeekChange = onSeekChange
         )
     }
 }
@@ -60,6 +61,7 @@ fun PlaySongContentPreview() {
             duration = 300000L,
             isBuffering = false,
             isPlaying = true,
+            onSeekChange = {}
         )
     }
 }
