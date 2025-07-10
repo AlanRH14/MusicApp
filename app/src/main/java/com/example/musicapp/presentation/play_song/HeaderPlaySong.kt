@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import com.example.musicapp.R
 
 @Composable
-fun NowPlayingContent(
+fun HeaderPlaySong(
     title: String,
     isPlayList: Boolean = false
 ) {

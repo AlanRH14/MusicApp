@@ -30,7 +30,7 @@ fun PlaySongContent(
             .padding(PaddingLarge),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        NowPlayingContent(
+        HeaderPlaySong(
             title = title,
             isPlayList = isPlaying
         )
