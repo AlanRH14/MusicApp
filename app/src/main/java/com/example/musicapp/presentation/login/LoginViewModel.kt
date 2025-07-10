@@ -10,6 +10,7 @@ import com.example.musicapp.common.Resource
 import com.example.musicapp.presentation.login.mvi.LoginEffect
 import com.example.musicapp.presentation.login.mvi.LoginState
 import com.example.musicapp.presentation.login.mvi.LoginUIEvent
+import com.example.musicapp.utils.ValidateFormat.emailFormatValid
 import com.example.musicapp.utils.emailFormatValid
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
