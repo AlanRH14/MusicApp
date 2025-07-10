@@ -49,6 +49,7 @@ fun SongContent(
         )
 
         Text(
+            modifier = Modifier.fillMaxWidth(),
             text = genre,
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
