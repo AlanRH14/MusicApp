@@ -28,11 +28,11 @@ fun SongContent(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         MusicAppImage(
-            modifier = Modifier.size(300.dp)
-                .align(Alignment.CenterHorizontally),
+            modifier = Modifier.size(300.dp),
             pathImage = image,
             imageDefault = 0,
             placeHolder = {},
