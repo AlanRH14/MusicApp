@@ -31,7 +31,8 @@ fun SongContent(
             .fillMaxWidth()
     ) {
         MusicAppImage(
-            modifier = Modifier.size(300.dp),
+            modifier = Modifier.size(300.dp)
+                .align(Alignment.CenterHorizontally),
             pathImage = image,
             imageDefault = 0,
             placeHolder = {},
