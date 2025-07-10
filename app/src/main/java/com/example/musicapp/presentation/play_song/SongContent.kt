@@ -1,5 +1,6 @@
 package com.example.musicapp.presentation.play_song
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
 import com.example.musicapp.presentation.common.components.MusicAppImage
 import com.example.musicapp.ui.theme.PaddingDefault
+import com.example.musicapp.utils.formattedTime
 
 @Composable
 fun SongContent(
@@ -77,7 +79,17 @@ fun SongContent(
             )
 
             Row {
+                Text(
+                    text = formattedTime(currentPosition),
+                    style = MaterialTheme.typography.bodySmall
+                )
 
+                Box(Modifier.weight(1F))
+
+                Text(
+                    text = formattedTime(duration),
+                    style = MaterialTheme.typography.bodySmall
+                )
             }
         }
     }

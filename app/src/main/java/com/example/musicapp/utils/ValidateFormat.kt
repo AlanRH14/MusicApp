@@ -7,3 +7,11 @@ fun String?.emailFormatValid(): Boolean =
 
 fun String.passwordFormatValid(): Boolean =
     true
+
+fun formattedTime(millis: Long): String {
+    val duration = millis / 1000
+    val minutes = millis * 60 % 60
+    val seconds = duration % 60
+
+    return String.format("%02d:%02d", minutes, seconds)
+}
