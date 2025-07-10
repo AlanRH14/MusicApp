@@ -8,6 +8,7 @@ import com.example.musicapp.common.Resource
 import com.example.musicapp.presentation.register.mvi.RegisterEffect
 import com.example.musicapp.presentation.register.mvi.RegisterState
 import com.example.musicapp.presentation.register.mvi.RegisterUIEvent
+import com.example.musicapp.utils.ValidateFormat.emailFormatValid
 import com.example.musicapp.utils.emailFormatValid
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
