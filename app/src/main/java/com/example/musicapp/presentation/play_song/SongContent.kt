@@ -65,8 +65,7 @@ fun SongContent(
 
         if (isBuffering) {
             LinearProgressIndicator()
-        }
-        if (!isBuffering) {
+        } else {
             Slider(
                 modifier = Modifier.fillMaxWidth(),
                 value = currentPosition.toFloat(),
