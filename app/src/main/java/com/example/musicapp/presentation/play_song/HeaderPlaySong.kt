@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import com.example.musicapp.R
 
 @Composable
-fun NowPlayingContent(
+fun HeaderPlaySong(
     title: String,
     isPlayList: Boolean = false
 ) {
@@ -32,7 +32,7 @@ fun NowPlayingContent(
         Text(
             text = title,
             style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.onPrimary
+            color = MaterialTheme.colorScheme.primary
         )
     }
 }
