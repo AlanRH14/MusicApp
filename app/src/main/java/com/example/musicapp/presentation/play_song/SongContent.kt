@@ -56,5 +56,11 @@ fun SongContent(
         )
 
         Spacer(modifier = Modifier.padding(PaddingDefault))
+
+        if (isBuffering) {
+
+        } else {
+
+        }
     }
 }
