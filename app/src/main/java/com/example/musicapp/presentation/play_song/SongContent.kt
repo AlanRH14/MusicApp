@@ -1,6 +1,7 @@
 package com.example.musicapp.presentation.play_song
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -74,6 +75,10 @@ fun SongContent(
                 valueRange = 0F..duration.toFloat(),
                 enabled = !isBuffering
             )
+
+            Row {
+
+            }
         }
     }
 }
