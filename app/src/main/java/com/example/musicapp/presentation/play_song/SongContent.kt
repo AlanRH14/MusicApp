@@ -30,7 +30,7 @@ fun SongContent(
         MusicAppImage(
             modifier = Modifier.size(300.dp),
             pathImage = image,
-            imageDefault = R.drawable.ic_logo,
+            imageDefault = 0,
             placeHolder = {},
             contentDescription = stringResource(R.string.song_cover_image),
         )
@@ -40,7 +40,7 @@ fun SongContent(
         Text(
             text = title,
             style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.onPrimary
         )
     }
 }

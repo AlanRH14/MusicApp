@@ -32,7 +32,7 @@ fun NowPlayingContent(
         Text(
             text = title,
             style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.onPrimary
+            color = MaterialTheme.colorScheme.primary
         )
     }
 }
