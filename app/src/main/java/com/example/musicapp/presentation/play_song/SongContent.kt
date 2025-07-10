@@ -31,8 +31,7 @@ fun SongContent(
             .fillMaxWidth()
     ) {
         MusicAppImage(
-            modifier = Modifier.size(300.dp)
-                .align(Alignment.CenterHorizontally),
+            modifier = Modifier.size(300.dp),
             pathImage = image,
             imageDefault = 0,
             placeHolder = {},
@@ -42,6 +41,7 @@ fun SongContent(
         Spacer(modifier = Modifier.padding(PaddingDefault))
 
         Text(
+            modifier = Modifier.fillMaxWidth(),
             text = title,
             style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.onPrimary
