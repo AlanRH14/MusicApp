@@ -42,7 +42,8 @@ fun PlaySongContent(
             duration = duration,
             currentPosition = currentPosition,
             isPlaying = isPlaying,
-            isBuffering = isBuffering
+            isBuffering = isBuffering,
+            onSeekChange = {}
         )
     }
 }
@@ -57,8 +58,8 @@ fun PlaySongContentPreview() {
             image = "http://example.com/image.jpg",
             currentPosition = 300000L,
             duration = 300000L,
-            isBuffering = true,
-            isPlaying = false,
+            isBuffering = false,
+            isPlaying = true,
         )
     }
 }
