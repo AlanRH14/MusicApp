@@ -19,8 +19,8 @@ fun PlaySongContent(
     image: String,
     currentPosition: Long,
     duration: Long,
-    isBuffering: Boolean,
     isPlaying: Boolean,
+    isBuffering: Boolean,
 ) {
     Column(
         modifier = Modifier
@@ -31,6 +31,16 @@ fun PlaySongContent(
         NowPlayingContent(
             title = title,
             isPlayList = isPlaying
+        )
+
+        SongContent(
+            title = title,
+            genre = genre,
+            image = image,
+            duration = duration,
+            currentPosition = currentPosition,
+            isPlaying = isPlaying,
+            isBuffering = isBuffering
         )
     }
 }
