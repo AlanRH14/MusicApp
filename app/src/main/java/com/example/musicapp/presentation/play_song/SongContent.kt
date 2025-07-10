@@ -32,9 +32,6 @@ fun SongContent(
     isBuffering: Boolean = false,
     onSeekChange: (newValue: Float) -> Unit = {}
 ) {
-    /*val sliderState = SliderState(
-        value = currentPosition.toFloat() / duration.toFloat()
-    )*/
     Column(
         modifier = Modifier
             .fillMaxWidth(),
