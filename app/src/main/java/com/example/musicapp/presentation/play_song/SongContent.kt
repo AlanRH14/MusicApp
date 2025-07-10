@@ -54,5 +54,7 @@ fun SongContent(
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+
+        Spacer(modifier = Modifier.padding(PaddingDefault))
     }
 }
