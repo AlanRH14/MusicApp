@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
@@ -20,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
 import com.example.musicapp.presentation.common.components.MusicAppImage
 import com.example.musicapp.ui.theme.PaddingDefault
-import com.example.musicapp.utils.formattedTime
+import com.example.musicapp.utils.toDecimalValue
 
 @Composable
 fun SongContent(
@@ -80,14 +79,14 @@ fun SongContent(
 
             Row {
                 Text(
-                    text = formattedTime(currentPosition),
+                    text = currentPosition.toDecimalValue(),
                     style = MaterialTheme.typography.bodySmall
                 )
 
                 Box(Modifier.weight(1F))
 
                 Text(
-                    text = formattedTime(duration),
+                    text = duration.toDecimalValue(),
                     style = MaterialTheme.typography.bodySmall
                 )
             }
