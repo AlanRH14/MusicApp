@@ -5,7 +5,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,8 +27,11 @@ fun SongContent(
     duration: Long,
     currentPosition: Long,
     isPlaying: Boolean = false,
-    isBuffering: Boolean = false
+    isBuffering: Boolean
 ) {
+    /*val sliderState = SliderState(
+        value = currentPosition.toFloat() / duration.toFloat()
+    )*/
     Column(
         modifier = Modifier
             .fillMaxWidth(),
@@ -58,9 +64,15 @@ fun SongContent(
         Spacer(modifier = Modifier.padding(PaddingDefault))
 
         if (isBuffering) {
-
+            LinearProgressIndicator()
         } else {
-
+            Slider(
+                modifier = Modifier.fillMaxWidth(),
+                value = currentPosition.toFloat() / duration.toFloat(),
+                onValueChange = { newValue -> },
+                valueRange = 0F..1F,
+                enabled = !isBuffering
+            )
         }
     }
 }
