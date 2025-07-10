@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.musicapp.ui.theme.MusicAppTheme
@@ -26,7 +27,8 @@ fun PlaySongContent(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(PaddingLarge)
+            .padding(PaddingLarge),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         NowPlayingContent(
             title = title,
