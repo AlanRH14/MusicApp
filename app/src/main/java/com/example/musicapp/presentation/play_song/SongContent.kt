@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
 import com.example.musicapp.presentation.common.components.MusicAppImage
 import com.example.musicapp.ui.theme.PaddingDefault
+import com.example.musicapp.utils.ValidateFormat.toDecimalValue
 import com.example.musicapp.utils.toDecimalValue
 
 @Composable
