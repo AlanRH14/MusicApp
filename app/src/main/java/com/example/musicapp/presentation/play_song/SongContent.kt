@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
 import com.example.musicapp.presentation.common.components.MusicAppImage
@@ -31,7 +32,7 @@ fun SongContent(
             pathImage = image,
             imageDefault = R.drawable.ic_logo,
             placeHolder = {},
-            contentDescription = "Song Cover Image",
+            contentDescription = stringResource(R.string.song_cover_image),
         )
 
         Spacer(modifier = Modifier.padding(PaddingDefault))
