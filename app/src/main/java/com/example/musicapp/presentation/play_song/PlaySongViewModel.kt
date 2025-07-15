@@ -43,6 +43,8 @@ class PlaySongViewModel(
     fun onEvent(event: PlaySongUIEvent) {
         when (event) {
             is PlaySongUIEvent.GetSongByID -> getSongByID(event.songID)
+            is PlaySongUIEvent.OnToggleToPause -> toggleToPause()
+            is PlaySongUIEvent.OnSeekTo -> seekTo(event.position)
         }
     }
 
