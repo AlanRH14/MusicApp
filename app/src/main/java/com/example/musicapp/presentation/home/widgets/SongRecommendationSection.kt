@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.home.widget
+package com.example.musicapp.presentation.home.widgets
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

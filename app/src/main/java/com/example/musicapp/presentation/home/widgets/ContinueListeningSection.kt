@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.home.widget
+package com.example.musicapp.presentation.home.widgets
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
