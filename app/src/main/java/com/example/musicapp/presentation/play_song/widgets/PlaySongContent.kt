@@ -3,6 +3,7 @@ package com.example.musicapp.presentation.play_song.widgets
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -13,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.musicapp.presentation.play_song.components.SongActions
 import com.example.musicapp.presentation.play_song.components.SongSlide
 import com.example.musicapp.ui.theme.MusicAppTheme
+import com.example.musicapp.ui.theme.PaddingDefault
 import com.example.musicapp.ui.theme.PaddingLarge
 
 @Composable
@@ -38,6 +40,8 @@ fun PlaySongContent(
             title = title,
             isPlayList = isPlaying
         )
+
+        Spacer(modifier = Modifier.padding(PaddingDefault))
 
         SongContent(
             title = title,
