@@ -23,8 +23,8 @@ fun SongActions(
         IconButton(onClick = {}) {
             Icon(
                 painter = painterResource(id = android.R.drawable.ic_media_previous),
+                tint = MaterialTheme.colorScheme.onPrimary,
                 contentDescription = stringResource(R.string.media_previous),
-                tint = MaterialTheme.colorScheme.onPrimary
             )
         }
 
@@ -37,16 +37,16 @@ fun SongActions(
                         android.R.drawable.ic_media_play
                     },
                 ),
+                tint = MaterialTheme.colorScheme.onPrimary,
                 contentDescription = stringResource(R.string.play_pause),
-                tint = MaterialTheme.colorScheme.onPrimary
             )
         }
 
         IconButton(onClick = {}) {
             Icon(
                 painter = painterResource(id = android.R.drawable.ic_media_next),
+                tint = MaterialTheme.colorScheme.onPrimary,
                 contentDescription = stringResource(R.string.next),
-                tint = MaterialTheme.colorScheme.onPrimary
             )
         }
     }
