@@ -56,6 +56,8 @@ fun PlaySongContent(
             onSeekChange = onSeekChange,
         )
 
+        Spacer(modifier = Modifier.padding(PaddingDefault))
+
         SongActions(
             isPlaying = isPlaying,
             onPlayPauseToggle = onPlayPauseToggle,
