@@ -6,6 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
+import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import kotlinx.coroutines.flow.collectLatest
 
@@ -29,5 +30,13 @@ fun PlaylistScreen(
 
     if (state.isLoading) {
         LoadingScreen()
+    }
+
+    if (!state.error.isNullOrEmpty()) {
+        ErrorScreen(
+            errorMessage = state.error ?: "",
+            primaryButton = "Retry",
+            onPrimaryButtonClicked = {}
+        )
     }
 }
