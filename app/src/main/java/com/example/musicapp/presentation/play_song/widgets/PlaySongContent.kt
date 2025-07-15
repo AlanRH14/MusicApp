@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.musicapp.presentation.play_song.components.SongActions
+import com.example.musicapp.presentation.play_song.components.SongSlide
 import com.example.musicapp.ui.theme.MusicAppTheme
 import com.example.musicapp.ui.theme.PaddingLarge
 
@@ -44,7 +44,7 @@ fun PlaySongContent(
             image = image,
         )
 
-        SongActions(
+        SongSlide(
             duration = duration,
             currentPosition = currentPosition,
             isPlaying = isPlaying,

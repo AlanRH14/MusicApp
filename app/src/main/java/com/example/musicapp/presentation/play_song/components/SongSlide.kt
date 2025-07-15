@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import com.example.musicapp.utils.ValidateFormat.toFormattedTime
 
 @Composable
-fun SongActions(
+fun SongSlide(
     duration: Long,
     currentPosition: Long,
     isPlaying: Boolean = false,
