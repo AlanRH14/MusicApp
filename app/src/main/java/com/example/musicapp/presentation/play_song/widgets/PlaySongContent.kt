@@ -49,6 +49,8 @@ fun PlaySongContent(
             image = image,
         )
 
+        Spacer(modifier = Modifier.padding(PaddingDefault))
+
         SongSlide(
             duration = duration,
             currentPosition = currentPosition,
