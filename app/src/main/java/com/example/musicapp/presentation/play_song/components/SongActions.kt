@@ -22,14 +22,17 @@ import com.example.musicapp.ui.theme.PaddingDefault
 
 @Composable
 fun SongActions(
-    isPlaying: Boolean = false
+    isPlaying: Boolean = false,
+    onPreviousClicked: () -> Unit = {},
+    onPlayPauseToggle: () -> Unit,
+    onNextClicked: () -> Unit = {},
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
-        IconButton(onClick = {}) {
+        IconButton(onClick = onPreviousClicked) {
             Icon(
                 painter = painterResource(id = android.R.drawable.ic_media_previous),
                 tint = MaterialTheme.colorScheme.onPrimary,
@@ -43,7 +46,7 @@ fun SongActions(
                 .size(80.dp)
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.primary),
-            onClick = {}
+            onClick = onPlayPauseToggle
         ) {
             Icon(
                 painter = painterResource(
@@ -58,7 +61,7 @@ fun SongActions(
             )
         }
 
-        IconButton(onClick = {}) {
+        IconButton(onClick = onNextClicked) {
             Icon(
                 painter = painterResource(id = android.R.drawable.ic_media_next),
                 tint = MaterialTheme.colorScheme.onPrimary,

@@ -48,15 +48,16 @@ fun PlaySongContent(
         SongSlide(
             duration = duration,
             currentPosition = currentPosition,
-            isPlaying = isPlaying,
             isBuffering = isBuffering,
             onSeekChange = onSeekChange,
+        )
+
+        SongActions(
+            isPlaying = isPlaying,
             onPlayPauseToggle = onPlayPauseToggle,
             onNextClicked = {},
             onPreviousClicked = {}
         )
-
-        SongActions(isPlaying = isPlaying)
     }
 }
 

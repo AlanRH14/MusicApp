@@ -15,12 +15,8 @@ import com.example.musicapp.utils.ValidateFormat.toFormattedTime
 fun SongSlide(
     duration: Long,
     currentPosition: Long,
-    isPlaying: Boolean = false,
     isBuffering: Boolean = false,
     onSeekChange: (newValue: Long) -> Unit,
-    onPlayPauseToggle: () -> Unit,
-    onNextClicked: () -> Unit = {},
-    onPreviousClicked: () -> Unit = {},
 ) {
     if (isBuffering) {
         LinearProgressIndicator()
