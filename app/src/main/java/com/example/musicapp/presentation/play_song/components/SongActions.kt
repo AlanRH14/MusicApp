@@ -27,6 +27,11 @@ fun SongActions(
             )
         }
 
-
+        IconButton(onClick = {}) {
+            Icon(
+                painter = painterResource(android.R.drawable.ic_media_next),
+                contentDescription = stringResource(R.string.next),
+            )
+        }
     }
 }

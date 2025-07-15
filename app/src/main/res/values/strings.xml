@@ -42,4 +42,5 @@
     <string name="now_playing">Now Playing</string>
     <string name="song_cover_image">Song Cover Image</string>
     <string name="media_previous">Media Previous</string>
+    <string name="next">Next</string>
 </resources>
