@@ -77,14 +77,16 @@ fun SongContent(
             Row {
                 Text(
                     text = currentPosition.toDecimalValue(),
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.surfaceVariant
                 )
 
                 Box(Modifier.weight(1F))
 
                 Text(
                     text = duration.toDecimalValue(),
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.surfaceVariant
                 )
             }
         }
