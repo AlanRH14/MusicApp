@@ -60,5 +60,35 @@ fun SongContent(
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+
+        Spacer(modifier = Modifier.padding(PaddingDefault))
+
+        if (isBuffering) {
+            LinearProgressIndicator()
+        } else {
+            Slider(
+                modifier = Modifier.fillMaxWidth(),
+                value = currentPosition.toFloat(),
+                onValueChange = onSeekChange,
+                valueRange = 0F..duration.toFloat(),
+                enabled = !isBuffering
+            )
+
+            Row {
+                Text(
+                    text = currentPosition.toDecimalValue(),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+
+                Box(Modifier.weight(1F))
+
+                Text(
+                    text = duration.toDecimalValue(),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            }
+        }
     }
 }
