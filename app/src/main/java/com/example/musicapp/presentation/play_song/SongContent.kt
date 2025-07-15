@@ -78,7 +78,7 @@ fun SongContent(
                 Text(
                     text = currentPosition.toDecimalValue(),
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.surfaceVariant
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
 
                 Box(Modifier.weight(1F))
@@ -86,7 +86,7 @@ fun SongContent(
                 Text(
                     text = duration.toDecimalValue(),
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.surfaceVariant
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
         }
