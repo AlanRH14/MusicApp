@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -23,6 +24,7 @@ fun SongActions(
             Icon(
                 painter = painterResource(id = android.R.drawable.ic_media_previous),
                 contentDescription = stringResource(R.string.media_previous),
+                tint = MaterialTheme.colorScheme.onPrimary
             )
         }
 
@@ -36,6 +38,7 @@ fun SongActions(
                     },
                 ),
                 contentDescription = stringResource(R.string.play_pause),
+                tint = MaterialTheme.colorScheme.onPrimary
             )
         }
 
@@ -43,6 +46,7 @@ fun SongActions(
             Icon(
                 painter = painterResource(id = android.R.drawable.ic_media_next),
                 contentDescription = stringResource(R.string.next),
+                tint = MaterialTheme.colorScheme.onPrimary
             )
         }
     }
