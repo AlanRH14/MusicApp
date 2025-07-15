@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.musicapp.presentation.play_song.mvi.SongActions
 import com.example.musicapp.ui.theme.MusicAppTheme
 import com.example.musicapp.ui.theme.PaddingLarge
 
@@ -40,11 +41,17 @@ fun PlaySongContent(
             title = title,
             genre = genre,
             image = image,
+        )
+
+        SongActions(
             duration = duration,
             currentPosition = currentPosition,
             isPlaying = isPlaying,
             isBuffering = isBuffering,
-            onSeekChange = onSeekChange
+            onSeekChange = onSeekChange,
+            onPlayPauseToggle = {},
+            onNextClicked = {},
+            onPreviousClicked = {}
         )
     }
 }
