@@ -27,8 +27,6 @@ fun SongActions(
             )
         }
 
-
-
         Icon(
             painter = painterResource(
                 id = if (isPlaying) {
