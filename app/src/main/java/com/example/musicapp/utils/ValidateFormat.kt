@@ -1,10 +1,7 @@
 package com.example.musicapp.utils
 
-import android.annotation.SuppressLint
 import android.util.Patterns.EMAIL_ADDRESS
 import java.util.Locale
-import kotlin.math.pow
-import kotlin.math.round
 
 object ValidateFormat {
     fun String?.emailFormatValid(): Boolean =
@@ -13,7 +10,7 @@ object ValidateFormat {
     fun String.passwordFormatValid(): Boolean =
         true
 
-    fun Long.toDecimalValue(): String {
+    fun Long.toFormattedTime(): String {
         val duration = this / 1000
         val minutes = (duration / 60).toInt()
         val seconds = (duration % 60).toInt()

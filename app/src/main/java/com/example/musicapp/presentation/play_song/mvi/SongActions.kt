@@ -9,7 +9,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.musicapp.utils.ValidateFormat.toDecimalValue
+import com.example.musicapp.utils.ValidateFormat.toFormattedTime
 
 @Composable
 fun SongActions(
@@ -35,7 +35,7 @@ fun SongActions(
 
         Row {
             Text(
-                text = currentPosition.toDecimalValue(),
+                text = currentPosition.toFormattedTime(),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onPrimary
             )
@@ -43,7 +43,7 @@ fun SongActions(
             Box(modifier = Modifier.weight(1F))
 
             Text(
-                text = duration.toDecimalValue(),
+                text = duration.toFormattedTime(),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onPrimary
             )
