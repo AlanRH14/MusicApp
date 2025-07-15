@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.musicapp.R
 import com.example.musicapp.domain.model.Album
-import com.example.musicapp.presentation.home.component.AlbumItem
+import com.example.musicapp.presentation.home.components.AlbumItem
 import com.example.musicapp.ui.theme.PaddingDefault
 import com.example.musicapp.ui.theme.PaddingSmall
 
