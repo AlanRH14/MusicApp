@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.login.widget
+package com.example.musicapp.presentation.login.widgets
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

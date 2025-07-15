@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
 import com.example.musicapp.presentation.common.components.MusicAppTextField
-import com.example.musicapp.presentation.login.widget.SocialCard
+import com.example.musicapp.presentation.login.widgets.SocialCard
 import com.example.musicapp.presentation.register.mvi.RegisterState
 import com.example.musicapp.presentation.register.mvi.RegisterUIEvent
 import com.example.musicapp.ui.theme.MusicAppTheme
