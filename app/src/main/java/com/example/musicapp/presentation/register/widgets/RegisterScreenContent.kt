@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.register.widget
+package com.example.musicapp.presentation.register.widgets
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
