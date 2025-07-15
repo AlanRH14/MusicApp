@@ -22,7 +22,7 @@ fun SongActions(
         IconButton(onClick = {}
         ) {
             Icon(
-                painter = painterResource(android.R.drawable.ic_media_previous),
+                painter = painterResource(id = android.R.drawable.ic_media_previous),
                 contentDescription = stringResource(R.string.media_previous),
             )
         }
