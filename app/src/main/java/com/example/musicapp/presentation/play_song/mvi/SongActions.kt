@@ -17,9 +17,11 @@ fun SongActions(
     currentPosition: Long,
     isPlaying: Boolean = false,
     isBuffering: Boolean = false,
-    onSeekChange: (newValue: Float) -> Unit
+    onSeekChange: (newValue: Float) -> Unit,
+    onPlayPauseToggle: () -> Unit,
+    onNextClicked: () -> Unit = {},
+    onPreviousClicked: () -> Unit = {},
 ) {
-
     if (isBuffering) {
         LinearProgressIndicator()
     } else {
