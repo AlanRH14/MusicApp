@@ -14,5 +14,7 @@ class PlaylistViewModel : ViewModel() {
     private val _effect = MutableSharedFlow<PlaylistEffect>()
     val effect = _effect.asSharedFlow()
 
+    fun onEvent(event: PlaylistUIEvent) {
 
+    }
 }
