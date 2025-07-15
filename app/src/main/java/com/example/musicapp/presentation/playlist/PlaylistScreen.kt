@@ -6,6 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
+import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -24,5 +25,9 @@ fun PlaylistScreen(
                 }
             }
         }
+    }
+
+    if (state.isLoading) {
+        LoadingScreen()
     }
 }
