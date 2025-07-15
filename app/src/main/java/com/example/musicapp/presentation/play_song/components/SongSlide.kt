@@ -26,7 +26,6 @@ fun SongSlide(
             value = currentPosition.toFloat(),
             onValueChange = { onSeekChange.invoke(it.toLong()) },
             valueRange = 0F..duration.toFloat(),
-            enabled = !isBuffering
         )
 
         Row {
