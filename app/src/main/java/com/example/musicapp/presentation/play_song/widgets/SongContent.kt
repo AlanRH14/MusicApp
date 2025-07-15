@@ -19,18 +19,12 @@ import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
 import com.example.musicapp.presentation.common.components.MusicAppImage
 import com.example.musicapp.ui.theme.PaddingDefault
-import com.example.musicapp.utils.ValidateFormat.toDecimalValue
 
 @Composable
 fun SongContent(
     title: String,
     genre: String,
     image: String,
-    duration: Long,
-    currentPosition: Long,
-    isPlaying: Boolean = false,
-    isBuffering: Boolean = false,
-    onSeekChange: (newValue: Float) -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -60,35 +54,5 @@ fun SongContent(
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-
-        Spacer(modifier = Modifier.padding(PaddingDefault))
-
-        if (isBuffering) {
-            LinearProgressIndicator()
-        } else {
-            Slider(
-                modifier = Modifier.fillMaxWidth(),
-                value = currentPosition.toFloat(),
-                onValueChange = onSeekChange,
-                valueRange = 0F..duration.toFloat(),
-                enabled = !isBuffering
-            )
-
-            Row {
-                Text(
-                    text = currentPosition.toDecimalValue(),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-
-                Box(Modifier.weight(1F))
-
-                Text(
-                    text = duration.toDecimalValue(),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            }
-        }
     }
 }
