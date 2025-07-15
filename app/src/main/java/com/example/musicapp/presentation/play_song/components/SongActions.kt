@@ -11,6 +11,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -25,7 +26,8 @@ fun SongActions(
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
     ) {
         IconButton(onClick = {}) {
             Icon(
@@ -37,7 +39,7 @@ fun SongActions(
 
         IconButton(
             modifier = Modifier
-                .padding(PaddingDefault)
+                .padding(horizontal = PaddingDefault)
                 .size(80.dp)
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.primary),
