@@ -5,7 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import com.example.musicapp.R
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import kotlinx.coroutines.flow.collectLatest
@@ -34,7 +36,7 @@ fun PlaylistScreen(
 
     if (!state.error.isNullOrEmpty()) {
         ErrorScreen(
-            errorMessage = state.error ?: "",
+            errorMessage = state.error ?: stringResource(id = R.string.unknown),
             primaryButton = "Retry",
             onPrimaryButtonClicked = {}
         )
