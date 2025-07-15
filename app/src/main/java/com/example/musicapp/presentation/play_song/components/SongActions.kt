@@ -19,24 +19,25 @@ fun SongActions(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
-        IconButton(onClick = {}
-        ) {
+        IconButton(onClick = {}) {
             Icon(
                 painter = painterResource(id = android.R.drawable.ic_media_previous),
                 contentDescription = stringResource(R.string.media_previous),
             )
         }
 
-        Icon(
-            painter = painterResource(
-                id = if (isPlaying) {
-                    android.R.drawable.ic_media_pause
-                } else {
-                    android.R.drawable.ic_media_play
-                },
-            ),
-            contentDescription = stringResource(R.string.play_pause),
-        )
+        IconButton(onClick = {}) {
+            Icon(
+                painter = painterResource(
+                    id = if (isPlaying) {
+                        android.R.drawable.ic_media_pause
+                    } else {
+                        android.R.drawable.ic_media_play
+                    },
+                ),
+                contentDescription = stringResource(R.string.play_pause),
+            )
+        }
 
         IconButton(onClick = {}) {
             Icon(
