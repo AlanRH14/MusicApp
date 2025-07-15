@@ -53,10 +53,10 @@ class MusicAppPlaybackService : Service() {
     val player = _player.asStateFlow()
     private var positionUpdateJob: Job? = null
     private var notificationJob: Job? = null
-    var isForegroundService = false
-    var currentNotification: Notification? = null
+    private var isForegroundService = false
+    private var currentNotification: Notification? = null
 
-    val playerListener = object : Player.Listener {
+    private val playerListener = object : Player.Listener {
         override fun onPlaybackStateChanged(playbackState: Int) {
             when (playbackState) {
                 Player.STATE_BUFFERING -> {
@@ -78,8 +78,8 @@ class MusicAppPlaybackService : Service() {
                             isPlaying = exoPlayer.isPlaying,
                             currentPosition = exoPlayer.currentPosition,
                             duration = exoPlayer.duration,
+                            isBuffering = false,
                             error = null,
-                            isBuffering = false
                         )
                     }
                     if (exoPlayer.isPlaying) {
