@@ -16,7 +16,7 @@ class SongApiMapperImpl(
             audioUrl = apiDto.audioUrl ?: "",
             coverImage = apiDto.coverImage ?: "",
             createdAt = apiDto.createdAt ?: 0L,
-            duration = apiDto.duration ?: 0,
+            duration = apiDto.duration ?: 0L,
             genre = apiDto.genre ?: "",
             id = apiDto.id ?: "",
             releaseDate = apiDto.releaseDate ?: 0L,

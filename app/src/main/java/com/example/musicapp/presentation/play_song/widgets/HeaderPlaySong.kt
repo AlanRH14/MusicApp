@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.play_song
+package com.example.musicapp.presentation.play_song.widgets
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

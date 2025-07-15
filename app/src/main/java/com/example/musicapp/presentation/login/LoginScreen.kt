@@ -10,7 +10,7 @@ import androidx.navigation.NavHostController
 import com.example.musicapp.R
 import com.example.musicapp.navigation.HomeRoute
 import com.example.musicapp.navigation.RegisterRoute
-import com.example.musicapp.presentation.login.widget.LoginScreenContent
+import com.example.musicapp.presentation.login.widgets.LoginScreenContent
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import com.example.musicapp.presentation.login.mvi.LoginEffect

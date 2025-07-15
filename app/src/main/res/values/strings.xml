@@ -41,4 +41,7 @@
     <string name="playing_from_playlist">Playing from Playlist</string>
     <string name="now_playing">Now Playing</string>
     <string name="song_cover_image">Song Cover Image</string>
+    <string name="media_previous">Media Previous</string>
+    <string name="next">Next</string>
+    <string name="play_pause">Play/Pause</string>
 </resources>

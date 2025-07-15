@@ -43,6 +43,8 @@ class PlaySongViewModel(
     fun onEvent(event: PlaySongUIEvent) {
         when (event) {
             is PlaySongUIEvent.GetSongByID -> getSongByID(event.songID)
+            is PlaySongUIEvent.OnToggleToPause -> toggleToPause()
+            is PlaySongUIEvent.OnSeekTo -> seekTo(event.position)
         }
     }
 
@@ -50,6 +52,7 @@ class PlaySongViewModel(
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
             isServiceBound = true
             playbackService = (binder as MusicAppPlaybackService.MusicBinder).getService()
+            observerPlaybackService()
             state.value.song?.let {
                 startServiceAndBind(it)
             } ?: run {
