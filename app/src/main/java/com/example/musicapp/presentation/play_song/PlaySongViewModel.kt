@@ -52,6 +52,7 @@ class PlaySongViewModel(
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
             isServiceBound = true
             playbackService = (binder as MusicAppPlaybackService.MusicBinder).getService()
+            observerPlaybackService()
             state.value.song?.let {
                 startServiceAndBind(it)
             } ?: run {
