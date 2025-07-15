@@ -23,7 +23,7 @@ fun PlaySongContent(
     duration: Long,
     isPlaying: Boolean,
     isBuffering: Boolean,
-    onSeekChange: (newValue: Float) -> Unit,
+    onSeekChange: (newValue: Long) -> Unit,
     onPlayPauseToggle: () -> Unit
 ) {
     Column(

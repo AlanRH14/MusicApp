@@ -17,7 +17,7 @@ fun SongActions(
     currentPosition: Long,
     isPlaying: Boolean = false,
     isBuffering: Boolean = false,
-    onSeekChange: (newValue: Float) -> Unit,
+    onSeekChange: (newValue: Long) -> Unit,
     onPlayPauseToggle: () -> Unit,
     onNextClicked: () -> Unit = {},
     onPreviousClicked: () -> Unit = {},
@@ -28,7 +28,7 @@ fun SongActions(
         Slider(
             modifier = Modifier.fillMaxWidth(),
             value = currentPosition.toFloat(),
-            onValueChange = onSeekChange,
+            onValueChange = { onSeekChange.invoke(it.toLong()) },
             valueRange = 0F..duration.toFloat(),
             enabled = !isBuffering
         )
