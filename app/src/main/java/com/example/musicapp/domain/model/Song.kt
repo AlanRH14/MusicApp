@@ -9,7 +9,7 @@ data class Song(
     val audioUrl: String = "",
     val coverImage: String = "",
     val createdAt: Long = 0L,
-    val duration: Int = 0,
+    val duration: Long = 0L,
     val genre: String = "",
     val id: String = "",
     val releaseDate: Long = 0L,
