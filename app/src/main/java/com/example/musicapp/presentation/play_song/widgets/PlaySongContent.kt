@@ -55,7 +55,7 @@ fun PlaySongContent(
             duration = duration,
             currentPosition = currentPosition,
             isBuffering = isBuffering,
-            onSeekChange = onEvent,
+            onSeekChange = { onEvent(PlaySongUIEvent.OnSeekTo(position = it)) },
         )
 
         Spacer(modifier = Modifier.padding(PaddingDefault))
