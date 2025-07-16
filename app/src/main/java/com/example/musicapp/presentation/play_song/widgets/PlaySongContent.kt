@@ -26,8 +26,7 @@ fun PlaySongContent(
     duration: Long,
     isPlaying: Boolean,
     isBuffering: Boolean,
-    onSeekChange: (newValue: Long) -> Unit,
-    onPlayPauseToggle: () -> Unit
+    onEvent: (newValue: Long) -> Unit,
 ) {
     Column(
         modifier = Modifier
