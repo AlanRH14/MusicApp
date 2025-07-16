@@ -11,6 +11,7 @@ import com.example.musicapp.R
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import com.example.musicapp.presentation.playlist.mvi.PlaylistEffect
+import com.example.musicapp.presentation.playlist.mvi.PlaylistUIEvent
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
@@ -23,6 +24,8 @@ fun PlaylistScreen(
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(key1 = true) {
+        viewModel.onEvent(PlaylistUIEvent.GetPlaylist)
+
         viewModel.effect.collectLatest { effect ->
             when (effect) {
                 is PlaylistEffect.ShowMessageError -> {
