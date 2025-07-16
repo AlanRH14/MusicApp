@@ -32,6 +32,7 @@ class HomeViewModel(
             is HomeUIEvent.OnSongClicked -> navigateToPlaySong(songID = event.songID)
             is HomeUIEvent.OnAlbumClicked -> showMessageTest("OnAlbumClicked")
             is HomeUIEvent.OnSongRecommendationClicked -> showMessageTest("OnSongRecommendationClicked")
+            is HomeUIEvent.OnPlaylistButtonClicked -> showMessageTest("OnPlaylistButtonClicked")
         }
     }
 
