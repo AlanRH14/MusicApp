@@ -34,7 +34,7 @@ class PlaylistRepositoryImpl(
         Resource.Loading
 
         return try {
-            val response = apiService.createPlaylist()
+            val response = apiService.createPlaylist(playlistRequest = playlistRequest)
             if (response.isSuccessful) {
                 response.body()?.let { res ->
                     Resource.Success(data = apiPlaylistMapper.mapToDomain(apiDto = res))
