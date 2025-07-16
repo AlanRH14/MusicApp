@@ -81,8 +81,7 @@ fun PlaySongContentPreview() {
             duration = 300000L,
             isBuffering = false,
             isPlaying = true,
-            onSeekChange = {},
-            onPlayPauseToggle = {}
+            onEvent = {}
         )
     }
 }
