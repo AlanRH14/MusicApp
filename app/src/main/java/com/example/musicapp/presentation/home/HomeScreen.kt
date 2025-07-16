@@ -34,7 +34,7 @@ fun HomeScreen(
                     Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()
                 }
 
-                is HomeEffect.NavigateToSong -> {
+                is HomeEffect.NavigateToPlaySong -> {
                     navController.navigate(PlaySong(songID = it.songID))
                 }
 
