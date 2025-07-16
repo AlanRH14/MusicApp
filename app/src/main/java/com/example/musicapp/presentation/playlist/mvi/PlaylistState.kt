@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.playlist
+package com.example.musicapp.presentation.playlist.mvi
 
 data class PlaylistState(
     val error: String? = null,
