@@ -6,9 +6,7 @@ import com.example.musicapp.presentation.onboarding.OnboardingViewModel
 import com.example.musicapp.presentation.play_song.PlaySongViewModel
 import com.example.musicapp.presentation.playlist.PlaylistViewModel
 import com.example.musicapp.presentation.register.RegisterViewModel
-import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val appModule = module {
