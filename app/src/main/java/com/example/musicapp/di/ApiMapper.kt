@@ -11,7 +11,7 @@ import com.example.musicapp.data.mapper_impl.user.UserApiMapperImpl
 import com.example.musicapp.data.mapper_impl.user.UserEntityMapperImpl
 import com.example.musicapp.data.model.AlbumDto
 import com.example.musicapp.data.model.ArtistDto
-import com.example.musicapp.data.model.PlaylistModelDto
+import com.example.musicapp.data.model.PlaylistDto
 import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.model.reponse.HomeResponse
 import com.example.musicapp.data.model.reponse.LoginResponse
@@ -56,7 +56,7 @@ val apiMapperModule = module {
         )
     }
 
-    single<ApiMapper<List<PlaylistModelDto>, List<Playlist>>> {
+    single<ApiMapper<List<PlaylistDto>, List<Playlist>>> {
         PlaylistApiMapperImpl(
             get(named("SongApiMapper"))
         )

@@ -1,6 +1,6 @@
 package com.example.musicapp.data.model
 
-data class PlaylistModelDto(
+data class PlaylistDto(
     val id: String? = null,
     val name: String? = null,
     val description: String? = null,
