@@ -2,11 +2,26 @@ package com.example.musicapp.data.mapper_impl
 
 import com.example.musicapp.common.ApiMapper
 import com.example.musicapp.data.model.PlaylistModelDto
+import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.domain.model.Playlist
+import com.example.musicapp.domain.model.Song
 
-class PlaylistApiMapperImpl : ApiMapper<List<PlaylistModelDto>, List<Playlist>> {
+class PlaylistApiMapperImpl(
+    private val apiSongMapper: ApiMapper<SongDto, Song>
+) : ApiMapper<List<PlaylistModelDto>, List<Playlist>> {
 
     override fun mapToDomain(apiDto: List<PlaylistModelDto>): List<Playlist> {
-        TODO("Not yet implemented")
+        return apiDto.map { playlist ->
+            Playlist(
+                id = playlist.id ?: "",
+                name = playlist.name ?: "",
+                description = playlist.description ?: "",
+                coverImage = playlist.coverImage ?: "",
+                userId = playlist.userId ?: "",
+                songs = emptyList(),
+                createdAt = playlist.createdAt ?: 0L,
+                updateAt = playlist.updateAt ?: 0L
+            )
+        }
     }
 }
