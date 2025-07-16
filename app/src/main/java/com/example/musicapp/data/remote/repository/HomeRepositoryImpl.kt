@@ -20,7 +20,7 @@ class HomeRepositoryImpl(
             if (response.isSuccessful) {
                 response.body()?.let { res ->
                     Resource.Success(data = apiHomeMapper.mapToDomain(apiDto = res))
-                } ?: Resource.Success(data = Home())
+                } ?: throw Exception(response.message())
             } else {
                 throw Exception(response.message())
             }
