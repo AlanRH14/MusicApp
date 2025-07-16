@@ -2,6 +2,7 @@ package com.example.musicapp.presentation.playlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.musicapp.domain.repository.PlaylistRepository
 import com.example.musicapp.presentation.playlist.mvi.PlaylistEffect
 import com.example.musicapp.presentation.playlist.mvi.PlaylistState
 import com.example.musicapp.presentation.playlist.mvi.PlaylistUIEvent
@@ -11,7 +12,9 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class PlaylistViewModel : ViewModel() {
+class PlaylistViewModel(
+    private val playlistRepository: PlaylistRepository
+) : ViewModel() {
 
     private val _state = MutableStateFlow(PlaylistState())
     val state = _state.asStateFlow()
