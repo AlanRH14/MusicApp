@@ -12,11 +12,12 @@ import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import com.example.musicapp.presentation.playlist.mvi.PlaylistEffect
 import kotlinx.coroutines.flow.collectLatest
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun PlaylistScreen(
     navController: NavHostController,
-    viewModel: PlaylistViewModel,
+    viewModel: PlaylistViewModel = koinViewModel(),
 ) {
 
     val state by viewModel.state.collectAsState()
