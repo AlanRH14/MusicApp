@@ -20,7 +20,7 @@ class PlaylistRepositoryImpl(
             if (response.isSuccessful) {
                 response.body()?.let { res ->
                     Resource.Success(data = apiPlaylistMapper.mapToDomain(apiDto = res))
-                } ?: throw Exception(response.message())
+                } ?: Resource.Success(data = emptyList())
             } else {
                 throw Exception(response.message())
             }
