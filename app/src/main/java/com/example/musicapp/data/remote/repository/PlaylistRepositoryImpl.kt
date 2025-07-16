@@ -1,5 +1,7 @@
 package com.example.musicapp.data.remote.repository
 
-class PlaylistRepositoryImpl {
+class PlaylistRepositoryImpl(
+    private val apiService: S
+) {
 
 }
