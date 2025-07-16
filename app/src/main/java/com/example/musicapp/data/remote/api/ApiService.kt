@@ -1,5 +1,6 @@
 package com.example.musicapp.data.remote.api
 
+import com.example.musicapp.data.model.PlaylistDto
 import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.model.reponse.HomeResponse
 import com.example.musicapp.data.model.request.LoginRequest
@@ -33,4 +34,7 @@ interface ApiService {
     suspend fun getSongByID(
         @Path("id") id: String
     ): Response<SongDto>
+
+    @GET("playlist")
+    suspend fun getPlaylist(): Response<List<PlaylistDto>>
 }
