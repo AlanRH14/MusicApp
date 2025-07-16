@@ -5,6 +5,7 @@ import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.model.reponse.HomeResponse
 import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.reponse.LoginResponse
+import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.data.model.request.RegisterRequest
 import retrofit2.Response
 import retrofit2.http.Body
@@ -39,5 +40,7 @@ interface ApiService {
     suspend fun getPlaylist(): Response<List<PlaylistDto>>
 
     @POST("playlist")
-    suspend fun createPlaylist(): Response<List<PlaylistDto>>
+    suspend fun createPlaylist(
+        playlistRequest: CreatePlaylistRequest
+    ): Response<List<PlaylistDto>>
 }
