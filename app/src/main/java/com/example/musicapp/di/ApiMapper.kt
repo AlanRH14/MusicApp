@@ -2,6 +2,7 @@ package com.example.musicapp.di
 
 import com.example.musicapp.common.ApiMapper
 import com.example.musicapp.data.local.database.entities.UserEntity
+import com.example.musicapp.data.mapper_impl.PlaylistApiMapperImpl
 import com.example.musicapp.data.mapper_impl.artist.ArtistApiMapperImpl
 import com.example.musicapp.data.mapper_impl.home.HomeApiMapperImpl
 import com.example.musicapp.data.mapper_impl.song.AlbumApiMapperImpl
@@ -10,12 +11,14 @@ import com.example.musicapp.data.mapper_impl.user.UserApiMapperImpl
 import com.example.musicapp.data.mapper_impl.user.UserEntityMapperImpl
 import com.example.musicapp.data.model.AlbumDto
 import com.example.musicapp.data.model.ArtistDto
+import com.example.musicapp.data.model.PlaylistModelDto
 import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.model.reponse.HomeResponse
 import com.example.musicapp.data.model.reponse.LoginResponse
 import com.example.musicapp.domain.model.Album
 import com.example.musicapp.domain.model.Artist
 import com.example.musicapp.domain.model.Home
+import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.domain.model.User
 import org.koin.core.qualifier.named
@@ -50,6 +53,12 @@ val apiMapperModule = module {
         HomeApiMapperImpl(
             get(named("SongApiMapper")),
             get(named("AlbumApiMapper"))
+        )
+    }
+
+    single<ApiMapper<List<PlaylistModelDto>, List<Playlist>>> {
+        PlaylistApiMapperImpl(
+            get(named("SongApiMapper"))
         )
     }
 }
