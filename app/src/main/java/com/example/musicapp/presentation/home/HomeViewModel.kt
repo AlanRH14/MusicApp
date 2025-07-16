@@ -71,7 +71,7 @@ class HomeViewModel(
 
     private fun navigateToPlaySong(songID: String) {
         viewModelScope.launch {
-            _effect.emit(HomeEffect.OnSongClicked(songID = songID))
+            _effect.emit(HomeEffect.NavigateToSong(songID = songID))
         }
     }
 
