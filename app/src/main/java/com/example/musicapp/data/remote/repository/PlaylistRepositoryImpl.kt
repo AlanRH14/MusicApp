@@ -13,6 +13,8 @@ class PlaylistRepositoryImpl(
 ) : PlaylistRepository {
 
     override suspend fun getPlaylist(): Resource<List<Playlist>> {
+        Resource.Loading
+
         return try {
             val response = apiService.getPlaylist()
             if (response.isSuccessful) {
