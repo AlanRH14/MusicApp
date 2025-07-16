@@ -18,7 +18,9 @@ class PlaylistApiMapperImpl(
                 description = playlist.description ?: "",
                 coverImage = playlist.coverImage ?: "",
                 userId = playlist.userId ?: "",
-                songs = emptyList(),
+                songs = playlist.songs?.map { song ->
+                    apiSongMapper.mapToDomain(apiDto = song)
+                } ?: emptyList(),
                 createdAt = playlist.createdAt ?: 0L,
                 updateAt = playlist.updateAt ?: 0L
             )
