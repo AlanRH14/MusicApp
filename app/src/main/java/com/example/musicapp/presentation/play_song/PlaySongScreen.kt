@@ -46,7 +46,7 @@ fun PlaySongScreen(
             currentPosition = state.currentPosition,
             isPlaying = state.isPlaying,
             isBuffering = state.isBuffering,
-            onEvent = {}
+            onEvent = viewModel::onEvent
         )
     }
 
