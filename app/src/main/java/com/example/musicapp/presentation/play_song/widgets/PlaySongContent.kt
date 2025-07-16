@@ -62,7 +62,7 @@ fun PlaySongContent(
 
         SongActions(
             isPlaying = isPlaying,
-            onPlayPauseToggle = onPlayPauseToggle,
+            onPlayPauseToggle = onEvent,
             onNextClicked = {},
             onPreviousClicked = {}
         )
