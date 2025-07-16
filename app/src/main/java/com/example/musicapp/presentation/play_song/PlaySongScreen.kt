@@ -41,7 +41,7 @@ fun PlaySongScreen(
             title = currentSong.title,
             genre = currentSong.genre,
             image = currentSong.coverImage,
-            duration = currentSong.duration,
+            duration = state.duration,
             currentPosition = state.currentPosition,
             isPlaying = state.isPlaying,
             isBuffering = state.isBuffering,
