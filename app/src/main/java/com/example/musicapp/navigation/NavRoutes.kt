@@ -18,3 +18,6 @@ object HomeRoute: NavRoutes
 
 @Serializable
 data class PlaySong(val songID: String): NavRoutes
+
+@Serializable
+object Playlist: NavRoutes

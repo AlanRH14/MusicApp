@@ -31,7 +31,7 @@ class HomeViewModel(
             is HomeUIEvent.OnSongClicked -> navigateToPlaySong(songID = event.songID)
             is HomeUIEvent.OnAlbumClicked -> showMessageTest("OnAlbumClicked")
             is HomeUIEvent.OnSongRecommendationClicked -> showMessageTest("OnSongRecommendationClicked")
-            is HomeUIEvent.OnPlaylistClicked -> showMessageTest("OnPlaylistButtonClicked")
+            is HomeUIEvent.OnPlaylistClicked -> navigateToPlaylist()
         }
     }
 
@@ -72,6 +72,12 @@ class HomeViewModel(
     private fun navigateToPlaySong(songID: String) {
         viewModelScope.launch {
             _effect.emit(HomeEffect.OnSongClicked(songID = songID))
+        }
+    }
+
+    private fun navigateToPlaylist() {
+        viewModelScope.launch {
+            _effect.emit(HomeEffect.NavigationToPlaylist)
         }
     }
 }
