@@ -36,10 +36,10 @@ interface ApiService {
         @Path("id") id: String
     ): Response<SongDto>
 
-    @GET("playlist")
+    @GET("/playlists")
     suspend fun getPlaylist(): Response<List<PlaylistDto>>
 
-    @POST("playlist")
+    @POST("/playlists")
     suspend fun createPlaylist(
         playlistRequest: CreatePlaylistRequest
     ): Response<List<PlaylistDto>>
