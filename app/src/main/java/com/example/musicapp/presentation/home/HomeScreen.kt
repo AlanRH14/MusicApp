@@ -9,6 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
 import com.example.musicapp.navigation.PlaySong
+import com.example.musicapp.navigation.Playlist
 import com.example.musicapp.presentation.home.widgets.HomeContent
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
@@ -33,8 +34,12 @@ fun HomeScreen(
                     Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()
                 }
 
-                is HomeEffect.OnSongClicked -> {
+                is HomeEffect.NavigateToPlaySong -> {
                     navController.navigate(PlaySong(songID = it.songID))
+                }
+
+                is HomeEffect.NavigationToPlaylist -> {
+                    navController.navigate(Playlist)
                 }
             }
         }

@@ -9,6 +9,7 @@ import com.example.musicapp.presentation.home.HomeScreen
 import com.example.musicapp.presentation.login.LoginScreen
 import com.example.musicapp.presentation.onboarding.OnboardingScreen
 import com.example.musicapp.presentation.play_song.PlaySongScreen
+import com.example.musicapp.presentation.playlist.PlaylistScreen
 import com.example.musicapp.presentation.register.RegisterScreen
 
 @Composable
@@ -37,6 +38,10 @@ fun AppNavGraph(
         composable<PlaySong> { songID ->
             val route = songID.toRoute<PlaySong>().songID
             PlaySongScreen(navController = navController, songID = route)
+        }
+
+        composable<Playlist> {
+            PlaylistScreen(navController = navController)
         }
     }
 }

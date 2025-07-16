@@ -28,6 +28,7 @@ fun HomeContent(
             userName = state.user.name,
             userImage = state.user.profilePicture,
             userImageDefault = R.drawable.ic_profile,
+            onPlaylistButtonClicked = { onEvent(HomeUIEvent.OnPlaylistClicked) }
         )
 
         ContinueListeningSection(
@@ -46,7 +47,13 @@ fun HomeContent(
 
         SongRecommendationSection(
             songs = state.homData.recommendedSong,
-            onRecommendationClicked = { songID -> onEvent(HomeUIEvent.OnSongRecommendationClicked(songID = songID)) }
+            onRecommendationClicked = { songID ->
+                onEvent(
+                    HomeUIEvent.OnSongRecommendationClicked(
+                        songID = songID
+                    )
+                )
+            }
         )
     }
 }
