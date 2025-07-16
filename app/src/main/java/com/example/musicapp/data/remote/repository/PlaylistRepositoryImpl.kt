@@ -14,9 +14,11 @@ class PlaylistRepositoryImpl(
 
     override suspend fun getPlaylist(): Resource<List<Playlist>> {
         return try {
-            val response = apiService.getHome()
+            val response = apiService.getPlaylist()
             if (response.isSuccessful) {
-
+                response.body()?.let { res ->
+                    Resource.Success(data = apiPlaylistMapper.mapToDomain(apiDto = res))
+                } ?: throw Exception(response.message())
             } else {
                 throw Exception(response.message())
             }
