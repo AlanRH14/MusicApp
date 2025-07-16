@@ -111,7 +111,7 @@ class PlaySongViewModel(
         }
     }
 
-    fun toggleToPause() {
+    private fun toggleToPause() {
         playbackService?.let { service ->
             if (service.player.value.isPlaying) {
                 service.pauseSong()
@@ -123,7 +123,7 @@ class PlaySongViewModel(
         }
     }
 
-    fun seekTo(position: Long) {
+    private fun seekTo(position: Long) {
         playbackService?.let { service ->
             service.mediaSessionCallback.onSeekTo(position)
         } ?: run {
