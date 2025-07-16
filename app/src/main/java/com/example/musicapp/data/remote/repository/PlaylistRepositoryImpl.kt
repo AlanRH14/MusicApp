@@ -30,7 +30,20 @@ class PlaylistRepositoryImpl(
         }
     }
 
-    override suspend fun createPlaylist(playlistRequest: CreatePlaylistRequest): Resource<PlaylistDto> {
-        TODO("Not yet implemented")
+    override suspend fun createPlaylist(playlistRequest: CreatePlaylistRequest): Resource<List<Playlist>> {
+        Resource.Loading
+
+        return try {
+            val response = apiService.createPlaylist()
+            if (response.isSuccessful) {
+                response.body()?.let { res ->
+                    Resource.Success(data = apiPlaylistMapper.mapToDomain(apiDto = res))
+                } ?: Resource.Success(data = emptyList())
+            } else {
+                throw Exception(response.message())
+            }
+        } catch (e: Exception) {
+            Resource.Error(message = "Error: ${e.message}")
+        }
     }
 }
