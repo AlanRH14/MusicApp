@@ -28,7 +28,7 @@ fun HomeContent(
             userName = state.user.name,
             userImage = state.user.profilePicture,
             userImageDefault = R.drawable.ic_profile,
-            onPlaylistButtonClicked = { onEvent(HomeUIEvent.OnPlaylistButtonClicked) }
+            onPlaylistButtonClicked = { onEvent(HomeUIEvent.OnPlaylistClicked) }
         )
 
         ContinueListeningSection(
