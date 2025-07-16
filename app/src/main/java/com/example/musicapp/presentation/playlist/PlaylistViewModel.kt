@@ -25,7 +25,10 @@ class PlaylistViewModel(
     val effect = _effect.asSharedFlow()
 
     fun onEvent(event: PlaylistUIEvent) {
-
+        when (event) {
+            is PlaylistUIEvent.GetPlaylist -> getPlaylist()
+            is PlaylistUIEvent.OnClickedRetry -> getPlaylist()
+        }
     }
 
     private fun getPlaylist() {
