@@ -37,4 +37,7 @@ interface ApiService {
 
     @GET("playlist")
     suspend fun getPlaylist(): Response<List<PlaylistDto>>
+
+    @POST("playlist")
+    suspend fun createPlaylist(): Response<List<PlaylistDto>>
 }
