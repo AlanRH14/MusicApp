@@ -22,7 +22,6 @@ fun PlaySongScreen(
     viewModel: PlaySongViewModel = koinViewModel(),
     songID: String,
 ) {
-
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(key1 = true) {
@@ -42,12 +41,11 @@ fun PlaySongScreen(
             title = currentSong.title,
             genre = currentSong.genre,
             image = currentSong.coverImage,
-            duration = currentSong.duration,
+            duration = state.duration,
             currentPosition = state.currentPosition,
             isPlaying = state.isPlaying,
             isBuffering = state.isBuffering,
-            onSeekChange = {},
-            onPlayPauseToggle = {}
+            onEvent = viewModel::onEvent
         )
     }
 

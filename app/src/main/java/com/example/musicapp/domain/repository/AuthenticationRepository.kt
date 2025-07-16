@@ -6,7 +6,6 @@ import com.example.musicapp.common.Resource
 import com.example.musicapp.domain.model.User
 
 interface AuthenticationRepository {
-
     suspend fun login(loginRequest: LoginRequest): Resource<User>
 
     suspend fun register(registerRequest: RegisterRequest): Resource<User>

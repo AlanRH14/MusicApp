@@ -5,7 +5,6 @@ import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.request.RegisterRequest
 
 interface RemoteAuthDataSource {
-
     suspend fun login(loginRequest: LoginRequest): LoginResponse
     suspend fun register(registerRequest: RegisterRequest): LoginResponse
 }
