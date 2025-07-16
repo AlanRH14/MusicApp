@@ -44,4 +44,5 @@
     <string name="media_previous">Media Previous</string>
     <string name="next">Next</string>
     <string name="play_pause">Play/Pause</string>
+    <string name="playlist_add">Playlist Add</string>
 </resources>
