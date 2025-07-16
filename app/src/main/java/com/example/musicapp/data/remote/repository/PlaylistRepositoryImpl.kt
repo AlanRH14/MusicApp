@@ -3,6 +3,7 @@ package com.example.musicapp.data.remote.repository
 import com.example.musicapp.common.ApiMapper
 import com.example.musicapp.common.Resource
 import com.example.musicapp.data.model.PlaylistDto
+import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.domain.repository.PlaylistRepository
@@ -27,5 +28,9 @@ class PlaylistRepositoryImpl(
         } catch (e: Exception) {
             Resource.Error(message = "Error: ${e.message}")
         }
+    }
+
+    override suspend fun createPlaylist(playlistRequest: CreatePlaylistRequest): Resource<PlaylistDto> {
+        TODO("Not yet implemented")
     }
 }
