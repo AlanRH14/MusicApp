@@ -87,7 +87,7 @@ class PlaySongViewModel(
     }
 
     private fun getSongByID(id: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             when (val response = repository.getSongById(id = id)) {
                 is Resource.Loading -> {
                     _state.update {
