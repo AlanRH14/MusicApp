@@ -17,6 +17,7 @@ import com.example.musicapp.domain.repository.MusicRepository
 import com.example.musicapp.presentation.play_song.mvi.PlaySongEffect
 import com.example.musicapp.presentation.play_song.mvi.PlaySongState
 import com.example.musicapp.presentation.play_song.mvi.PlaySongUIEvent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -68,7 +69,7 @@ class PlaySongViewModel(
 
     private fun observerPlaybackService() {
         playbackService?.let { service ->
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.IO) {
                 service.player.onEach { player ->
                     _state.update {
                         it.copy(
@@ -86,25 +87,27 @@ class PlaySongViewModel(
     }
 
     private fun getSongByID(id: String) {
-        viewModelScope.launch {
-            when (val response = repository.getSongById(id = id)) {
-                is Resource.Loading -> {
-                    _state.update {
-                        it.copy(isLoading = true)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getSongById(id = id).collect { response ->
+                when (response) {
+                    is Resource.Loading -> {
+                        _state.update {
+                            it.copy(isLoading = true)
+                        }
                     }
-                }
 
-                is Resource.Success -> {
-                    _state.update { song -> song.copy(song = song.song) }
-                    startServiceAndBind(song = response.data)
-                }
+                    is Resource.Success -> {
+                        _state.update { song -> song.copy(song = song.song) }
+                        startServiceAndBind(song = response.data)
+                    }
 
-                is Resource.Error -> {
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            error = response.message
-                        )
+                    is Resource.Error -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                error = response.message
+                            )
+                        }
                     }
                 }
             }

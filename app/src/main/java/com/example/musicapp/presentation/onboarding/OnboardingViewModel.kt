@@ -7,6 +7,7 @@ import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.presentation.onboarding.mvi.OnboardingEffect
 import com.example.musicapp.presentation.onboarding.mvi.OnboardingState
 import com.example.musicapp.presentation.onboarding.mvi.OnboardingUIEvent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -31,7 +32,7 @@ class OnboardingViewModel(
     }
 
     private fun isUserLoggedIn() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _state.update { it.copy(isLoading = true) }
 
             dataStoreHandle.readState(key = ConstantsPreferences.UserIsLoggedPreferences)

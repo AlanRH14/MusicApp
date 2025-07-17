@@ -10,6 +10,8 @@ import com.example.musicapp.data.local.database.entities.UserEntity
 import com.example.musicapp.data.local.datasource.UserLocalDataSource
 import com.example.musicapp.data.remote.datasource.RemoteAuthDataSource
 import com.example.musicapp.domain.model.User
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class AuthenticationRepositoryImpl(
     private val remoteDataSource: RemoteAuthDataSource,
@@ -18,23 +20,22 @@ class AuthenticationRepositoryImpl(
     private val apiUserMapper: ApiMapper<UserEntity, User>,
 ) : AuthenticationRepository {
 
-    override suspend fun login(loginRequest: LoginRequest): Resource<User> {
-        Resource.Loading
-        return try {
+    override fun login(loginRequest: LoginRequest): Flow<Resource<User>> = flow {
+        emit(Resource.Loading)
+        try {
             val response = remoteDataSource.login(loginRequest)
             val entity = apiLoginMapper.mapToDomain(apiDto = response)
             localDataSource.savaUser(user = entity)
-            Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
+            emit(Resource.Success(apiUserMapper.mapToDomain(apiDto = entity)))
         } catch (e: Exception) {
             localDataSource.getUser()?.let { userEntity ->
-                Resource.Success(apiUserMapper.mapToDomain(apiDto = userEntity))
-            } ?: Resource.Error(message = "Error: ${e.message}")
+                emit(Resource.Success(apiUserMapper.mapToDomain(apiDto = userEntity)))
+            } ?: emit(Resource.Error(message = "Error: ${e.message}"))
         }
     }
 
     override suspend fun register(registerRequest: RegisterRequest): Resource<User> {
         Resource.Loading
-
         return try {
             val response = remoteDataSource.register(registerRequest)
             val entity = apiLoginMapper.mapToDomain(apiDto = response)

@@ -6,26 +6,28 @@ import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.domain.repository.MusicRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class MusicRepositoryImpl(
     private val apiService: ApiService,
     private val apiSongMapper: ApiMapper<SongDto, Song>
 ) : MusicRepository {
 
-    override suspend fun getSongById(id: String): Resource<Song> {
-        Resource.Loading
+    override fun getSongById(id: String): Flow<Resource<Song>> = flow {
+        emit(Resource.Loading)
 
-        return try {
+        try {
             val response = apiService.getSongByID(id = id)
             if (response.isSuccessful) {
                 response.body()?.let { res ->
-                    Resource.Success(apiSongMapper.mapToDomain(apiDto = res))
+                    emit(Resource.Success(apiSongMapper.mapToDomain(apiDto = res)))
                 } ?: Resource.Success(Song())
             } else {
                 throw Exception(response.message())
             }
         } catch (e: Exception) {
-            Resource.Error(message = "Error: ${e.message}")
+            emit(Resource.Error(message = "Error: ${e.message}"))
         }
     }
 }

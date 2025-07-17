@@ -63,43 +63,42 @@ class LoginViewModel(
     }
 
     private fun togglePasswordVisibility() {
-        _state.update { it.copy(isPasswordVisibility = !it.isPasswordVisibility) }
+        _state.update { it.copy(isPasswordVisible = !it.isPasswordVisible) }
     }
 
     private fun login() {
         viewModelScope.launch(Dispatchers.IO) {
             if (invalidateInputs()) return@launch
 
-            val response =
-                repository.login(
-                    LoginRequest(
-                        email = state.value.email,
-                        password = state.value.password
-                    )
+            repository.login(
+                LoginRequest(
+                    email = state.value.email,
+                    password = state.value.password
                 )
-
-            when (response) {
-                is Resource.Loading -> {
-                    _state.update { it.copy(isLoading = true) }
-                }
-
-                is Resource.Success -> {
-                    _state.update { it.copy(isLoading = false) }
-                    if (response.data.token.isNotEmpty()) {
-                        dataStoreHandle.saveState(
-                            key = ConstantsPreferences.UserIsLoggedPreferences,
-                            value = true
-                        )
+            ).collect { response ->
+                when (response) {
+                    is Resource.Loading -> {
+                        _state.update { it.copy(isLoading = true) }
                     }
-                    _effect.emit(LoginEffect.NavigateToHome)
-                }
 
-                is Resource.Error -> {
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            errorMessage = response.message,
-                        )
+                    is Resource.Success -> {
+                        _state.update { it.copy(isLoading = false) }
+                        if (response.data.token.isNotEmpty()) {
+                            dataStoreHandle.saveState(
+                                key = ConstantsPreferences.UserIsLoggedPreferences,
+                                value = true
+                            )
+                        }
+                        _effect.emit(LoginEffect.NavigateToHome)
+                    }
+
+                    is Resource.Error -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                errorMessage = response.message,
+                            )
+                        }
                     }
                 }
             }
@@ -107,7 +106,8 @@ class LoginViewModel(
     }
 
     private fun invalidateInputs(): Boolean {
-        val isEmailValid = _state.value.email.isNullOrEmpty() || !_state.value.email.emailFormatValid()
+        val isEmailValid =
+            _state.value.email.isNullOrEmpty() || !_state.value.email.emailFormatValid()
         val isPasswordValid = _state.value.password.isNullOrEmpty()
 
         _state.update {

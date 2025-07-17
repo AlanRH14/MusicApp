@@ -9,6 +9,7 @@ import com.example.musicapp.presentation.register.mvi.RegisterEffect
 import com.example.musicapp.presentation.register.mvi.RegisterState
 import com.example.musicapp.presentation.register.mvi.RegisterUIEvent
 import com.example.musicapp.utils.ValidateFormat.emailFormatValid
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -71,21 +72,21 @@ class RegisterViewModel(
         _state.update {
             it.copy(
                 confirmPassword = confirmPassword,
-                isPasswordVisible = confirmPassword.isEmpty()
+                isConfirmPasswordValid = confirmPassword.isEmpty()
             )
         }
     }
 
     private fun togglePasswordVisibility() {
-        _state.update { it.copy(isPasswordVisible = !_state.value.isPasswordVisible) }
+        _state.update { it.copy(isPasswordVisible = !it.isPasswordVisible) }
     }
 
     private fun toggleConfirmPasswordVisibility() {
-        _state.update { it.copy(isPasswordVisible = !_state.value.isConfirmPasswordVisible) }
+        _state.update { it.copy(isConfirmPasswordVisible = !it.isConfirmPasswordVisible) }
     }
 
     private fun register() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             if (invalidateTextFields()) return@launch
 
             val response = repository.register(
