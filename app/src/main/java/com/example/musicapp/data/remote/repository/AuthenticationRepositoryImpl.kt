@@ -34,16 +34,15 @@ class AuthenticationRepositoryImpl(
         }
     }
 
-    override suspend fun register(registerRequest: RegisterRequest): Resource<User> {
-        Resource.Loading
-
-        return try {
+    override fun register(registerRequest: RegisterRequest): Flow<Resource<User>> = flow {
+        emit(Resource.Loading)
+        try {
             val response = remoteDataSource.register(registerRequest)
             val entity = apiLoginMapper.mapToDomain(apiDto = response)
             localDataSource.savaUser(user = entity)
-            Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
+            emit(Resource.Success(apiUserMapper.mapToDomain(apiDto = entity)))
         } catch (e: Exception) {
-            Resource.Error(message = "Error: ${e.message}")
+            emit(Resource.Error(message = "Error: ${e.message}"))
         }
     }
 }
