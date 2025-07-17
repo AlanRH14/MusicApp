@@ -41,10 +41,8 @@ fun CreatePlaylistContent(
 
         Spacer(modifier = Modifier.weight(1F))
 
-        Button(
-            onClick = {}
-        ) {
-            Text(text = "Create Playlist")
+        Button(onClick = { onEvent(CreatePlaylistUIEvent.OnCreatePlaylistClicked) }) {
+            Text(text = stringResource(R.string.create_playlist))
         }
     }
 }

@@ -26,4 +26,13 @@ fun CreatePlaylistScreen(
             }
         }
     }
+
+    CreatePlaylistContent(
+        state = state,
+        onEvent = viewModel::onEvent
+    )
+
+    if (!state.error.isNullOrEmpty()) {
+
+    }
 }
