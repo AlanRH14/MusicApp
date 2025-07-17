@@ -10,6 +10,7 @@ import com.example.musicapp.data.model.request.RegisterRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 
@@ -37,7 +38,9 @@ interface ApiService {
     ): Response<SongDto>
 
     @GET("/playlists")
-    suspend fun getPlaylist(): Response<List<PlaylistDto>>
+    suspend fun getPlaylist(
+        @Header("Authorization") token: String
+    ): Response<List<PlaylistDto>>
 
     @POST("/playlists")
     suspend fun createPlaylist(

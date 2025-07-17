@@ -9,9 +9,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Entity(tableName = USER_TABLE)
 data class UserEntity(
+    @SerialName("token") val token: String? = null,
     @PrimaryKey
-    @SerialName("token") val token: String,
-    @SerialName("id") val id: String? = null,
+    @SerialName("id") val id: String,
     @SerialName("email") val email: String? = null,
     @SerialName("name") val name: String? = null,
     @SerialName("profilePicture") val profilePicture: String? = null,

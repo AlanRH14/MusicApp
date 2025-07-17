@@ -8,8 +8,8 @@ class UserApiMapperImpl : ApiMapper<UserEntity, User> {
 
     override fun mapToDomain(apiDto: UserEntity): User {
         return User(
-            token = apiDto.token,
-            id = apiDto.id ?: "",
+            token = apiDto.token ?: "",
+            id = apiDto.id,
             email = apiDto.email ?: "",
             name = apiDto.name ?: "",
             profilePicture = apiDto.profilePicture ?: "",

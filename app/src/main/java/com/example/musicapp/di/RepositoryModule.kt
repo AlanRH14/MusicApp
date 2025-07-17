@@ -44,7 +44,8 @@ val repositoryModule = module {
     single<PlaylistRepository> {
         PlaylistRepositoryImpl(
             apiService = get(),
-            apiPlaylistMapper = get(named("PlaylistApiMapper"))
+            apiPlaylistMapper = get(named("PlaylistApiMapper")),
+            userLocalDataSource = get()
         )
     }
 }
