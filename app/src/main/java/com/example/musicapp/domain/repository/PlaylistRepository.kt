@@ -6,7 +6,7 @@ import com.example.musicapp.domain.model.Playlist
 import kotlinx.coroutines.flow.Flow
 
 interface PlaylistRepository {
-    suspend fun getPlaylist(): Flow<Resource<List<Playlist>>>
+    fun getPlaylist(): Flow<Resource<List<Playlist>>>
 
     suspend fun createPlaylist(playlistRequest: CreatePlaylistRequest): Resource<List<Playlist>>
 }

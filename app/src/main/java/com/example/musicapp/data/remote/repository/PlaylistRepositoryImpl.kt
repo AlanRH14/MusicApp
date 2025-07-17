@@ -18,7 +18,7 @@ class PlaylistRepositoryImpl(
     private val userLocalDataSource: UserLocalDataSource
 ) : PlaylistRepository {
 
-    override suspend fun getPlaylist(): Flow<Resource<List<Playlist>>> = flow {
+    override fun getPlaylist(): Flow<Resource<List<Playlist>>> = flow {
         emit(Resource.Loading)
         try {
             userLocalDataSource.getUser()?.let { userData ->
