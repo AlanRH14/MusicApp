@@ -7,6 +7,7 @@ import com.example.musicapp.domain.repository.PlaylistRepository
 import com.example.musicapp.presentation.playlist.mvi.PlaylistEffect
 import com.example.musicapp.presentation.playlist.mvi.PlaylistState
 import com.example.musicapp.presentation.playlist.mvi.PlaylistUIEvent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -32,7 +33,7 @@ class PlaylistViewModel(
     }
 
     private fun getPlaylist() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             playlistRepository.getPlaylist().collect { playlist ->
                 when (playlist) {
                     is Resource.Loading -> {
