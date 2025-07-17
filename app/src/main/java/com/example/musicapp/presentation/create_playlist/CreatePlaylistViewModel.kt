@@ -24,6 +24,9 @@ class CreatePlaylistViewModel(
     val effect = _effect.asSharedFlow()
 
     fun onEvent(event: CreatePlaylistUIEvent) {
+        when (event) {
+            is CreatePlaylistUIEvent.OnCreatePlaylistClicked -> onAddPlaylist()
+        }
     }
 
     private fun onAddPlaylist() {
