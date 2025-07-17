@@ -6,6 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
+import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
@@ -33,6 +34,10 @@ fun CreatePlaylistScreen(
     )
 
     if (!state.error.isNullOrEmpty()) {
-
+        ErrorScreen(
+            errorMessage = state.error ?: "Unknown",
+            primaryButton = "Retry",
+            onPrimaryButtonClicked = {}
+        )
     }
 }
