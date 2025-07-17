@@ -17,6 +17,7 @@ import com.example.musicapp.domain.repository.MusicRepository
 import com.example.musicapp.presentation.play_song.mvi.PlaySongEffect
 import com.example.musicapp.presentation.play_song.mvi.PlaySongState
 import com.example.musicapp.presentation.play_song.mvi.PlaySongUIEvent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -68,7 +69,7 @@ class PlaySongViewModel(
 
     private fun observerPlaybackService() {
         playbackService?.let { service ->
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.IO) {
                 service.player.onEach { player ->
                     _state.update {
                         it.copy(
