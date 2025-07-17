@@ -32,7 +32,10 @@ class CreatePlaylistViewModel(
     private fun onAddPlaylist() {
         viewModelScope.launch(Dispatchers.IO) {
             val response = playlistRepository.createPlaylist(
-                CreatePlaylistRequest()
+                CreatePlaylistRequest(
+                    name = _state.value.name,
+                    description = _state.value.description
+                )
             )
 
             when (response) {
