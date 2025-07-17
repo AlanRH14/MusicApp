@@ -1,5 +1,6 @@
 package com.example.musicapp.presentation.create_playlist
 
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -19,7 +20,9 @@ fun CreatePlaylistScreen(
     LaunchedEffect(key1 = true) {
         viewModel.effect.collectLatest { effect ->
             when(effect) {
-                is CreatePlaylistUIEvent.ShowErrorMessage ->
+                is CreatePlaylistEffect.ShowErrorMessage -> {
+                    Toast.makeText()
+                }
             }
         }
     }

@@ -15,6 +15,5 @@ class CreatePlaylistViewModel : ViewModel() {
     val effect = _effect.asSharedFlow()
 
     fun onEvent(event: CreatePlaylistUIEvent) {
-
     }
 }
