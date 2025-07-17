@@ -88,24 +88,26 @@ class PlaySongViewModel(
 
     private fun getSongByID(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            when (val response = repository.getSongById(id = id)) {
-                is Resource.Loading -> {
-                    _state.update {
-                        it.copy(isLoading = true)
+            repository.getSongById(id = id).collect { response ->
+                when (response) {
+                    is Resource.Loading -> {
+                        _state.update {
+                            it.copy(isLoading = true)
+                        }
                     }
-                }
 
-                is Resource.Success -> {
-                    _state.update { song -> song.copy(song = song.song) }
-                    startServiceAndBind(song = response.data)
-                }
+                    is Resource.Success -> {
+                        _state.update { song -> song.copy(song = song.song) }
+                        startServiceAndBind(song = response.data)
+                    }
 
-                is Resource.Error -> {
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            error = response.message
-                        )
+                    is Resource.Error -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                error = response.message
+                            )
+                        }
                     }
                 }
             }
