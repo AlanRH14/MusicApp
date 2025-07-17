@@ -19,9 +19,9 @@ fun CreatePlaylistScreen(
 
     LaunchedEffect(key1 = true) {
         viewModel.effect.collectLatest { effect ->
-            when(effect) {
+            when (effect) {
                 is CreatePlaylistEffect.ShowErrorMessage -> {
-                    Toast.makeText()
+                    Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
