@@ -89,30 +89,30 @@ class RegisterViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             if (invalidateTextFields()) return@launch
 
-            val response = repository.register(
+            repository.register(
                 RegisterRequest(
                     email = _state.value.email,
                     password = _state.value.password,
                     name = _state.value.name
                 )
-            )
+            ).collect { response ->
+                when (response) {
+                    is Resource.Loading -> {
+                        _state.update { it.copy(isLoading = true) }
+                    }
 
-            when (response) {
-                is Resource.Loading -> {
-                    _state.update { it.copy(isLoading = true) }
-                }
+                    is Resource.Success -> {
+                        _state.update { it.copy(isLoading = false) }
+                        _event.emit(RegisterEffect.NavigateToHome)
+                    }
 
-                is Resource.Success -> {
-                    _state.update { it.copy(isLoading = false) }
-                    _event.emit(RegisterEffect.NavigateToHome)
-                }
-
-                is Resource.Error -> {
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            errorMessage = response.message
-                        )
+                    is Resource.Error -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                errorMessage = response.message
+                            )
+                        }
                     }
                 }
             }
