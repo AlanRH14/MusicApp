@@ -26,8 +26,8 @@ fun MusicAppTextField(
     onValueChange: (String) -> Unit,
     label: String,
     placeholder: String,
-    leadingIcon: Painter,
-    leadingDescription: String,
+    leadingIcon: Painter? = null,
+    leadingDescription: String? = null,
     trailingIcon: Painter? = null,
     trailingDescription: String? = null,
     isPasswordVisible: Boolean = true,
@@ -50,10 +50,12 @@ fun MusicAppTextField(
         singleLine = singleLine,
         placeholder = { Text(placeholder) },
         leadingIcon = {
-            Icon(
-                painter = leadingIcon,
-                contentDescription = leadingDescription,
-            )
+            leadingIcon?.let { icon ->
+                Icon(
+                    painter = icon,
+                    contentDescription = leadingDescription,
+                )
+            }
         },
         isError = isError,
         supportingText = {

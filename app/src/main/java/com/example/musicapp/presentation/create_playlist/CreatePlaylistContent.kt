@@ -1,0 +1,48 @@
+package com.example.musicapp.presentation.create_playlist
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.example.musicapp.R
+import com.example.musicapp.presentation.common.components.MusicAppTextField
+import com.example.musicapp.ui.theme.PaddingDefault
+
+@Composable
+fun CreatePlaylistContent(
+    state: CreatePlaylistState,
+    onEvent: (CreatePlaylistUIEvent) -> Unit
+) {
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(PaddingDefault)
+    ) {
+
+        MusicAppTextField(
+            value = state.name,
+            onValueChange = { onEvent(CreatePlaylistUIEvent.OnNameUpdate(name = it)) },
+            label = stringResource(R.string.playlist_name),
+            placeholder = "Enter playlist name"
+        )
+
+        MusicAppTextField(
+            value = state.description,
+            onValueChange = { onEvent(CreatePlaylistUIEvent.OnDescriptionUpdate(description = it)) },
+            label = stringResource(R.string.description),
+            placeholder = "Enter playlist description",
+        )
+
+        Spacer(modifier = Modifier.weight(1F))
+
+        Button(onClick = { onEvent(CreatePlaylistUIEvent.OnCreatePlaylistClicked) }) {
+            Text(text = stringResource(R.string.create_playlist))
+        }
+    }
+}

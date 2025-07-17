@@ -45,4 +45,7 @@
     <string name="next">Next</string>
     <string name="play_pause">Play/Pause</string>
     <string name="playlist_add">Playlist Add</string>
+    <string name="playlist_name">Playlist Name</string>
+    <string name="description">Description</string>
+    <string name="create_playlist">Create Playlist</string>
 </resources>
