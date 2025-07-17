@@ -19,13 +19,15 @@ class HomeRepositoryImpl(
     override fun getHomeData(): Flow<Resource<Home>> = flow {
         emit(Resource.Loading)
         try {
-            val response = apiService.getHome()
-            if (response.isSuccessful) {
-                response.body()?.let { res ->
-                    emit(Resource.Success(data = apiHomeMapper.mapToDomain(apiDto = res)))
-                } ?: Resource.Success(data = Home())
-            } else {
-                throw Exception(response.message())
+            userLocalDataSource.getUser()?.let {
+                val response = apiService.getHome()
+                if (response.isSuccessful) {
+                    response.body()?.let { res ->
+                        emit(Resource.Success(data = apiHomeMapper.mapToDomain(apiDto = res)))
+                    } ?: Resource.Success(data = Home())
+                } else {
+                    throw Exception(response.message())
+                }
             }
         } catch (e: Exception) {
             emit(Resource.Error("Error: ${e.message}"))
