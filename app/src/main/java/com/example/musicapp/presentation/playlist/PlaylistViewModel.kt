@@ -33,21 +33,23 @@ class PlaylistViewModel(
 
     private fun getPlaylist() {
         viewModelScope.launch {
-            when (val data = playlistRepository.getPlaylist()) {
-                is Resource.Loading -> {
-                    _state.update { it.copy(isLoading = true) }
-                }
+            playlistRepository.getPlaylist().collect { playlist ->
+                when (playlist) {
+                    is Resource.Loading -> {
+                        _state.update { it.copy(isLoading = true) }
+                    }
 
-                is Resource.Success -> {
-                    _state.update { it.copy(isLoading = false) }
-                }
+                    is Resource.Success -> {
+                        _state.update { it.copy(isLoading = false) }
+                    }
 
-                is Resource.Error -> {
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            error = data.message
-                        )
+                    is Resource.Error -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                error = playlist.message
+                            )
+                        }
                     }
                 }
             }

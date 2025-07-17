@@ -37,26 +37,28 @@ class HomeViewModel(
 
     private fun getHome() {
         viewModelScope.launch(Dispatchers.IO) {
-            when (val data = repository.getHomeData()) {
-                is Resource.Loading -> {
-                    _state.update { it.copy(isLoading = true) }
-                }
-
-                is Resource.Success -> {
-                    _state.update {
-                        it.copy(
-                            homData = data.data,
-                            isLoading = false
-                        )
+            repository.getHomeData().collect { data ->
+                when (data) {
+                    is Resource.Loading -> {
+                        _state.update { it.copy(isLoading = true) }
                     }
-                }
 
-                is Resource.Error -> {
-                    _state.update {
-                        it.copy(
-                            error = data.message,
-                            isLoading = false
-                        )
+                    is Resource.Success -> {
+                        _state.update {
+                            it.copy(
+                                homData = data.data,
+                                isLoading = false
+                            )
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        _state.update {
+                            it.copy(
+                                error = data.message,
+                                isLoading = false
+                            )
+                        }
                     }
                 }
             }

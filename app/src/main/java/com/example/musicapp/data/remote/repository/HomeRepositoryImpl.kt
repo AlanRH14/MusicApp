@@ -6,26 +6,29 @@ import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.domain.model.Home
 import com.example.musicapp.domain.repository.HomeRepository
 import com.example.musicapp.common.Resource
+import com.example.musicapp.data.local.datasource.UserLocalDataSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class HomeRepositoryImpl(
     private val apiService: ApiService,
-    private val apiHomeMapper: ApiMapper<HomeResponse, Home>
+    private val apiHomeMapper: ApiMapper<HomeResponse, Home>,
+    private val userLocalDataSource: UserLocalDataSource
 ) : HomeRepository {
 
-    override suspend fun getHomeData(): Resource<Home> {
-        Resource.Loading
-
-        return try {
+    override fun getHomeData(): Flow<Resource<Home>> = flow {
+        emit(Resource.Loading)
+        try {
             val response = apiService.getHome()
             if (response.isSuccessful) {
                 response.body()?.let { res ->
-                    Resource.Success(data = apiHomeMapper.mapToDomain(apiDto = res))
+                    emit(Resource.Success(data = apiHomeMapper.mapToDomain(apiDto = res)))
                 } ?: Resource.Success(data = Home())
             } else {
                 throw Exception(response.message())
             }
         } catch (e: Exception) {
-            Resource.Error("Error: ${e.message}")
+            emit(Resource.Error("Error: ${e.message}"))
         }
     }
 }

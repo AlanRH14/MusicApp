@@ -2,7 +2,8 @@ package com.example.musicapp.domain.repository
 
 import com.example.musicapp.domain.model.Home
 import com.example.musicapp.common.Resource
+import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {
-    suspend fun getHomeData(): Resource<Home>
+    fun getHomeData(): Flow<Resource<Home>>
 }

@@ -30,7 +30,8 @@ val repositoryModule = module {
     single<HomeRepository> {
         HomeRepositoryImpl(
             apiService = get(),
-            apiHomeMapper = get(named("HomeApiMapper"))
+            apiHomeMapper = get(named("HomeApiMapper")),
+            userLocalDataSource = get()
         )
     }
 
