@@ -19,7 +19,7 @@ fun CreatePlaylistScreen(
     LaunchedEffect(key1 = true) {
         viewModel.effect.collectLatest { effect ->
             when(effect) {
-
+                is CreatePlaylistUIEvent.ShowErrorMessage ->
             }
         }
     }
