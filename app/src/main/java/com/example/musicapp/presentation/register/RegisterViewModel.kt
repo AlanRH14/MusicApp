@@ -82,7 +82,7 @@ class RegisterViewModel(
     }
 
     private fun toggleConfirmPasswordVisibility() {
-        _state.update { it.copy(isPasswordVisible = !_state.value.isConfirmPasswordVisible) }
+        _state.update { it.copy(isConfirmPasswordVisible = !it.isConfirmPasswordVisible) }
     }
 
     private fun register() {

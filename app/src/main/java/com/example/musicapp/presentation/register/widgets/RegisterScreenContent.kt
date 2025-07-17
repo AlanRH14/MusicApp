@@ -112,7 +112,7 @@ fun RegisterScreenContent(
             leadingIcon = painterResource(R.drawable.ic_mail),
             leadingDescription = stringResource(R.string.email_icon),
             trailingIcon = painterResource(R.drawable.ic_eye_off),
-            isPasswordVisible = state.isPasswordVisible,
+            isPasswordVisible = state.isConfirmPasswordVisible,
             trailingDescription = stringResource(R.string.icon_eye_off),
             onShowPasswordClicked = { onEvent(RegisterUIEvent.OnToggleConfirmPasswordVisibility) },
             isError = state.isConfirmPasswordValid
