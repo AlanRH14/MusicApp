@@ -30,7 +30,7 @@ fun CreatePlaylistContent(
         MusicAppTextField(
             value = state.description,
             onValueChange = {},
-            label = "Description",
+            label = stringResource(R.string.description),
             placeholder = "Enter playlist description",
         )
     }
