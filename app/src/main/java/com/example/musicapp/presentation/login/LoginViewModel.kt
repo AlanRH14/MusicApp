@@ -63,7 +63,7 @@ class LoginViewModel(
     }
 
     private fun togglePasswordVisibility() {
-        _state.update { it.copy(isPasswordVisibility = !it.isPasswordVisibility) }
+        _state.update { it.copy(isPasswordVisible = !it.isPasswordVisible) }
     }
 
     private fun login() {
