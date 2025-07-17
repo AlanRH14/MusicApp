@@ -72,7 +72,7 @@ class RegisterViewModel(
         _state.update {
             it.copy(
                 confirmPassword = confirmPassword,
-                isPasswordVisible = confirmPassword.isEmpty()
+                isConfirmPasswordValid = confirmPassword.isEmpty()
             )
         }
     }
