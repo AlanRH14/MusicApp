@@ -28,14 +28,14 @@ fun HomeScreen(
     LaunchedEffect(key1 = true) {
         viewModel.onEvent(HomeUIEvent.GetHomeData)
 
-        viewModel.effect.collectLatest {
-            when (it) {
+        viewModel.effect.collectLatest { effect ->
+            when (effect) {
                 is HomeEffect.ShowErrorMessage -> {
-                    Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
                 }
 
                 is HomeEffect.NavigateToPlaySong -> {
-                    navController.navigate(PlaySong(songID = it.songID))
+                    navController.navigate(PlaySong(songID = effect.songID))
                 }
 
                 is HomeEffect.NavigationToPlaylist -> {
