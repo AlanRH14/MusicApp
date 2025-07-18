@@ -39,8 +39,6 @@ fun PlaylistScreen(
         }
     }
 
-    val navBackStackEntry = navController.currentBackStackEntry
-
     PlaylistContent(
         state = state,
         onEvent = viewModel::onEvent
