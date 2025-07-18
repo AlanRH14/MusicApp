@@ -65,7 +65,7 @@ class PlaylistViewModel(
 
     private fun navigateToCreatePlaylist() {
         viewModelScope.launch {
-            _effect.emit(PlaylistEffect.CreatePlaylist)
+            _effect.emit(PlaylistEffect.NavigateToCreatePlaylist)
         }
     }
 }
