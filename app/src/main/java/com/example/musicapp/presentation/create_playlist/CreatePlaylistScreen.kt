@@ -33,6 +33,7 @@ fun CreatePlaylistScreen(
                         "playlistCreated",
                         effect.playlist
                     )
+                    navController.popBackStack()
                 }
             }
         }
