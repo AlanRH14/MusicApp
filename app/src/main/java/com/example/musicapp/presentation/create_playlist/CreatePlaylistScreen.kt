@@ -9,6 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
+import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import com.example.musicapp.presentation.create_playlist.mvi.CreatePlaylistEffect
 import com.example.musicapp.presentation.create_playlist.widgets.CreatePlaylistContent
 import kotlinx.coroutines.flow.collectLatest
@@ -44,6 +45,10 @@ fun CreatePlaylistScreen(
         state = state,
         onEvent = viewModel::onEvent
     )
+
+    if (state.isLoading) {
+        LoadingScreen()
+    }
 
     if (!state.error.isNullOrEmpty()) {
         ErrorScreen(
