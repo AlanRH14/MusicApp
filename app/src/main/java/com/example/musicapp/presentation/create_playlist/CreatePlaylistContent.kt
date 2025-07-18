@@ -31,7 +31,8 @@ fun CreatePlaylistContent(
             value = state.name,
             onValueChange = { onEvent(CreatePlaylistUIEvent.OnNameUpdate(name = it)) },
             label = stringResource(R.string.playlist_name),
-            placeholder = "Enter playlist name"
+            placeholder = "Enter playlist name",
+            isError = state.isNameEmpty
         )
 
         MusicAppTextField(
@@ -39,6 +40,7 @@ fun CreatePlaylistContent(
             onValueChange = { onEvent(CreatePlaylistUIEvent.OnDescriptionUpdate(description = it)) },
             label = stringResource(R.string.description),
             placeholder = "Enter playlist description",
+            isError = state.isDescriptionEmpty
         )
 
         Spacer(modifier = Modifier.weight(1F))

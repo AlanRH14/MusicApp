@@ -27,6 +27,13 @@ fun CreatePlaylistScreen(
                 is CreatePlaylistEffect.ShowErrorMessage -> {
                     Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
                 }
+
+                is CreatePlaylistEffect.NavigateToPlaylist -> {
+                    navController.previousBackStackEntry?.savedStateHandle?.set(
+                        "playlistCreated",
+                        effect.playlist
+                    )
+                }
             }
         }
     }
