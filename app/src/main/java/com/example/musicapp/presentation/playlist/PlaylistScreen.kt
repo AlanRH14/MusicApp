@@ -35,8 +35,6 @@ fun PlaylistScreen(
         }
     }
 
-
-
     if (state.isLoading) {
         LoadingScreen()
     }

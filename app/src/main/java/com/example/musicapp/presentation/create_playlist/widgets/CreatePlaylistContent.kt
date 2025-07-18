@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.create_playlist
+package com.example.musicapp.presentation.create_playlist.widgets
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
