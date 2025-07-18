@@ -36,7 +36,7 @@ class PlaylistRepositoryImpl(
         }
     }
 
-    override suspend fun createPlaylist(playlistRequest: CreatePlaylistRequest): Resource<List<Playlist>> {
+    override suspend fun createPlaylist(playlistRequest: CreatePlaylistRequest): Resource<Playlist> {
         Resource.Loading
 
         return try {
