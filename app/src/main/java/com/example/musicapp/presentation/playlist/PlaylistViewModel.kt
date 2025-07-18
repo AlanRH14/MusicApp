@@ -41,7 +41,12 @@ class PlaylistViewModel(
                     }
 
                     is Resource.Success -> {
-                        _state.update { it.copy(isLoading = false) }
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                playlist = playlist.data
+                            )
+                        }
                     }
 
                     is Resource.Error -> {
