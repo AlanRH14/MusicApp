@@ -31,9 +31,15 @@ fun PlaylistScreen(
                 is PlaylistEffect.ShowMessageError -> {
                     Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
                 }
+
+                is PlaylistEffect.CreatePlaylist -> {
+
+                }
             }
         }
     }
+
+    val navBackStackEntry = navController.currentBackStackEntry
 
     PlaylistContent(
         state = state,
