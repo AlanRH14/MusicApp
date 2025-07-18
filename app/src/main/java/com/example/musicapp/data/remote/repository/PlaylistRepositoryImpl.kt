@@ -11,10 +11,8 @@ import com.example.musicapp.domain.repository.PlaylistRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-
 class PlaylistRepositoryImpl(
     private val apiService: ApiService,
-    private val apiListPlaylistMapper: ApiMapper<List<PlaylistDto>, List<Playlist>>,
     private val apiPlaylistMapper: ApiMapper<PlaylistDto, Playlist>,
     private val userLocalDataSource: UserLocalDataSource
 ) : PlaylistRepository {
@@ -26,7 +24,7 @@ class PlaylistRepositoryImpl(
                 val response = apiService.getPlaylist(token = "Bearer ${userData.token}")
                 if (response.isSuccessful) {
                     response.body()?.let { res ->
-                        emit(Resource.Success(data = apiListPlaylistMapper.mapToDomain(apiDto = res)))
+                        emit(Resource.Success(data = res.map { apiPlaylistMapper.mapToDomain(apiDto = it) }))
                     } ?: emit(Resource.Success(data = emptyList()))
                 } else {
                     throw Exception(response.message())
