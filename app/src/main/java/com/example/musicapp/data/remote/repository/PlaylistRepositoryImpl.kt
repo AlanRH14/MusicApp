@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.flow
 class PlaylistRepositoryImpl(
     private val apiService: ApiService,
     private val apiListPlaylistMapper: ApiMapper<List<PlaylistDto>, List<Playlist>>,
+    private val apiPlaylistMapper: ApiMapper<PlaylistDto, Playlist>,
     private val userLocalDataSource: UserLocalDataSource
 ) : PlaylistRepository {
 
@@ -47,7 +48,7 @@ class PlaylistRepositoryImpl(
                 )
                 if (response.isSuccessful) {
                     response.body()?.let { res ->
-                        Resource.Success(data = apiListPlaylistMapper.mapToDomain(apiDto = res))
+                        Resource.Success(data = apiPlaylistMapper.mapToDomain(apiDto = res))
                     } ?: Resource.Success(data = emptyList())
                 } else {
                     throw Exception(response.message())
