@@ -48,5 +48,5 @@ interface ApiService {
     suspend fun createPlaylist(
         @Header("Authorization") token: String,
         @Body playlistRequest: CreatePlaylistRequest
-    ): Response<List<PlaylistDto>>
+    ): Response<PlaylistDto>
 }
