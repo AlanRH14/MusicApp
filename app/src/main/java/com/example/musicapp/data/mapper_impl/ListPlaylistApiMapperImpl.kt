@@ -6,7 +6,7 @@ import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.domain.model.Song
 
-class PlaylistApiMapperImpl(
+class ListPlaylistApiMapperImpl(
     private val apiSongMapper: ApiMapper<SongDto, Song>
 ) : ApiMapper<List<PlaylistDto>, List<Playlist>> {
 
