@@ -20,7 +20,6 @@ fun CreatePlaylistContent(
     state: CreatePlaylistState,
     onEvent: (CreatePlaylistUIEvent) -> Unit
 ) {
-
     Column(
         modifier = Modifier
             .fillMaxSize()
