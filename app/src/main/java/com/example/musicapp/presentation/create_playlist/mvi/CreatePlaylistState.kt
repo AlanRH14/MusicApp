@@ -9,5 +9,5 @@ data class CreatePlaylistState(
     val description: String = "",
     val isNameEmpty: Boolean = false,
     val isDescriptionEmpty: Boolean = false,
-    val playlist: List<Playlist> = emptyList()
+    val playlist: Playlist = Playlist()
 )
