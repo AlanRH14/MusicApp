@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.musicapp.R
 import com.example.musicapp.presentation.common.components.MusicAppTextField
+import com.example.musicapp.presentation.create_playlist.mvi.CreatePlaylistState
 import com.example.musicapp.ui.theme.PaddingDefault
 
 @Composable

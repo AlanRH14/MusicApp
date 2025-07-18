@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.create_playlist
+package com.example.musicapp.presentation.create_playlist.mvi
 
 import com.example.musicapp.domain.model.Playlist
 
