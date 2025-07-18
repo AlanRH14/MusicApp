@@ -56,12 +56,6 @@ val apiMapperModule = module {
         )
     }
 
-    single<ApiMapper<List<PlaylistDto>, List<Playlist>>>(named("ListPlaylistApiMapper")) {
-        ListPlaylistApiMapperImpl(
-            get(named("SongApiMapper"))
-        )
-    }
-
     single<ApiMapper<PlaylistDto, Playlist>>(named("PlaylistApiMapper")) {
         PlaylistApiMapperImpl(
             get(named("SongApiMapper"))
