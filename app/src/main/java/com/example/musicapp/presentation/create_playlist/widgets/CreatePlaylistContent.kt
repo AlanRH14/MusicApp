@@ -1,5 +1,6 @@
 package com.example.musicapp.presentation.create_playlist.widgets
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.musicapp.R
@@ -23,7 +25,9 @@ fun CreatePlaylistContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(PaddingDefault)
+            .padding(PaddingDefault),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
 
         MusicAppTextField(
