@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
+import com.example.musicapp.navigation.CreatePlaylist
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import com.example.musicapp.presentation.playlist.mvi.PlaylistEffect
@@ -32,8 +33,11 @@ fun PlaylistScreen(
                     Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
                 }
 
-                is PlaylistEffect.CreatePlaylist -> {
-
+                is PlaylistEffect.NavigateToCreatePlaylist -> {
+                    navController.navigate(CreatePlaylist) {
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 }
             }
         }
