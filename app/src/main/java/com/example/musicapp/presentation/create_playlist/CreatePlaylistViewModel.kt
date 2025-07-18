@@ -43,9 +43,9 @@ class CreatePlaylistViewModel(
     }
 
     private fun onAddPlaylist() {
+        if (validateEmptyInputs()) return
+
         viewModelScope.launch(Dispatchers.IO) {
-
-
             val response = playlistRepository.createPlaylist(
                 CreatePlaylistRequest(
                     name = _state.value.name,
@@ -77,5 +77,19 @@ class CreatePlaylistViewModel(
                 }
             }
         }
+    }
+
+    private fun validateEmptyInputs(): Boolean {
+        val isNameEmpty = _state.value.name.isEmpty()
+        val isDescriptionEmpty = _state.value.description.isEmpty()
+
+        _state.update {
+            it.copy(
+                isNameEmpty = isNameEmpty,
+                isDescriptionEmpty = isDescriptionEmpty
+            )
+        }
+
+        return isNameEmpty || isDescriptionEmpty
     }
 }

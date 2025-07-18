@@ -7,5 +7,7 @@ data class CreatePlaylistState(
     val error: String? = null,
     val name: String = "",
     val description: String = "",
+    val isNameEmpty: Boolean = false,
+    val isDescriptionEmpty: Boolean = false,
     val playlist: List<Playlist> = emptyList()
 )
