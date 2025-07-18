@@ -29,6 +29,8 @@ class CreatePlaylistViewModel(
     fun onEvent(event: CreatePlaylistUIEvent) {
         when (event) {
             is CreatePlaylistUIEvent.OnCreatePlaylistClicked -> onAddPlaylist()
+            is CreatePlaylistUIEvent.OnNameUpdate -> onNameUpdate(event.name)
+            is CreatePlaylistUIEvent.OnDescriptionUpdate -> onDescription(event.description)
         }
     }
 
