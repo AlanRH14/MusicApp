@@ -32,8 +32,18 @@ class CreatePlaylistViewModel(
         }
     }
 
+    private fun onNameUpdate(name: String) {
+        _state.update { it.copy(name = name) }
+    }
+
+    private fun onDescription(description: String) {
+        _state.update { it.copy(description = description) }
+    }
+
     private fun onAddPlaylist() {
         viewModelScope.launch(Dispatchers.IO) {
+
+
             val response = playlistRepository.createPlaylist(
                 CreatePlaylistRequest(
                     name = _state.value.name,
