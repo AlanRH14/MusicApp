@@ -35,6 +35,11 @@ fun PlaylistScreen(
         }
     }
 
+    PlaylistContent(
+        state = state,
+        onEvent = viewModel::onEvent
+    )
+
     if (state.isLoading) {
         LoadingScreen()
     }
