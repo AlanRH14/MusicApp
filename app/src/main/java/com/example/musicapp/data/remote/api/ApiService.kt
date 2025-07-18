@@ -46,6 +46,6 @@ interface ApiService {
 
     @POST("/playlists")
     suspend fun createPlaylist(
-        playlistRequest: CreatePlaylistRequest
+        @Body playlistRequest: CreatePlaylistRequest
     ): Response<List<PlaylistDto>>
 }
