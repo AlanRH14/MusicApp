@@ -30,7 +30,7 @@ class CreatePlaylistViewModel(
         when (event) {
             is CreatePlaylistUIEvent.OnCreatePlaylistClicked -> onAddPlaylist()
             is CreatePlaylistUIEvent.OnNameUpdate -> onNameUpdate(event.name)
-            is CreatePlaylistUIEvent.OnDescriptionUpdate -> onDescription(event.description)
+            is CreatePlaylistUIEvent.OnDescriptionUpdate -> onDescriptionUpdate(event.description)
         }
     }
 
@@ -38,7 +38,7 @@ class CreatePlaylistViewModel(
         _state.update { it.copy(name = name) }
     }
 
-    private fun onDescription(description: String) {
+    private fun onDescriptionUpdate(description: String) {
         _state.update { it.copy(description = description) }
     }
 
