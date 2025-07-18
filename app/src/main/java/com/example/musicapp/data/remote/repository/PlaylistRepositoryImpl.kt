@@ -11,10 +11,9 @@ import com.example.musicapp.domain.repository.PlaylistRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-
 class PlaylistRepositoryImpl(
     private val apiService: ApiService,
-    private val apiPlaylistMapper: ApiMapper<List<PlaylistDto>, List<Playlist>>,
+    private val apiPlaylistMapper: ApiMapper<PlaylistDto, Playlist>,
     private val userLocalDataSource: UserLocalDataSource
 ) : PlaylistRepository {
 
@@ -25,7 +24,7 @@ class PlaylistRepositoryImpl(
                 val response = apiService.getPlaylist(token = "Bearer ${userData.token}")
                 if (response.isSuccessful) {
                     response.body()?.let { res ->
-                        emit(Resource.Success(data = apiPlaylistMapper.mapToDomain(apiDto = res)))
+                        emit(Resource.Success(data = res.map { apiPlaylistMapper.mapToDomain(apiDto = it) }))
                     } ?: emit(Resource.Success(data = emptyList()))
                 } else {
                     throw Exception(response.message())
@@ -36,18 +35,23 @@ class PlaylistRepositoryImpl(
         }
     }
 
-    override suspend fun createPlaylist(playlistRequest: CreatePlaylistRequest): Resource<List<Playlist>> {
+    override suspend fun createPlaylist(playlistRequest: CreatePlaylistRequest): Resource<Playlist> {
         Resource.Loading
 
         return try {
-            val response = apiService.createPlaylist(playlistRequest = playlistRequest)
-            if (response.isSuccessful) {
-                response.body()?.let { res ->
-                    Resource.Success(data = apiPlaylistMapper.mapToDomain(apiDto = res))
-                } ?: Resource.Success(data = emptyList())
-            } else {
-                throw Exception(response.message())
-            }
+            userLocalDataSource.getUser()?.let { userData ->
+                val response = apiService.createPlaylist(
+                    token = "Bearer ${userData.token}",
+                    playlistRequest = playlistRequest
+                )
+                if (response.isSuccessful) {
+                    response.body()?.let { res ->
+                        Resource.Success(data = apiPlaylistMapper.mapToDomain(apiDto = res))
+                    } ?: Resource.Success(data = Playlist())
+                } else {
+                    throw Exception(response.message())
+                }
+            } ?: throw Exception("Get local user error")
         } catch (e: Exception) {
             Resource.Error(message = "Error: ${e.message}")
         }

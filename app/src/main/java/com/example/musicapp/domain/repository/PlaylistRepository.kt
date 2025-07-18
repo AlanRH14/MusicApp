@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface PlaylistRepository {
     fun getPlaylist(): Flow<Resource<List<Playlist>>>
 
-    suspend fun createPlaylist(playlistRequest: CreatePlaylistRequest): Resource<List<Playlist>>
+    suspend fun createPlaylist(playlistRequest: CreatePlaylistRequest): Resource<Playlist>
 }

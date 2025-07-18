@@ -21,3 +21,6 @@ data class PlaySong(val songID: String): NavRoutes
 
 @Serializable
 object Playlist: NavRoutes
+
+@Serializable
+object CreatePlaylist: NavRoutes
