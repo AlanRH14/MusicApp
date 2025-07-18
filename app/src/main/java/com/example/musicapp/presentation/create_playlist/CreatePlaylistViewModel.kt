@@ -49,7 +49,7 @@ class CreatePlaylistViewModel(
             val response = playlistRepository.createPlaylist(
                 CreatePlaylistRequest(
                     name = _state.value.name,
-                    description = _state.value.description
+                    description = _state.value.description,
                 )
             )
 
