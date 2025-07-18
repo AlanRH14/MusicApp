@@ -1,5 +1,6 @@
 package com.example.musicapp.data.remote.api
 
+import android.media.session.MediaSession.Token
 import com.example.musicapp.data.model.PlaylistDto
 import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.model.reponse.HomeResponse
@@ -46,6 +47,7 @@ interface ApiService {
 
     @POST("/playlists")
     suspend fun createPlaylist(
+        @Header("Authorization") token: String,
         @Body playlistRequest: CreatePlaylistRequest
     ): Response<List<PlaylistDto>>
 }
