@@ -7,6 +7,7 @@ import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.domain.repository.MusicRepository
+import com.example.musicapp.utils.Constants.AUTHENTICATION_HEADER_TYPE
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -21,7 +22,7 @@ class MusicRepositoryImpl(
         try {
             userLocalDataSource.getUser()?.let { userData ->
                 val response = apiService.getSongByID(
-                    token = "Bearer ${userData.token}",
+                    token = "$AUTHENTICATION_HEADER_TYPE ${userData.token}",
                     id = id
                 )
                 if (response.isSuccessful) {
