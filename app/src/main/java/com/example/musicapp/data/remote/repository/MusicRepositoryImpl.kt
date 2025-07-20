@@ -20,7 +20,10 @@ class MusicRepositoryImpl(
         emit(Resource.Loading)
         try {
             userLocalDataSource.getUser()?.let { userData ->
-                val response = apiService.getSongByID(id = id)
+                val response = apiService.getSongByID(
+                    token = userData.token,
+                    id = id
+                )
                 if (response.isSuccessful) {
                     response.body()?.let { res ->
                         emit(Resource.Success(apiSongMapper.mapToDomain(apiDto = res)))
