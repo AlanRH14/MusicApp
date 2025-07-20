@@ -36,7 +36,7 @@ interface ApiService {
 
     @GET("/songs/{id}")
     suspend fun getSongByID(
-        @Header("")
+        @Header("Authorization") token :String,
         @Path("id") id: String
     ): Response<SongDto>
 
