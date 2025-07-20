@@ -8,6 +8,7 @@ import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.domain.repository.PlaylistRepository
+import com.example.musicapp.utils.Constants.AUTHENTICATION_HEADER_TYPE
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -21,7 +22,7 @@ class PlaylistRepositoryImpl(
         emit(Resource.Loading)
         try {
             userLocalDataSource.getUser()?.let { userData ->
-                val response = apiService.getPlaylist(token = "Bearer ${userData.token}")
+                val response = apiService.getPlaylist(token = "$AUTHENTICATION_HEADER_TYPE ${userData.token}")
                 if (response.isSuccessful) {
                     response.body()?.let { res ->
                         emit(Resource.Success(data = res.map { apiPlaylistMapper.mapToDomain(apiDto = it) }))

@@ -97,7 +97,12 @@ class PlaySongViewModel(
                     }
 
                     is Resource.Success -> {
-                        _state.update { song -> song.copy(song = song.song) }
+                        _state.update { song ->
+                            song.copy(
+                                isLoading = false,
+                                song = song.song
+                            )
+                        }
                         startServiceAndBind(song = response.data)
                     }
 

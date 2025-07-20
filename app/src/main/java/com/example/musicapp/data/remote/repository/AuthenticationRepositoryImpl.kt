@@ -28,9 +28,7 @@ class AuthenticationRepositoryImpl(
             localDataSource.savaUser(user = entity)
             emit(Resource.Success(apiUserMapper.mapToDomain(apiDto = entity)))
         } catch (e: Exception) {
-            localDataSource.getUser()?.let { userEntity ->
-                emit(Resource.Success(apiUserMapper.mapToDomain(apiDto = userEntity)))
-            } ?: emit(Resource.Error(message = "Error: ${e.message}"))
+            emit(Resource.Error(message = "Error: ${e.message}"))
         }
     }
 
