@@ -2,6 +2,7 @@ package com.example.musicapp.data.remote.repository
 
 import com.example.musicapp.common.ApiMapper
 import com.example.musicapp.common.Resource
+import com.example.musicapp.data.local.datasource.UserLocalDataSource
 import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.domain.model.Song
@@ -11,12 +12,12 @@ import kotlinx.coroutines.flow.flow
 
 class MusicRepositoryImpl(
     private val apiService: ApiService,
-    private val apiSongMapper: ApiMapper<SongDto, Song>
+    private val apiSongMapper: ApiMapper<SongDto, Song>,
+    private val userLocalDataSource: UserLocalDataSource,
 ) : MusicRepository {
 
     override fun getSongById(id: String): Flow<Resource<Song>> = flow {
         emit(Resource.Loading)
-
         try {
             val response = apiService.getSongByID(id = id)
             if (response.isSuccessful) {
