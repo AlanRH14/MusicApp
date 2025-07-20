@@ -19,14 +19,17 @@ class MusicRepositoryImpl(
     override fun getSongById(id: String): Flow<Resource<Song>> = flow {
         emit(Resource.Loading)
         try {
-            val response = apiService.getSongByID(id = id)
-            if (response.isSuccessful) {
-                response.body()?.let { res ->
-                    emit(Resource.Success(apiSongMapper.mapToDomain(apiDto = res)))
-                } ?: Resource.Success(Song())
-            } else {
-                throw Exception(response.message())
+            userLocalDataSource.getUser()?.let { userData ->
+                val response = apiService.getSongByID(id = id)
+                if (response.isSuccessful) {
+                    response.body()?.let { res ->
+                        emit(Resource.Success(apiSongMapper.mapToDomain(apiDto = res)))
+                    } ?: Resource.Success(Song())
+                } else {
+                    throw Exception(response.message())
+                }
             }
+
         } catch (e: Exception) {
             emit(Resource.Error(message = "Error: ${e.message}"))
         }
