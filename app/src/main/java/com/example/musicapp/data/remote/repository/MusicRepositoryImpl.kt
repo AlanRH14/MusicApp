@@ -31,8 +31,7 @@ class MusicRepositoryImpl(
                 } else {
                     throw Exception(response.message())
                 }
-            }
-
+            } ?: Exception("Get local user error")
         } catch (e: Exception) {
             emit(Resource.Error(message = "Error: ${e.message}"))
         }
