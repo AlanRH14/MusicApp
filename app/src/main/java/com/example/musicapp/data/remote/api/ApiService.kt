@@ -36,6 +36,7 @@ interface ApiService {
 
     @GET("/songs/{id}")
     suspend fun getSongByID(
+        @Header("")
         @Path("id") id: String
     ): Response<SongDto>
 
