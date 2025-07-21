@@ -13,21 +13,23 @@ class RemoteAuthDataSourceImpl(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : RemoteAuthDataSource {
 
-    override suspend fun login(loginRequest: LoginRequest): LoginResponse = withContext(ioDispatcher) {
-        val response = apiService.login(loginRequest = loginRequest)
-        if (response.isSuccessful) {
-            response.body() ?: LoginResponse()
-        } else {
-            throw Exception(response.message())
+    override suspend fun login(loginRequest: LoginRequest): LoginResponse =
+        withContext(ioDispatcher) {
+            val response = apiService.login(loginRequest = loginRequest)
+            if (response.isSuccessful) {
+                response.body() ?: LoginResponse()
+            } else {
+                throw Exception(response.message())
+            }
         }
-    }
 
-    override suspend fun register(registerRequest: RegisterRequest): LoginResponse {
-        val response = apiService.register(registerRequest = registerRequest)
-        return if (response.isSuccessful) {
-            response.body() ?: LoginResponse()
-        }else {
-            throw Exception(response.message())
+    override suspend fun register(registerRequest: RegisterRequest): LoginResponse =
+        withContext(ioDispatcher) {
+            val response = apiService.register(registerRequest = registerRequest)
+            if (response.isSuccessful) {
+                response.body() ?: LoginResponse()
+            } else {
+                throw Exception(response.message())
+            }
         }
-    }
 }
