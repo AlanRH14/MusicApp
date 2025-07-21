@@ -34,7 +34,7 @@ fun PlaylistItem(
 
         Column {
             Text(
-                modifier = Modifier.padding(PaddingDefault),
+                modifier = Modifier.padding(start = PaddingDefault),
                 text = playlist.name
             )
             Text(
