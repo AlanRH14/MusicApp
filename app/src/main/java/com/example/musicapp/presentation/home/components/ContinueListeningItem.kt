@@ -43,7 +43,7 @@ fun ContinueListeningItem(
             pathImage = song.coverImage,
             imageDefault = R.drawable.ic_logo,
             placeHolder = {},
-            contentDescription = stringResource(R.string.continue_listening_image),
+            contentDescription = stringResource(id = R.string.continue_listening_image),
         )
 
         Spacer(modifier = Modifier.size(4.dp))
