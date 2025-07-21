@@ -22,7 +22,7 @@ fun ContinueListeningSection(
     onSongClicked: (String) -> Unit
 ) {
     Text(
-        text = stringResource(R.string.continue_listening),
+        text = stringResource(id = R.string.continue_listening),
         style = MaterialTheme.typography.titleLarge
     )
 
