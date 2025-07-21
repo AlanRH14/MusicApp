@@ -94,7 +94,7 @@ class PlaylistRepositoryImpl(
     ): Resource<UpdatePlaylistSongResponse> = withContext(ioDispatcher) {
         Resource.Loading
         try {
-            val response = apiService.addSongToPlaylist(
+            val response = apiService.removeSongsFromPlaylist(
                 playlistId = playlistId,
                 request = UpdatePlaylistSongRequest(songIds = listOf(songId))
             )
