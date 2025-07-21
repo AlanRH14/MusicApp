@@ -10,6 +10,7 @@ import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.domain.repository.HomeRepository
 import com.example.musicapp.domain.repository.MusicRepository
 import com.example.musicapp.domain.repository.PlaylistRepository
+import kotlinx.coroutines.Dispatchers
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -19,7 +20,7 @@ val repositoryModule = module {
             remoteDataSource = get(),
             localDataSource = get(),
             apiLoginMapper = get(named("LoginApiMapper")),
-            apiUserMapper = get(named("UserApiMapper"))
+            apiUserMapper = get(named("UserApiMapper")),
         )
     }
 
@@ -47,7 +48,8 @@ val repositoryModule = module {
         PlaylistRepositoryImpl(
             apiService = get(),
             apiPlaylistMapper = get(named("PlaylistApiMapper")),
-            userLocalDataSource = get()
+            userLocalDataSource = get(),
+            ioDispatcher = Dispatchers.IO
         )
     }
 }
