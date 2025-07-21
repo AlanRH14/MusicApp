@@ -9,4 +9,9 @@ interface PlaylistRepository {
     fun getPlaylist(): Flow<Resource<List<Playlist>>>
 
     suspend fun createPlaylist(playlistRequest: CreatePlaylistRequest): Resource<Playlist>
+
+    suspend fun addSongToPlaylist(
+        playlistId: String,
+        songId: String
+    ): Resource<Playlist>
 }

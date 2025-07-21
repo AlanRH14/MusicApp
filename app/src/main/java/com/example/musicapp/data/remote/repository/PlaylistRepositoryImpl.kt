@@ -61,4 +61,14 @@ class PlaylistRepositoryImpl(
                 Resource.Error(message = "Error: ${e.message}")
             }
         }
+
+    override suspend fun addSongToPlaylist(playlistId: String, songId: String): Resource<Playlist> =
+        withContext(ioDispatcher) {
+            Resource.Loading
+            try {
+
+            } catch (e: Exception) {
+
+            }
+        }
 }
