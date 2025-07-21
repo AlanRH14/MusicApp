@@ -11,8 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.musicapp.domain.model.Song
 import com.example.musicapp.presentation.play_song.components.SongActions
 import com.example.musicapp.presentation.play_song.components.SongSlide
+import com.example.musicapp.presentation.play_song.mvi.PlaySongState
 import com.example.musicapp.presentation.play_song.mvi.PlaySongUIEvent
 import com.example.musicapp.ui.theme.MusicAppTheme
 import com.example.musicapp.ui.theme.PaddingDefault
@@ -20,13 +22,7 @@ import com.example.musicapp.ui.theme.PaddingLarge
 
 @Composable
 fun PlaySongContent(
-    title: String,
-    genre: String,
-    image: String,
-    currentPosition: Long,
-    duration: Long,
-    isPlaying: Boolean,
-    isBuffering: Boolean,
+    state: PlaySongState,
     onEvent: (PlaySongUIEvent) -> Unit,
 ) {
     Column(
@@ -37,35 +33,35 @@ fun PlaySongContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         HeaderPlaySong(
-            title = title,
-            isPlayList = isPlaying
+            title = state.song?.title ?: "",
+            isPlayList = state.isPlaying
         )
 
         Spacer(modifier = Modifier.padding(PaddingDefault))
 
         SongContent(
-            title = title,
-            genre = genre,
-            image = image,
+            title = state.song?.title ?: "",
+            genre = state.song?.genre ?: "",
+            image = state.song?.coverImage ?: "",
         )
 
         Spacer(modifier = Modifier.padding(PaddingDefault))
 
         SongSlide(
-            duration = duration,
-            currentPosition = currentPosition,
-            isBuffering = isBuffering,
+            duration = state.duration,
+            currentPosition = state.currentPosition,
+            isBuffering = state.isBuffering,
             onSeekChange = { onEvent(PlaySongUIEvent.OnSeekTo(position = it)) },
         )
 
         Spacer(modifier = Modifier.padding(PaddingDefault))
 
         SongActions(
-            isPlaying = isPlaying,
+            isPlaying = state.isPlaying,
             onPlayPauseToggle = { onEvent(PlaySongUIEvent.OnToggleToPause) },
             onNextClicked = {},
             onPreviousClicked = {},
-            onAddPlaylistClicked = {}
+            onAddPlaylistClicked = { onEvent(PlaySongUIEvent.OnAddPlaylistClicked(state.song?.id ?: "")) }
         )
     }
 }
@@ -75,13 +71,17 @@ fun PlaySongContent(
 fun PlaySongContentPreview() {
     MusicAppTheme {
         PlaySongContent(
-            title = "Song Title",
-            genre = "Pop",
-            image = "http://example.com/image.jpg",
-            currentPosition = 300000L,
-            duration = 300000L,
-            isBuffering = false,
-            isPlaying = true,
+            state = PlaySongState(
+                song = Song(
+                    title = "Song Title",
+                    genre = "Pop",
+                    coverImage = "http://example.com/image.jpg"
+                ),
+                currentPosition = 300000L,
+                duration = 300000L,
+                isBuffering = false,
+                isPlaying = true,
+            ),
             onEvent = {}
         )
     }
