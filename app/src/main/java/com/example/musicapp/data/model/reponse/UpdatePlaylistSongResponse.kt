@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class UpdatePlaylistSongResponse(
     @SerialName("songsAdded")
-    val songsAdded: List<String>? = null
+    val songsAdded: Int? = null
 )
