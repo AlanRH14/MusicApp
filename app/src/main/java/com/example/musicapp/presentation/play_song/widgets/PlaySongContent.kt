@@ -64,7 +64,8 @@ fun PlaySongContent(
             isPlaying = isPlaying,
             onPlayPauseToggle = { onEvent(PlaySongUIEvent.OnToggleToPause) },
             onNextClicked = {},
-            onPreviousClicked = {}
+            onPreviousClicked = {},
+            onAddPlaylistClicked = {}
         )
     }
 }

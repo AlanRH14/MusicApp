@@ -26,6 +26,7 @@ fun SongActions(
     onPreviousClicked: () -> Unit = {},
     onPlayPauseToggle: () -> Unit,
     onNextClicked: () -> Unit = {},
+    onAddPlaylistClicked: () -> Unit = {}
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -69,7 +70,7 @@ fun SongActions(
             )
         }
 
-        IconButton(onClick = {}) {
+        IconButton(onClick = onAddPlaylistClicked) {
             Icon(
                 painter = painterResource(id = androidx.media3.session.R.drawable.media3_icon_playlist_add),
                 contentDescription = stringResource(id = R.string.playlist_add),
