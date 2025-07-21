@@ -78,7 +78,7 @@ fun SocialCard(
 @Composable
 private fun SocialCardPreview() {
     SocialCard(
-        stringRes = stringResource(R.string.already_have_an_account),
+        stringRes = stringResource(id = R.string.already_have_an_account),
         onClick = {},
         onFbClick = {},
         onGoogleClick = {},
