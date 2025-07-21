@@ -33,7 +33,7 @@ fun CreatePlaylistContent(
         MusicAppTextField(
             value = state.name,
             onValueChange = { onEvent(CreatePlaylistUIEvent.OnNameUpdate(name = it)) },
-            label = stringResource(R.string.playlist_name),
+            label = stringResource(id = R.string.playlist_name),
             placeholder = "Enter playlist name",
             isError = state.isNameEmpty
         )
@@ -41,7 +41,7 @@ fun CreatePlaylistContent(
         MusicAppTextField(
             value = state.description,
             onValueChange = { onEvent(CreatePlaylistUIEvent.OnDescriptionUpdate(description = it)) },
-            label = stringResource(R.string.description),
+            label = stringResource(id = R.string.description),
             placeholder = "Enter playlist description",
             isError = state.isDescriptionEmpty
         )
@@ -49,7 +49,7 @@ fun CreatePlaylistContent(
         Spacer(modifier = Modifier.weight(1F))
 
         Button(onClick = { onEvent(CreatePlaylistUIEvent.OnCreatePlaylistClicked) }) {
-            Text(text = stringResource(R.string.create_playlist))
+            Text(text = stringResource(id = R.string.create_playlist))
         }
     }
 }
