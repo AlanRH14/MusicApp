@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import com.example.musicapp.R
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.presentation.common.components.MusicAppImage
-import com.example.musicapp.presentation.playlist.mvi.PlaylistState
 import com.example.musicapp.ui.theme.PaddingDefault
 
 @Composable
