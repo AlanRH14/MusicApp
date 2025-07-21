@@ -52,7 +52,7 @@ fun SocialCard(
             Spacer(modifier = Modifier.size(PaddingLarge))
 
             SocialButton(
-                res = painterResource(R.drawable.ic_google),
+                res = painterResource(id = R.drawable.ic_google),
                 onClick = onGoogleClick
             )
         }
