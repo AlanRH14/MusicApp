@@ -48,7 +48,7 @@ fun CreatePlaylistScreen(
 
     if (!state.error.isNullOrEmpty()) {
         ErrorScreen(
-            errorMessage = state.error ?: stringResource(R.string.unknown),
+            errorMessage = state.error ?: stringResource(id = R.string.unknown),
             primaryButton = stringResource(id = R.string.retry),
             onPrimaryButtonClicked = {}
         )
