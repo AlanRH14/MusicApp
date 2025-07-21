@@ -32,6 +32,10 @@ fun PlaySongScreen(
                 is PlaySongEffect.ShowErrorMessage -> {
                     Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
                 }
+
+                is PlaySongEffect.NavigateToPlaylist -> {
+
+                }
             }
         }
     }
