@@ -3,9 +3,11 @@ package com.example.musicapp.presentation.playlist
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.presentation.common.components.MusicAppImage
@@ -21,6 +23,7 @@ fun PlaylistItem(
             .padding(PaddingDefault)
     ) {
         MusicAppImage(
+            modifier = Modifier.size(60.dp),
             pathImage = playlist.coverImage,
             imageDefault = R.drawable.ic_logo,
             placeHolder = {},
