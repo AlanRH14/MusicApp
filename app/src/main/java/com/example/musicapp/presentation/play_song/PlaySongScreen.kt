@@ -32,19 +32,17 @@ fun PlaySongScreen(
                 is PlaySongEffect.ShowErrorMessage -> {
                     Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
                 }
+
+                is PlaySongEffect.NavigateToPlaylist -> {
+
+                }
             }
         }
     }
 
-    state.currentSong?.let { currentSong ->
+    state.currentSong?.let {
         PlaySongContent(
-            title = currentSong.title,
-            genre = currentSong.genre,
-            image = currentSong.coverImage,
-            duration = state.duration,
-            currentPosition = state.currentPosition,
-            isPlaying = state.isPlaying,
-            isBuffering = state.isBuffering,
+            state = state,
             onEvent = viewModel::onEvent
         )
     }

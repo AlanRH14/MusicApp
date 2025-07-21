@@ -4,7 +4,9 @@ import com.example.musicapp.common.ApiMapper
 import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.datasource.UserLocalDataSource
 import com.example.musicapp.data.model.PlaylistDto
+import com.example.musicapp.data.model.reponse.UpdatePlaylistSongResponse
 import com.example.musicapp.data.model.request.CreatePlaylistRequest
+import com.example.musicapp.data.model.request.UpdatePlaylistSongRequest
 import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.domain.repository.PlaylistRepository
@@ -61,4 +63,51 @@ class PlaylistRepositoryImpl(
                 Resource.Error(message = "Error: ${e.message}")
             }
         }
+
+    override suspend fun addSongToPlaylist(
+        playlistId: String,
+        songId: String
+    ): Resource<UpdatePlaylistSongResponse> =
+        withContext(ioDispatcher) {
+            Resource.Loading
+            try {
+                val response = apiService.addSongToPlaylist(
+                    playlistId = playlistId,
+                    request = UpdatePlaylistSongRequest(songIds = listOf(songId))
+                )
+
+                if (response.isSuccessful) {
+                    response.body()?.let { res ->
+                        Resource.Success(res)
+                    } ?: Resource.Success(UpdatePlaylistSongResponse())
+                } else {
+                    throw Exception("Add song to playlist")
+                }
+            } catch (e: Exception) {
+                Resource.Error(message = "Error: ${e.message}")
+            }
+        }
+
+    override suspend fun deleteSongFromPlaylist(
+        playlistId: String,
+        songId: String
+    ): Resource<UpdatePlaylistSongResponse> = withContext(ioDispatcher) {
+        Resource.Loading
+        try {
+            val response = apiService.removeSongsFromPlaylist(
+                playlistId = playlistId,
+                request = UpdatePlaylistSongRequest(songIds = listOf(songId))
+            )
+
+            if (response.isSuccessful) {
+                response.body()?.let { res ->
+                    Resource.Success(res)
+                } ?: Resource.Success(UpdatePlaylistSongResponse())
+            } else {
+                throw Exception("Delete song from playlist")
+            }
+        } catch (e: Exception) {
+            Resource.Error("Error: ${e.message}")
+        }
+    }
 }

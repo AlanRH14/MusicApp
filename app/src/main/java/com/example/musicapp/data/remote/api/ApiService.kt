@@ -5,10 +5,13 @@ import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.model.reponse.HomeResponse
 import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.reponse.LoginResponse
+import com.example.musicapp.data.model.reponse.UpdatePlaylistSongResponse
 import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.data.model.request.RegisterRequest
+import com.example.musicapp.data.model.request.UpdatePlaylistSongRequest
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -32,7 +35,7 @@ interface ApiService {
 
     @GET("/songs/{id}")
     suspend fun getSongByID(
-        @Header("Authorization") token :String,
+        @Header("Authorization") token: String,
         @Path("id") id: String
     ): Response<SongDto>
 
@@ -46,4 +49,16 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body playlistRequest: CreatePlaylistRequest
     ): Response<PlaylistDto>
+
+    @POST("/playlist/{Id}/songs")
+    suspend fun addSongToPlaylist(
+        @Path("Id") playlistId: String,
+        @Body request: UpdatePlaylistSongRequest
+    ): Response<UpdatePlaylistSongResponse>
+
+    @DELETE("playlist/{Id}/songs")
+    suspend fun removeSongsFromPlaylist(
+        @Path("Id") playlistId: String,
+        @Body request: UpdatePlaylistSongRequest
+    ): Response<UpdatePlaylistSongResponse>
 }
