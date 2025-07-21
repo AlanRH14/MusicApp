@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.example.musicapp.R
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.presentation.common.components.MusicAppImage
@@ -23,7 +24,7 @@ fun PlaylistItem(
             pathImage = playlist.coverImage,
             imageDefault = R.drawable.ic_logo,
             placeHolder = {},
-            contentDescription = "Playlist Item Image"
+            contentDescription = stringResource(R.string.playlist_item_image)
         )
     }
 }
