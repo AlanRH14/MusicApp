@@ -19,7 +19,7 @@ fun SongSlide(
     onSeekChange: (newValue: Long) -> Unit,
 ) {
     if (isBuffering) {
-        LinearProgressIndicator()
+        Box{ LinearProgressIndicator(modifier = Modifier.fillMaxWidth()) }
     } else {
         Slider(
             modifier = Modifier.fillMaxWidth(),

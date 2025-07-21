@@ -1,10 +1,12 @@
 package com.example.musicapp.presentation.playlist
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,21 +20,23 @@ fun PlaylistContent(
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (state.playlist.isEmpty()) {
-            Text("No playlist found")
-        }
-
-        TextButton(onClick = {
-            onEvent(PlaylistUIEvent.NavigateToCreatePlaylist)
-        }) {
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { onEvent(PlaylistUIEvent.NavigateToCreatePlaylist) }
+        ) {
             Text(text = "Create Playlist")
         }
 
-        state.playlist.forEach { playlist ->
-            Text(playlist.name)
+        if (state.playlist.isEmpty()) {
+            Text("No playlist found")
+        } else {
+            LazyColumn {
+                items(state.playlist, key = { playlist -> playlist.id }) { playlist ->
+                    PlaylistItem(playlist = playlist) { }
+                }
+            }
         }
     }
 }

@@ -31,10 +31,6 @@ fun CreatePlaylistScreen(
                 }
 
                 is CreatePlaylistEffect.NavigateToPlaylist -> {
-                    navController.previousBackStackEntry?.savedStateHandle?.set(
-                        "playlistCreated",
-                        effect.playlist
-                    )
                     navController.popBackStack()
                 }
             }

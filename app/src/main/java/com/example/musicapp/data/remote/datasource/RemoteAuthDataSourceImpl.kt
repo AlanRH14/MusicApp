@@ -5,29 +5,30 @@ import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.request.RegisterRequest
 import com.example.musicapp.data.remote.api.ApiService
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class RemoteAuthDataSourceImpl(
     private val apiService: ApiService,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val ioDispatcher: CoroutineDispatcher
 ) : RemoteAuthDataSource {
 
-    override suspend fun login(loginRequest: LoginRequest): LoginResponse = withContext(ioDispatcher) {
-        val response = apiService.login(loginRequest = loginRequest)
-        if (response.isSuccessful) {
-            response.body() ?: LoginResponse()
-        } else {
-            throw Exception(response.message())
+    override suspend fun login(loginRequest: LoginRequest): LoginResponse =
+        withContext(ioDispatcher) {
+            val response = apiService.login(loginRequest = loginRequest)
+            if (response.isSuccessful) {
+                response.body() ?: LoginResponse()
+            } else {
+                throw Exception(response.message())
+            }
         }
-    }
 
-    override suspend fun register(registerRequest: RegisterRequest): LoginResponse {
-        val response = apiService.register(registerRequest = registerRequest)
-        return if (response.isSuccessful) {
-            response.body() ?: LoginResponse()
-        }else {
-            throw Exception(response.message())
+    override suspend fun register(registerRequest: RegisterRequest): LoginResponse =
+        withContext(ioDispatcher) {
+            val response = apiService.register(registerRequest = registerRequest)
+            if (response.isSuccessful) {
+                response.body() ?: LoginResponse()
+            } else {
+                throw Exception(response.message())
+            }
         }
-    }
 }

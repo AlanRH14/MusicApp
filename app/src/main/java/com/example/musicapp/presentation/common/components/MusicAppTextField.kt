@@ -49,22 +49,23 @@ fun MusicAppTextField(
         label = { Text(label) },
         singleLine = singleLine,
         placeholder = { Text(placeholder) },
-        leadingIcon = {
+        leadingIcon =
             leadingIcon?.let { icon ->
-                Icon(
-                    painter = icon,
-                    contentDescription = leadingDescription,
-                )
-            }
-        },
+                {
+                    Icon(
+                        painter = icon,
+                        contentDescription = leadingDescription,
+                    )
+                }
+            },
         isError = isError,
         supportingText = {
             if (isError) {
                 Text(placeholder)
             }
         },
-        trailingIcon = {
-            trailingIcon?.let { icon ->
+        trailingIcon = trailingIcon?.let { icon ->
+            {
                 IconButton(
                     onClick = onShowPasswordClicked,
                 ) {
