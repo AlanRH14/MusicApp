@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 
 class RemoteAuthDataSourceImpl(
     private val apiService: ApiService,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val ioDispatcher: CoroutineDispatcher
 ) : RemoteAuthDataSource {
 
     override suspend fun login(loginRequest: LoginRequest): LoginResponse =
