@@ -15,4 +15,9 @@ interface PlaylistRepository {
         playlistId: String,
         songId: String
     ): Resource<UpdatePlaylistSongResponse>
+
+    suspend fun deleteSongFromPlaylist(
+        playlistId: String,
+        songId: String,
+    ): Resource<UpdatePlaylistSongResponse>
 }
