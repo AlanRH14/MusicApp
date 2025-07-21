@@ -44,9 +44,9 @@ fun LoginScreenContent(
         MusicAppTextField(
             value = state.email ?: "",
             onValueChange = { onEvent(LoginUIEvent.OnEmailUpdate(it)) },
-            label = stringResource(R.string.email),
-            placeholder = stringResource(R.string.email_placeholder),
-            leadingIcon = painterResource(R.drawable.ic_mail),
+            label = stringResource(id = R.string.email),
+            placeholder = stringResource(id = R.string.email_placeholder),
+            leadingIcon = painterResource(id = R.drawable.ic_mail),
             leadingDescription = stringResource(R.string.email_icon),
             isError = state.isEmailError,
         )
