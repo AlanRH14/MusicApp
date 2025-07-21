@@ -93,13 +93,13 @@ fun RegisterScreenContent(
         MusicAppTextField(
             value = state.password ?: "",
             onValueChange = { onEvent(RegisterUIEvent.OnPasswordUpdate(it)) },
-            label = stringResource(R.string.password),
-            placeholder = stringResource(R.string.password_placeholder),
-            leadingIcon = painterResource(R.drawable.ic_mail),
-            leadingDescription = stringResource(R.string.email_icon),
-            trailingIcon = painterResource(R.drawable.ic_eye_off),
+            label = stringResource(id = R.string.password),
+            placeholder = stringResource(id = R.string.password_placeholder),
+            leadingIcon = painterResource(id = R.drawable.ic_mail),
+            leadingDescription = stringResource(id = R.string.email_icon),
+            trailingIcon = painterResource(id = R.drawable.ic_eye_off),
             isPasswordVisible = state.isPasswordVisible,
-            trailingDescription = stringResource(R.string.icon_eye_off),
+            trailingDescription = stringResource(id = R.string.icon_eye_off),
             onShowPasswordClicked = { onEvent(RegisterUIEvent.OnTogglePasswordVisibility) },
             isError = state.isPasswordValid
         )
