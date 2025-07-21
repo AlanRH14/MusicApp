@@ -14,6 +14,7 @@ import com.example.musicapp.data.service.MusicAppPlaybackService
 import com.example.musicapp.data.service.MusicAppPlaybackService.Companion.KEY_SONG
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.domain.repository.MusicRepository
+import com.example.musicapp.domain.repository.PlaylistRepository
 import com.example.musicapp.presentation.play_song.mvi.PlaySongEffect
 import com.example.musicapp.presentation.play_song.mvi.PlaySongState
 import com.example.musicapp.presentation.play_song.mvi.PlaySongUIEvent
@@ -30,6 +31,7 @@ import kotlinx.coroutines.launch
 class PlaySongViewModel(
     private val mContext: Application,
     private val repository: MusicRepository,
+    private val playlistRepository: PlaylistRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(PlaySongState())
@@ -46,6 +48,7 @@ class PlaySongViewModel(
             is PlaySongUIEvent.GetSongByID -> getSongByID(event.songID)
             is PlaySongUIEvent.OnToggleToPause -> toggleToPause()
             is PlaySongUIEvent.OnSeekTo -> seekTo(event.position)
+            is PlaySongUIEvent.OnAddPlaylistClicked -> {}
         }
     }
 
@@ -159,6 +162,12 @@ class PlaySongViewModel(
                 serviceConnection,
                 Context.BIND_AUTO_CREATE
             )
+        }
+    }
+
+    private fun onAddPlaylistClicked(songID: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            playlistRepository.getPlaylist()
         }
     }
 }
