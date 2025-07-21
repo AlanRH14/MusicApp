@@ -47,7 +47,7 @@ fun LoginScreenContent(
             label = stringResource(id = R.string.email),
             placeholder = stringResource(id = R.string.email_placeholder),
             leadingIcon = painterResource(id = R.drawable.ic_mail),
-            leadingDescription = stringResource(R.string.email_icon),
+            leadingDescription = stringResource(id = R.string.email_icon),
             isError = state.isEmailError,
         )
 
