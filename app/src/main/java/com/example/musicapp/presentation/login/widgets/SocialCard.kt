@@ -45,14 +45,14 @@ fun SocialCard(
             horizontalArrangement = Arrangement.Center
         ) {
             SocialButton(
-                res = painterResource(R.drawable.ic_facebook),
+                res = painterResource(id = R.drawable.ic_facebook),
                 onClick = onFbClick
             )
 
             Spacer(modifier = Modifier.size(PaddingLarge))
 
             SocialButton(
-                res = painterResource(R.drawable.ic_google),
+                res = painterResource(id = R.drawable.ic_google),
                 onClick = onGoogleClick
             )
         }
@@ -78,7 +78,7 @@ fun SocialCard(
 @Composable
 private fun SocialCardPreview() {
     SocialCard(
-        stringRes = stringResource(R.string.already_have_an_account),
+        stringRes = stringResource(id = R.string.already_have_an_account),
         onClick = {},
         onFbClick = {},
         onGoogleClick = {},

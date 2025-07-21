@@ -68,5 +68,13 @@ fun SongActions(
                 contentDescription = stringResource(R.string.next),
             )
         }
+
+        IconButton(onClick = {}) {
+            Icon(
+                painter = painterResource(id = androidx.media3.session.R.drawable.media3_icon_playlist_add),
+                contentDescription = stringResource(id = R.string.playlist_add),
+                tint = MaterialTheme.colorScheme.onPrimary
+            )
+        }
     }
 }

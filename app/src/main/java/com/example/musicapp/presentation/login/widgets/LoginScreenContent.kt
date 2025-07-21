@@ -44,10 +44,10 @@ fun LoginScreenContent(
         MusicAppTextField(
             value = state.email ?: "",
             onValueChange = { onEvent(LoginUIEvent.OnEmailUpdate(it)) },
-            label = stringResource(R.string.email),
-            placeholder = stringResource(R.string.email_placeholder),
-            leadingIcon = painterResource(R.drawable.ic_mail),
-            leadingDescription = stringResource(R.string.email_icon),
+            label = stringResource(id = R.string.email),
+            placeholder = stringResource(id = R.string.email_placeholder),
+            leadingIcon = painterResource(id = R.drawable.ic_mail),
+            leadingDescription = stringResource(id = R.string.email_icon),
             isError = state.isEmailError,
         )
 
@@ -56,13 +56,13 @@ fun LoginScreenContent(
         MusicAppTextField(
             value = state.password ?: "",
             onValueChange = { onEvent(LoginUIEvent.OnPasswordUpdate(it)) },
-            label = stringResource(R.string.password),
-            placeholder = stringResource(R.string.password_placeholder),
-            leadingIcon = painterResource(R.drawable.ic_lock),
-            leadingDescription = stringResource(R.string.icon_eye_off),
-            trailingIcon = painterResource(R.drawable.ic_eye_off),
+            label = stringResource(id = R.string.password),
+            placeholder = stringResource(id = R.string.password_placeholder),
+            leadingIcon = painterResource(id = R.drawable.ic_lock),
+            leadingDescription = stringResource(id = R.string.icon_eye_off),
+            trailingIcon = painterResource(id = R.drawable.ic_eye_off),
             isPasswordVisible = state.isPasswordVisible,
-            trailingDescription = stringResource(R.string.icon_eye_off),
+            trailingDescription = stringResource(id = R.string.icon_eye_off),
             onShowPasswordClicked = { onEvent(LoginUIEvent.OnTogglePasswordVisibility) },
             isError = state.isPasswordError,
         )
@@ -72,7 +72,7 @@ fun LoginScreenContent(
         LoginCheckBox(
             checked = state.rememberMeActive,
             onCheckedChange = { onEvent(LoginUIEvent.OnRememberMeActive) },
-            text = stringResource(R.string.remember_me),
+            text = stringResource(id = R.string.remember_me),
         )
 
         Spacer(modifier = Modifier.size(16.dp))
@@ -90,7 +90,7 @@ fun LoginScreenContent(
             onClick = { onEvent(LoginUIEvent.OnLoginClicked) }
         ) {
             Text(
-                stringResource(R.string.login),
+                stringResource(id = R.string.login),
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onPrimary
             )
@@ -103,7 +103,7 @@ fun LoginScreenContent(
             onClick = { onEvent(LoginUIEvent.OnForgotPasswordClicked) }
         ) {
             Text(
-                text = stringResource(R.string.forgot_password),
+                text = stringResource(id = R.string.forgot_password),
                 fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -112,7 +112,7 @@ fun LoginScreenContent(
         Spacer(modifier = Modifier.weight(1F))
 
         SocialCard(
-            stringRes = stringResource(R.string.do_not_have_an_account),
+            stringRes = stringResource(id = R.string.do_not_have_an_account),
             onClick = { onEvent(LoginUIEvent.OnRegisterClicked) },
             onFbClick = {},
             onGoogleClick = {}

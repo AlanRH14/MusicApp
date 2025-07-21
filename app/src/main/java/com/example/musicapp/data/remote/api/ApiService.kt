@@ -15,10 +15,6 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ApiService {
-
-    @GET("/status")
-    suspend fun getSomething(): Response<Map<String, String>>
-
     @POST("/auth/login")
     suspend fun login(
         @Body loginRequest: LoginRequest

@@ -47,7 +47,7 @@ fun OnboardingCard(
             modifier = Modifier
                 .padding(PaddingLarge)
                 .fillMaxWidth(),
-            rawText = stringResource(R.string.onboarding_text),
+            rawText = stringResource(id = R.string.onboarding_text),
             spanStyle = SpanStyle(color = MaterialTheme.colorScheme.primary),
             textStyle = MaterialTheme.typography.headlineLarge,
             textAlign = TextAlign.Center
@@ -80,7 +80,7 @@ fun OnboardingCard(
             onClick = { onEvent(OnboardingUIEvent.OnGetStartedClicked) }
         ) {
             Text(
-                text = stringResource(R.string.get_started),
+                text = stringResource(id = R.string.get_started),
                 style = MaterialTheme.typography.labelLarge
             )
         }

@@ -29,7 +29,7 @@ fun SongRecommendationSection(
     onRecommendationClicked: (String) -> Unit
 ) {
     Text(
-        text = stringResource(R.string.recommendation),
+        text = stringResource(id = R.string.recommendation),
         style = MaterialTheme.typography.titleLarge
     )
 
@@ -54,7 +54,7 @@ fun SongRecommendationSection(
                     pathImage = song.coverImage,
                     imageDefault = R.drawable.ic_logo,
                     placeHolder = {},
-                    contentDescription = stringResource(R.string.song_recommendation_image),
+                    contentDescription = stringResource(id = R.string.song_recommendation_image),
                 )
             }
         }

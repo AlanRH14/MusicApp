@@ -70,7 +70,7 @@ fun MusicAppTextField(
                     onClick = onShowPasswordClicked,
                 ) {
                     Icon(
-                        painter = if (isPasswordVisible) icon else painterResource(R.drawable.ic_eye),
+                        painter = if (isPasswordVisible) icon else painterResource(id = R.drawable.ic_eye),
                         contentDescription = trailingDescription
                     )
                 }

@@ -44,8 +44,8 @@ fun RegisterScreenContent(
         Image(
             modifier = Modifier
                 .clickable { onEvent(RegisterUIEvent.OnBackClicked) },
-            painter = painterResource(R.drawable.ic_back),
-            contentDescription = stringResource(R.string.image_back)
+            painter = painterResource(id = R.drawable.ic_back),
+            contentDescription = stringResource(id = R.string.image_back)
         )
 
         Spacer(modifier = Modifier.size(16.dp))
@@ -54,15 +54,15 @@ fun RegisterScreenContent(
             modifier = Modifier
                 .size(120.dp)
                 .align(Alignment.CenterHorizontally),
-            painter = painterResource(R.drawable.ic_logo),
-            contentDescription = stringResource(R.string.image_logo)
+            painter = painterResource(id = R.drawable.ic_logo),
+            contentDescription = stringResource(id = R.string.image_logo)
         )
 
         Spacer(modifier = Modifier.size(16.dp))
 
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.register_your_account),
+            text = stringResource(id = R.string.register_your_account),
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
@@ -73,33 +73,33 @@ fun RegisterScreenContent(
         MusicAppTextField(
             value = state.name ?: "",
             onValueChange = { onEvent(RegisterUIEvent.OnNameUpdate(it)) },
-            label = stringResource(R.string.name),
-            placeholder = stringResource(R.string.name_placeholder),
-            leadingIcon = painterResource(R.drawable.ic_mail),
-            leadingDescription = stringResource(R.string.email_icon),
+            label = stringResource(id = R.string.name),
+            placeholder = stringResource(id = R.string.name_placeholder),
+            leadingIcon = painterResource(id = R.drawable.ic_mail),
+            leadingDescription = stringResource(id = R.string.email_icon),
             isError = state.isNameValid
         )
 
         MusicAppTextField(
             value = state.email ?: "",
             onValueChange = { onEvent(RegisterUIEvent.OnEmailUpdate(it)) },
-            label = stringResource(R.string.email),
-            placeholder = stringResource(R.string.email_placeholder),
-            leadingIcon = painterResource(R.drawable.ic_mail),
-            leadingDescription = stringResource(R.string.email_icon),
+            label = stringResource(id = R.string.email),
+            placeholder = stringResource(id = R.string.email_placeholder),
+            leadingIcon = painterResource(id = R.drawable.ic_mail),
+            leadingDescription = stringResource(id = R.string.email_icon),
             isError = state.isEmailValid
         )
 
         MusicAppTextField(
             value = state.password ?: "",
             onValueChange = { onEvent(RegisterUIEvent.OnPasswordUpdate(it)) },
-            label = stringResource(R.string.password),
-            placeholder = stringResource(R.string.password_placeholder),
-            leadingIcon = painterResource(R.drawable.ic_mail),
-            leadingDescription = stringResource(R.string.email_icon),
-            trailingIcon = painterResource(R.drawable.ic_eye_off),
+            label = stringResource(id = R.string.password),
+            placeholder = stringResource(id = R.string.password_placeholder),
+            leadingIcon = painterResource(id = R.drawable.ic_mail),
+            leadingDescription = stringResource(id = R.string.email_icon),
+            trailingIcon = painterResource(id = R.drawable.ic_eye_off),
             isPasswordVisible = state.isPasswordVisible,
-            trailingDescription = stringResource(R.string.icon_eye_off),
+            trailingDescription = stringResource(id = R.string.icon_eye_off),
             onShowPasswordClicked = { onEvent(RegisterUIEvent.OnTogglePasswordVisibility) },
             isError = state.isPasswordValid
         )
@@ -107,13 +107,13 @@ fun RegisterScreenContent(
         MusicAppTextField(
             value = state.confirmPassword ?: "",
             onValueChange = { onEvent(RegisterUIEvent.OnConfirmPasswordUpdate(it)) },
-            label = stringResource(R.string.confirm_password),
-            placeholder = stringResource(R.string.confirm_password),
-            leadingIcon = painterResource(R.drawable.ic_mail),
-            leadingDescription = stringResource(R.string.email_icon),
-            trailingIcon = painterResource(R.drawable.ic_eye_off),
+            label = stringResource(id = R.string.confirm_password),
+            placeholder = stringResource(id = R.string.confirm_password),
+            leadingIcon = painterResource(id = R.drawable.ic_mail),
+            leadingDescription = stringResource(id = R.string.email_icon),
+            trailingIcon = painterResource(id = R.drawable.ic_eye_off),
             isPasswordVisible = state.isConfirmPasswordVisible,
-            trailingDescription = stringResource(R.string.icon_eye_off),
+            trailingDescription = stringResource(id = R.string.icon_eye_off),
             onShowPasswordClicked = { onEvent(RegisterUIEvent.OnToggleConfirmPasswordVisibility) },
             isError = state.isConfirmPasswordValid
         )
@@ -133,7 +133,7 @@ fun RegisterScreenContent(
             onClick = { onEvent(RegisterUIEvent.OnRegisterClicked) },
         ) {
             Text(
-                text = stringResource(R.string.register),
+                text = stringResource(id = R.string.register),
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onPrimary
             )
@@ -142,7 +142,7 @@ fun RegisterScreenContent(
         Box(modifier = Modifier.weight(1F))
 
         SocialCard(
-            stringRes = stringResource(R.string.already_have_an_account),
+            stringRes = stringResource(id = R.string.already_have_an_account),
             onClick = { onEvent(RegisterUIEvent.OnLoginClicked) },
             onFbClick = {},
             onGoogleClick = {},

@@ -67,8 +67,8 @@ fun OnboardingScreen(
     ) {
         Image(
             modifier = Modifier.fillMaxSize(),
-            painter = painterResource(R.drawable.ic_welcome),
-            contentDescription = stringResource(R.string.onboarding_background_image),
+            painter = painterResource(id = R.drawable.ic_welcome),
+            contentDescription = stringResource(id = R.string.onboarding_background_image),
             contentScale = ContentScale.FillBounds
         )
 
@@ -81,9 +81,9 @@ fun OnboardingScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .offset(y = (-cardHeight.minus(20.dp))),
-                painter = painterResource(R.drawable.ic_girl),
+                painter = painterResource(id = R.drawable.ic_girl),
                 contentScale = ContentScale.Crop,
-                contentDescription = stringResource(R.string.image_onboarding),
+                contentDescription = stringResource(id = R.string.image_onboarding),
             )
             OnboardingCard(
                 modifier = Modifier

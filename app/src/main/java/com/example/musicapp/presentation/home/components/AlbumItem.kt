@@ -43,7 +43,7 @@ fun AlbumItem(
             pathImage = album.coverImage,
             imageDefault = R.drawable.ic_logo,
             placeHolder = {},
-            contentDescription = stringResource(R.string.album_item_image)
+            contentDescription = stringResource(id = R.string.album_item_image)
         )
 
         Text(
