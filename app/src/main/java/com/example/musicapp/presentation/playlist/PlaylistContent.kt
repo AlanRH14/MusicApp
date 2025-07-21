@@ -19,12 +19,12 @@ fun PlaylistContent(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (state.playlist.isEmpty()) {
-            Text("No playlist found")
-        }
-
         Button(onClick = { onEvent(PlaylistUIEvent.NavigateToCreatePlaylist) }) {
             Text(text = "Create Playlist")
+        }
+
+        if (state.playlist.isEmpty()) {
+            Text("No playlist found")
         }
 
         state.playlist.forEach { playlist ->
