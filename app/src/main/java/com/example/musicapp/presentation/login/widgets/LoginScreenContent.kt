@@ -103,7 +103,7 @@ fun LoginScreenContent(
             onClick = { onEvent(LoginUIEvent.OnForgotPasswordClicked) }
         ) {
             Text(
-                text = stringResource(R.string.forgot_password),
+                text = stringResource(id = R.string.forgot_password),
                 fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -112,7 +112,7 @@ fun LoginScreenContent(
         Spacer(modifier = Modifier.weight(1F))
 
         SocialCard(
-            stringRes = stringResource(R.string.do_not_have_an_account),
+            stringRes = stringResource(id = R.string.do_not_have_an_account),
             onClick = { onEvent(LoginUIEvent.OnRegisterClicked) },
             onFbClick = {},
             onGoogleClick = {}
