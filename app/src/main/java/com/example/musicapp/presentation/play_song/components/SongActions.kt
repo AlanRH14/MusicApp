@@ -68,5 +68,13 @@ fun SongActions(
                 contentDescription = stringResource(R.string.next),
             )
         }
+
+        IconButton(onClick = {}) {
+            Icon(
+                painter = painterResource(id = 0),
+                contentDescription = "Playlist Icon",
+                tint = MaterialTheme.colorScheme.onPrimary
+            )
+        }
     }
 }
