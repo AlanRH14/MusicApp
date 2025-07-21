@@ -72,7 +72,7 @@ fun LoginScreenContent(
         LoginCheckBox(
             checked = state.rememberMeActive,
             onCheckedChange = { onEvent(LoginUIEvent.OnRememberMeActive) },
-            text = stringResource(R.string.remember_me),
+            text = stringResource(id = R.string.remember_me),
         )
 
         Spacer(modifier = Modifier.size(16.dp))
@@ -90,7 +90,7 @@ fun LoginScreenContent(
             onClick = { onEvent(LoginUIEvent.OnLoginClicked) }
         ) {
             Text(
-                stringResource(R.string.login),
+                stringResource(id = R.string.login),
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onPrimary
             )
