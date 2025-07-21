@@ -45,7 +45,7 @@ fun SocialCard(
             horizontalArrangement = Arrangement.Center
         ) {
             SocialButton(
-                res = painterResource(R.drawable.ic_facebook),
+                res = painterResource(id = R.drawable.ic_facebook),
                 onClick = onFbClick
             )
 
