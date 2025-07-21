@@ -36,15 +36,9 @@ fun PlaySongScreen(
         }
     }
 
-    state.currentSong?.let { currentSong ->
+    state.currentSong?.let {
         PlaySongContent(
-            title = currentSong.title,
-            genre = currentSong.genre,
-            image = currentSong.coverImage,
-            duration = state.duration,
-            currentPosition = state.currentPosition,
-            isPlaying = state.isPlaying,
-            isBuffering = state.isBuffering,
+            state = state,
             onEvent = viewModel::onEvent
         )
     }
