@@ -25,10 +25,10 @@ fun PlaylistContent(
 
         if (state.playlist.isEmpty()) {
             Text("No playlist found")
-        }
-
-        state.playlist.forEach { playlist ->
-            Text(playlist.name)
+        } else {
+            state.playlist.forEach { playlist ->
+                Text(playlist.name)
+            }
         }
     }
 }
