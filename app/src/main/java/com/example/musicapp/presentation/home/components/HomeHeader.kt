@@ -43,14 +43,14 @@ fun HomeHeader(
             pathImage = userImage,
             imageDefault = userImageDefault,
             placeHolder = {},
-            contentDescription = stringResource(R.string.user_image)
+            contentDescription = stringResource(id = R.string.user_image)
         )
 
         Spacer(modifier = Modifier.size(PaddingLarge))
 
         Column {
             Text(
-                text = stringResource(R.string.welcome_back),
+                text = stringResource(id = R.string.welcome_back),
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.titleMedium
             )
@@ -69,7 +69,7 @@ fun HomeHeader(
         IconButton(onClick = onPlaylistButtonClicked) {
             Icon(
                 painter = painterResource(id = androidx.media3.session.R.drawable.media3_icon_playlist_add),
-                contentDescription = stringResource(R.string.playlist_add),
+                contentDescription = stringResource(id = R.string.playlist_add),
                 tint = MaterialTheme.colorScheme.onPrimary
             )
         }
