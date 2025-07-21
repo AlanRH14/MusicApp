@@ -59,12 +59,12 @@ private fun SocialButtonPreview() {
         horizontalArrangement = Arrangement.Center
     ) {
         SocialButton(
-            res = painterResource(R.drawable.ic_facebook),
+            res = painterResource(id = R.drawable.ic_facebook),
             onClick = {},
         )
 
         SocialButton(
-            res = painterResource(R.drawable.ic_google),
+            res = painterResource(id = R.drawable.ic_google),
             onClick = {},
         )
     }
