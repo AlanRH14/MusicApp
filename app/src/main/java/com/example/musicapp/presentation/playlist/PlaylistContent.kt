@@ -2,6 +2,7 @@ package com.example.musicapp.presentation.playlist
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -23,7 +24,7 @@ fun PlaylistContent(
             Text("No playlist found")
         }
 
-        TextButton(onClick = {
+        Button(onClick = {
             onEvent(PlaylistUIEvent.NavigateToCreatePlaylist)
         }) {
             Text(text = "Create Playlist")
