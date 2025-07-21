@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.create_playlist
+package com.example.musicapp.presentation.add_playlist
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
@@ -10,8 +10,8 @@ import androidx.navigation.NavHostController
 import com.example.musicapp.R
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
-import com.example.musicapp.presentation.create_playlist.mvi.CreatePlaylistEffect
-import com.example.musicapp.presentation.create_playlist.widgets.CreatePlaylistContent
+import com.example.musicapp.presentation.add_playlist.mvi.CreatePlaylistEffect
+import com.example.musicapp.presentation.add_playlist.widgets.CreatePlaylistContent
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
