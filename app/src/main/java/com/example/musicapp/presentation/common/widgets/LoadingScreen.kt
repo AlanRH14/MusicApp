@@ -32,7 +32,7 @@ fun LoadingScreen() {
 
         Spacer(modifier = Modifier.size(16.dp))
 
-        Text(text = stringResource(R.string.loading))
+        Text(text = stringResource(id = R.string.loading))
     }
 }
 
