@@ -71,7 +71,7 @@ fun SongActions(
 
         IconButton(onClick = {}) {
             Icon(
-                painter = painterResource(id = 0),
+                painter = painterResource(id = androidx.media3.session.R.drawable.media3_icon_playlist_add),
                 contentDescription = "Playlist Icon",
                 tint = MaterialTheme.colorScheme.onPrimary
             )
