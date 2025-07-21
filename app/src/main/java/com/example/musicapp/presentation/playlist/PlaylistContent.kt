@@ -2,6 +2,7 @@ package com.example.musicapp.presentation.playlist
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
@@ -21,7 +22,10 @@ fun PlaylistContent(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(onClick = { onEvent(PlaylistUIEvent.NavigateToCreatePlaylist) }) {
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { onEvent(PlaylistUIEvent.NavigateToCreatePlaylist) }
+        ) {
             Text(text = "Create Playlist")
         }
 
