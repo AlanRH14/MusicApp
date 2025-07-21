@@ -23,7 +23,7 @@ fun TopMixesSection(
 ) {
 
     Text(
-        text = stringResource(R.string.top_mixes),
+        text = stringResource(id = R.string.top_mixes),
         style = MaterialTheme.typography.titleLarge
     )
 
