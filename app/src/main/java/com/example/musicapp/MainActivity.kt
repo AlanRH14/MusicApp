@@ -15,13 +15,11 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.example.musicapp.navigation.AppNavGraph
 import com.example.musicapp.navigation.OnboardingRoute
-import com.example.musicapp.presentation.onboarding.OnboardingViewModel
 import com.example.musicapp.ui.theme.MusicAppTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
     private var isSplashScreenVisible = true
