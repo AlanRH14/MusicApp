@@ -50,7 +50,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
         }
     }
 
-    val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     fun createPlayerNotification(
         isPlaying: Boolean,
