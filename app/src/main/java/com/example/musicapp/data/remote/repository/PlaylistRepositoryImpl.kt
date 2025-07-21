@@ -4,6 +4,7 @@ import com.example.musicapp.common.ApiMapper
 import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.datasource.UserLocalDataSource
 import com.example.musicapp.data.model.PlaylistDto
+import com.example.musicapp.data.model.reponse.UpdatePlaylistSongResponse
 import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.domain.model.Playlist
@@ -62,13 +63,24 @@ class PlaylistRepositoryImpl(
             }
         }
 
-    override suspend fun addSongToPlaylist(playlistId: String, songId: String): Resource<Playlist> =
+    override suspend fun addSongToPlaylist(
+        playlistId: String,
+        songId: String
+    ): Resource<UpdatePlaylistSongResponse> =
         withContext(ioDispatcher) {
             Resource.Loading
             try {
+                val response = apiService.getPlaylist("")
 
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        Resource.Success(UpdatePlaylistSongResponse())
+                    } ?: Resource.Success(UpdatePlaylistSongResponse())
+                } else {
+                    throw Exception("")
+                }
             } catch (e: Exception) {
-
+                Resource.Error(message = "Error: ${e.message}")
             }
         }
 }

@@ -5,8 +5,10 @@ import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.model.reponse.HomeResponse
 import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.reponse.LoginResponse
+import com.example.musicapp.data.model.reponse.UpdatePlaylistSongResponse
 import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.data.model.request.RegisterRequest
+import com.example.musicapp.data.model.request.UpdatePlaylistSongRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -46,4 +48,10 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body playlistRequest: CreatePlaylistRequest
     ): Response<PlaylistDto>
+
+    @POST("/playlist/{Id}/songs")
+    suspend fun addSongToPlaylist(
+        @Path("Id") playlistId: String,
+        @Body request: UpdatePlaylistSongRequest
+    ): Response<UpdatePlaylistSongResponse>
 }
