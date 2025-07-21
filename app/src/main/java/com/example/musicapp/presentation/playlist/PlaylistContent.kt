@@ -24,9 +24,7 @@ fun PlaylistContent(
             Text("No playlist found")
         }
 
-        Button(onClick = {
-            onEvent(PlaylistUIEvent.NavigateToCreatePlaylist)
-        }) {
+        Button(onClick = { onEvent(PlaylistUIEvent.NavigateToCreatePlaylist) }) {
             Text(text = "Create Playlist")
         }
 
