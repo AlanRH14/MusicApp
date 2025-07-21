@@ -1,5 +1,6 @@
 package com.example.musicapp.presentation.playlist
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,11 +18,13 @@ import com.example.musicapp.ui.theme.PaddingDefault
 
 @Composable
 fun PlaylistItem(
-    playlist: Playlist
+    playlist: Playlist,
+    onItemClicked: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { onItemClicked.invoke() }
             .padding(PaddingDefault)
     ) {
         MusicAppImage(
@@ -39,7 +42,13 @@ fun PlaylistItem(
             )
             Text(
                 modifier = Modifier.padding(start = PaddingDefault),
-                text = playlist.description
+                text = "${playlist.songs.size} ${
+                    if (playlist.songs.size > 1) {
+                        "songs"
+                    } else {
+                        "song"
+                    }
+                }"
             )
         }
     }
