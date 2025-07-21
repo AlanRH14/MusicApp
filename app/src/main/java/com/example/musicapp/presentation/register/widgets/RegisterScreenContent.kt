@@ -133,7 +133,7 @@ fun RegisterScreenContent(
             onClick = { onEvent(RegisterUIEvent.OnRegisterClicked) },
         ) {
             Text(
-                text = stringResource(R.string.register),
+                text = stringResource(id = R.string.register),
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onPrimary
             )
@@ -142,7 +142,7 @@ fun RegisterScreenContent(
         Box(modifier = Modifier.weight(1F))
 
         SocialCard(
-            stringRes = stringResource(R.string.already_have_an_account),
+            stringRes = stringResource(id = R.string.already_have_an_account),
             onClick = { onEvent(RegisterUIEvent.OnLoginClicked) },
             onFbClick = {},
             onGoogleClick = {},
