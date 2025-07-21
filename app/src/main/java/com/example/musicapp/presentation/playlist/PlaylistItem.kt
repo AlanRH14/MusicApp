@@ -37,6 +37,10 @@ fun PlaylistItem(
                 modifier = Modifier.padding(PaddingDefault),
                 text = playlist.name
             )
+            Text(
+                modifier = Modifier.padding(start = PaddingDefault),
+                text = playlist.description
+            )
         }
     }
 }
