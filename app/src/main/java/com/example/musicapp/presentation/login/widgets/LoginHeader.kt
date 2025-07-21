@@ -27,8 +27,8 @@ fun LoginHeader(
             onClick = onBackClicked,
         ) {
             Icon(
-                painter = painterResource(R.drawable.ic_back),
-                contentDescription = stringResource(R.string.image_back),
+                painter = painterResource(id = R.drawable.ic_back),
+                contentDescription = stringResource(id = R.string.image_back),
             )
         }
 
@@ -38,15 +38,15 @@ fun LoginHeader(
             modifier = Modifier
                 .size(120.dp)
                 .align(Alignment.CenterHorizontally),
-            painter = painterResource(R.drawable.ic_logo),
-            contentDescription = stringResource(R.string.image_logo),
+            painter = painterResource(id = R.drawable.ic_logo),
+            contentDescription = stringResource(id = R.string.image_logo),
         )
 
         Spacer(modifier = Modifier.size(16.dp))
 
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.login_text),
+            text = stringResource(id = R.string.login_text),
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
