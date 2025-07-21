@@ -30,7 +30,7 @@ fun PlaylistItem(
         MusicAppImage(
             modifier = Modifier.size(60.dp),
             pathImage = playlist.coverImage,
-            imageDefault = R.drawable.ic_logo,
+            imageDefault = R.drawable.ic_profile,
             placeHolder = {},
             contentDescription = stringResource(R.string.playlist_item_image)
         )
