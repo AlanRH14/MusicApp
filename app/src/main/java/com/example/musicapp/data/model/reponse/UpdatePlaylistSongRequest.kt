@@ -5,8 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UpdatePlaylistSongRequest(
-    @SerialName("playlistId")
-    val playlistId: String? = null,
-    @SerialName("songId")
-    val songId: String? = null
+    @SerialName("songIds")
+    val songIds: List<String>? = null
 )
