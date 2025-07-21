@@ -2,6 +2,9 @@ package com.example.musicapp.presentation.playlist
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,8 +29,10 @@ fun PlaylistContent(
         if (state.playlist.isEmpty()) {
             Text("No playlist found")
         } else {
-            state.playlist.forEach { playlist ->
-                Text(playlist.name)
+            LazyColumn {
+                items(state.playlist, key = { playlist -> playlist.id }) { playlist ->
+                    PlaylistItem(playlist = playlist) { }
+                }
             }
         }
     }
