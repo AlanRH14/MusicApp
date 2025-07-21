@@ -18,7 +18,6 @@ fun PlaylistContent(
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (state.playlist.isEmpty()) {
