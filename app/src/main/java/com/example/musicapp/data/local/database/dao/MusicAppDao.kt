@@ -8,7 +8,4 @@ interface MusicAppDao<T> {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entities: T)
-
-    @Update
-    suspend fun update(entities: T)
 }
