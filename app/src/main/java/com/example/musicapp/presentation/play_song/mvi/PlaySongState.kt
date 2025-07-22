@@ -1,5 +1,6 @@
 package com.example.musicapp.presentation.play_song.mvi
 
+import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.domain.model.Song
 
 data class PlaySongState(
@@ -10,5 +11,6 @@ data class PlaySongState(
     val duration: Long = 0L,
     val isBuffering: Boolean = false,
     val song: Song? = null,
+    val playlists: List<Playlist> = emptyList(),
     val error: String? = null
 )

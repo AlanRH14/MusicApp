@@ -175,7 +175,12 @@ class PlaySongViewModel(
                     }
 
                     is Resource.Success -> {
-                        _state.update { it.copy(isLoading = false) }
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                playlists = playlist.data
+                            )
+                        }
                         _effect.emit(PlaySongEffect.ShowPlaylistSelection(playlists = playlist.data))
                     }
 
