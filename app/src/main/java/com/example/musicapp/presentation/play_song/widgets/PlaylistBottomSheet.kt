@@ -58,6 +58,7 @@ fun PlaylistBottomSheet(
                                     songID = songID
                                 )
                             )
+                            onDismissRequest()
                         }
                     )
                 }
