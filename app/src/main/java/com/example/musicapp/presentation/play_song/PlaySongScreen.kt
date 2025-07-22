@@ -41,18 +41,18 @@ fun PlaySongScreen(
         }
     }
 
-    state.currentSong?.let {
-        PlaySongContent(
-            state = state,
-            onEvent = viewModel::onEvent
-        )
-    }
-
     if (state.shouldShowSheet) {
         PlaylistBottomSheet(
             sheetState = sheetState,
             playlists = state.playlists,
             songID = songID,
+            onEvent = viewModel::onEvent
+        )
+    }
+
+    state.currentSong?.let {
+        PlaySongContent(
+            state = state,
             onEvent = viewModel::onEvent
         )
     }

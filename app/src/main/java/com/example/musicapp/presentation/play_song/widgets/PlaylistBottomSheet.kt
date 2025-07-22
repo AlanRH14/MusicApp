@@ -59,7 +59,6 @@ fun PlaylistBottomSheet(
                                     songID = songID
                                 )
                             )
-                            onEvent(PlaySongUIEvent.OnToggleToBottomSheet)
                         }
                     )
                 }
