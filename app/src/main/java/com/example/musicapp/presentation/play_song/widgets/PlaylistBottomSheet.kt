@@ -26,7 +26,6 @@ import com.example.musicapp.ui.theme.PaddingLarge
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlaylistBottomSheet(
-    onDismissRequest: () -> Unit,
     sheetState: SheetState,
     playlists: List<Playlist>,
     songID: String,
@@ -34,7 +33,7 @@ fun PlaylistBottomSheet(
 ) {
 
     ModalBottomSheet(
-        onDismissRequest = onDismissRequest,
+        onDismissRequest = { onEvent(PlaySongUIEvent.OnToggleToBottomSheet) },
         sheetState = sheetState
     ) {
         Column(
@@ -60,7 +59,7 @@ fun PlaylistBottomSheet(
                                     songID = songID
                                 )
                             )
-                            onDismissRequest()
+                            onEvent(PlaySongUIEvent.OnToggleToBottomSheet)
                         }
                     )
                 }

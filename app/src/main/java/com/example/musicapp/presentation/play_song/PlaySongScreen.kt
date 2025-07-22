@@ -31,7 +31,6 @@ fun PlaySongScreen(
 ) {
     val state by viewModel.state.collectAsState()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
-    var shouldShowSheet by remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = true) {
         viewModel.onEvent(PlaySongUIEvent.GetSongByID(songID = songID))
@@ -44,9 +43,7 @@ fun PlaySongScreen(
 
                 is PlaySongEffect.NavigateToPlaylist -> {}
 
-                is PlaySongEffect.ShowPlaylistSelection -> {
-                    shouldShowSheet = true
-                }
+                is PlaySongEffect.ShowPlaylistSelection -> {}
             }
         }
     }
@@ -70,9 +67,8 @@ fun PlaySongScreen(
         )
     }
 
-    if (shouldShowSheet) {
+    if (state.shouldShowSheet) {
         PlaylistBottomSheet(
-            onDismissRequest = { shouldShowSheet = false },
             sheetState = sheetState,
             playlists = state.playlists,
             songID = songID,

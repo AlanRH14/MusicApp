@@ -12,5 +12,6 @@ data class PlaySongState(
     val isBuffering: Boolean = false,
     val song: Song? = null,
     val playlists: List<Playlist> = emptyList(),
+    val shouldShowSheet: Boolean = false,
     val error: String? = null
 )
