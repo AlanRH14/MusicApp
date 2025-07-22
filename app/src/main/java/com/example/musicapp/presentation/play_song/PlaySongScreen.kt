@@ -13,7 +13,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
-import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import com.example.musicapp.presentation.play_song.mvi.PlaySongEffect
@@ -33,7 +32,6 @@ fun PlaySongScreen(
     val state by viewModel.state.collectAsState()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
     var shouldShowSheet by remember { mutableStateOf(false) }
-    val playlist by remember { mutableStateOf<List<Playlist>>(emptyList()) }
 
     LaunchedEffect(key1 = true) {
         viewModel.onEvent(PlaySongUIEvent.GetSongByID(songID = songID))
