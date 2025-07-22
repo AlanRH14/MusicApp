@@ -184,7 +184,7 @@ class PlaySongViewModel(
                                 playlists = playlist.data
                             )
                         }
-                        _effect.emit(PlaySongEffect.ShowPlaylistSelection(playlists = playlist.data))
+                        _effect.emit(PlaySongEffect.ShowPlaylistSelection)
                     }
 
                     is Resource.Error -> {
