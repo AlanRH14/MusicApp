@@ -7,9 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
@@ -40,8 +37,6 @@ fun PlaySongScreen(
                 is PlaySongEffect.ShowErrorMessage -> {
                     Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
                 }
-
-                is PlaySongEffect.NavigateToPlaylist -> {}
             }
         }
     }

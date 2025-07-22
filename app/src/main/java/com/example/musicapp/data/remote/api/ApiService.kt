@@ -52,6 +52,7 @@ interface ApiService {
 
     @POST("/playlists/{id}/songs")
     suspend fun addSongToPlaylist(
+        @Header("Authorization") token: String,
         @Path("id") playlistId: String,
         @Body request: UpdatePlaylistSongRequest
     ): Response<UpdatePlaylistSongResponse>
