@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.presentation.play_song.mvi.PlaySongUIEvent
+import com.example.musicapp.presentation.playlist.components.PlaylistItem
 import com.example.musicapp.ui.theme.PaddingDefault
 import com.example.musicapp.ui.theme.PaddingLarge
 
@@ -47,14 +48,9 @@ fun PlaylistBottomSheet(
 
             LazyColumn {
                 items(items = playlists, key = { playlist -> playlist.id }) { playlist ->
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(PaddingDefault)
-                            .clickable { onEvent(PlaySongUIEvent.OnAddPlaylistClicked(playlist.id)) },
-                        text = playlist.name,
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onPrimary
+                    PlaylistItem(
+                        playlist = playlist,
+                        onItemClicked = { onEvent(PlaySongUIEvent.OnAddPlaylistClicked(playlist.id)) }
                     )
                 }
             }
