@@ -46,7 +46,9 @@ fun PlaySongScreen(
 
                 is PlaySongEffect.NavigateToPlaylist -> {}
 
-                is PlaySongEffect.ShowPlaylistSelection -> {}
+                is PlaySongEffect.ShowPlaylistSelection -> {
+                    shouldShowSheet = true
+                }
             }
         }
     }
