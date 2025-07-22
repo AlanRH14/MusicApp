@@ -220,6 +220,7 @@ class PlaySongViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
+                            shouldShowSheet = false,
                             error = response.message
                         )
                     }
