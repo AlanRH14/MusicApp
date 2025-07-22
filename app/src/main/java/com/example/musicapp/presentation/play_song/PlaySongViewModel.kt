@@ -48,7 +48,7 @@ class PlaySongViewModel(
             is PlaySongUIEvent.GetSongByID -> getSongByID(event.songID)
             is PlaySongUIEvent.OnToggleToPause -> toggleToPause()
             is PlaySongUIEvent.OnSeekTo -> seekTo(event.position)
-            is PlaySongUIEvent.OnAddPlaylistClicked -> onAddPlaylistClicked()
+            is PlaySongUIEvent.OnAddPlaylistClicked -> getPlaylist()
             is PlaySongUIEvent.OnAddSongToPlaylist -> addSongToPlaylist(
                 playlistID = event.playlistID,
                 songID = event.songID
@@ -169,7 +169,7 @@ class PlaySongViewModel(
         }
     }
 
-    private fun onAddPlaylistClicked() {
+    private fun getPlaylist() {
         viewModelScope.launch(Dispatchers.IO) {
             playlistRepository.getPlaylist().collect { playlist ->
                 when (playlist) {
