@@ -50,13 +50,13 @@ interface ApiService {
         @Body playlistRequest: CreatePlaylistRequest
     ): Response<PlaylistDto>
 
-    @POST("/playlist/{id}/songs")
+    @POST("/playlists/{id}/songs")
     suspend fun addSongToPlaylist(
         @Path("id") playlistId: String,
         @Body request: UpdatePlaylistSongRequest
     ): Response<UpdatePlaylistSongResponse>
 
-    @DELETE("playlist/{id}/songs")
+    @DELETE("playlists/{id}/songs")
     suspend fun removeSongsFromPlaylist(
         @Path("id") playlistId: String,
         @Body request: UpdatePlaylistSongRequest
