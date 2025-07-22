@@ -198,6 +198,25 @@ class PlaySongViewModel(
                 playlistID = playlistID,
                 songID = songID
             )
+
+            when (response) {
+                is Resource.Loading -> {
+                    _state.update { it.copy(isLoading = true) }
+                }
+
+                is Resource.Success -> {
+                    _state.update { it.copy(isLoading = false) }
+                }
+
+                is Resource.Error -> {
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            error = response.message
+                        )
+                    }
+                }
+            }
         }
     }
 }
