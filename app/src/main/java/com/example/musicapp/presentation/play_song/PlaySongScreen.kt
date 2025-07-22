@@ -74,6 +74,7 @@ fun PlaySongScreen(
         PlaylistBottomSheet(
             onDismissRequest = { shouldShowSheet = false },
             sheetState = sheetState,
+            playlists = playlist
         )
     }
 }
