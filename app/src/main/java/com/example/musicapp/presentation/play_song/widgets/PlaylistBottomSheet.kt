@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -14,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.musicapp.domain.model.Playlist
+import com.example.musicapp.presentation.play_song.mvi.PlaySongUIEvent
 import com.example.musicapp.ui.theme.PaddingDefault
 import com.example.musicapp.ui.theme.PaddingLarge
 
@@ -23,6 +26,7 @@ fun PlaylistBottomSheet(
     onDismissRequest: () -> Unit,
     sheetState: SheetState,
     playlists: List<Playlist>,
+    onEvent: (PlaySongUIEvent) -> Unit
 ) {
 
     ModalBottomSheet(
@@ -41,15 +45,18 @@ fun PlaylistBottomSheet(
                 color = MaterialTheme.colorScheme.primary
             )
 
-            playlists.forEach { playlist ->
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(PaddingDefault)
-                        .clickable {  },
-                    text = playlist.name,
-                    style = MaterialTheme.typography.bodyLarge,
-                )
+            LazyColumn {
+                items(items = playlists, key = { playlist -> playlist.id }) { playlist ->
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(PaddingDefault)
+                            .clickable { onEvent(PlaySongUIEvent.OnAddPlaylistClicked(playlist.id)) },
+                        text = playlist.name,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
             }
         }
     }
