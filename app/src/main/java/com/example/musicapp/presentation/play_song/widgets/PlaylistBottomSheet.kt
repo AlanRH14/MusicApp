@@ -27,6 +27,7 @@ fun PlaylistBottomSheet(
     onDismissRequest: () -> Unit,
     sheetState: SheetState,
     playlists: List<Playlist>,
+    songID: String,
     onEvent: (PlaySongUIEvent) -> Unit
 ) {
 
@@ -50,7 +51,14 @@ fun PlaylistBottomSheet(
                 items(items = playlists, key = { playlist -> playlist.id }) { playlist ->
                     PlaylistItem(
                         playlist = playlist,
-                        onItemClicked = { onEvent(PlaySongUIEvent.OnAddPlaylistClicked(playlist.id)) }
+                        onItemClicked = {
+                            onEvent(
+                                PlaySongUIEvent.OnAddSongToPlaylist(
+                                    playlistID = playlist.id,
+                                    songID = songID
+                                )
+                            )
+                        }
                     )
                 }
             }

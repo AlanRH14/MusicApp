@@ -5,4 +5,5 @@ sealed interface PlaySongUIEvent {
     data object OnToggleToPause : PlaySongUIEvent
     data class OnSeekTo(val position: Long) : PlaySongUIEvent
     data class OnAddPlaylistClicked(val idSong: String) : PlaySongUIEvent
+    data class OnAddSongToPlaylist(val playlistID: String, val songID: String): PlaySongUIEvent
 }
