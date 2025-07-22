@@ -15,6 +15,8 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.example.musicapp.R
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.presentation.play_song.mvi.PlaySongUIEvent
 import com.example.musicapp.presentation.playlist.components.PlaylistItem
@@ -42,7 +44,7 @@ fun PlaylistBottomSheet(
             verticalArrangement = Arrangement.spacedBy(PaddingDefault)
         ) {
             Text(
-                text = "Select Playlist",
+                text = stringResource(R.string.select_playlist),
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.primary
             )
