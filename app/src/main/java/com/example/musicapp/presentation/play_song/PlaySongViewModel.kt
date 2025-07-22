@@ -176,6 +176,7 @@ class PlaySongViewModel(
 
                     is Resource.Success -> {
                         _state.update { it.copy(isLoading = false) }
+                        _effect.emit(PlaySongEffect)
                     }
 
                     is Resource.Error -> {
