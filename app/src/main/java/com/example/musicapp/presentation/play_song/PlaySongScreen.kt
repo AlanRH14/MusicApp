@@ -18,6 +18,7 @@ import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import com.example.musicapp.presentation.play_song.mvi.PlaySongEffect
 import com.example.musicapp.presentation.play_song.mvi.PlaySongUIEvent
 import com.example.musicapp.presentation.play_song.widgets.PlaySongContent
+import com.example.musicapp.presentation.play_song.widgets.PlaylistBottomSheet
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
@@ -30,8 +31,8 @@ fun PlaySongScreen(
 ) {
     val state by viewModel.state.collectAsState()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
-    val shouldShowSheet = remember { mutableStateOf(false) }
-    val playlist = remember { mutableStateOf<List<Playlist>>(emptyList()) }
+    val shouldShowSheet by remember { mutableStateOf(false) }
+    val playlist by remember { mutableStateOf<List<Playlist>>(emptyList()) }
 
     LaunchedEffect(key1 = true) {
         viewModel.onEvent(PlaySongUIEvent.GetSongByID(songID = songID))
@@ -65,6 +66,13 @@ fun PlaySongScreen(
             errorMessage = state.error ?: stringResource(R.string.unknown),
             primaryButton = stringResource(R.string.retry),
             onPrimaryButtonClicked = {},
+        )
+    }
+
+    if (shouldShowSheet) {
+        PlaylistBottomSheet(
+            shouldShowSheet = shouldShowSheet,
+            sheetState = sheetState
         )
     }
 }
