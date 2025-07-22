@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
@@ -167,7 +168,26 @@ class PlaySongViewModel(
 
     private fun onAddPlaylistClicked(songID: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            playlistRepository.getPlaylist()
+            playlistRepository.getPlaylist().collect { playlist ->
+                when (playlist) {
+                    is Resource.Loading -> {
+                        _state.update { it.copy(isLoading = true) }
+                    }
+
+                    is Resource.Success -> {
+                        _state.update { it.copy(isLoading = false) }
+                    }
+
+                    is Resource.Error -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                error = playlist.message
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }
