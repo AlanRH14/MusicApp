@@ -9,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
@@ -31,7 +32,7 @@ fun PlaySongScreen(
 ) {
     val state by viewModel.state.collectAsState()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
-    val shouldShowSheet by remember { mutableStateOf(false) }
+    var shouldShowSheet by remember { mutableStateOf(false) }
     val playlist by remember { mutableStateOf<List<Playlist>>(emptyList()) }
 
     LaunchedEffect(key1 = true) {
@@ -71,8 +72,8 @@ fun PlaySongScreen(
 
     if (shouldShowSheet) {
         PlaylistBottomSheet(
-            shouldShowSheet = shouldShowSheet,
-            sheetState = sheetState
+            onDismissRequest = { shouldShowSheet = false },
+            sheetState = sheetState,
         )
     }
 }
