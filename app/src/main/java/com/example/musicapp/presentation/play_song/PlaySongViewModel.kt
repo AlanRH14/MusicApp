@@ -48,7 +48,7 @@ class PlaySongViewModel(
             is PlaySongUIEvent.GetSongByID -> getSongByID(event.songID)
             is PlaySongUIEvent.OnToggleToPause -> toggleToPause()
             is PlaySongUIEvent.OnSeekTo -> seekTo(event.position)
-            is PlaySongUIEvent.OnAddPlaylistClicked -> {}
+            is PlaySongUIEvent.OnAddPlaylistClicked -> onAddPlaylistClicked(event.idSong)
             is PlaySongUIEvent.OnAddSongToPlaylist -> {}
         }
     }
