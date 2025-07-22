@@ -65,15 +65,15 @@ class PlaylistRepositoryImpl(
         }
 
     override suspend fun addSongToPlaylist(
-        playlistId: String,
-        songId: String
+        playlistID: String,
+        songID: String
     ): Resource<UpdatePlaylistSongResponse> =
         withContext(ioDispatcher) {
             Resource.Loading
             try {
                 val response = apiService.addSongToPlaylist(
-                    playlistId = playlistId,
-                    request = UpdatePlaylistSongRequest(songIds = listOf(songId))
+                    playlistId = playlistID,
+                    request = UpdatePlaylistSongRequest(songIds = listOf(songID))
                 )
 
                 if (response.isSuccessful) {

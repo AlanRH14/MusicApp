@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
@@ -50,6 +49,7 @@ class PlaySongViewModel(
             is PlaySongUIEvent.OnToggleToPause -> toggleToPause()
             is PlaySongUIEvent.OnSeekTo -> seekTo(event.position)
             is PlaySongUIEvent.OnAddPlaylistClicked -> {}
+            is PlaySongUIEvent.OnAddSongToPlaylist -> {}
         }
     }
 
@@ -189,6 +189,15 @@ class PlaySongViewModel(
                     }
                 }
             }
+        }
+    }
+
+    private fun addSongToPlaylist(playlistID: String, songID: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = playlistRepository.addSongToPlaylist(
+                playlistID = playlistID,
+                songID = songID
+            )
         }
     }
 }
