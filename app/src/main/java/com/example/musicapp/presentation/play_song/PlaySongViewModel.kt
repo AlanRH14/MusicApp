@@ -99,9 +99,7 @@ class PlaySongViewModel(
             repository.getSongById(id = id).collect { response ->
                 when (response) {
                     is Resource.Loading -> {
-                        _state.update {
-                            it.copy(isLoading = true)
-                        }
+                        _state.update { it.copy(isLoading = true) }
                     }
 
                     is Resource.Success -> {
