@@ -48,7 +48,12 @@ class PlaySongViewModel(
             is PlaySongUIEvent.GetSongByID -> getSongByID(event.songID)
             is PlaySongUIEvent.OnToggleToPause -> toggleToPause()
             is PlaySongUIEvent.OnSeekTo -> seekTo(event.position)
-            is PlaySongUIEvent.OnAddPlaylistClicked -> {}
+            is PlaySongUIEvent.OnAddPlaylistClicked -> getPlaylist()
+            is PlaySongUIEvent.OnToggleToBottomSheet -> onToggleToBottomSheet()
+            is PlaySongUIEvent.OnAddSongToPlaylist -> addSongToPlaylist(
+                playlistID = event.playlistID,
+                songID = event.songID
+            )
         }
     }
 
@@ -94,9 +99,7 @@ class PlaySongViewModel(
             repository.getSongById(id = id).collect { response ->
                 when (response) {
                     is Resource.Loading -> {
-                        _state.update {
-                            it.copy(isLoading = true)
-                        }
+                        _state.update { it.copy(isLoading = true) }
                     }
 
                     is Resource.Success -> {
@@ -165,9 +168,68 @@ class PlaySongViewModel(
         }
     }
 
-    private fun onAddPlaylistClicked(songID: String) {
+    private fun getPlaylist() {
         viewModelScope.launch(Dispatchers.IO) {
-            playlistRepository.getPlaylist()
+            playlistRepository.getPlaylist().collect { playlist ->
+                when (playlist) {
+                    is Resource.Loading -> {
+                        _state.update { it.copy(isLoading = true) }
+                    }
+
+                    is Resource.Success -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                shouldShowSheet = true,
+                                playlists = playlist.data
+                            )
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                error = playlist.message
+                            )
+                        }
+                    }
+                }
+            }
         }
+    }
+
+    private fun addSongToPlaylist(playlistID: String, songID: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = playlistRepository.addSongToPlaylist(
+                playlistID = playlistID,
+                songID = songID
+            )
+
+            when (response) {
+                is Resource.Loading -> {
+                    _state.update { it.copy(isLoading = true) }
+                }
+
+                is Resource.Success -> {
+                    _state.update { it.copy(isLoading = false) }
+                    _effect.emit(PlaySongEffect.ShowErrorMessage("Song added to playlist successfully"))
+                }
+
+                is Resource.Error -> {
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            shouldShowSheet = false,
+                            error = response.message
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun onToggleToBottomSheet() {
+        _state.update { it.copy(shouldShowSheet = !it.shouldShowSheet) }
     }
 }

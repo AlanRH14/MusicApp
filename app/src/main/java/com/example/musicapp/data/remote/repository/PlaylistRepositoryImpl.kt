@@ -65,38 +65,41 @@ class PlaylistRepositoryImpl(
         }
 
     override suspend fun addSongToPlaylist(
-        playlistId: String,
-        songId: String
+        playlistID: String,
+        songID: String
     ): Resource<UpdatePlaylistSongResponse> =
         withContext(ioDispatcher) {
             Resource.Loading
             try {
-                val response = apiService.addSongToPlaylist(
-                    playlistId = playlistId,
-                    request = UpdatePlaylistSongRequest(songIds = listOf(songId))
-                )
+                userLocalDataSource.getUser()?.let { userData ->
+                    val response = apiService.addSongToPlaylist(
+                        token = "$AUTHENTICATION_HEADER_TYPE adada ${userData.token}",
+                        playlistId = playlistID,
+                        request = UpdatePlaylistSongRequest(songIds = listOf(songID))
+                    )
 
-                if (response.isSuccessful) {
-                    response.body()?.let { res ->
-                        Resource.Success(res)
-                    } ?: Resource.Success(UpdatePlaylistSongResponse())
-                } else {
-                    throw Exception("Add song to playlist")
-                }
+                    if (response.isSuccessful) {
+                        response.body()?.let { res ->
+                            Resource.Success(res)
+                        } ?: Resource.Success(UpdatePlaylistSongResponse())
+                    } else {
+                        throw Exception(response.message())
+                    }
+                } ?: throw Exception("Get local user error")
             } catch (e: Exception) {
                 Resource.Error(message = "Error: ${e.message}")
             }
         }
 
     override suspend fun deleteSongFromPlaylist(
-        playlistId: String,
-        songId: String
+        playlistID: String,
+        songID: String
     ): Resource<UpdatePlaylistSongResponse> = withContext(ioDispatcher) {
         Resource.Loading
         try {
             val response = apiService.removeSongsFromPlaylist(
-                playlistId = playlistId,
-                request = UpdatePlaylistSongRequest(songIds = listOf(songId))
+                playlistId = playlistID,
+                request = UpdatePlaylistSongRequest(songIds = listOf(songID))
             )
 
             if (response.isSuccessful) {

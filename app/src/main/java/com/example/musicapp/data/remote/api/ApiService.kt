@@ -50,15 +50,16 @@ interface ApiService {
         @Body playlistRequest: CreatePlaylistRequest
     ): Response<PlaylistDto>
 
-    @POST("/playlist/{Id}/songs")
+    @POST("/playlists/{id}/songs")
     suspend fun addSongToPlaylist(
-        @Path("Id") playlistId: String,
+        @Header("Authorization") token: String,
+        @Path("id") playlistId: String,
         @Body request: UpdatePlaylistSongRequest
     ): Response<UpdatePlaylistSongResponse>
 
-    @DELETE("playlist/{Id}/songs")
+    @DELETE("playlists/{id}/songs")
     suspend fun removeSongsFromPlaylist(
-        @Path("Id") playlistId: String,
+        @Path("id") playlistId: String,
         @Body request: UpdatePlaylistSongRequest
     ): Response<UpdatePlaylistSongResponse>
 }

@@ -33,16 +33,16 @@ fun PlaySongContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         HeaderPlaySong(
-            title = state.song?.title ?: "",
+            title = state.currentSong?.title ?: "",
             isPlayList = state.isPlaying
         )
 
         Spacer(modifier = Modifier.padding(PaddingDefault))
 
         SongContent(
-            title = state.song?.title ?: "",
-            genre = state.song?.genre ?: "",
-            image = state.song?.coverImage ?: "",
+            title = state.currentSong?.title ?: "",
+            genre = state.currentSong?.genre ?: "",
+            image = state.currentSong?.coverImage ?: "",
         )
 
         Spacer(modifier = Modifier.padding(PaddingDefault))
@@ -61,7 +61,7 @@ fun PlaySongContent(
             onPlayPauseToggle = { onEvent(PlaySongUIEvent.OnToggleToPause) },
             onNextClicked = {},
             onPreviousClicked = {},
-            onAddPlaylistClicked = { onEvent(PlaySongUIEvent.OnAddPlaylistClicked(state.song?.id ?: "")) }
+            onAddPlaylistClicked = { onEvent(PlaySongUIEvent.OnAddPlaylistClicked) }
         )
     }
 }
