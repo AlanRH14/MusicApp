@@ -42,8 +42,6 @@ fun PlaySongScreen(
                 }
 
                 is PlaySongEffect.NavigateToPlaylist -> {}
-
-                is PlaySongEffect.ShowPlaylistSelection -> {}
             }
         }
     }
@@ -51,6 +49,15 @@ fun PlaySongScreen(
     state.currentSong?.let {
         PlaySongContent(
             state = state,
+            onEvent = viewModel::onEvent
+        )
+    }
+
+    if (state.shouldShowSheet) {
+        PlaylistBottomSheet(
+            sheetState = sheetState,
+            playlists = state.playlists,
+            songID = songID,
             onEvent = viewModel::onEvent
         )
     }
@@ -64,15 +71,6 @@ fun PlaySongScreen(
             errorMessage = state.error ?: stringResource(R.string.unknown),
             primaryButton = stringResource(R.string.retry),
             onPrimaryButtonClicked = {},
-        )
-    }
-
-    if (state.shouldShowSheet) {
-        PlaylistBottomSheet(
-            sheetState = sheetState,
-            playlists = state.playlists,
-            songID = songID,
-            onEvent = viewModel::onEvent
         )
     }
 }

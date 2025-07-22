@@ -49,6 +49,7 @@ class PlaySongViewModel(
             is PlaySongUIEvent.OnToggleToPause -> toggleToPause()
             is PlaySongUIEvent.OnSeekTo -> seekTo(event.position)
             is PlaySongUIEvent.OnAddPlaylistClicked -> getPlaylist()
+            is PlaySongUIEvent.OnToggleToBottomSheet -> onToggleToBottomSheet()
             is PlaySongUIEvent.OnAddSongToPlaylist -> addSongToPlaylist(
                 playlistID = event.playlistID,
                 songID = event.songID
@@ -181,10 +182,10 @@ class PlaySongViewModel(
                         _state.update {
                             it.copy(
                                 isLoading = false,
+                                shouldShowSheet = true,
                                 playlists = playlist.data
                             )
                         }
-                        _effect.emit(PlaySongEffect.ShowPlaylistSelection)
                     }
 
                     is Resource.Error -> {
@@ -227,5 +228,9 @@ class PlaySongViewModel(
                 }
             }
         }
+    }
+
+    private fun onToggleToBottomSheet() {
+        _state.update { it.copy(shouldShowSheet = !it.shouldShowSheet) }
     }
 }
