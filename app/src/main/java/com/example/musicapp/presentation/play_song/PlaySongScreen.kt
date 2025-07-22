@@ -76,7 +76,7 @@ fun PlaySongScreen(
         PlaylistBottomSheet(
             onDismissRequest = { shouldShowSheet = false },
             sheetState = sheetState,
-            playlists = playlist,
+            playlists = state.playlists,
             songID = songID,
             onEvent = viewModel::onEvent
         )
