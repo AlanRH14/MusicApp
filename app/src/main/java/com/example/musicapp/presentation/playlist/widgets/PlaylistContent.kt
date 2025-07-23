@@ -25,7 +25,7 @@ fun PlaylistContent(
     ) {
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { onEvent(PlaylistUIEvent.NavigateToPlaylistDetail) }
+            onClick = { onEvent(PlaylistUIEvent.NavigateToCreatePlaylist) }
         ) {
             Text(text = "Create Playlist")
         }
@@ -36,7 +36,7 @@ fun PlaylistContent(
             LazyColumn {
                 items(state.playlist, key = { playlist -> playlist.id }) { playlist ->
                     PlaylistItem(playlist = playlist) {
-                        onEvent(PlaylistUIEvent.NavigateToPlaylistDetail)
+                        onEvent(PlaylistUIEvent.NavigateToCreatePlaylist)
                     }
                 }
             }
