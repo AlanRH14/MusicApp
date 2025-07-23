@@ -62,11 +62,6 @@ class PlaySongViewModel(
             isServiceBound = true
             playbackService = (binder as MusicAppPlaybackService.MusicBinder).getService()
             observerPlaybackService()
-            state.value.song?.let {
-                startServiceAndBind(it)
-            } ?: run {
-                _state.update { it.copy(error = "No song to play") }
-            }
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {

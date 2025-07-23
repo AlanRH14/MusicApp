@@ -41,18 +41,6 @@ fun PlaySongScreen(
         }
     }
 
-    if (state.isLoading) {
-        LoadingScreen()
-    }
-
-    if (!state.error.isNullOrEmpty()) {
-        ErrorScreen(
-            errorMessage = state.error ?: stringResource(R.string.unknown),
-            primaryButton = stringResource(R.string.retry),
-            onPrimaryButtonClicked = {},
-        )
-    }
-
     state.currentSong?.let {
         PlaySongContent(
             state = state,
@@ -66,6 +54,18 @@ fun PlaySongScreen(
             playlists = state.playlists,
             songID = songID,
             onEvent = viewModel::onEvent
+        )
+    }
+
+    if (state.isLoading) {
+        LoadingScreen()
+    }
+
+    if (!state.error.isNullOrEmpty()) {
+        ErrorScreen(
+            errorMessage = state.error ?: stringResource(R.string.unknown),
+            primaryButton = stringResource(R.string.retry),
+            onPrimaryButtonClicked = {},
         )
     }
 }

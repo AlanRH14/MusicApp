@@ -65,7 +65,6 @@ class MusicAppPlaybackService : Service() {
                             isBuffering = true,
                             currentPosition = exoPlayer.currentPosition,
                             duration = exoPlayer.duration,
-                            error = null,
                             isPlaying = false
                         )
                     }
@@ -79,7 +78,6 @@ class MusicAppPlaybackService : Service() {
                             currentPosition = exoPlayer.currentPosition,
                             duration = exoPlayer.duration,
                             isBuffering = false,
-                            error = null,
                         )
                     }
                     if (exoPlayer.isPlaying) {
@@ -96,7 +94,6 @@ class MusicAppPlaybackService : Service() {
                             isPlaying = false,
                             currentPosition = 0L,
                             duration = 0L,
-                            error = null,
                             isBuffering = false
                         )
                     }
@@ -109,7 +106,6 @@ class MusicAppPlaybackService : Service() {
                             isPlaying = false,
                             currentPosition = 0L,
                             duration = 0L,
-                            error = null,
                             isBuffering = false
                         )
                     }
@@ -180,7 +176,6 @@ class MusicAppPlaybackService : Service() {
                     duration = exoPlayer.duration,
                     isBuffering = exoPlayer.isLoading,
                     isPlaying = exoPlayer.isPlaying,
-                    error = null
                 )
             }
         }
@@ -223,7 +218,6 @@ class MusicAppPlaybackService : Service() {
                             duration = exoPlayer.duration,
                             isBuffering = exoPlayer.isLoading,
                             isPlaying = exoPlayer.isPlaying,
-                            error = null
                         )
                     }
                 }
