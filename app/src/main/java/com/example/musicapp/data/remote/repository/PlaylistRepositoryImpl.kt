@@ -97,18 +97,21 @@ class PlaylistRepositoryImpl(
     ): Resource<UpdatePlaylistSongResponse> = withContext(ioDispatcher) {
         Resource.Loading
         try {
-            val response = apiService.removeSongsFromPlaylist(
-                playlistId = playlistID,
-                request = UpdatePlaylistSongRequest(songIds = listOf(songID))
-            )
+            userLocalDataSource.getUser()?.let { userData ->
+                val response = apiService.removeSongsFromPlaylist(
+                    token = "$AUTHENTICATION_HEADER_TYPE ${userData.token}",
+                    playlistId = playlistID,
+                    request = UpdatePlaylistSongRequest(songIds = listOf(songID))
+                )
 
-            if (response.isSuccessful) {
-                response.body()?.let { res ->
-                    Resource.Success(res)
-                } ?: Resource.Success(UpdatePlaylistSongResponse())
-            } else {
-                throw Exception(response.message())
-            }
+                if (response.isSuccessful) {
+                    response.body()?.let { res ->
+                        Resource.Success(res)
+                    } ?: Resource.Success(UpdatePlaylistSongResponse())
+                } else {
+                    throw Exception(response.message())
+                }
+            } ?: throw Exception("Get local user error")
         } catch (e: Exception) {
             Resource.Error("Error: ${e.message}")
         }
