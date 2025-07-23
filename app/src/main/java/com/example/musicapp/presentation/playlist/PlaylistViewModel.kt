@@ -29,7 +29,7 @@ class PlaylistViewModel(
         when (event) {
             is PlaylistUIEvent.GetPlaylist -> getPlaylist()
             is PlaylistUIEvent.OnClickedRetry -> getPlaylist()
-            is PlaylistUIEvent.NavigateToCreatePlaylist -> navigateToCreatePlaylist()
+            is PlaylistUIEvent.NavigateToPlaylistDetail -> navigateToCreatePlaylist()
         }
     }
 
