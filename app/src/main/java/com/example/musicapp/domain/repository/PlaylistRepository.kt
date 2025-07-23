@@ -21,5 +21,5 @@ interface PlaylistRepository {
         songID: String,
     ): Resource<UpdatePlaylistSongResponse>
 
-    fun getPlaylistDetails(playlistID: String, songID: String): Flow<Resource<Playlist>>
+    fun getPlaylistDetails(playlistID: String): Flow<Resource<Playlist>>
 }

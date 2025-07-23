@@ -24,14 +24,15 @@ class PlaylistDetailViewModel(
 
     fun onEvent(event: PlaylistDetailUIEvent) {
         when (event) {
-            is PlaylistDetailUIEvent.OnDeleteSongOfPlaylist -> getPlaylistDetails(
+
+            is PlaylistDetailUIEvent.OnDeleteSongOfPlaylist -> deleteSongFromPlaylist(
                 playlistID = event.playlistID,
                 songID = event.songID
             )
         }
     }
 
-    private fun getPlaylistDetails(playlistID: String, songID: String) {
+    private fun getPlaylistDetails(playlistID: String) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getPlaylistDetails(playlistID = playlistID).collect { details ->
                 when (details) {
@@ -54,6 +55,20 @@ class PlaylistDetailViewModel(
                     }
                 }
             }
+        }
+    }
+
+    private fun deleteSongFromPlaylist(
+        playlistID: String,
+        songID: String,
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = repository.deleteSongFromPlaylist(
+                playlistID = playlistID,
+                songID = songID
+            )
+
+
         }
     }
 }
