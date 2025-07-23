@@ -42,8 +42,8 @@ fun PlaylistItem(
             )
             Text(
                 modifier = Modifier.padding(start = PaddingDefault),
-                text = "${playlist.songs.size} ${
-                    if (playlist.songs.size > 1) {
+                text = "${playlist.songCount} ${
+                    if (playlist.songCount > 1) {
                         "songs"
                     } else {
                         "song"

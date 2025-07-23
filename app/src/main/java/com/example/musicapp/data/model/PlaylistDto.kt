@@ -11,6 +11,7 @@ data class PlaylistDto(
     @SerialName("coverImage") val coverImage: String? = null,
     @SerialName("userId") val userId: String? = null,
     @SerialName("songs") val songs: List<SongDto>? = null,
+    @SerialName("songCount") val songCount: Int? = null,
     @SerialName("createdAt") val createdAt: Long? = null,
     @SerialName("updateAt") val updateAt: Long? = null
 )

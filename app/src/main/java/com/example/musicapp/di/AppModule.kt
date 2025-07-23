@@ -6,6 +6,7 @@ import com.example.musicapp.presentation.login.LoginViewModel
 import com.example.musicapp.presentation.onboarding.OnboardingViewModel
 import com.example.musicapp.presentation.play_song.PlaySongViewModel
 import com.example.musicapp.presentation.playlist.PlaylistViewModel
+import com.example.musicapp.presentation.playlist_detail.PlaylistDetailViewModel
 import com.example.musicapp.presentation.register.RegisterViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -18,4 +19,5 @@ val appModule = module {
     viewModel { PlaySongViewModel(get(), get(), get()) }
     viewModel { PlaylistViewModel(get()) }
     viewModel { CreatePlaylistViewModel(get()) }
+    viewModel { PlaylistDetailViewModel(get()) }
 }

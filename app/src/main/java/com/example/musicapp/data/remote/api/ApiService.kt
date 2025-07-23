@@ -13,6 +13,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -44,6 +45,12 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Response<List<PlaylistDto>>
 
+    @GET("/playlists/{id}")
+    suspend fun getPlaylistById(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): Response<PlaylistDto>
+
     @POST("/playlists")
     suspend fun createPlaylist(
         @Header("Authorization") token: String,
@@ -57,8 +64,9 @@ interface ApiService {
         @Body request: UpdatePlaylistSongRequest
     ): Response<UpdatePlaylistSongResponse>
 
-    @DELETE("playlists/{id}/songs")
+    @HTTP(method = "DELETE", path = "playlists/{id}/songs", hasBody = true)
     suspend fun removeSongsFromPlaylist(
+        @Header("Authorization") token: String,
         @Path("id") playlistId: String,
         @Body request: UpdatePlaylistSongRequest
     ): Response<UpdatePlaylistSongResponse>

@@ -73,7 +73,7 @@ class PlaylistRepositoryImpl(
             try {
                 userLocalDataSource.getUser()?.let { userData ->
                     val response = apiService.addSongToPlaylist(
-                        token = "$AUTHENTICATION_HEADER_TYPE adada ${userData.token}",
+                        token = "$AUTHENTICATION_HEADER_TYPE ${userData.token}",
                         playlistId = playlistID,
                         request = UpdatePlaylistSongRequest(songIds = listOf(songID))
                     )
@@ -97,20 +97,44 @@ class PlaylistRepositoryImpl(
     ): Resource<UpdatePlaylistSongResponse> = withContext(ioDispatcher) {
         Resource.Loading
         try {
-            val response = apiService.removeSongsFromPlaylist(
-                playlistId = playlistID,
-                request = UpdatePlaylistSongRequest(songIds = listOf(songID))
-            )
+            userLocalDataSource.getUser()?.let { userData ->
+                val response = apiService.removeSongsFromPlaylist(
+                    token = "$AUTHENTICATION_HEADER_TYPE ${userData.token}",
+                    playlistId = playlistID,
+                    request = UpdatePlaylistSongRequest(songIds = listOf(songID))
+                )
 
-            if (response.isSuccessful) {
-                response.body()?.let { res ->
-                    Resource.Success(res)
-                } ?: Resource.Success(UpdatePlaylistSongResponse())
-            } else {
-                throw Exception("Delete song from playlist")
-            }
+                if (response.isSuccessful) {
+                    response.body()?.let { res ->
+                        Resource.Success(res)
+                    } ?: Resource.Success(UpdatePlaylistSongResponse())
+                } else {
+                    throw Exception(response.message())
+                }
+            } ?: throw Exception("Get local user error")
         } catch (e: Exception) {
             Resource.Error("Error: ${e.message}")
+        }
+    }
+
+    override fun getPlaylistDetails(playlistID: String): Flow<Resource<Playlist>> = flow {
+        emit(Resource.Loading)
+        try {
+            userLocalDataSource.getUser()?.let { userData ->
+                val response = apiService.getPlaylistById(
+                    token = "$AUTHENTICATION_HEADER_TYPE ${userData.token}",
+                    id = playlistID
+                )
+                if (response.isSuccessful) {
+                    response.body()?.let { res ->
+                        emit(Resource.Success(apiPlaylistMapper.mapToDomain(apiDto = res)))
+                    } ?: emit(Resource.Success(Playlist()))
+                } else {
+                    throw Exception(response.message())
+                }
+            } ?: throw Exception("Get local user error")
+        } catch (e: Exception) {
+            emit(Resource.Error("Error: ${e.message}"))
         }
     }
 }
