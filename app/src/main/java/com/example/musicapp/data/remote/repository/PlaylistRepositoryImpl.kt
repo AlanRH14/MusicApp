@@ -124,13 +124,8 @@ class PlaylistRepositoryImpl(
                 )
                 if (response.isSuccessful) {
                     response.body()?.let { res ->
-                        val test = res.find { playlist -> playlist.id == playlistID }
-                        Resource.Success(
-                            apiPlaylistMapper.mapToDomain(
-                                apiDto = test ?: PlaylistDto()
-                            )
-                        )
-                    } ?: Resource.Success(Playlist())
+                        emit(Resource.Success(apiPlaylistMapper.mapToDomain(apiDto = res)))
+                    } ?: emit(Resource.Success(Playlist()))
                 } else {
                     throw Exception(response.message())
                 }
