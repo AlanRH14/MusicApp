@@ -20,6 +20,7 @@ class PlaylistApiMapperImpl(
             songs = apiDto.songs?.map { song ->
                 apiSongMapper.mapToDomain(apiDto = song)
             } ?: emptyList(),
+            songCount = apiDto.songCount ?: 0,
             createdAt = apiDto.createdAt ?: 0L,
             updateAt = apiDto.updateAt ?: 0L
         )
