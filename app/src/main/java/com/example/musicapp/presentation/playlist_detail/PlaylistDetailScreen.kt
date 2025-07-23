@@ -1,5 +1,6 @@
 package com.example.musicapp.presentation.playlist_detail
 
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -22,7 +23,9 @@ fun PlaylistDetailScreen(
         viewModel.onEvent(PlaylistDetailUIEvent.OnGetPlaylistDetail(playlistID = playlistID))
         viewModel.effect.collectLatest { effect ->
             when (effect) {
-                is PlaylistDetailEffect.ShowMessageError -> {}
+                is PlaylistDetailEffect.ShowMessageError -> {
+                    Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

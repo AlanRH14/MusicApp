@@ -80,6 +80,8 @@ class PlaylistDetailViewModel(
 
                 is Resource.Success -> {
                     _state.update { it.copy(isLoading = false) }
+                    _effect.emit(PlaylistDetailEffect.ShowMessageError("Song deleted successfully"))
+                    getPlaylistDetails(playlistID = playlistID)
                 }
 
                 is Resource.Error -> {
