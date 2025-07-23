@@ -13,6 +13,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun PlaylistDetailScreen(
     navController: NavHostController,
+    playlistID: String,
     viewModel: PlaylistDetailViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()

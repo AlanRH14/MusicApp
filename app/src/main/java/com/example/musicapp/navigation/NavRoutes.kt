@@ -14,13 +14,16 @@ object LoginRoute : NavRoutes
 object RegisterRoute : NavRoutes
 
 @Serializable
-object HomeRoute: NavRoutes
+object HomeRoute : NavRoutes
 
 @Serializable
-data class PlaySong(val songID: String): NavRoutes
+data class PlaySong(val songID: String) : NavRoutes
 
 @Serializable
-object Playlist: NavRoutes
+object Playlist : NavRoutes
 
 @Serializable
-object CreatePlaylist: NavRoutes
+object CreatePlaylist : NavRoutes
+
+@Serializable
+data class PlaylistDetail(val playlistID: String) : NavRoutes
