@@ -35,9 +35,12 @@ fun PlaylistContent(
         } else {
             LazyColumn {
                 items(state.playlist, key = { playlist -> playlist.id }) { playlist ->
-                    PlaylistItem(playlist = playlist) {
-                        onEvent(PlaylistUIEvent.NavigateToCreatePlaylist)
-                    }
+                    PlaylistItem(
+                        playlist = playlist,
+                        onItemClicked = {
+                            onEvent(PlaylistUIEvent.NavigateToPlaylistDetail(playlistID = playlist.id))
+                        }
+                    )
                 }
             }
         }
