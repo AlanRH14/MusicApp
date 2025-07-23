@@ -22,9 +22,16 @@ class PlaylistDetailViewModel(
     private val _effect = MutableSharedFlow<PlaylistDetailEffect>()
     val effect = _effect.asSharedFlow()
 
-    fun onEvent(event: PlaylistDetailUIEvent) {}
+    fun onEvent(event: PlaylistDetailUIEvent) {
+        when (event) {
+            is PlaylistDetailUIEvent.OnDeleteSongOfPlaylist -> getPlaylistDetails(
+                playlistID = event.playlistID,
+                songID = event.songID
+            )
+        }
+    }
 
-    private fun getPlaylistDetails(playlistID: String) {
+    private fun getPlaylistDetails(playlistID: String, songID: String) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getPlaylistDetails(playlistID = playlistID).collect { details ->
                 when (details) {
@@ -34,6 +41,7 @@ class PlaylistDetailViewModel(
 
                     is Resource.Success -> {
                         _state.update { it.copy(isLoading = false) }
+                        _effect.emit(PlaylistDetailEffect.ShowMessageError(message = "Song deleted successfully"))
                     }
 
                     is Resource.Error -> {
