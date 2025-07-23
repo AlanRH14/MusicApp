@@ -30,6 +30,7 @@ class PlaylistViewModel(
             is PlaylistUIEvent.GetPlaylist -> getPlaylist()
             is PlaylistUIEvent.OnClickedRetry -> getPlaylist()
             is PlaylistUIEvent.NavigateToCreatePlaylist -> navigateToCreatePlaylist()
+            is PlaylistUIEvent.NavigateToPlaylistDetail -> navigateToPlaylistDetail(playlistID = event.playlistID)
         }
     }
 
@@ -66,6 +67,12 @@ class PlaylistViewModel(
     private fun navigateToCreatePlaylist() {
         viewModelScope.launch {
             _effect.emit(PlaylistEffect.NavigateToCreatePlaylist)
+        }
+    }
+
+    private fun navigateToPlaylistDetail(playlistID: String) {
+        viewModelScope.launch {
+            _effect.emit(PlaylistEffect.NavigateToDetailPlaylist(playlistID = playlistID))
         }
     }
 }

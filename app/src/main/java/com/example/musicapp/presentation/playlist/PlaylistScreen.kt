@@ -40,6 +40,10 @@ fun PlaylistScreen(
                         restoreState = true
                     }
                 }
+
+                is PlaylistEffect.NavigateToDetailPlaylist -> {
+                    // navController.navigate
+                }
             }
         }
     }
