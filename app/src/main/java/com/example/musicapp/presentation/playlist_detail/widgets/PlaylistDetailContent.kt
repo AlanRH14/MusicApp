@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.playlist_detail
+package com.example.musicapp.presentation.playlist_detail.widgets
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
