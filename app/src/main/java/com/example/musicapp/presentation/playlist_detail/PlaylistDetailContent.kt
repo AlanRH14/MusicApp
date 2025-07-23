@@ -1,6 +1,6 @@
 package com.example.musicapp.presentation.playlist_detail
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,6 +25,7 @@ import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.presentation.common.components.MusicAppImage
 import com.example.musicapp.ui.theme.PaddingDefault
 import com.example.musicapp.ui.theme.PaddingLarge
+import com.example.musicapp.ui.theme.PaddingSmall
 
 @Composable
 fun PlaylistDetailContent(
@@ -33,11 +34,21 @@ fun PlaylistDetailContent(
 ) {
     LazyColumn {
         item {
-            Box(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(PaddingLarge)
+                    .padding(PaddingLarge),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
+                playlist.songs.firstOrNull()?.title?.let { title ->
+                    Text(
+                        modifier = Modifier.padding(PaddingDefault),
+                        text = title,
+                        style = MaterialTheme.typography.headlineMedium,
+                    )
+                }
+
                 playlist.songs.firstOrNull()?.coverImage?.let { image ->
                     MusicAppImage(
                         modifier = Modifier.size(200.dp),
@@ -47,20 +58,13 @@ fun PlaylistDetailContent(
                         contentDescription = "Playlist Image",
                     )
                 }
-
-                playlist.songs.firstOrNull()?.title?.let { title ->
-                    Text(
-                        modifier = Modifier.align(Alignment.TopCenter),
-                        text = title,
-                        style = MaterialTheme.typography.headlineMedium,
-                    )
-                }
             }
         }
 
         items(playlist.songs, key = { song -> song.id }) { song ->
-            Row {
+            Row(modifier = Modifier.padding(PaddingSmall)) {
                 MusicAppImage(
+                    modifier = Modifier.size(50.dp),
                     pathImage = song.coverImage,
                     imageDefault = R.drawable.ic_logo,
                     placeHolder = {},
