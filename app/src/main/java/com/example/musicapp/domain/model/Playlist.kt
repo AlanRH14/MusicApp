@@ -7,6 +7,7 @@ data class Playlist(
     val coverImage: String = "",
     val userId: String = "",
     val songs: List<Song> = emptyList(),
+    val songCount: Int = 0,
     val createdAt: Long = 0L,
     val updateAt: Long = 0L
 )
