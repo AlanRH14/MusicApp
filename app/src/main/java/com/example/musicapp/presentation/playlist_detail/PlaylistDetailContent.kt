@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
 import com.example.musicapp.domain.model.Playlist
@@ -83,11 +84,17 @@ fun PlaylistDetailContent(
                 Spacer(modifier = Modifier.weight(1F))
 
                 IconButton(onClick = {
-                    onEvent(PlaylistDetailUIEvent.OnDeleteSongOfPlaylist(songID = song.id))
+                    onEvent(
+                        PlaylistDetailUIEvent.OnDeleteSongOfPlaylist(
+                            playlistID = playlist.id,
+                            songID = song.id
+                        )
+                    )
                 }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete Song of Playlist Icon"
+                        contentDescription = "Delete Song of Playlist Icon",
+                        tint = Color.Red
                     )
                 }
             }
