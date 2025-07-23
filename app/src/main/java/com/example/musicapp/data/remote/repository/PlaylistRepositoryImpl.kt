@@ -117,15 +117,24 @@ class PlaylistRepositoryImpl(
     override fun getPlaylistDetails(playlistID: String): Flow<Resource<Playlist>> = flow {
         emit(Resource.Loading)
         try {
-            val response = apiService.getPlaylistById(id = playlistID)
-            if (response.isSuccessful) {
-                response.body()?.let { res ->
-                    val test = res.find { playlist -> playlist.id == playlistID}
-                    Resource.Success(apiPlaylistMapper.mapToDomain(apiDto = test ?: PlaylistDto()))
-                } ?: Resource.Success(Playlist())
-            } else {
-                throw Exception(response.message())
-            }
+            userLocalDataSource.getUser()?.let { userData ->
+                val response = apiService.getPlaylistById(
+                    token = "$AUTHENTICATION_HEADER_TYPE ${userData.token}",
+                    id = playlistID
+                )
+                if (response.isSuccessful) {
+                    response.body()?.let { res ->
+                        val test = res.find { playlist -> playlist.id == playlistID }
+                        Resource.Success(
+                            apiPlaylistMapper.mapToDomain(
+                                apiDto = test ?: PlaylistDto()
+                            )
+                        )
+                    } ?: Resource.Success(Playlist())
+                } else {
+                    throw Exception(response.message())
+                }
+            } ?: throw Exception("Get local user error")
         } catch (e: Exception) {
             emit(Resource.Error("Error: ${e.message}"))
         }

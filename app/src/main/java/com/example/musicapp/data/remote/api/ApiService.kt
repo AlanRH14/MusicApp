@@ -46,6 +46,7 @@ interface ApiService {
 
     @GET("/playlists/{id}")
     suspend fun getPlaylistById(
+        @Header("Authorization") token: String,
         @Path("id") id: String
     ): Response<List<PlaylistDto>>
 
