@@ -42,8 +42,12 @@ class PlaylistDetailViewModel(
                     }
 
                     is Resource.Success -> {
-                        _state.update { it.copy(isLoading = false) }
-                        _effect.emit(PlaylistDetailEffect.ShowMessageError(message = "Song deleted successfully"))
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                playlist = details.data
+                            )
+                        }
                     }
 
                     is Resource.Error -> {
