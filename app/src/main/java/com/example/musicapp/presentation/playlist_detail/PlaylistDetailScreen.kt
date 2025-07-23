@@ -5,6 +5,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
+import com.example.musicapp.presentation.common.widgets.ErrorScreen
+import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
@@ -21,5 +23,17 @@ fun PlaylistDetailScreen(
                 is PlaylistDetailEffect.ShowMessageError -> {}
             }
         }
+    }
+
+    if (state.isLoading) {
+        LoadingScreen()
+    }
+
+    if (!state.error.isNullOrEmpty()) {
+        ErrorScreen(
+            errorMessage = state.error ?: "Unknown",
+            primaryButton = "Retry",
+            onPrimaryButtonClicked = {}
+        )
     }
 }
