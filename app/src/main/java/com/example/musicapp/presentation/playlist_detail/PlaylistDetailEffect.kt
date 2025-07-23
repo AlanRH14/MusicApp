@@ -1,4 +1,5 @@
 package com.example.musicapp.presentation.playlist_detail
 
 sealed interface PlaylistDetailEffect {
+    data class ShowMessageError(val message: String): PlaylistDetailEffect
 }
