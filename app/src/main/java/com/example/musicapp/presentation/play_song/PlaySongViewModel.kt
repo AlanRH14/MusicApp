@@ -212,8 +212,13 @@ class PlaySongViewModel(
                 }
 
                 is Resource.Success -> {
-                    _state.update { it.copy(isLoading = false) }
-                    _effect.emit(PlaySongEffect.ShowErrorMessage("Song added to playlist successfully"))
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            shouldShowSheet = false
+                        )
+                    }
+                    _effect.emit(PlaySongEffect.ShowMessage("Song added to playlist successfully"))
                 }
 
                 is Resource.Error -> {

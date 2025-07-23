@@ -34,7 +34,7 @@ fun PlaySongScreen(
 
         viewModel.effect.collectLatest { effect ->
             when (effect) {
-                is PlaySongEffect.ShowErrorMessage -> {
+                is PlaySongEffect.ShowMessage -> {
                     Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
                 }
             }
