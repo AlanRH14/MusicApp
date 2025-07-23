@@ -25,6 +25,13 @@ fun PlaylistDetailScreen(
         }
     }
 
+    state.playlist?.let { playlist ->
+        PlaylistDetailContent(
+            playlist = playlist,
+            onEvent = viewModel::onEvent
+        )
+    }
+
     if (state.isLoading) {
         LoadingScreen()
     }
