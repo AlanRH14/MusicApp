@@ -107,10 +107,27 @@ class PlaylistRepositoryImpl(
                     Resource.Success(res)
                 } ?: Resource.Success(UpdatePlaylistSongResponse())
             } else {
-                throw Exception("Delete song from playlist")
+                throw Exception(response.message())
             }
         } catch (e: Exception) {
             Resource.Error("Error: ${e.message}")
+        }
+    }
+
+    override fun getPlaylistDetails(playlistID: String): Flow<Resource<Playlist>> = flow {
+        emit(Resource.Loading)
+        try {
+            val response = apiService.getPlaylistById(id = playlistID)
+            if (response.isSuccessful) {
+                response.body()?.let { res ->
+                    val test = res.find { playlist -> playlist.id == playlistID}
+                    Resource.Success(apiPlaylistMapper.mapToDomain(apiDto = test ?: PlaylistDto()))
+                } ?: Resource.Success(Playlist())
+            } else {
+                throw Exception(response.message())
+            }
+        } catch (e: Exception) {
+            emit(Resource.Error("Error: ${e.message}"))
         }
     }
 }
