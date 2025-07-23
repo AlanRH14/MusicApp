@@ -9,6 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
 import com.example.musicapp.navigation.CreatePlaylist
+import com.example.musicapp.navigation.PlaylistDetail
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import com.example.musicapp.presentation.playlist.mvi.PlaylistEffect
@@ -42,7 +43,7 @@ fun PlaylistScreen(
                 }
 
                 is PlaylistEffect.NavigateToDetailPlaylist -> {
-                    // navController.navigate
+                    navController.navigate(PlaylistDetail(playlistID = effect.playlistID))
                 }
             }
         }

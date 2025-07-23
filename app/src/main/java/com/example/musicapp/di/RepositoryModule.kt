@@ -44,7 +44,7 @@ val repositoryModule = module {
         )
     }
 
-    single<PlaylistRepository> {
+    single<PlaylistRepository>{
         PlaylistRepositoryImpl(
             apiService = get(),
             apiPlaylistMapper = get(named("PlaylistApiMapper")),
