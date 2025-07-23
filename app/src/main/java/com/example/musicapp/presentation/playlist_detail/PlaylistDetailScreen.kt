@@ -8,6 +8,9 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
+import com.example.musicapp.presentation.playlist_detail.mvi.PlaylistDetailEffect
+import com.example.musicapp.presentation.playlist_detail.mvi.PlaylistDetailUIEvent
+import com.example.musicapp.presentation.playlist_detail.widgets.PlaylistDetailContent
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 

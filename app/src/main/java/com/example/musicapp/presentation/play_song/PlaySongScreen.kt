@@ -34,23 +34,11 @@ fun PlaySongScreen(
 
         viewModel.effect.collectLatest { effect ->
             when (effect) {
-                is PlaySongEffect.ShowErrorMessage -> {
+                is PlaySongEffect.ShowMessage -> {
                     Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
-    }
-
-    if (state.isLoading) {
-        LoadingScreen()
-    }
-
-    if (!state.error.isNullOrEmpty()) {
-        ErrorScreen(
-            errorMessage = state.error ?: stringResource(R.string.unknown),
-            primaryButton = stringResource(R.string.retry),
-            onPrimaryButtonClicked = {},
-        )
     }
 
     state.currentSong?.let {
@@ -66,6 +54,18 @@ fun PlaySongScreen(
             playlists = state.playlists,
             songID = songID,
             onEvent = viewModel::onEvent
+        )
+    }
+
+    if (state.isLoading) {
+        LoadingScreen()
+    }
+
+    if (!state.error.isNullOrEmpty()) {
+        ErrorScreen(
+            errorMessage = state.error ?: stringResource(R.string.unknown),
+            primaryButton = stringResource(R.string.retry),
+            onPrimaryButtonClicked = {},
         )
     }
 }
