@@ -54,8 +54,6 @@ class PlaySongViewModel(
                 playlistID = event.playlistID,
                 songID = event.songID
             )
-
-            is PlaySongUIEvent.OnCloseClicked -> navigateToBack()
         }
     }
 
@@ -233,11 +231,5 @@ class PlaySongViewModel(
 
     private fun onToggleToBottomSheet() {
         _state.update { it.copy(shouldShowSheet = !it.shouldShowSheet) }
-    }
-
-    private fun navigateToBack() {
-        viewModelScope.launch {
-            _effect.emit(PlaySongEffect.NavigateToBack)
-        }
     }
 }

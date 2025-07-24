@@ -37,10 +37,6 @@ fun PlaySongScreen(
                 is PlaySongEffect.ShowMessage -> {
                     Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
                 }
-
-                is PlaySongEffect.NavigateToBack -> {
-                    navController.popBackStack()
-                }
             }
         }
     }
@@ -72,10 +68,6 @@ fun PlaySongScreen(
             onPrimaryButtonClicked = {
                 viewModel.onEvent(PlaySongUIEvent.GetSongByID(songID = songID))
             },
-            secondaryButton = stringResource(id = R.string.close),
-            onSecondaryButtonClicked = {
-                viewModel.onEvent(PlaySongUIEvent.OnCloseClicked)
-            }
         )
     }
 }
