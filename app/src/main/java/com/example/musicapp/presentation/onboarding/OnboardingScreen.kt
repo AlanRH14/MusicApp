@@ -1,6 +1,5 @@
 package com.example.musicapp.presentation.onboarding
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -46,10 +45,6 @@ fun OnboardingScreen(
 
         viewModel.effect.collectLatest {
             when (it) {
-                is OnboardingEffect.ShowErrorMessage -> {
-                    Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()
-                }
-
                 is OnboardingEffect.NavigateToLogin -> {
                     navController.navigate(LoginRoute)
                 }
