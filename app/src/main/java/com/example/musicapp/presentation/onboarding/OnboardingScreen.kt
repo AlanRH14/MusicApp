@@ -50,7 +50,7 @@ fun OnboardingScreen(
                     Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()
                 }
 
-                is OnboardingEffect.NavigationToLogin -> {
+                is OnboardingEffect.NavigateToLogin -> {
                     navController.navigate(LoginRoute)
                 }
 
