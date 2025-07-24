@@ -10,35 +10,48 @@ import com.example.musicapp.data.local.database.entities.UserEntity
 import com.example.musicapp.data.local.datasource.UserLocalDataSource
 import com.example.musicapp.data.remote.datasource.RemoteAuthDataSource
 import com.example.musicapp.domain.model.User
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 
 class AuthenticationRepositoryImpl(
     private val remoteDataSource: RemoteAuthDataSource,
     private val localDataSource: UserLocalDataSource,
     private val apiLoginMapper: ApiMapper<LoginResponse, UserEntity>,
     private val apiUserMapper: ApiMapper<UserEntity, User>,
+    private val ioDispatcher: CoroutineDispatcher
 ) : AuthenticationRepository {
 
-    override suspend fun login(loginRequest: LoginRequest): Resource<User> {
-        Resource.Loading
-        return try {
-            val response = remoteDataSource.login(loginRequest)
-            val entity = apiLoginMapper.mapToDomain(apiDto = response)
-            localDataSource.savaUser(user = entity)
-            Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
-        } catch (e: Exception) {
-            Resource.Error(message = "Error: ${e.message}")
+    override suspend fun login(loginRequest: LoginRequest): Resource<User> =
+        withContext(ioDispatcher) {
+            Resource.Loading
+            try {
+                val response = remoteDataSource.login(loginRequest)
+                val entity = apiLoginMapper.mapToDomain(apiDto = response)
+                if (entity.token != null) {
+                    localDataSource.savaUser(user = entity)
+                    Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
+                } else {
+                    throw Exception("Token null")
+                }
+            } catch (e: Exception) {
+                Resource.Error(message = "Error: ${e.message}")
+            }
         }
-    }
 
-    override suspend fun register(registerRequest: RegisterRequest): Resource<User> {
-        Resource.Loading
-        return try {
-            val response = remoteDataSource.register(registerRequest)
-            val entity = apiLoginMapper.mapToDomain(apiDto = response)
-            localDataSource.savaUser(user = entity)
-            Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
-        } catch (e: Exception) {
-            Resource.Error(message = "Error: ${e.message}")
+    override suspend fun register(registerRequest: RegisterRequest): Resource<User> =
+        withContext(ioDispatcher) {
+            Resource.Loading
+            try {
+                val response = remoteDataSource.register(registerRequest)
+                val entity = apiLoginMapper.mapToDomain(apiDto = response)
+                if (entity.token != null) {
+                    localDataSource.savaUser(user = entity)
+                    Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
+                } else {
+                    throw Exception("Token null")
+                }
+            } catch (e: Exception) {
+                Resource.Error(message = "Error: ${e.message}")
+            }
         }
-    }
 }
