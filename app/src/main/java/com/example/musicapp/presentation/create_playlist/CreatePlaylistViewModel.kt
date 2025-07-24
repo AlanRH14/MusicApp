@@ -66,7 +66,7 @@ class CreatePlaylistViewModel(
                             playlist = response.data
                         )
                     }
-                    _effect.emit(CreatePlaylistEffect.NavigateToPlaylist)
+                    _effect.emit(CreatePlaylistEffect.NavigationToPlaylist)
                 }
 
                 is Resource.Error -> {
