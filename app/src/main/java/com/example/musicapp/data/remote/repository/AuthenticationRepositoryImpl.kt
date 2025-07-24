@@ -10,8 +10,6 @@ import com.example.musicapp.data.local.database.entities.UserEntity
 import com.example.musicapp.data.local.datasource.UserLocalDataSource
 import com.example.musicapp.data.remote.datasource.RemoteAuthDataSource
 import com.example.musicapp.domain.model.User
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 
 class AuthenticationRepositoryImpl(
     private val remoteDataSource: RemoteAuthDataSource,
@@ -20,15 +18,15 @@ class AuthenticationRepositoryImpl(
     private val apiUserMapper: ApiMapper<UserEntity, User>,
 ) : AuthenticationRepository {
 
-    override fun login(loginRequest: LoginRequest): Flow<Resource<User>> = flow {
-        emit(Resource.Loading)
-        try {
+    override suspend fun login(loginRequest: LoginRequest): Resource<User> {
+        Resource.Loading
+        return try {
             val response = remoteDataSource.login(loginRequest)
             val entity = apiLoginMapper.mapToDomain(apiDto = response)
             localDataSource.savaUser(user = entity)
-            emit(Resource.Success(apiUserMapper.mapToDomain(apiDto = entity)))
+            Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
         } catch (e: Exception) {
-            emit(Resource.Error(message = "Error: ${e.message}"))
+            Resource.Error(message = "Error: ${e.message}")
         }
     }
 
