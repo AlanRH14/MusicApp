@@ -70,35 +70,35 @@ class LoginViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             if (invalidateInputs()) return@launch
 
-            repository.login(
+            val response = repository.login(
                 LoginRequest(
                     email = state.value.email,
                     password = state.value.password
                 )
-            ).collect { response ->
-                when (response) {
-                    is Resource.Loading -> {
-                        _state.update { it.copy(isLoading = true) }
-                    }
+            )
 
-                    is Resource.Success -> {
-                        _state.update { it.copy(isLoading = false) }
-                        if (response.data.token.isNotEmpty()) {
-                            dataStoreHandle.saveState(
-                                key = ConstantsPreferences.UserIsLoggedPreferences,
-                                value = true
-                            )
-                        }
-                        _effect.emit(LoginEffect.NavigateToHome)
-                    }
+            when (response) {
+                is Resource.Loading -> {
+                    _state.update { it.copy(isLoading = true) }
+                }
 
-                    is Resource.Error -> {
-                        _state.update {
-                            it.copy(
-                                isLoading = false,
-                                errorMessage = response.message,
-                            )
-                        }
+                is Resource.Success -> {
+                    _state.update { it.copy(isLoading = false) }
+                    if (response.data.token.isNotEmpty()) {
+                        dataStoreHandle.saveState(
+                            key = ConstantsPreferences.UserIsLoggedPreferences,
+                            value = true
+                        )
+                    }
+                    _effect.emit(LoginEffect.NavigateToHome)
+                }
+
+                is Resource.Error -> {
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            errorMessage = response.message,
+                        )
                     }
                 }
             }
