@@ -30,7 +30,7 @@ fun HomeScreen(
 
         viewModel.effect.collectLatest { effect ->
             when (effect) {
-                is HomeEffect.ShowErrorMessage -> {
+                is HomeEffect.ShowMessage -> {
                     Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
                 }
 
@@ -58,7 +58,7 @@ fun HomeScreen(
         ErrorScreen(
             errorMessage = state.error ?: stringResource(id = R.string.unknown),
             primaryButton = stringResource(id = R.string.retry),
-            onPrimaryButtonClicked = {},
+            onPrimaryButtonClicked = { viewModel.onEvent(HomeUIEvent.GetHomeData) },
         )
     }
 }
