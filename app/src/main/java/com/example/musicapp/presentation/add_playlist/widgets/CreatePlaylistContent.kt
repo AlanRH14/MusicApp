@@ -34,7 +34,7 @@ fun CreatePlaylistContent(
             value = state.name,
             onValueChange = { onEvent(CreatePlaylistUIEvent.OnNameUpdate(name = it)) },
             label = stringResource(id = R.string.playlist_name),
-            placeholder = "Enter playlist name",
+            placeholder = stringResource(R.string.enter_playlist_name),
             isError = state.isNameEmpty
         )
 

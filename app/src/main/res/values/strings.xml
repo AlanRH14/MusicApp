@@ -50,4 +50,5 @@
     <string name="create_playlist">Create Playlist</string>
     <string name="playlist_item_image">Playlist Item Image</string>
     <string name="select_playlist">Select Playlist</string>
+    <string name="enter_playlist_name">Enter playlist name</string>
 </resources>
