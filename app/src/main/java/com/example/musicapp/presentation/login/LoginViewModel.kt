@@ -122,7 +122,7 @@ class LoginViewModel(
 
     private fun navigateToRegister() {
         viewModelScope.launch {
-            _effect.emit(LoginEffect.NavigationToRegister)
+            _effect.emit(LoginEffect.NavigateToRegister)
         }
     }
 

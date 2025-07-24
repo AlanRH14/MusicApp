@@ -32,7 +32,7 @@ fun LoginScreen(
                     Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()
                 }
 
-                is LoginEffect.NavigationToRegister -> {
+                is LoginEffect.NavigateToRegister -> {
                     navController.navigate(RegisterRoute)
                 }
 
