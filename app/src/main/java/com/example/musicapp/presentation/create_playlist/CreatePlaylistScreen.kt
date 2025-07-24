@@ -30,7 +30,7 @@ fun CreatePlaylistScreen(
                     navController.popBackStack()
                 }
 
-                is CreatePlaylistEffect.PreviousScreen -> {
+                is CreatePlaylistEffect.NavigationToBack -> {
                     navController.popBackStack()
                 }
             }
