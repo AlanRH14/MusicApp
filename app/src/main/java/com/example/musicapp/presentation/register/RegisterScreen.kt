@@ -13,6 +13,7 @@ import com.example.musicapp.presentation.register.widgets.RegisterScreenContent
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import com.example.musicapp.presentation.register.mvi.RegisterEffect
+import com.example.musicapp.presentation.register.mvi.RegisterUIEvent
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
@@ -54,7 +55,9 @@ fun RegisterScreen(
         ErrorScreen(
             errorMessage = state.errorMessage ?: stringResource(R.string.unknown),
             primaryButton = stringResource(R.string.retry),
-            onPrimaryButtonClicked = {}
+            onPrimaryButtonClicked = {
+                viewModel.onEvent(RegisterUIEvent.OnDismissed)
+            }
         )
     }
 }
