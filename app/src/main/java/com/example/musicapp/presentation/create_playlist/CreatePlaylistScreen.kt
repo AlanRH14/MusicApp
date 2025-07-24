@@ -26,11 +26,11 @@ fun CreatePlaylistScreen(
     LaunchedEffect(key1 = true) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
-                is CreatePlaylistEffect.NavigationToPlaylist -> {
+                is CreatePlaylistEffect.NavigateToPlaylist -> {
                     navController.popBackStack()
                 }
 
-                is CreatePlaylistEffect.NavigationToBack -> {
+                is CreatePlaylistEffect.NavigateToBack -> {
                     navController.popBackStack()
                 }
             }

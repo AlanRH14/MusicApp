@@ -66,7 +66,7 @@ class CreatePlaylistViewModel(
                             playlist = response.data
                         )
                     }
-                    _effect.emit(CreatePlaylistEffect.NavigationToPlaylist)
+                    _effect.emit(CreatePlaylistEffect.NavigateToPlaylist)
                 }
 
                 is Resource.Error -> {
@@ -97,7 +97,7 @@ class CreatePlaylistViewModel(
 
     private fun navigationToBack() {
         viewModelScope.launch {
-            _effect.emit(CreatePlaylistEffect.NavigationToBack)
+            _effect.emit(CreatePlaylistEffect.NavigateToBack)
         }
     }
 }
