@@ -35,7 +35,7 @@ fun SocialDivider() {
         Text(
             modifier = Modifier
                 .padding(horizontal = PaddingDefault),
-            text = stringResource(R.string.or_continue_with),
+            text = stringResource(id = R.string.or_continue_with),
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onPrimary
         )
