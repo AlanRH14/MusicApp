@@ -27,10 +27,6 @@ fun RegisterScreen(
     LaunchedEffect(key1 = true) {
         viewModel.event.collectLatest { event ->
             when (event) {
-                is RegisterEffect.ShowErrorMessage -> {
-                    Toast.makeText(navController.context, event.message, Toast.LENGTH_SHORT).show()
-                }
-
                 is RegisterEffect.NavigateToLogin -> {
                     navController.popBackStack()
                 }
