@@ -97,7 +97,7 @@ class LoginViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            errorMessage = response.message,
+                            error = response.message,
                         )
                     }
                 }
@@ -143,6 +143,6 @@ class LoginViewModel(
     }
 
     private fun dismissError() {
-        _state.update { it.copy(errorMessage = null) }
+        _state.update { it.copy(error = null) }
     }
 }
