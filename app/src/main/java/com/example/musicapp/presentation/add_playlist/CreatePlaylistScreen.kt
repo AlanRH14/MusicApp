@@ -11,6 +11,7 @@ import com.example.musicapp.R
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import com.example.musicapp.presentation.add_playlist.mvi.CreatePlaylistEffect
+import com.example.musicapp.presentation.add_playlist.mvi.CreatePlaylistUIEvent
 import com.example.musicapp.presentation.add_playlist.widgets.CreatePlaylistContent
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
@@ -50,7 +51,11 @@ fun CreatePlaylistScreen(
         ErrorScreen(
             errorMessage = state.error ?: stringResource(id = R.string.unknown),
             primaryButton = stringResource(id = R.string.retry),
-            onPrimaryButtonClicked = {}
+            onPrimaryButtonClicked = {
+                viewModel.onEvent(CreatePlaylistUIEvent.OnCreatePlaylistClicked)
+            },
+            secondaryButton = "Close",
+            onSecondaryButtonClicked = {}
         )
     }
 }
