@@ -4,5 +4,5 @@ sealed interface PlaylistUIEvent {
     data object GetPlaylist : PlaylistUIEvent
     data object OnRetryClicked : PlaylistUIEvent
     data object OnCreatePlaylistClicked : PlaylistUIEvent
-    data class NavigateToPlaylistDetail(val playlistID: String) : PlaylistUIEvent
+    data class OnPlaylistDetailClicked(val playlistID: String) : PlaylistUIEvent
 }

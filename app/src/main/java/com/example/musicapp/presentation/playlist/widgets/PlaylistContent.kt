@@ -38,7 +38,7 @@ fun PlaylistContent(
                     PlaylistItem(
                         playlist = playlist,
                         onItemClicked = {
-                            onEvent(PlaylistUIEvent.NavigateToPlaylistDetail(playlistID = playlist.id))
+                            onEvent(PlaylistUIEvent.OnPlaylistDetailClicked(playlistID = playlist.id))
                         }
                     )
                 }
