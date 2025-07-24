@@ -97,7 +97,7 @@ class CreatePlaylistViewModel(
 
     private fun navigationToBack() {
         viewModelScope.launch {
-            _effect.emit(CreatePlaylistEffect.NavigationToBack)
+            _effect.emit(CreatePlaylistEffect.NavigateToBack)
         }
     }
 }

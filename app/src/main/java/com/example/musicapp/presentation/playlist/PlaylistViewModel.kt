@@ -28,9 +28,9 @@ class PlaylistViewModel(
     fun onEvent(event: PlaylistUIEvent) {
         when (event) {
             is PlaylistUIEvent.GetPlaylist -> getPlaylist()
-            is PlaylistUIEvent.OnClickedRetry -> getPlaylist()
-            is PlaylistUIEvent.NavigateToCreatePlaylist -> navigateToCreatePlaylist()
-            is PlaylistUIEvent.NavigateToPlaylistDetail -> navigateToPlaylistDetail(playlistID = event.playlistID)
+            is PlaylistUIEvent.OnRetryClicked -> getPlaylist()
+            is PlaylistUIEvent.OnCreatePlaylistClicked -> navigateToCreatePlaylist()
+            is PlaylistUIEvent.OnPlaylistDetailClicked -> navigateToPlaylistDetail(playlistID = event.playlistID)
         }
     }
 

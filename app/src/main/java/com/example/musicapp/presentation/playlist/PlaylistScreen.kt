@@ -1,6 +1,5 @@
 package com.example.musicapp.presentation.playlist
 
-import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -31,10 +30,6 @@ fun PlaylistScreen(
 
         viewModel.effect.collectLatest { effect ->
             when (effect) {
-                is PlaylistEffect.ShowMessageError -> {
-                    Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
-                }
-
                 is PlaylistEffect.NavigateToCreatePlaylist -> {
                     navController.navigate(CreatePlaylist) {
                         launchSingleTop = true

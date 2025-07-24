@@ -10,4 +10,5 @@ sealed interface RegisterUIEvent {
     data object OnBackClicked : RegisterUIEvent
     data object OnRegisterClicked : RegisterUIEvent
     data object OnLoginClicked : RegisterUIEvent
+    data object OnDismissed : RegisterUIEvent
 }

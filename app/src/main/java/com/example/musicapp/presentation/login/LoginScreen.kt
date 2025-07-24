@@ -28,15 +28,15 @@ fun LoginScreen(
     LaunchedEffect(key1 = viewModel) {
         viewModel.effect.collectLatest {
             when (it) {
-                is LoginEffect.ShowErrorMessage -> {
+                is LoginEffect.ShowMessage -> {
                     Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()
                 }
 
-                is LoginEffect.NavigationToRegister -> {
+                is LoginEffect.NavigateToRegister -> {
                     navController.navigate(RegisterRoute)
                 }
 
-                is LoginEffect.NavigationToBack -> {
+                is LoginEffect.NavigateToBack -> {
                     navController.popBackStack()
                 }
 
@@ -56,10 +56,10 @@ fun LoginScreen(
         LoadingScreen()
     }
 
-    if (!state.errorMessage.isNullOrEmpty()
+    if (!state.error.isNullOrEmpty()
     ) {
         ErrorScreen(
-            errorMessage = state.errorMessage ?: stringResource(id = R.string.unknown),
+            errorMessage = state.error ?: stringResource(id = R.string.unknown),
             primaryButton = stringResource(id = R.string.retry),
             onPrimaryButtonClicked = { viewModel.onEvent(LoginUIEvent.OnDismissed) }
         )

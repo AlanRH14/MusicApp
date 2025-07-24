@@ -79,7 +79,7 @@ class HomeViewModel(
 
     private fun navigateToPlaylist() {
         viewModelScope.launch {
-            _effect.emit(HomeEffect.NavigationToPlaylist)
+            _effect.emit(HomeEffect.NavigateToPlaylist)
         }
     }
 }

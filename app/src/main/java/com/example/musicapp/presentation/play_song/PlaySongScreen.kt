@@ -65,7 +65,9 @@ fun PlaySongScreen(
         ErrorScreen(
             errorMessage = state.error ?: stringResource(id = R.string.unknown),
             primaryButton = stringResource(id = R.string.retry),
-            onPrimaryButtonClicked = {},
+            onPrimaryButtonClicked = {
+                viewModel.onEvent(PlaySongUIEvent.GetSongByID(songID = songID))
+            },
         )
     }
 }

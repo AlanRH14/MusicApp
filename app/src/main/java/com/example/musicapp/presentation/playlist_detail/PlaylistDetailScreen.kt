@@ -26,7 +26,7 @@ fun PlaylistDetailScreen(
         viewModel.onEvent(PlaylistDetailUIEvent.OnGetPlaylistDetail(playlistID = playlistID))
         viewModel.effect.collectLatest { effect ->
             when (effect) {
-                is PlaylistDetailEffect.ShowMessageError -> {
+                is PlaylistDetailEffect.ShowMessage -> {
                     Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
                 }
             }

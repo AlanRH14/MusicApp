@@ -2,7 +2,7 @@ package com.example.musicapp.presentation.login.mvi
 
 data class LoginState(
     val isLoading: Boolean = false,
-    val errorMessage: String? = null,
+    val error: String? = null,
     val email: String? = null,
     val password: String? = null,
     val isPasswordVisible: Boolean = false,

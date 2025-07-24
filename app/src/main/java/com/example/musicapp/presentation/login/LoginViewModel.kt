@@ -97,7 +97,7 @@ class LoginViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            errorMessage = response.message,
+                            error = response.message,
                         )
                     }
                 }
@@ -122,7 +122,7 @@ class LoginViewModel(
 
     private fun navigateToRegister() {
         viewModelScope.launch {
-            _effect.emit(LoginEffect.NavigationToRegister)
+            _effect.emit(LoginEffect.NavigateToRegister)
         }
     }
 
@@ -132,17 +132,17 @@ class LoginViewModel(
 
     private fun handleForgotPassword() {
         viewModelScope.launch {
-            _effect.emit(LoginEffect.ShowErrorMessage("Forgot Password clicked"))
+            _effect.emit(LoginEffect.ShowMessage("Forgot Password clicked"))
         }
     }
 
     private fun navigateBack() {
         viewModelScope.launch {
-            _effect.emit(LoginEffect.NavigationToBack)
+            _effect.emit(LoginEffect.NavigateToBack)
         }
     }
 
     private fun dismissError() {
-        _state.update { it.copy(errorMessage = null) }
+        _state.update { it.copy(error = null) }
     }
 }

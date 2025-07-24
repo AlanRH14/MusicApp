@@ -1,6 +1,5 @@
 package com.example.musicapp.presentation.register
 
-import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -14,6 +13,7 @@ import com.example.musicapp.presentation.register.widgets.RegisterScreenContent
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import com.example.musicapp.presentation.register.mvi.RegisterEffect
+import com.example.musicapp.presentation.register.mvi.RegisterUIEvent
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
@@ -27,10 +27,6 @@ fun RegisterScreen(
     LaunchedEffect(key1 = true) {
         viewModel.event.collectLatest { event ->
             when (event) {
-                is RegisterEffect.ShowErrorMessage -> {
-                    Toast.makeText(navController.context, event.message, Toast.LENGTH_SHORT).show()
-                }
-
                 is RegisterEffect.NavigateToLogin -> {
                     navController.popBackStack()
                 }
@@ -59,7 +55,9 @@ fun RegisterScreen(
         ErrorScreen(
             errorMessage = state.errorMessage ?: stringResource(R.string.unknown),
             primaryButton = stringResource(R.string.retry),
-            onPrimaryButtonClicked = {}
+            onPrimaryButtonClicked = {
+                viewModel.onEvent(RegisterUIEvent.OnDismissed)
+            }
         )
     }
 }

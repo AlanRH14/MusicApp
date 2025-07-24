@@ -53,7 +53,7 @@ class OnboardingViewModel(
 
     private fun navigationToLogin() {
         viewModelScope.launch {
-            _effect.emit(OnboardingEffect.NavigationToLogin)
+            _effect.emit(OnboardingEffect.NavigateToLogin)
         }
     }
 }
