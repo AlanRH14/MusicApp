@@ -67,7 +67,7 @@ class HomeViewModel(
 
     private fun showMessageTest(eventMessage: String) {
         viewModelScope.launch {
-            _effect.emit(HomeEffect.ShowErrorMessage(message = eventMessage))
+            _effect.emit(HomeEffect.ShowMessage(message = eventMessage))
         }
     }
 

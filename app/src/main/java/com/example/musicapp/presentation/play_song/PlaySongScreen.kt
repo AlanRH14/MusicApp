@@ -63,8 +63,8 @@ fun PlaySongScreen(
 
     if (!state.error.isNullOrEmpty()) {
         ErrorScreen(
-            errorMessage = state.error ?: stringResource(R.string.unknown),
-            primaryButton = stringResource(R.string.retry),
+            errorMessage = state.error ?: stringResource(id = R.string.unknown),
+            primaryButton = stringResource(id = R.string.retry),
             onPrimaryButtonClicked = {},
         )
     }

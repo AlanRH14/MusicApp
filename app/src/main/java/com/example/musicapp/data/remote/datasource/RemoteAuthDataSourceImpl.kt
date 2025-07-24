@@ -16,7 +16,7 @@ class RemoteAuthDataSourceImpl(
         withContext(ioDispatcher) {
             val response = apiService.login(loginRequest = loginRequest)
             if (response.isSuccessful) {
-                response.body() ?: LoginResponse()
+                response.body() ?: throw Exception("Login not processed")
             } else {
                 throw Exception(response.message())
             }
@@ -26,7 +26,7 @@ class RemoteAuthDataSourceImpl(
         withContext(ioDispatcher) {
             val response = apiService.register(registerRequest = registerRequest)
             if (response.isSuccessful) {
-                response.body() ?: LoginResponse()
+                response.body() ?: throw Exception("Register not processed")
             } else {
                 throw Exception(response.message())
             }

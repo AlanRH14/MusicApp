@@ -21,6 +21,7 @@ val repositoryModule = module {
             localDataSource = get(),
             apiLoginMapper = get(named("LoginApiMapper")),
             apiUserMapper = get(named("UserApiMapper")),
+            ioDispatcher = Dispatchers.IO,
         )
     }
 

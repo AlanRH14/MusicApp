@@ -41,7 +41,7 @@ fun SongActions(
             Icon(
                 painter = painterResource(id = android.R.drawable.ic_media_previous),
                 tint = MaterialTheme.colorScheme.onPrimary,
-                contentDescription = stringResource(R.string.media_previous),
+                contentDescription = stringResource(id = R.string.media_previous),
             )
         }
 
@@ -62,7 +62,7 @@ fun SongActions(
                     },
                 ),
                 tint = MaterialTheme.colorScheme.onPrimary,
-                contentDescription = stringResource(R.string.play_pause),
+                contentDescription = stringResource(id = R.string.play_pause),
             )
         }
 
@@ -70,7 +70,7 @@ fun SongActions(
             Icon(
                 painter = painterResource(id = android.R.drawable.ic_media_next),
                 tint = MaterialTheme.colorScheme.onPrimary,
-                contentDescription = stringResource(R.string.next),
+                contentDescription = stringResource(id = R.string.next),
             )
         }
 

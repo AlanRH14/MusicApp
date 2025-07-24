@@ -1,6 +1,6 @@
 package com.example.musicapp.di
 
-import com.example.musicapp.presentation.add_playlist.CreatePlaylistViewModel
+import com.example.musicapp.presentation.create_playlist.CreatePlaylistViewModel
 import com.example.musicapp.presentation.home.HomeViewModel
 import com.example.musicapp.presentation.login.LoginViewModel
 import com.example.musicapp.presentation.onboarding.OnboardingViewModel
