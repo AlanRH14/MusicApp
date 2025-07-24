@@ -55,7 +55,9 @@ fun CreatePlaylistScreen(
                 viewModel.onEvent(CreatePlaylistUIEvent.OnCreatePlaylistClicked)
             },
             secondaryButton = stringResource(R.string.close),
-            onSecondaryButtonClicked = {}
+            onSecondaryButtonClicked = {
+                viewModel.onEvent(CreatePlaylistUIEvent.OnCloseClicked)
+            }
         )
     }
 }
