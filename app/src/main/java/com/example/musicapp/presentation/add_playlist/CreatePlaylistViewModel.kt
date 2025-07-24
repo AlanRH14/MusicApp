@@ -28,7 +28,7 @@ class CreatePlaylistViewModel(
 
     fun onEvent(event: CreatePlaylistUIEvent) {
         when (event) {
-            is CreatePlaylistUIEvent.OnCreatePlaylistClicked -> onAddPlaylist()
+            is CreatePlaylistUIEvent.OnCreatePlaylistClicked -> createPlaylist()
             is CreatePlaylistUIEvent.OnNameUpdate -> onNameUpdate(event.name)
             is CreatePlaylistUIEvent.OnDescriptionUpdate -> onDescriptionUpdate(event.description)
             is CreatePlaylistUIEvent.OnCloseClicked -> previousScreen()
@@ -43,7 +43,7 @@ class CreatePlaylistViewModel(
         _state.update { it.copy(description = description) }
     }
 
-    private fun onAddPlaylist() {
+    private fun createPlaylist() {
         if (validateEmptyInputs()) return
 
         viewModelScope.launch(Dispatchers.IO) {
