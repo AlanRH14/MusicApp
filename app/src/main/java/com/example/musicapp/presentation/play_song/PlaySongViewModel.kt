@@ -81,7 +81,7 @@ class PlaySongViewModel(
                             currentPosition = player.currentPosition.coerceAtLeast(0),
                             duration = player.duration.coerceAtLeast(0),
                             isBuffering = player.isBuffering,
-                            error = player.error
+                            error = player.error ?: it.error
                         )
                     }
                 }.launchIn(viewModelScope)
