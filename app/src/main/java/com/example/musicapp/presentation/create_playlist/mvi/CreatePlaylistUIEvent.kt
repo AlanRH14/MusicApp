@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.add_playlist.mvi
+package com.example.musicapp.presentation.create_playlist.mvi
 
 sealed interface CreatePlaylistUIEvent {
     data object OnCreatePlaylistClicked : CreatePlaylistUIEvent

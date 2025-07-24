@@ -1,13 +1,13 @@
-package com.example.musicapp.presentation.add_playlist
+package com.example.musicapp.presentation.create_playlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.common.Resource
 import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.domain.repository.PlaylistRepository
-import com.example.musicapp.presentation.add_playlist.mvi.CreatePlaylistEffect
-import com.example.musicapp.presentation.add_playlist.mvi.CreatePlaylistState
-import com.example.musicapp.presentation.add_playlist.mvi.CreatePlaylistUIEvent
+import com.example.musicapp.presentation.create_playlist.mvi.CreatePlaylistEffect
+import com.example.musicapp.presentation.create_playlist.mvi.CreatePlaylistState
+import com.example.musicapp.presentation.create_playlist.mvi.CreatePlaylistUIEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
