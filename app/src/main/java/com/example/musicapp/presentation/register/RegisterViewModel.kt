@@ -38,6 +38,7 @@ class RegisterViewModel(
             is RegisterUIEvent.OnBackClicked -> navigateBack()
             is RegisterUIEvent.OnRegisterClicked -> register()
             is RegisterUIEvent.OnLoginClicked -> navigateBack()
+            is RegisterUIEvent.OnDismissed -> dismissError()
         }
     }
 
@@ -142,5 +143,9 @@ class RegisterViewModel(
         }
 
         return isNameValid || isEmailValid || isPasswordValid || isConfirmPasswordValid
+    }
+
+    private fun dismissError() {
+        _state.update { it.copy(errorMessage = null) }
     }
 }
