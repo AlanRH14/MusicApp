@@ -25,7 +25,7 @@ fun PlaylistContent(
     ) {
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { onEvent(PlaylistUIEvent.NavigateToCreatePlaylist) }
+            onClick = { onEvent(PlaylistUIEvent.OnCreatePlaylistClicked) }
         ) {
             Text(text = "Create Playlist")
         }
