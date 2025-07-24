@@ -7,4 +7,5 @@ sealed interface PlaySongUIEvent {
     data object OnAddPlaylistClicked : PlaySongUIEvent
     data object OnToggleToBottomSheet: PlaySongUIEvent
     data class OnAddSongToPlaylist(val playlistID: String, val songID: String): PlaySongUIEvent
+    data object OnCloseClicked: PlaySongUIEvent
 }
