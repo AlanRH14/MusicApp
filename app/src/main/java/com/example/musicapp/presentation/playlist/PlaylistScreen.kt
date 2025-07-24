@@ -31,10 +31,6 @@ fun PlaylistScreen(
 
         viewModel.effect.collectLatest { effect ->
             when (effect) {
-                is PlaylistEffect.ShowMessageError -> {
-                    Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
-                }
-
                 is PlaylistEffect.NavigateToCreatePlaylist -> {
                     navController.navigate(CreatePlaylist) {
                         launchSingleTop = true
