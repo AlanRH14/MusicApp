@@ -42,7 +42,7 @@ fun CreatePlaylistContent(
             value = state.description,
             onValueChange = { onEvent(CreatePlaylistUIEvent.OnDescriptionUpdate(description = it)) },
             label = stringResource(id = R.string.description),
-            placeholder = "Enter playlist description",
+            placeholder = stringResource(R.string.enter_playlist_description),
             isError = state.isDescriptionEmpty
         )
 
