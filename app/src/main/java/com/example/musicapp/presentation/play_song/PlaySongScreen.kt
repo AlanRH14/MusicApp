@@ -37,6 +37,10 @@ fun PlaySongScreen(
                 is PlaySongEffect.ShowMessage -> {
                     Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
                 }
+
+                is PlaySongEffect.NavigateToBack -> {
+                    navController.popBackStack()
+                }
             }
         }
     }
