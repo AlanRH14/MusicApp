@@ -132,7 +132,7 @@ class LoginViewModel(
 
     private fun handleForgotPassword() {
         viewModelScope.launch {
-            _effect.emit(LoginEffect.ShowErrorMessage("Forgot Password clicked"))
+            _effect.emit(LoginEffect.ShowMessage("Forgot Password clicked"))
         }
     }
 

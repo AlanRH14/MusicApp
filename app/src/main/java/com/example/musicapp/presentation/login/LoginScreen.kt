@@ -28,7 +28,7 @@ fun LoginScreen(
     LaunchedEffect(key1 = viewModel) {
         viewModel.effect.collectLatest {
             when (it) {
-                is LoginEffect.ShowErrorMessage -> {
+                is LoginEffect.ShowMessage -> {
                     Toast.makeText(navController.context, it.message, Toast.LENGTH_SHORT).show()
                 }
 
