@@ -31,7 +31,7 @@ class CreatePlaylistViewModel(
             is CreatePlaylistUIEvent.OnCreatePlaylistClicked -> createPlaylist()
             is CreatePlaylistUIEvent.OnNameUpdate -> onNameUpdate(event.name)
             is CreatePlaylistUIEvent.OnDescriptionUpdate -> onDescriptionUpdate(event.description)
-            is CreatePlaylistUIEvent.OnCloseClicked -> previousScreen()
+            is CreatePlaylistUIEvent.OnCloseClicked -> navigationToBack()
         }
     }
 
@@ -95,7 +95,7 @@ class CreatePlaylistViewModel(
         return isNameEmpty || isDescriptionEmpty
     }
 
-    private fun previousScreen() {
+    private fun navigationToBack() {
         viewModelScope.launch {
             _effect.emit(CreatePlaylistEffect.NavigationToBack)
         }
