@@ -10,7 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.musicapp.R
 import com.example.musicapp.ui.theme.PaddingDefault
 import com.example.musicapp.ui.theme.PaddingLarge
 
@@ -33,7 +35,7 @@ fun SocialDivider() {
         Text(
             modifier = Modifier
                 .padding(horizontal = PaddingDefault),
-            text = "or continue with",
+            text = stringResource(R.string.or_continue_with),
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onPrimary
         )
