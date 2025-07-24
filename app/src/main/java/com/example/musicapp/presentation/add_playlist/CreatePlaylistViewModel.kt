@@ -31,6 +31,7 @@ class CreatePlaylistViewModel(
             is CreatePlaylistUIEvent.OnCreatePlaylistClicked -> onAddPlaylist()
             is CreatePlaylistUIEvent.OnNameUpdate -> onNameUpdate(event.name)
             is CreatePlaylistUIEvent.OnDescriptionUpdate -> onDescriptionUpdate(event.description)
+            is CreatePlaylistUIEvent.OnCloseClicked -> previousScreen()
         }
     }
 
@@ -92,5 +93,11 @@ class CreatePlaylistViewModel(
         }
 
         return isNameEmpty || isDescriptionEmpty
+    }
+
+    private fun previousScreen() {
+        viewModelScope.launch {
+            _effect.emit(CreatePlaylistEffect.PreviousScreen)
+        }
     }
 }
