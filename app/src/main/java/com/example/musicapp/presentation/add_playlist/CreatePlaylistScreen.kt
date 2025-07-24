@@ -27,11 +27,11 @@ fun CreatePlaylistScreen(
     LaunchedEffect(key1 = true) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
-                is CreatePlaylistEffect.ShowMessage -> {
-                    Toast.makeText(navController.context, effect.message, Toast.LENGTH_SHORT).show()
+                is CreatePlaylistEffect.NavigateToPlaylist -> {
+                    navController.popBackStack()
                 }
 
-                is CreatePlaylistEffect.NavigateToPlaylist -> {
+                is CreatePlaylistEffect.PreviousScreen -> {
                     navController.popBackStack()
                 }
             }
@@ -50,13 +50,9 @@ fun CreatePlaylistScreen(
     if (!state.error.isNullOrEmpty()) {
         ErrorScreen(
             errorMessage = state.error ?: stringResource(id = R.string.unknown),
-            primaryButton = stringResource(id = R.string.retry),
+            primaryButton = stringResource(id = R.string.close),
             onPrimaryButtonClicked = {
                 viewModel.onEvent(CreatePlaylistUIEvent.OnCreatePlaylistClicked)
-            },
-            secondaryButton = stringResource(R.string.close),
-            onSecondaryButtonClicked = {
-                viewModel.onEvent(CreatePlaylistUIEvent.OnCloseClicked)
             }
         )
     }
