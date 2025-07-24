@@ -138,7 +138,7 @@ class LoginViewModel(
 
     private fun navigateBack() {
         viewModelScope.launch {
-            _effect.emit(LoginEffect.NavigationToBack)
+            _effect.emit(LoginEffect.NavigateToBack)
         }
     }
 

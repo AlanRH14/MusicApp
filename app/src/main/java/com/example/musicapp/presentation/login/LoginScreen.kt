@@ -36,7 +36,7 @@ fun LoginScreen(
                     navController.navigate(RegisterRoute)
                 }
 
-                is LoginEffect.NavigationToBack -> {
+                is LoginEffect.NavigateToBack -> {
                     navController.popBackStack()
                 }
 
