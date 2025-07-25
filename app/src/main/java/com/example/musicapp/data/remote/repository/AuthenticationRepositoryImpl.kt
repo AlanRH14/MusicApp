@@ -21,7 +21,7 @@ class AuthenticationRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : AuthenticationRepository {
 
-    override suspend fun login(loginRequest: LoginRequest): Resource<User> =
+    override suspend fun login(loginRequest: LoginRequest, rememberMe: Boolean): Resource<User> =
         withContext(ioDispatcher) {
             Resource.Loading
             try {
