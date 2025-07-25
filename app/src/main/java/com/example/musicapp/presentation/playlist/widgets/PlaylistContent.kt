@@ -33,7 +33,7 @@ fun PlaylistContent(
         }
 
         if (state.playlist.isEmpty()) {
-            Text(stringResource(R.string.no_playlist_found))
+            Text(stringResource(id = R.string.no_playlist_found))
         } else {
             LazyColumn {
                 items(state.playlist, key = { playlist -> playlist.id }) { playlist ->
