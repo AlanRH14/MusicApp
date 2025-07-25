@@ -1,5 +1,7 @@
 package com.example.musicapp.presentation.login
 
+import android.content.Context
+import androidx.credentials.CredentialManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.data.local.preferences.ConstantsPreferences
@@ -43,7 +45,7 @@ class LoginViewModel(
             is LoginUIEvent.OnForgotPasswordClicked -> handleForgotPassword()
             is LoginUIEvent.OnBackClicked -> navigateBack()
             is LoginUIEvent.OnDismissed -> dismissError()
-            is LoginUIEvent.OnGoogleSignInClicked -> navigateToHome()
+            is LoginUIEvent.OnGoogleSignInClicked -> signInGoogle()
         }
     }
 
@@ -93,7 +95,7 @@ class LoginViewModel(
                             value = true
                         )
                     }
-                    navigateToHome()
+                    _effect.emit(LoginEffect.NavigateToHome)
                 }
 
                 is Resource.Error -> {
@@ -149,9 +151,18 @@ class LoginViewModel(
         _state.update { it.copy(error = null) }
     }
 
-    private fun navigateToHome() {
-        viewModelScope.launch {
+    private fun signInGoogle(mContext: Context) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = googleAuth.signIn(
+                mContext = mContext,
+                credentialsManager = CredentialManager.create(mContext)
+            )
 
+            if (response != null) {
+                _effect.emit(LoginEffect.NavigateToHome)
+            } else {
+                _state.update { it.copy(error = "Goggle Authentication Error") }
+            }
             _effect.emit(LoginEffect.NavigateToHome)
         }
     }
