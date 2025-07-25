@@ -76,6 +76,10 @@ androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomVers
 
 kotlin-parcelize-runtime = { module = "org.jetbrains.kotlin:kotlin-parcelize-runtime", version.ref = "kotlin" }
 
+androidx-credentials = { module = "androidx.credentials:credentials"}
+androix-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth" }
+android-googleid = { module = "com.google.android.libraries.identity.googleid:googleid"}
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
