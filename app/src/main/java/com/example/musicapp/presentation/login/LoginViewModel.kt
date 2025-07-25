@@ -7,6 +7,7 @@ import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.common.Resource
+import com.example.musicapp.data.auth.GoogleAuthUIProvider
 import com.example.musicapp.presentation.login.mvi.LoginEffect
 import com.example.musicapp.presentation.login.mvi.LoginState
 import com.example.musicapp.presentation.login.mvi.LoginUIEvent
@@ -24,6 +25,7 @@ class LoginViewModel(
     private val dataStoreHandle: DataStoreHandle,
 ) : ViewModel() {
 
+    val googleAuth = GoogleAuthUIProvider()
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
 
@@ -90,7 +92,7 @@ class LoginViewModel(
                             value = true
                         )
                     }
-                    _effect.emit(LoginEffect.NavigateToHome)
+                    navigateToHome()
                 }
 
                 is Resource.Error -> {
@@ -144,5 +146,11 @@ class LoginViewModel(
 
     private fun dismissError() {
         _state.update { it.copy(error = null) }
+    }
+
+    private fun navigateToHome() {
+        viewModelScope.launch {
+            _effect.emit(LoginEffect.NavigateToHome)
+        }
     }
 }
