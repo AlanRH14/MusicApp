@@ -17,5 +17,4 @@ data class UserEntity(
     @SerialName("profilePicture") val profilePicture: String? = null,
     @SerialName("createdAt") val createdAt: Long? = null,
     @SerialName("updateAt") val updateAt: Long? = null,
-    @SerialName("rememberMe") val rememberMe: Boolean = false
 )
