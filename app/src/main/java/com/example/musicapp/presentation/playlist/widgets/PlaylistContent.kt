@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.example.musicapp.R
 import com.example.musicapp.presentation.playlist.components.PlaylistItem
 import com.example.musicapp.presentation.playlist.mvi.PlaylistState
 import com.example.musicapp.presentation.playlist.mvi.PlaylistUIEvent
@@ -27,7 +29,7 @@ fun PlaylistContent(
             modifier = Modifier.fillMaxWidth(),
             onClick = { onEvent(PlaylistUIEvent.OnCreatePlaylistClicked) }
         ) {
-            Text(text = "Create Playlist")
+            Text(text = stringResource(id = R.string.create_playlist))
         }
 
         if (state.playlist.isEmpty()) {
