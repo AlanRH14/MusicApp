@@ -7,7 +7,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.musicapp.R
-import com.example.musicapp.navigation.HomeRoute
 import com.example.musicapp.navigation.LoginRoute
 import com.example.musicapp.presentation.register.widgets.RegisterScreenContent
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
@@ -32,11 +31,7 @@ fun RegisterScreen(
                 }
 
                 is RegisterEffect.NavigateToHome -> {
-                    navController.navigate(HomeRoute) {
-                        popUpTo(LoginRoute) {
-                            inclusive = true
-                        }
-                    }
+                    navController.navigate(LoginRoute)
                 }
             }
         }
