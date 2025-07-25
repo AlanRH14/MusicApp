@@ -15,10 +15,10 @@ koinAnnotations = "2.1.0"
 koinKspCompiler = "2.1.0"
 ksp = "2.0.20-1.0.25"
 
-kotlinxSerialization = "1.9.0"
+kotlinxSerialization = "1.8.1"
 retrofit = "2.11.0"
 loggingInterceptor = "4.12.0"
-navigationCompose = "2.9.0"
+navigationCompose = "2.9.2"
 
 media3Version = "1.7.1"
 mediaVesrion = "1.7.0"
