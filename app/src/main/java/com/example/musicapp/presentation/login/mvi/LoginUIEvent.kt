@@ -1,5 +1,7 @@
 package com.example.musicapp.presentation.login.mvi
 
+import android.content.Context
+
 sealed interface LoginUIEvent {
     data class OnEmailUpdate(val email: String) : LoginUIEvent
     data class OnPasswordUpdate(val password: String) : LoginUIEvent
@@ -10,4 +12,5 @@ sealed interface LoginUIEvent {
     data object OnForgotPasswordClicked : LoginUIEvent
     data object OnBackClicked : LoginUIEvent
     data object OnDismissed : LoginUIEvent
+    data class OnGoogleSignInClicked(val mContext: Context): LoginUIEvent
 }

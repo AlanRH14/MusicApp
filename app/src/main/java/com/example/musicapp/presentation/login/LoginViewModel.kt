@@ -1,5 +1,7 @@
 package com.example.musicapp.presentation.login
 
+import android.content.Context
+import androidx.credentials.CredentialManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.data.local.preferences.ConstantsPreferences
@@ -7,6 +9,7 @@ import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.common.Resource
+import com.example.musicapp.data.auth.GoogleAuthUIProvider
 import com.example.musicapp.presentation.login.mvi.LoginEffect
 import com.example.musicapp.presentation.login.mvi.LoginState
 import com.example.musicapp.presentation.login.mvi.LoginUIEvent
@@ -24,6 +27,7 @@ class LoginViewModel(
     private val dataStoreHandle: DataStoreHandle,
 ) : ViewModel() {
 
+    private val googleAuth = GoogleAuthUIProvider()
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
 
@@ -41,6 +45,7 @@ class LoginViewModel(
             is LoginUIEvent.OnForgotPasswordClicked -> handleForgotPassword()
             is LoginUIEvent.OnBackClicked -> navigateBack()
             is LoginUIEvent.OnDismissed -> dismissError()
+            is LoginUIEvent.OnGoogleSignInClicked -> signInGoogle(event.mContext)
         }
     }
 
@@ -144,5 +149,21 @@ class LoginViewModel(
 
     private fun dismissError() {
         _state.update { it.copy(error = null) }
+    }
+
+    private fun signInGoogle(mContext: Context) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = googleAuth.signIn(
+                mContext = mContext,
+                credentialsManager = CredentialManager.create(mContext)
+            )
+
+            if (response != null) {
+                _effect.emit(LoginEffect.NavigateToHome)
+            } else {
+                _state.update { it.copy(error = "Goggle Authentication Error") }
+            }
+            _effect.emit(LoginEffect.NavigateToHome)
+        }
     }
 }

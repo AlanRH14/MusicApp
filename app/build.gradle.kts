@@ -92,4 +92,8 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     implementation(libs.kotlin.parcelize.runtime)
+
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.android.googleid)
 }

@@ -5,27 +5,30 @@ coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.9.1"
+lifecycleRuntimeKtx = "2.9.2"
 activityCompose = "1.10.1"
-composeBom = "2025.06.00"
+composeBom = "2025.07.00"
 
 coreSplashscreen = "1.0.1"
-koinAndroid = "4.0.3"
-koinAnnotations = "2.0.0-Beta1"
-koinKspCompiler = "2.0.0-Beta1"
+koinAndroid = "4.1.0"
+koinAnnotations = "2.1.0"
+koinKspCompiler = "2.1.0"
 ksp = "2.0.20-1.0.25"
 
 kotlinxSerialization = "1.8.1"
 retrofit = "2.11.0"
 loggingInterceptor = "4.12.0"
-navigationCompose = "2.9.0"
+navigationCompose = "2.9.2"
 
-media3Version= "1.7.1"
+media3Version = "1.7.1"
 mediaVesrion = "1.7.0"
 
 coilVersion = "3.0.4"
 dataStoreVersion = "1.1.7"
 roomVersion = "2.7.2"
+
+googleCredentilasVersion = "1.5.0"
+googleIDVersion = "1.1.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -62,8 +65,8 @@ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose
 
 androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3Version" }
 androidx-media3-session = { module = "androidx.media3:media3-session", version.ref = "media3Version" }
-androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref="media3Version"}
-androidx-media = { module = "androidx.media:media", version.ref="mediaVesrion"}
+androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3Version" }
+androidx-media = { module = "androidx.media:media", version.ref = "mediaVesrion" }
 
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", name = "coil-compose", version.ref = "coilVersion" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", name = "coil-network", version.ref = "coilVersion" }
@@ -75,6 +78,10 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
 
 kotlin-parcelize-runtime = { module = "org.jetbrains.kotlin:kotlin-parcelize-runtime", version.ref = "kotlin" }
+
+androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "googleCredentilasVersion" }
+androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "googleCredentilasVersion" }
+android-googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleIDVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

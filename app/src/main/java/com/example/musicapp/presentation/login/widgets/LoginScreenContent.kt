@@ -13,6 +13,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,6 +33,7 @@ fun LoginScreenContent(
     state: LoginState,
     onEvent: (LoginUIEvent) -> Unit
 ) {
+    val mContext = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -115,7 +117,7 @@ fun LoginScreenContent(
             stringRes = stringResource(id = R.string.do_not_have_an_account),
             onClick = { onEvent(LoginUIEvent.OnRegisterClicked) },
             onFbClick = {},
-            onGoogleClick = {}
+            onGoogleClick = { onEvent(LoginUIEvent.OnGoogleSignInClicked(mContext = mContext)) }
         )
     }
 }
