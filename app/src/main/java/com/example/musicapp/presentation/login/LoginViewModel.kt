@@ -27,7 +27,7 @@ class LoginViewModel(
     private val dataStoreHandle: DataStoreHandle,
 ) : ViewModel() {
 
-    val googleAuth = GoogleAuthUIProvider()
+    private val googleAuth = GoogleAuthUIProvider()
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
 
