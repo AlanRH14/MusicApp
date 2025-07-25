@@ -45,7 +45,6 @@ class AuthenticationRepositoryImpl(
                 val response = remoteDataSource.register(registerRequest)
                 val entity = apiLoginMapper.mapToDomain(apiDto = response)
                 if (entity.token != null) {
-                    localDataSource.savaUser(user = entity)
                     Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
                 } else {
                     throw Exception("Token null")

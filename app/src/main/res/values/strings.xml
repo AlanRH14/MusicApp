@@ -54,4 +54,5 @@
     <string name="enter_playlist_description">Enter playlist description</string>
     <string name="or_continue_with">or continue with</string>
     <string name="close">Close</string>
+    <string name="no_playlist_found">No playlist found</string>
 </resources>

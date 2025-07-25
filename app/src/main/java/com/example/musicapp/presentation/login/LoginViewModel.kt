@@ -84,7 +84,7 @@ class LoginViewModel(
 
                 is Resource.Success -> {
                     _state.update { it.copy(isLoading = false) }
-                    if (response.data.token.isNotEmpty()) {
+                    if (response.data.token.isNotEmpty() && _state.value.rememberMeActive) {
                         dataStoreHandle.saveState(
                             key = ConstantsPreferences.UserIsLoggedPreferences,
                             value = true
