@@ -81,7 +81,7 @@ kotlin-parcelize-runtime = { module = "org.jetbrains.kotlin:kotlin-parcelize-run
 
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "googleCredentilasVersion" }
 androix-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "googleCredentilasVersion" }
-android-googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version = "googleIDVersion" }
+android-googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleIDVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
