@@ -115,7 +115,7 @@ fun LoginScreenContent(
             stringRes = stringResource(id = R.string.do_not_have_an_account),
             onClick = { onEvent(LoginUIEvent.OnRegisterClicked) },
             onFbClick = {},
-            onGoogleClick = {}
+            onGoogleClick = { onEvent(LoginUIEvent.OnGoogleSignInClicked) }
         )
     }
 }

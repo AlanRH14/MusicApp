@@ -151,6 +151,7 @@ class LoginViewModel(
 
     private fun navigateToHome() {
         viewModelScope.launch {
+
             _effect.emit(LoginEffect.NavigateToHome)
         }
     }
