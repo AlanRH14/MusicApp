@@ -5,9 +5,9 @@ coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.9.1"
+lifecycleRuntimeKtx = "2.9.2"
 activityCompose = "1.10.1"
-composeBom = "2025.06.00"
+composeBom = "2025.07.00"
 
 coreSplashscreen = "1.0.1"
 koinAndroid = "4.0.3"
@@ -28,6 +28,7 @@ dataStoreVersion = "1.1.7"
 roomVersion = "2.7.2"
 
 googleCredentilasVersion = "1.5.0"
+googleIDVersion = "1.1.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -80,7 +81,7 @@ kotlin-parcelize-runtime = { module = "org.jetbrains.kotlin:kotlin-parcelize-run
 
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "googleCredentilasVersion" }
 androix-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "googleCredentilasVersion" }
-android-googleid = { module = "com.google.android.libraries.identity.googleid:googleid" }
+android-googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version = "googleIDVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
