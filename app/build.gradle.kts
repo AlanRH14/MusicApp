@@ -94,4 +94,5 @@ dependencies {
     implementation(libs.kotlin.parcelize.runtime)
 
     implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
 }
