@@ -51,9 +51,9 @@ fun RegisterScreen(
         LoadingScreen()
     }
 
-    if (!state.errorMessage.isNullOrEmpty()) {
+    if (!state.error.isNullOrEmpty()) {
         ErrorScreen(
-            errorMessage = state.errorMessage ?: stringResource(R.string.unknown),
+            errorMessage = state.error ?: stringResource(R.string.unknown),
             primaryButton = stringResource(R.string.retry),
             onPrimaryButtonClicked = {
                 viewModel.onEvent(RegisterUIEvent.OnDismissed)

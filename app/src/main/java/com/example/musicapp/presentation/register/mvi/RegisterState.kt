@@ -2,7 +2,7 @@ package com.example.musicapp.presentation.register.mvi
 
 data class RegisterState(
     val isLoading: Boolean = false,
-    val errorMessage: String? = null,
+    val error: String? = null,
     val name: String? = null,
     val email: String? = null,
     val password: String? = null,
