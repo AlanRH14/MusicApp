@@ -1,6 +1,7 @@
 package com.example.musicapp.presentation.login.mvi
 
 sealed interface LoginUIEvent {
+    data class ShowMessage(val message: String): LoginUIEvent
     data class OnEmailUpdate(val email: String) : LoginUIEvent
     data class OnPasswordUpdate(val password: String) : LoginUIEvent
     data object OnTogglePasswordVisibility : LoginUIEvent
