@@ -38,7 +38,7 @@ class LoginViewModel(
             is LoginUIEvent.OnLoginClicked -> login()
             is LoginUIEvent.OnRememberMeActive -> checkUpdate()
             is LoginUIEvent.OnRegisterClicked -> navigateToRegister()
-            is LoginUIEvent.OnForgotPasswordClicked -> handleForgotPassword()
+            is LoginUIEvent.OnForgotPasswordClicked -> showErrorMessage("Forgot Password clicked")
             is LoginUIEvent.OnBackClicked -> navigateBack()
             is LoginUIEvent.OnDismissed -> dismissError()
             is LoginUIEvent.OngGoogleSignInClicked -> TODO()
@@ -132,9 +132,9 @@ class LoginViewModel(
         _state.update { it.copy(rememberMeActive = !_state.value.rememberMeActive) }
     }
 
-    private fun handleForgotPassword() {
+    private fun showErrorMessage(message: String) {
         viewModelScope.launch {
-            _effect.emit(LoginEffect.ShowMessage("Forgot Password clicked"))
+            _effect.emit(LoginEffect.ShowMessage(message = message))
         }
     }
 
