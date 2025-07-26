@@ -41,7 +41,7 @@ class LoginViewModel(
             is LoginUIEvent.OnForgotPasswordClicked -> showErrorMessage("Forgot Password clicked")
             is LoginUIEvent.OnBackClicked -> navigateBack()
             is LoginUIEvent.OnDismissed -> dismissError()
-            is LoginUIEvent.OngGoogleSignInClicked -> TODO()
+            is LoginUIEvent.OngGoogleSignInClicked -> showErrorMessage("Google SignIn clicked")
             is LoginUIEvent.OnFacebookSignInClicked -> TODO()
         }
     }
