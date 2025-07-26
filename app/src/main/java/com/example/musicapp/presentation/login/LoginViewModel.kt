@@ -41,7 +41,8 @@ class LoginViewModel(
             is LoginUIEvent.OnForgotPasswordClicked -> handleForgotPassword()
             is LoginUIEvent.OnBackClicked -> navigateBack()
             is LoginUIEvent.OnDismissed -> dismissError()
-            is LoginUIEvent.OngGoogleSignInClicked -> Unit
+            is LoginUIEvent.OngGoogleSignInClicked -> TODO()
+            is LoginUIEvent.OnFacebookSignInClicked -> TODO()
         }
     }
 
