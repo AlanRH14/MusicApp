@@ -1,7 +1,5 @@
 package com.example.musicapp.presentation.login
 
-import android.content.Context
-import androidx.credentials.CredentialManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.data.local.preferences.ConstantsPreferences
@@ -9,7 +7,6 @@ import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.common.Resource
-import com.example.musicapp.data.auth.GoogleAuthUIProvider
 import com.example.musicapp.presentation.login.mvi.LoginEffect
 import com.example.musicapp.presentation.login.mvi.LoginState
 import com.example.musicapp.presentation.login.mvi.LoginUIEvent
