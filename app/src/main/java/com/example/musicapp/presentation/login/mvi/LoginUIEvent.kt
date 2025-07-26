@@ -12,4 +12,5 @@ sealed interface LoginUIEvent {
     data object OnBackClicked : LoginUIEvent
     data object OnDismissed : LoginUIEvent
     data object OngGoogleSignInClicked: LoginUIEvent
+    data object OnFacebookSignInClicked: LoginUIEvent
 }
