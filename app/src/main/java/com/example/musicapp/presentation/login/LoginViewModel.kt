@@ -149,20 +149,4 @@ class LoginViewModel(
     private fun dismissError() {
         _state.update { it.copy(error = null) }
     }
-
-    private fun signInGoogle(mContext: Context) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val response = googleAuth.signIn(
-                mContext = mContext,
-                credentialsManager = CredentialManager.create(mContext)
-            )
-
-            if (response != null) {
-                _effect.emit(LoginEffect.NavigateToHome)
-            } else {
-                _state.update { it.copy(error = "Goggle Authentication Error") }
-            }
-            _effect.emit(LoginEffect.NavigateToHome)
-        }
-    }
 }
