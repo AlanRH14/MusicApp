@@ -33,7 +33,6 @@ fun LoginScreenContent(
     state: LoginState,
     onEvent: (LoginUIEvent) -> Unit
 ) {
-    val mContext = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
