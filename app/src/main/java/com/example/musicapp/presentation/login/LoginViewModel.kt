@@ -42,7 +42,7 @@ class LoginViewModel(
             is LoginUIEvent.OnBackClicked -> navigateBack()
             is LoginUIEvent.OnDismissed -> dismissError()
             is LoginUIEvent.OngGoogleSignInClicked -> showErrorMessage("Google SignIn clicked")
-            is LoginUIEvent.OnFacebookSignInClicked -> TODO()
+            is LoginUIEvent.OnFacebookSignInClicked -> showErrorMessage("Facebook SignIn clicked")
         }
     }
 
