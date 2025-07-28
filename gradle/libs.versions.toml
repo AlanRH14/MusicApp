@@ -23,7 +23,7 @@ navigationCompose = "2.9.2"
 media3Version = "1.7.1"
 mediaVesrion = "1.7.0"
 
-coilVersion = "3.0.4"
+coilVersion = "3.3.0"
 dataStoreVersion = "1.1.7"
 roomVersion = "2.7.2"
 
