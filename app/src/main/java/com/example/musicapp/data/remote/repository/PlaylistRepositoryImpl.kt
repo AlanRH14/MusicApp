@@ -13,6 +13,7 @@ import com.example.musicapp.domain.repository.PlaylistRepository
 import com.example.musicapp.utils.Constants.AUTHENTICATION_HEADER_TYPE
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
@@ -119,22 +120,20 @@ class PlaylistRepositoryImpl(
 
     override fun getPlaylistDetails(playlistID: String): Flow<Resource<Playlist>> = flow {
         emit(Resource.Loading)
-        try {
-            userLocalDataSource.getUser()?.let { userData ->
-                val response = apiService.getPlaylistById(
-                    token = "$AUTHENTICATION_HEADER_TYPE ${userData.token}",
-                    id = playlistID
-                )
-                if (response.isSuccessful) {
-                    response.body()?.let { res ->
-                        emit(Resource.Success(apiPlaylistMapper.mapToDomain(apiDto = res)))
-                    } ?: emit(Resource.Success(Playlist()))
-                } else {
-                    throw Exception(response.message())
-                }
-            } ?: throw Exception("Get local user error")
-        } catch (e: Exception) {
-            emit(Resource.Error("Error: ${e.message}"))
-        }
+        userLocalDataSource.getUser()?.let { userData ->
+            val response = apiService.getPlaylistById(
+                token = "$AUTHENTICATION_HEADER_TYPE ${userData.token}",
+                id = playlistID
+            )
+            if (response.isSuccessful) {
+                response.body()?.let { res ->
+                    emit(Resource.Success(apiPlaylistMapper.mapToDomain(apiDto = res)))
+                } ?: emit(Resource.Success(Playlist()))
+            } else {
+                throw Exception(response.message())
+            }
+        } ?: throw Exception("Get local user error")
+    }.catch { error ->
+        emit(Resource.Error("Error: ${error.message}"))
     }
 }
