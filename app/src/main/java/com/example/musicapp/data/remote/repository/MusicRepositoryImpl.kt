@@ -28,7 +28,7 @@ class MusicRepositoryImpl(
             if (response.isSuccessful) {
                 response.body()?.let { res ->
                     emit(Resource.Success(apiSongMapper.mapToDomain(apiDto = res)))
-                } ?: Resource.Success(Song())
+                } ?: emit(Resource.Success(Song()))
             } else {
                 throw Exception(response.message())
             }
