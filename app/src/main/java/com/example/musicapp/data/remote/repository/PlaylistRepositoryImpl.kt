@@ -32,13 +32,13 @@ class PlaylistRepositoryImpl(
             if (response.isSuccessful) {
                 response.body()?.let { res ->
                     emit(Resource.Success(data = res.map { apiPlaylistMapper.mapToDomain(apiDto = it) }))
-                } ?: emit(Resource.Success(data = emptyList()))
+                } ?: emit(Resource.Success(emptyList()))
             } else {
                 throw Exception(response.message())
             }
         } ?: throw Exception("Get local user error")
     }.catch { error ->
-        emit(Resource.Error(message = "Error: ${error.message}"))
+        emit(Resource.Error("Error: ${error.message}"))
     }
 
     override suspend fun createPlaylist(playlistRequest: CreatePlaylistRequest): Resource<Playlist> =
