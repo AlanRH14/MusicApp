@@ -9,6 +9,7 @@ import com.example.musicapp.domain.model.Song
 import com.example.musicapp.domain.repository.MusicRepository
 import com.example.musicapp.utils.Constants.AUTHENTICATION_HEADER_TYPE
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
 class MusicRepositoryImpl(
@@ -19,22 +20,20 @@ class MusicRepositoryImpl(
 
     override fun getSongById(id: String): Flow<Resource<Song>> = flow {
         emit(Resource.Loading)
-        try {
-            userLocalDataSource.getUser()?.let { userData ->
-                val response = apiService.getSongByID(
-                    token = "$AUTHENTICATION_HEADER_TYPE ${userData.token}",
-                    id = id
-                )
-                if (response.isSuccessful) {
-                    response.body()?.let { res ->
-                        emit(Resource.Success(apiSongMapper.mapToDomain(apiDto = res)))
-                    } ?: Resource.Success(Song())
-                } else {
-                    throw Exception(response.message())
-                }
-            } ?: Exception("Get local user error")
-        } catch (e: Exception) {
-            emit(Resource.Error(message = "Error: ${e.message}"))
-        }
+        userLocalDataSource.getUser()?.let { userData ->
+            val response = apiService.getSongByID(
+                token = "$AUTHENTICATION_HEADER_TYPE ${userData.token}",
+                id = id
+            )
+            if (response.isSuccessful) {
+                response.body()?.let { res ->
+                    emit(Resource.Success(apiSongMapper.mapToDomain(apiDto = res)))
+                } ?: Resource.Success(Song())
+            } else {
+                throw Exception(response.message())
+            }
+        } ?: Exception("Get local user error")
+    }.catch { error ->
+        emit(Resource.Error(message = "Error: ${error.message}"))
     }
 }
