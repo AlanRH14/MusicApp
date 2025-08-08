@@ -18,7 +18,7 @@ retrofit = "3.0.0"
 loggingInterceptor = "5.1.0"
 navigationCompose = "2.9.3"
 
-media3Version = "1.7.1"
+media3Version = "1.8.0"
 mediaVesrion = "1.7.0"
 
 coilVersion = "3.3.0"
