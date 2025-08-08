@@ -16,7 +16,7 @@ ksp = "2.1.21-2.0.1"
 kotlinxSerialization = "1.9.0"
 retrofit = "3.0.0"
 loggingInterceptor = "5.1.0"
-navigationCompose = "2.9.2"
+navigationCompose = "2.9.3"
 
 media3Version = "1.7.1"
 mediaVesrion = "1.7.0"
