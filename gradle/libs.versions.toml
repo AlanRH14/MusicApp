@@ -64,7 +64,7 @@ androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref = "medi
 androidx-media = { module = "androidx.media:media", version.ref = "mediaVesrion" }
 
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", name = "coil-compose", version.ref = "coilVersion" }
-coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", name = "coil-network", version.ref = "coilVersion" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-ktor3", name = "coil-compose", version.ref = "coilVersion" }
 
 data-store = { module = "androidx.datastore:datastore-preferences", name = "data-store", version.ref = "dataStoreVersion" }
 
