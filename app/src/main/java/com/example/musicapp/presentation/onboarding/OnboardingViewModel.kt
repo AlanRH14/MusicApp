@@ -37,12 +37,7 @@ class OnboardingViewModel(
 
             dataStoreHandle.readState(key = ConstantsPreferences.UserIsLoggedPreferences)
                 .collect { userIsLogged ->
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            isUserLoggedIn = userIsLogged
-                        )
-                    }
+                    _state.update { it.copy(isLoading = false) }
 
                     if (userIsLogged) {
                         _effect.emit(OnboardingEffect.NavigateToHome)
