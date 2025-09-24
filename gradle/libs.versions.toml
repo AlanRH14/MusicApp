@@ -23,7 +23,7 @@ mediaVesrion = "1.7.1"
 
 coilVersion = "3.3.0"
 dataStoreVersion = "1.1.7"
-roomVersion = "2.8.0"
+roomVersion = "2.8.1"
 
 googleCredentilasVersion = "1.5.0"
 googleIDVersion = "1.1.1"
