@@ -81,7 +81,7 @@ dependencies {
     implementation(libs.data.store)
 
     ksp(libs.room.compiler)
-    implementation(libs.androidx.room.ktx)
+    implementation(libs.room.ktx)
 
     implementation(libs.kotlin.parcelize.runtime)
 
