@@ -22,7 +22,7 @@ media3Version = "1.8.0"
 mediaVesrion = "1.7.1"
 
 coilVersion = "3.3.0"
-dataStoreVersion = "1.1.7"
+dataStoreVersion = "1.2.1"
 roomVersion = "2.8.4"
 
 googleCredentials = "1.6.0"
