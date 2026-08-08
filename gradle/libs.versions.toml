@@ -1,32 +1,32 @@
 [versions]
-agp = "8.13.0"
-kotlin = "2.2.20"
-coreKtx = "1.17.0"
+agp = "9.3.1"
+kotlin = "2.4.10"
+coreKtx = "1.19.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
-lifecycleRuntimeKtx = "2.9.4"
-activityCompose = "1.11.0"
-composeBom = "2025.09.01"
+lifecycleRuntimeKtx = "2.11.0"
+activityCompose = "1.13.0"
+composeBom = "2026.06.01"
 
-coreSplashscreen = "1.0.1"
-koinAndroid = "4.1.1"
-ksp = "2.1.21-2.0.1"
+coreSplashscreen = "1.2.0"
+koinAndroid = "4.2.2"
+ksp = "2.3.10"
 
-kotlinxSerialization = "1.9.0"
+kotlinxSerialization = "1.11.0"
 retrofit = "3.0.0"
-loggingInterceptor = "5.1.0"
-navigationCompose = "2.9.5"
+loggingInterceptor = "5.4.0"
+navigationCompose = "2.9.8"
 
-media3Version = "1.8.0"
-mediaVesrion = "1.7.1"
+media3Version = "1.11.0"
+mediaVesrion = "1.8.0"
 
-coilVersion = "3.3.0"
-dataStoreVersion = "1.1.7"
-roomVersion = "2.8.1"
+coilVersion = "3.5.0"
+dataStoreVersion = "1.2.1"
+roomVersion = "2.8.4"
 
-googleCredentilasVersion = "1.5.0"
-googleIDVersion = "1.1.1"
+googleCredentials = "1.6.0"
+googleID = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -68,19 +68,17 @@ coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-ktor3", name = "
 
 data-store = { module = "androidx.datastore:datastore-preferences", name = "data-store", version.ref = "dataStoreVersion" }
 
-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
-androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
-androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
 
 kotlin-parcelize-runtime = { module = "org.jetbrains.kotlin:kotlin-parcelize-runtime", version.ref = "kotlin" }
 
-androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "googleCredentilasVersion" }
-androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "googleCredentilasVersion" }
-android-googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleIDVersion" }
+androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "googleCredentials" }
+androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "googleCredentials" }
+android-googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleID" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
