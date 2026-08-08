@@ -23,7 +23,7 @@ mediaVesrion = "1.7.1"
 
 coilVersion = "3.3.0"
 dataStoreVersion = "1.1.7"
-roomVersion = "2.8.1"
+roomVersion = "2.8.4"
 
 googleCredentials = "1.6.0"
 googleID = "1.2.0"
@@ -76,7 +76,7 @@ kotlin-parcelize-runtime = { module = "org.jetbrains.kotlin:kotlin-parcelize-run
 
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "googleCredentials" }
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "googleCredentials" }
-android-googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleIDVersion" }
+android-googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleID" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
