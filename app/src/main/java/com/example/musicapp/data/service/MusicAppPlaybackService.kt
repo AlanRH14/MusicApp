@@ -74,41 +74,6 @@ class MusicAppPlaybackService : MediaSessionService() {
         }
     }
 
-    val mediaSessionCallback = object : MediaSessionCompat.Callback() {
-        override fun onPlay() {
-            resumeSong()
-        }
-
-        override fun onPause() {
-            pauseSong()
-        }
-
-        override fun onStop() {
-            super.onStop()
-        }
-
-        override fun onSkipToNext() {
-            super.onSkipToNext()
-        }
-
-        override fun onSkipToPrevious() {
-            super.onSkipToPrevious()
-        }
-
-        override fun onSeekTo(pos: Long) {
-            super.onSeekTo(pos)
-            exoPlayer.seekTo(pos)
-            _player.update {
-                it.copy(
-                    currentPosition = pos,
-                    duration = exoPlayer.duration,
-                    isBuffering = exoPlayer.isLoading,
-                    isPlaying = exoPlayer.isPlaying,
-                )
-            }
-        }
-    }
-
     override fun onCreate() {
         super.onCreate()
 
