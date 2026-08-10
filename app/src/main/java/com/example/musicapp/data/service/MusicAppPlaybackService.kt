@@ -1,7 +1,5 @@
 package com.example.musicapp.data.service
 
-import android.app.Notification
-import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.Build
@@ -10,6 +8,8 @@ import androidx.core.net.toUri
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.session.MediaSession
+import androidx.media3.session.MediaSessionService
 import com.example.musicapp.data.service.helper.MusicAppNotificationHelper
 import com.example.musicapp.domain.model.Song
 import kotlinx.coroutines.CoroutineScope
@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
-class MusicAppPlaybackService : Service() {
+class MusicAppPlaybackService : MediaSessionService() {
 
     companion object {
         const val ACTION_PLAY = "com.example.musicapp.ACTION_PLAY"
@@ -43,91 +43,35 @@ class MusicAppPlaybackService : Service() {
     private val binder = MusicBinder()
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private lateinit var exoPlayer: ExoPlayer
-    private lateinit var mediaSession: MediaSessionCompat
+    private var mediaSession: MediaSession? = null
     private val notificationHelper: MusicAppNotificationHelper by inject()
     private val _player = MutableStateFlow(PlayerState())
     val player = _player.asStateFlow()
     private var positionUpdateJob: Job? = null
-    private var notificationJob: Job? = null
     private var isForegroundService = false
-    private var currentNotification: Notification? = null
 
     private val playerListener = object : Player.Listener {
         override fun onPlaybackStateChanged(playbackState: Int) {
-            when (playbackState) {
-                Player.STATE_BUFFERING -> {
-                    _player.update {
-                        it.copy(
-                            isBuffering = true,
-                            currentPosition = exoPlayer.currentPosition,
-                            duration = exoPlayer.duration,
-                            isPlaying = false
-                        )
-                    }
-                    updatePlaybackState(PlaybackStateCompat.STATE_BUFFERING)
-                }
-
-                Player.STATE_READY -> {
-                    _player.update {
-                        it.copy(
-                            isPlaying = exoPlayer.isPlaying,
-                            currentPosition = exoPlayer.currentPosition,
-                            duration = exoPlayer.duration,
-                            isBuffering = false,
-                        )
-                    }
-                    if (exoPlayer.isPlaying) {
-                        startForegroundServiceIfNeeded()
-                        updatePlaybackState(PlaybackStateCompat.STATE_PLAYING)
-                    } else {
-                        updatePlaybackState(PlaybackStateCompat.STATE_PAUSED)
-                    }
-                }
-
-                Player.STATE_ENDED -> {
-                    _player.update {
-                        it.copy(
-                            isPlaying = false,
-                            currentPosition = 0L,
-                            duration = 0L,
-                            isBuffering = false
-                        )
-                    }
-                    updatePlaybackState(PlaybackStateCompat.STATE_STOPPED)
-                }
-
-                Player.STATE_IDLE -> {
-                    _player.update {
-                        it.copy(
-                            isPlaying = false,
-                            currentPosition = 0L,
-                            duration = 0L,
-                            isBuffering = false
-                        )
-                    }
-                    updatePlaybackState(PlaybackStateCompat.STATE_NONE)
-                }
+            _player.update {
+                it.copy(
+                    isBuffering = true,
+                    currentPosition = exoPlayer.currentPosition,
+                    duration = exoPlayer.duration,
+                    isPlaying = false
+                )
             }
-            updateMediaSessionState()
+
+            if (exoPlayer.isPlaying) startForegroundServiceIfNeeded()
         }
-    }
 
-    private fun updatePlaybackState(stateBuffering: Int) {
-        val state = PlaybackStateCompat.Builder()
-            .setState(
-                stateBuffering,
-                exoPlayer.currentPosition,
-                1f
-            ).setActions(
-                PlaybackStateCompat.ACTION_PLAY or
-                        PlaybackStateCompat.ACTION_PAUSE or
-                        PlaybackStateCompat.ACTION_STOP or
-                        PlaybackStateCompat.ACTION_SEEK_TO or
-                        PlaybackStateCompat.ACTION_SKIP_TO_NEXT or
-                        PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
-            ).build()
-
-        mediaSession.setPlaybackState(state)
+        override fun onIsPlayingChanged(isPlaying: Boolean) {
+            _player.update { it.copy(isPlaying = isPlaying) }
+            if (isPlaying) {
+                startForegroundServiceIfNeeded()
+            } else {
+                updateNotification()
+            }
+        }
     }
 
     private fun updateMediaSessionState() {
@@ -185,7 +129,7 @@ class MusicAppPlaybackService : Service() {
             it.addListener(playerListener)
         }
 
-        mediaSession = MediaSessionCompat(this, "MusicAppPlaybackService").also {
+        mediaSession = MediaSession(this, "MusicAppPlaybackService").also {
             it.isActive = true
             it.setCallback(mediaSessionCallback)
             it.setPlaybackState(
@@ -201,6 +145,10 @@ class MusicAppPlaybackService : Service() {
             )
         }
         startPositionUpdate()
+    }
+
+    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? {
+        TODO("Not yet implemented")
     }
 
     private fun startPositionUpdate() {
