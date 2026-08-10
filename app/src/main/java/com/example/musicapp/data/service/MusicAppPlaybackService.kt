@@ -128,29 +128,16 @@ class MusicAppPlaybackService : MediaSessionService() {
     }
 
     private fun updateNotification() {
-        notificationJob?.cancel()
-        notificationJob = serviceScope.launch {
-            notificationHelper.createPlayerNotification(
-                player.value.isPlaying,
-                player.value.currentSong ?: return@launch,
-                mediaSession
-            ) {
-                try {
-                    currentNotification = it
-                    notificationHelper.updateNotification(it)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }
-    }
+        val song = player.value.currentSong ?: return
+        val session = mediaSession ?: return
 
-    fun stopForegroundServiceIfNeeded() {
-        if (isForegroundService) {
+        notificationHelper.createPlayerNotification(
+            player.value.isPlaying,
+            song,
+            session
+        ) {
             try {
-                mediaSession.isActive = false
-                stopForeground(STOP_FOREGROUND_REMOVE)
-                isForegroundService = false
+                notificationHelper.updateNotification(it)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -158,9 +145,7 @@ class MusicAppPlaybackService : MediaSessionService() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (intent != null) {
-            MediaButtonReceiver.handleIntent(mediaSession, intent)
-        }
+        super.onStartCommand(intent, flags, startId)
 
         when (intent?.action) {
             ACTION_PLAY -> {
@@ -169,14 +154,7 @@ class MusicAppPlaybackService : MediaSessionService() {
                 } else {
                     intent.getParcelableExtra(KEY_SONG)
                 }
-
-                if (song != null) {
-                    playSong(song)
-                } else {
-                    if (player.value.currentSong != null) {
-                        resumeSong()
-                    }
-                }
+                song?.let { playSong(it) } ?: resumeSong()
             }
 
             ACTION_PAUSE -> pauseSong()
