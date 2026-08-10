@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.net.toUri
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
@@ -168,16 +169,20 @@ class MusicAppPlaybackService : MediaSessionService() {
         try {
             _player.update { it.copy(currentSong = song, isBuffering = true) }
 
-            val metaBuilder = MediaItem.Builder()
+            val mediaItem = MediaItem.Builder()
                 .setUri(song.audioUrl.toUri())
-                .
+                .setMediaId(song.id)
+                .setMediaMetadata(
+                    MediaMetadata.Builder()
+                        .setTitle(song.title)
+                        .setArtist(song.artist.name)
+                        .setArtworkUri(song.coverImage.toUri())
+                        .build()
+                ).build()
 
-            mediaSession.setMetadata(metaBuilder.build())
-            val mediaItem = MediaItem.fromUri(song.audioUrl.toUri())
             exoPlayer.setMediaItem(mediaItem)
             exoPlayer.prepare()
-            exoPlayer.playWhenReady = true
-            updatePlaybackState(PlaybackStateCompat.STATE_PLAYING)
+            exoPlayer.play()
         } catch (e: Exception) {
             _player.update {
                 it.copy(
