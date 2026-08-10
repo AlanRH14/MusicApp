@@ -169,8 +169,6 @@ class MusicAppPlaybackService : MediaSessionService() {
                 it.copy(
                     currentSong = song,
                     isBuffering = true,
-                    currentPosition = 0L,
-                    duration = song.duration
                 )
             }
 
