@@ -82,9 +82,7 @@ class MusicAppPlaybackService : MediaSessionService() {
             it.addListener(playerListener)
         }
 
-        mediaSession = MediaSession(this, "MusicAppPlaybackService").also {
-
-        }
+        mediaSession = MediaSession.Builder(this, exoPlayer).build()
         startPositionUpdate()
     }
 
