@@ -74,18 +74,6 @@ class MusicAppPlaybackService : MediaSessionService() {
         }
     }
 
-    private fun updateMediaSessionState() {
-        if (exoPlayer.isPlaying || player.value.currentSong != null) {
-            if (!mediaSession.isActive) {
-                mediaSession.isActive = true
-            }
-        } else {
-            if (mediaSession.isActive) {
-                mediaSession.isActive = false
-            }
-        }
-    }
-
     val mediaSessionCallback = object : MediaSessionCompat.Callback() {
         override fun onPlay() {
             resumeSong()
