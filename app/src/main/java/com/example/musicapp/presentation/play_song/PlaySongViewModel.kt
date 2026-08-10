@@ -134,7 +134,7 @@ class PlaySongViewModel(
 
     private fun seekTo(position: Long) {
         playbackService?.let { service ->
-            service.mediaSessionCallback.onSeekTo(position)
+            service.seekTo(position)
         } ?: run {
             _state.update { it.copy(error = "Playback service not bound") }
         }

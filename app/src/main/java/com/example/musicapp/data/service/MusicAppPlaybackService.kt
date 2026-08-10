@@ -195,6 +195,20 @@ class MusicAppPlaybackService : MediaSessionService() {
         }
     }
 
+    fun seekTo(position: Long) {
+        try {
+            exoPlayer.seekTo(position)
+            _player.update {
+                it.copy(
+                    currentPosition = position,
+                    duration = exoPlayer.duration
+                )
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     fun pauseSong() {
         try {
             exoPlayer.pause()
