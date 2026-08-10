@@ -156,18 +156,8 @@ class MusicAppPlaybackService : MediaSessionService() {
                 }
                 song?.let { playSong(it) } ?: resumeSong()
             }
-
             ACTION_PAUSE -> pauseSong()
-
-            ACTION_STOP -> {}
-
-            ACTION_PREVIOUS -> {}
-
-            ACTION_NEXT -> {}
-
-            ACTION_PREPARE_SONG -> {}
-
-            else -> {}
+            ACTION_STOP -> stopSelf()
         }
 
         return START_STICKY
