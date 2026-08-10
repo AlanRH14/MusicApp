@@ -83,19 +83,7 @@ class MusicAppPlaybackService : MediaSessionService() {
         }
 
         mediaSession = MediaSession(this, "MusicAppPlaybackService").also {
-            it.isActive = true
-            it.setCallback(mediaSessionCallback)
-            it.setPlaybackState(
-                PlaybackStateCompat.Builder().setState(PlaybackStateCompat.STATE_NONE, 0, 0F)
-                    .setActions(
-                        PlaybackStateCompat.ACTION_PLAY or
-                                PlaybackStateCompat.ACTION_PAUSE or
-                                PlaybackStateCompat.ACTION_STOP or
-                                PlaybackStateCompat.ACTION_SEEK_TO or
-                                PlaybackStateCompat.ACTION_SKIP_TO_NEXT or
-                                PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
-                    ).build()
-            )
+
         }
         startPositionUpdate()
     }
