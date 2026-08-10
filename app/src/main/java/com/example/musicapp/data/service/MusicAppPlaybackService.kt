@@ -156,6 +156,7 @@ class MusicAppPlaybackService : MediaSessionService() {
                 }
                 song?.let { playSong(it) } ?: resumeSong()
             }
+
             ACTION_PAUSE -> pauseSong()
             ACTION_STOP -> stopSelf()
         }
@@ -165,20 +166,11 @@ class MusicAppPlaybackService : MediaSessionService() {
 
     private fun playSong(song: Song) {
         try {
-            _player.update {
-                it.copy(
-                    currentSong = song,
-                    isBuffering = true,
-                )
-            }
+            _player.update { it.copy(currentSong = song, isBuffering = true) }
 
-            val metaBuilder = MediaMetadataCompat.Builder()
-                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, song.title)
-                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, song.artist.name)
-                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, song.duration)
-                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, song.coverImage)
-                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON_URI, song.coverImage)
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, song.id)
+            val metaBuilder = MediaItem.Builder()
+                .setUri(song.audioUrl.toUri())
+                .
 
             mediaSession.setMetadata(metaBuilder.build())
             val mediaItem = MediaItem.fromUri(song.audioUrl.toUri())
