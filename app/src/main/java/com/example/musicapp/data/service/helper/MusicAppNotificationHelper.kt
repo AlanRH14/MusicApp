@@ -8,9 +8,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
-import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.media3.session.MediaSession
 import com.example.musicapp.MainActivity
 import com.example.musicapp.R
 import com.example.musicapp.data.service.MusicAppPlaybackService
@@ -55,7 +55,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
     fun createPlayerNotification(
         isPlaying: Boolean,
         song: Song,
-        mediasSession: MediaSessionCompat,
+        mediasSession: MediaSession,
         callback: (Notification) -> Unit,
     ) {
         val intent = Intent(mContext, MainActivity::class.java).apply {

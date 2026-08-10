@@ -87,7 +87,8 @@ class MusicAppPlaybackService : MediaSessionService() {
         startPositionUpdate()
     }
 
-    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession?  = mediaSession
+    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? =
+        mediaSession
 
     private fun startPositionUpdate() {
         positionUpdateJob?.cancel()
@@ -107,29 +108,22 @@ class MusicAppPlaybackService : MediaSessionService() {
     }
 
     fun startForegroundServiceIfNeeded() {
-        val currentSong = player.value.currentSong ?: return
+        val song = player.value.currentSong ?: return
+        val session = mediaSession ?: return
 
-        if (!isForegroundService) {
-            notificationHelper.createPlayerNotification(
-                player.value.isPlaying, currentSong, mediaSession
-            ) {
-                if (!isForegroundService) {
-                    try {
-                        currentNotification = it
-                        startForeground(
-                            MusicAppNotificationHelper.NOTIFICATION_ID, it
-                        )
-                        isForegroundService = true
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                } else {
-                    currentNotification = it
-                    updateNotification()
+        notificationHelper.createPlayerNotification(
+            player.value.isPlaying, song, session
+        ) {
+            if (!isForegroundService) {
+                try {
+                    startForeground(MusicAppNotificationHelper.NOTIFICATION_ID, it)
+                    isForegroundService = true
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
+            } else {
+                notificationHelper.updateNotification(it)
             }
-        } else {
-            updateNotification()
         }
     }
 
