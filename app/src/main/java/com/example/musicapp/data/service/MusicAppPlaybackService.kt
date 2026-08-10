@@ -86,9 +86,7 @@ class MusicAppPlaybackService : MediaSessionService() {
         startPositionUpdate()
     }
 
-    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? {
-        TODO("Not yet implemented")
-    }
+    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession?  = mediaSession
 
     private fun startPositionUpdate() {
         positionUpdateJob?.cancel()
