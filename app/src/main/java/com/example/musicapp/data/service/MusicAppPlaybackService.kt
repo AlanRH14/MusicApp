@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import kotlin.time.Duration.Companion.milliseconds
 
 class MusicAppPlaybackService : MediaSessionService() {
 
@@ -97,12 +98,10 @@ class MusicAppPlaybackService : MediaSessionService() {
                         it.copy(
                             currentPosition = exoPlayer.currentPosition,
                             duration = exoPlayer.duration,
-                            isBuffering = exoPlayer.isLoading,
-                            isPlaying = exoPlayer.isPlaying,
                         )
                     }
                 }
-                delay(500)
+                delay(500.milliseconds)
             }
         }
     }
