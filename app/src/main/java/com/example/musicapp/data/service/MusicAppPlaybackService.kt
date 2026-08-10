@@ -33,7 +33,7 @@ class MusicAppPlaybackService : MediaSessionService() {
         const val ACTION_STOP = "com.example.musicapp.ACTION_STOP"
         const val ACTION_PREVIOUS = "com.example.musicapp.ACTION_PREVIOUS"
         const val ACTION_NEXT = "com.example.musicapp.ACTION_NEXT"
-        const val ACTION_PREPARE_SONG = "com.example.musicapp.ACTION_PREPARE_SONG"
+        const val ACTION_BIND_CUSTOM = "com.example.musicapp.ACTION_BIND_CUSTOM"
 
         const val KEY_SONG = "SONG"
     }
@@ -205,7 +205,6 @@ class MusicAppPlaybackService : MediaSessionService() {
                     duration = exoPlayer.duration
                 )
             }
-            updatePlaybackState(PlaybackStateCompat.STATE_PAUSED)
             updateNotification()
         } catch (e: Exception) {
             _player.update {
@@ -229,7 +228,6 @@ class MusicAppPlaybackService : MediaSessionService() {
                     duration = exoPlayer.duration
                 )
             }
-            updatePlaybackState(PlaybackStateCompat.STATE_PLAYING)
             startForegroundServiceIfNeeded()
         } catch (e: Exception) {
             _player.update {
@@ -244,7 +242,11 @@ class MusicAppPlaybackService : MediaSessionService() {
         updateNotification()
     }
 
-    override fun onBind(intent: Intent?): IBinder {
-        return binder
+    override fun onBind(intent: Intent?): IBinder? {
+        return if (intent?.action == ACTION_BIND_CUSTOM) {
+            binder
+        } else {
+            super.onBind(intent)
+        }
     }
 }
