@@ -75,8 +75,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
             .setSmallIcon(R.drawable.ic_profile)
             .setContentIntent(pendingIntent)
             .setStyle(
-                androidx.media.app.NotificationCompat.MediaStyle()
-                    .setMediaSession(mediasSession.sessionToken)
+                MediaNotificationHelper.MediaStyle(mediasSession)
                     .setShowActionsInCompactView(0)
             )
             .setOngoing(true)

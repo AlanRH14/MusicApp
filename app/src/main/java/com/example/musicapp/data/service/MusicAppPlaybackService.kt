@@ -249,4 +249,11 @@ class MusicAppPlaybackService : MediaSessionService() {
             super.onBind(intent)
         }
     }
+
+    override fun onDestroy() {
+        exoPlayer.release()
+        mediaSession?.release()
+        mediaSession = null
+        super.onDestroy()
+    }
 }
