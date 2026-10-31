@@ -13,7 +13,7 @@ coreSplashscreen = "1.2.0"
 koinAndroid = "4.2.2"
 ksp = "2.3.10"
 
-kotlinxSerialization = "1.11.0"
+kotlinxSerialization = "1.12.0"
 retrofit = "3.0.0"
 loggingInterceptor = "5.5.1"
 navigationCompose = "2.10.2"
