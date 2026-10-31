@@ -3,12 +3,12 @@ package com.example.musicapp.data.remote.datasource
 import com.example.musicapp.data.model.reponse.LoginResponse
 import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.request.RegisterRequest
-import com.example.musicapp.data.remote.api.ApiService
+import com.example.musicapp.data.remote.api.AuthApiService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 class RemoteAuthDataSourceImpl(
-    private val apiService: ApiService,
+    private val apiService: AuthApiService,
     private val ioDispatcher: CoroutineDispatcher
 ) : RemoteAuthDataSource {
 

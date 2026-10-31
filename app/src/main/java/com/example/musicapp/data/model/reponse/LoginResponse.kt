@@ -9,3 +9,4 @@ data class LoginResponse(
     @SerialName("token") val token: String? = null,
     @SerialName("user") val user: UserDto? = null
 )
+
