@@ -1,6 +1,8 @@
 package com.example.musicapp.di
 
-import com.example.musicapp.data.remote.api.ApiService
+import com.example.musicapp.data.remote.api.AuthApiService
+import com.example.musicapp.data.remote.api.HomeApiService
+import com.example.musicapp.data.remote.api.PlaylistApiService
 import com.example.musicapp.utils.Constants.BASE_URL
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -39,6 +41,14 @@ val networkModule = module {
     }
 
     single {
-        get<Retrofit>().create(ApiService::class.java)
+        get<Retrofit>().create(AuthApiService::class.java)
+    }
+
+    single {
+        get<Retrofit>().create(HomeApiService::class.java)
+    }
+
+    single {
+        get<Retrofit>().create(PlaylistApiService::class.java)
     }
 }

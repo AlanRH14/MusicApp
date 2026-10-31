@@ -4,7 +4,7 @@ import com.example.musicapp.common.ApiMapper
 import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.datasource.UserLocalDataSource
 import com.example.musicapp.data.model.SongDto
-import com.example.musicapp.data.remote.api.ApiService
+import com.example.musicapp.data.remote.api.HomeApiService
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.domain.repository.MusicRepository
 import com.example.musicapp.utils.Constants.AUTHENTICATION_HEADER_TYPE
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
 class MusicRepositoryImpl(
-    private val apiService: ApiService,
+    private val homeApiService: HomeApiService,
     private val apiSongMapper: ApiMapper<SongDto, Song>,
     private val userLocalDataSource: UserLocalDataSource,
 ) : MusicRepository {
@@ -21,7 +21,7 @@ class MusicRepositoryImpl(
     override fun getSongById(id: String): Flow<Resource<Song>> = flow {
         emit(Resource.Loading)
         userLocalDataSource.getUser()?.let { userData ->
-            val response = apiService.getSongByID(
+            val response = homeApiService.getSongByID(
                 token = "$AUTHENTICATION_HEADER_TYPE ${userData.token}",
                 id = id
             )

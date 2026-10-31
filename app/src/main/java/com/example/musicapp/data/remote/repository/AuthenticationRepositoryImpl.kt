@@ -23,7 +23,6 @@ class AuthenticationRepositoryImpl(
 
     override suspend fun login(loginRequest: LoginRequest): Resource<User> =
         withContext(ioDispatcher) {
-            Resource.Loading
             try {
                 val response = remoteDataSource.login(loginRequest)
                 val entity = apiLoginMapper.mapToDomain(apiDto = response)
@@ -40,7 +39,6 @@ class AuthenticationRepositoryImpl(
 
     override suspend fun register(registerRequest: RegisterRequest): Resource<User> =
         withContext(ioDispatcher) {
-            Resource.Loading
             try {
                 val response = remoteDataSource.register(registerRequest)
                 val entity = apiLoginMapper.mapToDomain(apiDto = response)

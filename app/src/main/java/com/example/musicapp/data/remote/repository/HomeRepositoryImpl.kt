@@ -2,7 +2,7 @@ package com.example.musicapp.data.remote.repository
 
 import com.example.musicapp.common.ApiMapper
 import com.example.musicapp.data.model.reponse.HomeResponse
-import com.example.musicapp.data.remote.api.ApiService
+import com.example.musicapp.data.remote.api.HomeApiService
 import com.example.musicapp.domain.model.Home
 import com.example.musicapp.domain.repository.HomeRepository
 import com.example.musicapp.common.Resource
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
 class HomeRepositoryImpl(
-    private val apiService: ApiService,
+    private val homeApiService: HomeApiService,
     private val apiHomeMapper: ApiMapper<HomeResponse, Home>,
     private val userLocalDataSource: UserLocalDataSource
 ) : HomeRepository {
@@ -23,7 +23,7 @@ class HomeRepositoryImpl(
 
         userLocalDataSource.getUser()?.let { userData ->
             val response =
-                apiService.getHome(token = "$AUTHENTICATION_HEADER_TYPE ${userData.token}")
+                homeApiService.getHome(token = "$AUTHENTICATION_HEADER_TYPE ${userData.token}")
             if (response.isSuccessful) {
                 response.body()?.let { res ->
                     emit(Resource.Success(data = apiHomeMapper.mapToDomain(apiDto = res)))

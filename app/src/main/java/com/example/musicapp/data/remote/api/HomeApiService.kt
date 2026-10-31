@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
 
-interface ApiService {
+interface HomeApiService {
     @GET("/home")
     suspend fun getHome(
         @Header("Authorization") token: String
