@@ -9,7 +9,6 @@ import com.example.musicapp.domain.model.Song
 class PlaylistApiMapperImpl(
     private val apiSongMapper: ApiMapper<SongDto, Song>
 ): ApiMapper<PlaylistDto, Playlist> {
-
     override fun mapToDomain(apiDto: PlaylistDto): Playlist {
         return Playlist(
             id = apiDto.id ?: "",
