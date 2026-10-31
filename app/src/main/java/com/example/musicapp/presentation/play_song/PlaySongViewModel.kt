@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
@@ -60,8 +61,10 @@ class PlaySongViewModel(
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
             isServiceBound = true
-            playbackService = (binder as MusicAppPlaybackService.MusicBinder).getService()
-            observerPlaybackService()
+            if (binder is MusicAppPlaybackService.MusicBinder) {
+                playbackService = binder.getService()
+                observerPlaybackService()
+            }
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
@@ -73,18 +76,18 @@ class PlaySongViewModel(
     private fun observerPlaybackService() {
         playbackService?.let { service ->
             viewModelScope.launch(Dispatchers.IO) {
-                service.player.onEach { player ->
+                service.player.collectLatest { player ->
                     _state.update {
                         it.copy(
                             isPlaying = player.isPlaying,
-                            currentSong = player.currentSong,
+                            currentSong = player.currentSong ?: it.currentSong,
                             currentPosition = player.currentPosition.coerceAtLeast(0),
                             duration = player.duration.coerceAtLeast(0),
                             isBuffering = player.isBuffering,
                             error = player.error ?: it.error
                         )
                     }
-                }.launchIn(viewModelScope)
+                }
             }
         }
     }
@@ -98,10 +101,11 @@ class PlaySongViewModel(
                     }
 
                     is Resource.Success -> {
-                        _state.update { song ->
-                            song.copy(
+                        _state.update { state ->
+                            state.copy(
                                 isLoading = false,
-                                song = song.song
+                                song = response.data,
+                                currentSong = response.data
                             )
                         }
                         startServiceAndBind(song = response.data)
@@ -155,8 +159,11 @@ class PlaySongViewModel(
         }
 
         if (!isServiceBound) {
+            val bindIntent = Intent(mContext, MusicAppPlaybackService::class.java).apply {
+                action = MusicAppPlaybackService.ACTION_BIND_CUSTOM
+            }
             mContext.bindService(
-                Intent(mContext, MusicAppPlaybackService::class.java),
+                bindIntent,
                 serviceConnection,
                 Context.BIND_AUTO_CREATE
             )
@@ -231,5 +238,17 @@ class PlaySongViewModel(
 
     private fun onToggleToBottomSheet() {
         _state.update { it.copy(shouldShowSheet = !it.shouldShowSheet) }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        if (isServiceBound) {
+            try {
+                mContext.unbindService(serviceConnection)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            isServiceBound = false
+        }
     }
 }

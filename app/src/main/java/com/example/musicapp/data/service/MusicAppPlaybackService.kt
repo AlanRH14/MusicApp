@@ -7,6 +7,7 @@ import android.os.IBinder
 import androidx.core.net.toUri
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
+import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
@@ -34,7 +35,6 @@ class MusicAppPlaybackService : MediaSessionService() {
         const val ACTION_PREVIOUS = "com.example.musicapp.ACTION_PREVIOUS"
         const val ACTION_NEXT = "com.example.musicapp.ACTION_NEXT"
         const val ACTION_BIND_CUSTOM = "com.example.musicapp.ACTION_BIND_CUSTOM"
-
         const val KEY_SONG = "SONG"
     }
 
@@ -54,12 +54,13 @@ class MusicAppPlaybackService : MediaSessionService() {
 
     private val playerListener = object : Player.Listener {
         override fun onPlaybackStateChanged(playbackState: Int) {
+            val isBuffering = playbackState == Player.STATE_BUFFERING
             _player.update {
                 it.copy(
-                    isBuffering = true,
+                    isBuffering = isBuffering,
                     currentPosition = exoPlayer.currentPosition,
                     duration = exoPlayer.duration,
-                    isPlaying = false
+                    isPlaying = exoPlayer.isPlaying
                 )
             }
 
@@ -72,6 +73,16 @@ class MusicAppPlaybackService : MediaSessionService() {
                 startForegroundServiceIfNeeded()
             } else {
                 updateNotification()
+            }
+        }
+
+        override fun onPlayerError(error: PlaybackException) {
+            _player.update {
+                it.copy(
+                    isPlaying = false,
+                    isBuffering = false,
+                    error = error.localizedMessage ?: "Error de reproducción"
+                )
             }
         }
     }
@@ -167,7 +178,8 @@ class MusicAppPlaybackService : MediaSessionService() {
 
     private fun playSong(song: Song) {
         try {
-            _player.update { it.copy(currentSong = song, isBuffering = true) }
+            android.util.Log.d("PlaybackService", "Cargando audio desde: ${song.audioUrl}")
+            _player.update { it.copy(currentSong = song, isBuffering = true, error = null) }
 
             val mediaItem = MediaItem.Builder()
                 .setUri(song.audioUrl.toUri())
