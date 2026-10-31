@@ -201,16 +201,14 @@ class PlaySongViewModel(
 
     private fun addSongToPlaylist(playlistID: String, songID: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            _state.update { it.copy(isLoading = true) }
+
             val response = playlistRepository.addSongToPlaylist(
                 playlistID = playlistID,
                 songID = songID
             )
 
             when (response) {
-                is Resource.Loading -> {
-                    _state.update { it.copy(isLoading = true) }
-                }
-
                 is Resource.Success -> {
                     _state.update {
                         it.copy(
@@ -229,6 +227,10 @@ class PlaySongViewModel(
                             error = response.message
                         )
                     }
+                }
+
+                is Resource.Loading -> {
+                    _state.update { it.copy(isLoading = false) }
                 }
             }
         }

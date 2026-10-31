@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class GoogleAuthUIProvider {
+
     suspend fun signIn(
         mContext: Context,
         credentialsManager: CredentialManager

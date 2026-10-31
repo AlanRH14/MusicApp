@@ -31,7 +31,7 @@ val repositoryModule = module {
 
     single<HomeRepository> {
         HomeRepositoryImpl(
-            apiService = get(),
+            homeApiService = get(),
             apiHomeMapper = get(named("HomeApiMapper")),
             userLocalDataSource = get()
         )
@@ -39,7 +39,7 @@ val repositoryModule = module {
 
     single<MusicRepository> {
         MusicRepositoryImpl(
-            apiService = get(),
+            homeApiService = get(),
             apiSongMapper = get(named("SongApiMapper")),
             userLocalDataSource = get()
         )

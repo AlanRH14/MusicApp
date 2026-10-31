@@ -1,4 +1,4 @@
-package com.example.musicapp.data.mapper_impl.playlist
+package com.example.musicapp.data.mappers.playlist
 
 import com.example.musicapp.common.ApiMapper
 import com.example.musicapp.data.model.PlaylistDto

@@ -47,6 +47,7 @@ class CreatePlaylistViewModel(
         if (validateEmptyInputs()) return
 
         viewModelScope.launch(Dispatchers.IO) {
+            _state.update { it.copy(isLoading = true) }
             val response = playlistRepository.createPlaylist(
                 CreatePlaylistRequest(
                     name = _state.value.name,
@@ -55,10 +56,6 @@ class CreatePlaylistViewModel(
             )
 
             when (response) {
-                is Resource.Loading -> {
-                    _state.update { it.copy(isLoading = true) }
-                }
-
                 is Resource.Success -> {
                     _state.update {
                         it.copy(
@@ -76,6 +73,10 @@ class CreatePlaylistViewModel(
                             error = response.message
                         )
                     }
+                }
+
+                else -> {
+                    _state.update { it.copy(isLoading = false) }
                 }
             }
         }
