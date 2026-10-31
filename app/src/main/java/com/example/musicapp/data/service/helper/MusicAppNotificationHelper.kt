@@ -8,9 +8,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
-import android.support.v4.media.session.MediaSessionCompat
+import androidx.annotation.OptIn
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.session.MediaSession
 import com.example.musicapp.MainActivity
 import com.example.musicapp.R
 import com.example.musicapp.data.service.MusicAppPlaybackService
@@ -21,6 +23,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.net.URL
+import androidx.media3.session.MediaStyleNotificationHelper
 
 class MusicAppNotificationHelper(private val mContext: Context) {
 
@@ -52,10 +55,11 @@ class MusicAppNotificationHelper(private val mContext: Context) {
 
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
+    @OptIn(UnstableApi::class)
     fun createPlayerNotification(
         isPlaying: Boolean,
         song: Song,
-        mediasSession: MediaSessionCompat,
+        mediasSession: MediaSession,
         callback: (Notification) -> Unit,
     ) {
         val intent = Intent(mContext, MainActivity::class.java).apply {
@@ -75,8 +79,7 @@ class MusicAppNotificationHelper(private val mContext: Context) {
             .setSmallIcon(R.drawable.ic_profile)
             .setContentIntent(pendingIntent)
             .setStyle(
-                androidx.media.app.NotificationCompat.MediaStyle()
-                    .setMediaSession(mediasSession.sessionToken)
+                MediaStyleNotificationHelper.MediaStyle(mediasSession)
                     .setShowActionsInCompactView(0)
             )
             .setOngoing(true)

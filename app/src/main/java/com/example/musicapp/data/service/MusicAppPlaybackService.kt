@@ -1,19 +1,17 @@
 package com.example.musicapp.data.service
 
-import android.app.Notification
-import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
-import android.support.v4.media.MediaMetadataCompat
-import android.support.v4.media.session.MediaSessionCompat
-import android.support.v4.media.session.PlaybackStateCompat
 import androidx.core.net.toUri
-import androidx.media.session.MediaButtonReceiver
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
+import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.session.MediaSession
+import androidx.media3.session.MediaSessionService
 import com.example.musicapp.data.service.helper.MusicAppNotificationHelper
 import com.example.musicapp.domain.model.Song
 import kotlinx.coroutines.CoroutineScope
@@ -26,8 +24,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import kotlin.time.Duration.Companion.milliseconds
 
-class MusicAppPlaybackService : Service() {
+class MusicAppPlaybackService : MediaSessionService() {
 
     companion object {
         const val ACTION_PLAY = "com.example.musicapp.ACTION_PLAY"
@@ -35,8 +34,7 @@ class MusicAppPlaybackService : Service() {
         const val ACTION_STOP = "com.example.musicapp.ACTION_STOP"
         const val ACTION_PREVIOUS = "com.example.musicapp.ACTION_PREVIOUS"
         const val ACTION_NEXT = "com.example.musicapp.ACTION_NEXT"
-        const val ACTION_PREPARE_SONG = "com.example.musicapp.ACTION_PREPARE_SONG"
-
+        const val ACTION_BIND_CUSTOM = "com.example.musicapp.ACTION_BIND_CUSTOM"
         const val KEY_SONG = "SONG"
     }
 
@@ -47,135 +45,43 @@ class MusicAppPlaybackService : Service() {
     private val binder = MusicBinder()
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private lateinit var exoPlayer: ExoPlayer
-    private lateinit var mediaSession: MediaSessionCompat
+    private var mediaSession: MediaSession? = null
     private val notificationHelper: MusicAppNotificationHelper by inject()
     private val _player = MutableStateFlow(PlayerState())
     val player = _player.asStateFlow()
     private var positionUpdateJob: Job? = null
-    private var notificationJob: Job? = null
     private var isForegroundService = false
-    private var currentNotification: Notification? = null
 
     private val playerListener = object : Player.Listener {
         override fun onPlaybackStateChanged(playbackState: Int) {
-            when (playbackState) {
-                Player.STATE_BUFFERING -> {
-                    _player.update {
-                        it.copy(
-                            isBuffering = true,
-                            currentPosition = exoPlayer.currentPosition,
-                            duration = exoPlayer.duration,
-                            isPlaying = false
-                        )
-                    }
-                    updatePlaybackState(PlaybackStateCompat.STATE_BUFFERING)
-                }
-
-                Player.STATE_READY -> {
-                    _player.update {
-                        it.copy(
-                            isPlaying = exoPlayer.isPlaying,
-                            currentPosition = exoPlayer.currentPosition,
-                            duration = exoPlayer.duration,
-                            isBuffering = false,
-                        )
-                    }
-                    if (exoPlayer.isPlaying) {
-                        startForegroundServiceIfNeeded()
-                        updatePlaybackState(PlaybackStateCompat.STATE_PLAYING)
-                    } else {
-                        updatePlaybackState(PlaybackStateCompat.STATE_PAUSED)
-                    }
-                }
-
-                Player.STATE_ENDED -> {
-                    _player.update {
-                        it.copy(
-                            isPlaying = false,
-                            currentPosition = 0L,
-                            duration = 0L,
-                            isBuffering = false
-                        )
-                    }
-                    updatePlaybackState(PlaybackStateCompat.STATE_STOPPED)
-                }
-
-                Player.STATE_IDLE -> {
-                    _player.update {
-                        it.copy(
-                            isPlaying = false,
-                            currentPosition = 0L,
-                            duration = 0L,
-                            isBuffering = false
-                        )
-                    }
-                    updatePlaybackState(PlaybackStateCompat.STATE_NONE)
-                }
-            }
-            updateMediaSessionState()
-        }
-    }
-
-    private fun updatePlaybackState(stateBuffering: Int) {
-        val state = PlaybackStateCompat.Builder()
-            .setState(
-                stateBuffering,
-                exoPlayer.currentPosition,
-                1f
-            ).setActions(
-                PlaybackStateCompat.ACTION_PLAY or
-                        PlaybackStateCompat.ACTION_PAUSE or
-                        PlaybackStateCompat.ACTION_STOP or
-                        PlaybackStateCompat.ACTION_SEEK_TO or
-                        PlaybackStateCompat.ACTION_SKIP_TO_NEXT or
-                        PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
-            ).build()
-
-        mediaSession.setPlaybackState(state)
-    }
-
-    private fun updateMediaSessionState() {
-        if (exoPlayer.isPlaying || player.value.currentSong != null) {
-            if (!mediaSession.isActive) {
-                mediaSession.isActive = true
-            }
-        } else {
-            if (mediaSession.isActive) {
-                mediaSession.isActive = false
-            }
-        }
-    }
-
-    val mediaSessionCallback = object : MediaSessionCompat.Callback() {
-        override fun onPlay() {
-            resumeSong()
-        }
-
-        override fun onPause() {
-            pauseSong()
-        }
-
-        override fun onStop() {
-            super.onStop()
-        }
-
-        override fun onSkipToNext() {
-            super.onSkipToNext()
-        }
-
-        override fun onSkipToPrevious() {
-            super.onSkipToPrevious()
-        }
-
-        override fun onSeekTo(pos: Long) {
-            super.onSeekTo(pos)
-            exoPlayer.seekTo(pos)
+            val isBuffering = playbackState == Player.STATE_BUFFERING
             _player.update {
                 it.copy(
-                    currentPosition = pos,
+                    isBuffering = isBuffering,
+                    currentPosition = exoPlayer.currentPosition,
                     duration = exoPlayer.duration,
-                    isBuffering = exoPlayer.isLoading,
-                    isPlaying = exoPlayer.isPlaying,
+                    isPlaying = exoPlayer.isPlaying
+                )
+            }
+
+            if (exoPlayer.isPlaying) startForegroundServiceIfNeeded()
+        }
+
+        override fun onIsPlayingChanged(isPlaying: Boolean) {
+            _player.update { it.copy(isPlaying = isPlaying) }
+            if (isPlaying) {
+                startForegroundServiceIfNeeded()
+            } else {
+                updateNotification()
+            }
+        }
+
+        override fun onPlayerError(error: PlaybackException) {
+            _player.update {
+                it.copy(
+                    isPlaying = false,
+                    isBuffering = false,
+                    error = error.localizedMessage ?: "Error de reproducción"
                 )
             }
         }
@@ -189,23 +95,12 @@ class MusicAppPlaybackService : Service() {
             it.addListener(playerListener)
         }
 
-        mediaSession = MediaSessionCompat(this, "MusicAppPlaybackService").also {
-            it.isActive = true
-            it.setCallback(mediaSessionCallback)
-            it.setPlaybackState(
-                PlaybackStateCompat.Builder().setState(PlaybackStateCompat.STATE_NONE, 0, 0F)
-                    .setActions(
-                        PlaybackStateCompat.ACTION_PLAY or
-                                PlaybackStateCompat.ACTION_PAUSE or
-                                PlaybackStateCompat.ACTION_STOP or
-                                PlaybackStateCompat.ACTION_SEEK_TO or
-                                PlaybackStateCompat.ACTION_SKIP_TO_NEXT or
-                                PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
-                    ).build()
-            )
-        }
+        mediaSession = MediaSession.Builder(this, exoPlayer).build()
         startPositionUpdate()
     }
+
+    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? =
+        mediaSession
 
     private fun startPositionUpdate() {
         positionUpdateJob?.cancel()
@@ -216,67 +111,45 @@ class MusicAppPlaybackService : Service() {
                         it.copy(
                             currentPosition = exoPlayer.currentPosition,
                             duration = exoPlayer.duration,
-                            isBuffering = exoPlayer.isLoading,
-                            isPlaying = exoPlayer.isPlaying,
                         )
                     }
                 }
-                delay(500)
+                delay(500.milliseconds)
             }
         }
     }
 
     fun startForegroundServiceIfNeeded() {
-        val currentSong = player.value.currentSong ?: return
+        val song = player.value.currentSong ?: return
+        val session = mediaSession ?: return
 
-        if (!isForegroundService) {
-            notificationHelper.createPlayerNotification(
-                player.value.isPlaying, currentSong, mediaSession
-            ) {
-                if (!isForegroundService) {
-                    try {
-                        currentNotification = it
-                        startForeground(
-                            MusicAppNotificationHelper.NOTIFICATION_ID, it
-                        )
-                        isForegroundService = true
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                } else {
-                    currentNotification = it
-                    updateNotification()
+        notificationHelper.createPlayerNotification(
+            player.value.isPlaying, song, session
+        ) {
+            if (!isForegroundService) {
+                try {
+                    startForeground(MusicAppNotificationHelper.NOTIFICATION_ID, it)
+                    isForegroundService = true
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
+            } else {
+                notificationHelper.updateNotification(it)
             }
-        } else {
-            updateNotification()
         }
     }
 
     private fun updateNotification() {
-        notificationJob?.cancel()
-        notificationJob = serviceScope.launch {
-            notificationHelper.createPlayerNotification(
-                player.value.isPlaying,
-                player.value.currentSong ?: return@launch,
-                mediaSession
-            ) {
-                try {
-                    currentNotification = it
-                    notificationHelper.updateNotification(it)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }
-    }
+        val song = player.value.currentSong ?: return
+        val session = mediaSession ?: return
 
-    fun stopForegroundServiceIfNeeded() {
-        if (isForegroundService) {
+        notificationHelper.createPlayerNotification(
+            player.value.isPlaying,
+            song,
+            session
+        ) {
             try {
-                mediaSession.isActive = false
-                stopForeground(STOP_FOREGROUND_REMOVE)
-                isForegroundService = false
+                notificationHelper.updateNotification(it)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -284,9 +157,7 @@ class MusicAppPlaybackService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (intent != null) {
-            MediaButtonReceiver.handleIntent(mediaSession, intent)
-        }
+        super.onStartCommand(intent, flags, startId)
 
         when (intent?.action) {
             ACTION_PLAY -> {
@@ -295,27 +166,11 @@ class MusicAppPlaybackService : Service() {
                 } else {
                     intent.getParcelableExtra(KEY_SONG)
                 }
-
-                if (song != null) {
-                    playSong(song)
-                } else {
-                    if (player.value.currentSong != null) {
-                        resumeSong()
-                    }
-                }
+                song?.let { playSong(it) } ?: resumeSong()
             }
 
             ACTION_PAUSE -> pauseSong()
-
-            ACTION_STOP -> {}
-
-            ACTION_PREVIOUS -> {}
-
-            ACTION_NEXT -> {}
-
-            ACTION_PREPARE_SONG -> {}
-
-            else -> {}
+            ACTION_STOP -> stopSelf()
         }
 
         return START_STICKY
@@ -323,29 +178,23 @@ class MusicAppPlaybackService : Service() {
 
     private fun playSong(song: Song) {
         try {
-            _player.update {
-                it.copy(
-                    currentSong = song,
-                    isBuffering = true,
-                    currentPosition = 0L,
-                    duration = song.duration
-                )
-            }
+            android.util.Log.d("PlaybackService", "Cargando audio desde: ${song.audioUrl}")
+            _player.update { it.copy(currentSong = song, isBuffering = true, error = null) }
 
-            val metaBuilder = MediaMetadataCompat.Builder()
-                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, song.title)
-                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, song.artist.name)
-                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, song.duration)
-                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, song.coverImage)
-                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON_URI, song.coverImage)
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, song.id)
+            val mediaItem = MediaItem.Builder()
+                .setUri(song.audioUrl.toUri())
+                .setMediaId(song.id)
+                .setMediaMetadata(
+                    MediaMetadata.Builder()
+                        .setTitle(song.title)
+                        .setArtist(song.artist.name)
+                        .setArtworkUri(song.coverImage.toUri())
+                        .build()
+                ).build()
 
-            mediaSession.setMetadata(metaBuilder.build())
-            val mediaItem = MediaItem.fromUri(song.audioUrl.toUri())
             exoPlayer.setMediaItem(mediaItem)
             exoPlayer.prepare()
-            exoPlayer.playWhenReady = true
-            updatePlaybackState(PlaybackStateCompat.STATE_PLAYING)
+            exoPlayer.play()
         } catch (e: Exception) {
             _player.update {
                 it.copy(
@@ -354,6 +203,20 @@ class MusicAppPlaybackService : Service() {
                     currentSong = null
                 )
             }
+            e.printStackTrace()
+        }
+    }
+
+    fun seekTo(position: Long) {
+        try {
+            exoPlayer.seekTo(position)
+            _player.update {
+                it.copy(
+                    currentPosition = position,
+                    duration = exoPlayer.duration
+                )
+            }
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
@@ -368,7 +231,6 @@ class MusicAppPlaybackService : Service() {
                     duration = exoPlayer.duration
                 )
             }
-            updatePlaybackState(PlaybackStateCompat.STATE_PAUSED)
             updateNotification()
         } catch (e: Exception) {
             _player.update {
@@ -392,7 +254,6 @@ class MusicAppPlaybackService : Service() {
                     duration = exoPlayer.duration
                 )
             }
-            updatePlaybackState(PlaybackStateCompat.STATE_PLAYING)
             startForegroundServiceIfNeeded()
         } catch (e: Exception) {
             _player.update {
@@ -407,7 +268,18 @@ class MusicAppPlaybackService : Service() {
         updateNotification()
     }
 
-    override fun onBind(intent: Intent?): IBinder {
-        return binder
+    override fun onBind(intent: Intent?): IBinder? {
+        return if (intent?.action == ACTION_BIND_CUSTOM) {
+            binder
+        } else {
+            super.onBind(intent)
+        }
+    }
+
+    override fun onDestroy() {
+        exoPlayer.release()
+        mediaSession?.release()
+        mediaSession = null
+        super.onDestroy()
     }
 }
