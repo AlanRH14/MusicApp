@@ -1,10 +1,11 @@
-package com.example.musicapp.data.mapper_impl.artist
+package com.example.musicapp.data.mappers.artist
 
 import com.example.musicapp.common.ApiMapper
 import com.example.musicapp.data.model.ArtistDto
 import com.example.musicapp.domain.model.Artist
 
 class ArtistApiMapperImpl : ApiMapper<ArtistDto, Artist> {
+
     override fun mapToDomain(apiDto: ArtistDto): Artist {
         return Artist(
             bio = apiDto.bio ?: "",

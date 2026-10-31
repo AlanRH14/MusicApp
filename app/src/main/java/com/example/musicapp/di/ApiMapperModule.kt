@@ -2,13 +2,13 @@ package com.example.musicapp.di
 
 import com.example.musicapp.common.ApiMapper
 import com.example.musicapp.data.local.database.entities.UserEntity
-import com.example.musicapp.data.mapper_impl.playlist.PlaylistApiMapperImpl
-import com.example.musicapp.data.mapper_impl.artist.ArtistApiMapperImpl
-import com.example.musicapp.data.mapper_impl.home.HomeApiMapperImpl
-import com.example.musicapp.data.mapper_impl.song.AlbumApiMapperImpl
-import com.example.musicapp.data.mapper_impl.song.SongApiMapperImpl
-import com.example.musicapp.data.mapper_impl.user.UserApiMapperImpl
-import com.example.musicapp.data.mapper_impl.user.UserEntityMapperImpl
+import com.example.musicapp.data.mappers.playlist.PlaylistApiMapperImpl
+import com.example.musicapp.data.mappers.artist.ArtistApiMapperImpl
+import com.example.musicapp.data.mappers.home.HomeApiMapperImpl
+import com.example.musicapp.data.mappers.song.AlbumApiMapperImpl
+import com.example.musicapp.data.mappers.song.SongApiMapperImpl
+import com.example.musicapp.data.mappers.user.UserApiMapperImpl
+import com.example.musicapp.data.mappers.user.UserEntityMapperImpl
 import com.example.musicapp.data.model.AlbumDto
 import com.example.musicapp.data.model.ArtistDto
 import com.example.musicapp.data.model.PlaylistDto

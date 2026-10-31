@@ -44,7 +44,6 @@ class PlaylistRepositoryImpl(
 
     override suspend fun createPlaylist(playlistRequest: CreatePlaylistRequest): Resource<Playlist> =
         withContext(ioDispatcher) {
-            Resource.Loading
             try {
                 userLocalDataSource.getUser()?.let { userData ->
                     val response = apiService.createPlaylist(

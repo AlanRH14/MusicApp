@@ -1,4 +1,4 @@
-package com.example.musicapp.data.mapper_impl.song
+package com.example.musicapp.data.mappers.song
 
 import com.example.musicapp.common.ApiMapper
 import com.example.musicapp.data.model.ArtistDto
@@ -9,6 +9,7 @@ import com.example.musicapp.domain.model.Song
 class SongApiMapperImpl(
     private val apiArtistMapper: ApiMapper<ArtistDto, Artist>
 ) : ApiMapper<SongDto, Song> {
+
     override fun mapToDomain(apiDto: SongDto): Song {
         return Song(
             artist = apiArtistMapper.mapToDomain(apiDto = apiDto.artist ?: ArtistDto()),
