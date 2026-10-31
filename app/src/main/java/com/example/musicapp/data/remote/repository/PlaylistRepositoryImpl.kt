@@ -68,7 +68,6 @@ class PlaylistRepositoryImpl(
         songID: String
     ): Resource<UpdatePlaylistSongResponse> =
         withContext(ioDispatcher) {
-            Resource.Loading
             try {
                 userLocalDataSource.getUser()?.let { userData ->
                     val response = apiService.addSongToPlaylist(
