@@ -8,6 +8,7 @@ import com.example.musicapp.data.model.reponse.UpdatePlaylistSongResponse
 import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.data.model.request.UpdatePlaylistSongRequest
 import com.example.musicapp.data.remote.api.ApiService
+import com.example.musicapp.data.remote.api.PlaylistApiService
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.domain.repository.PlaylistRepository
 import com.example.musicapp.utils.Constants.AUTHENTICATION_HEADER_TYPE
@@ -18,13 +19,13 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
 class PlaylistRepositoryImpl(
-    private val apiService: ApiService,
+    private val apiService: PlaylistApiService,
     private val apiPlaylistMapper: ApiMapper<PlaylistDto, Playlist>,
     private val userLocalDataSource: UserLocalDataSource,
     private val ioDispatcher: CoroutineDispatcher
 ) : PlaylistRepository {
 
-    override fun getPlaylist(): Flow<Resource<List<Playlist>>> = flow<Resource<List<Playlist>>> {
+    override fun getPlaylist(): Flow<Resource<List<Playlist>>> = flow {
         emit(Resource.Loading)
         userLocalDataSource.getUser()?.let { userData ->
             val response =
