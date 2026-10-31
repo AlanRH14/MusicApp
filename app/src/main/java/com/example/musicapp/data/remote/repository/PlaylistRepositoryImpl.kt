@@ -7,7 +7,6 @@ import com.example.musicapp.data.model.PlaylistDto
 import com.example.musicapp.data.model.reponse.UpdatePlaylistSongResponse
 import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.data.model.request.UpdatePlaylistSongRequest
-import com.example.musicapp.data.remote.api.ApiService
 import com.example.musicapp.data.remote.api.PlaylistApiService
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.domain.repository.PlaylistRepository
@@ -93,7 +92,6 @@ class PlaylistRepositoryImpl(
         playlistID: String,
         songID: String
     ): Resource<UpdatePlaylistSongResponse> = withContext(ioDispatcher) {
-        Resource.Loading
         try {
             userLocalDataSource.getUser()?.let { userData ->
                 val response = apiService.removeSongsFromPlaylist(
