@@ -26,7 +26,7 @@ dataStoreVersion = "1.2.1"
 roomVersion = "2.8.4"
 
 googleCredentials = "1.6.0"
-googleID = "1.2.0"
+googleID = "1.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
