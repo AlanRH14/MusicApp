@@ -12,7 +12,6 @@ class HomeApiMapperImpl(
     private val apiSongMapper: ApiMapper<SongDto, Song>,
     private val apiAlbumMapper: ApiMapper<AlbumDto, Album>
 ) : ApiMapper<HomeResponse, Home> {
-
     override fun mapToDomain(apiDto: HomeResponse): Home {
         return Home(
             continueListening = apiDto.continueListening?.map { song ->

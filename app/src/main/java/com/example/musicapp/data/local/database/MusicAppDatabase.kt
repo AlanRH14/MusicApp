@@ -7,6 +7,5 @@ import com.example.musicapp.data.local.database.entities.UserEntity
 
 @Database(entities = [UserEntity::class], version = 1, exportSchema = false)
 abstract class MusicAppDatabase: RoomDatabase() {
-
     abstract fun userDao(): UserDao
 }
