@@ -7,8 +7,8 @@ import com.example.musicapp.data.mappers.artist.ArtistMapperImpl
 import com.example.musicapp.data.mappers.home.HomeMapperImpl
 import com.example.musicapp.data.mappers.song.AlbumMapperImpl
 import com.example.musicapp.data.mappers.song.SongMapperImpl
-import com.example.musicapp.data.mappers.user.UserMapperImpl
 import com.example.musicapp.data.mappers.user.UserEntityMapperImpl
+import com.example.musicapp.data.mappers.user.UserMapperImpl
 import com.example.musicapp.data.model.AlbumDto
 import com.example.musicapp.data.model.ArtistDto
 import com.example.musicapp.data.model.PlaylistDto
@@ -25,11 +25,10 @@ import com.example.musicapp.utils.QualifiersConstants
 import org.koin.dsl.module
 
 val mapperModule = module {
-    single<Mapper<UserEntity, User>>(QualifiersConstants.USER_MAPPER) {
+    single<Mapper<LoginResponse, User>>(QualifiersConstants.USER_MAPPER) {
         UserMapperImpl()
     }
-
-    single<Mapper<LoginResponse, UserEntity>>(QualifiersConstants.LOGIN_MAPPER) {
+    single<Mapper<User, UserEntity>>(QualifiersConstants.USER_ENTITY_MAPPER) {
         UserEntityMapperImpl()
     }
 

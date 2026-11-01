@@ -1,13 +1,13 @@
 package com.example.musicapp.data.mappers.user
 
 import com.example.musicapp.common.Mapper
-import com.example.musicapp.data.local.database.entities.UserEntity
 import com.example.musicapp.data.model.reponse.LoginResponse
+import com.example.musicapp.domain.model.User
 
-class UserEntityMapperImpl : Mapper<LoginResponse, UserEntity> {
+class UserMapperImpl : Mapper<LoginResponse, User> {
 
-    override fun mapTo(input: LoginResponse): UserEntity {
-        return UserEntity(
+    override fun mapTo(input: LoginResponse): User {
+        return User(
             token = input.token ?: "",
             id = input.user?.id ?: "",
             email = input.user?.email ?: "",
