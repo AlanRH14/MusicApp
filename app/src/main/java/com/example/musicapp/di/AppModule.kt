@@ -8,10 +8,14 @@ import com.example.musicapp.presentation.play_song.PlaySongViewModel
 import com.example.musicapp.presentation.playlist.PlaylistViewModel
 import com.example.musicapp.presentation.playlist_detail.PlaylistDetailViewModel
 import com.example.musicapp.presentation.register.RegisterViewModel
+import com.example.musicapp.presentation.splash.SplashViewModel
+import com.example.musicapp.utils.QualifiersConstants
 import org.koin.core.module.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val appModule = module {
+    viewModel { SplashViewModel(ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO)) }
     viewModel { OnboardingViewModel(get()) }
     viewModel { LoginViewModel(get(), get()) }
     viewModel { RegisterViewModel(get()) }
