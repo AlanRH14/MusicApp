@@ -8,8 +8,7 @@ import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.domain.repository.HomeRepository
 import com.example.musicapp.domain.repository.MusicRepository
 import com.example.musicapp.domain.repository.PlaylistRepository
-import kotlinx.coroutines.Dispatchers
-import org.koin.core.qualifier.named
+import com.example.musicapp.utils.QualifiersConstants
 import org.koin.dsl.module
 
 val repositoryModule = module {
@@ -17,25 +16,25 @@ val repositoryModule = module {
         AuthenticationRepositoryImpl(
             remoteDataSource = get(),
             localDataSource = get(),
-            apiLoginMapper = get(named("LoginApiMapper")),
-            apiUserMapper = get(named("UserApiMapper")),
-            ioDispatcher = Dispatchers.IO,
+            apiLoginMapper = get(QualifiersConstants.LOGIN_MAPPER),
+            apiUserMapper = get(QualifiersConstants.USER_MAPPER),
+            ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO),
         )
     }
 
     single<HomeRepository> {
         HomeRepositoryImpl(
             homeApiService = get(),
-            apiHomeMapper = get(named("HomeApiMapper")),
+            apiHomeMapper = get(QualifiersConstants.HOME_MAPPER),
             userLocalDataSource = get(),
-            ioDispatcher = Dispatchers.IO
+            ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO)
         )
     }
 
     single<MusicRepository> {
         MusicRepositoryImpl(
             homeApiService = get(),
-            apiSongMapper = get(named("SongApiMapper")),
+            apiSongMapper = get(QualifiersConstants.SONG_MAPPER),
             userLocalDataSource = get()
         )
     }
@@ -43,9 +42,9 @@ val repositoryModule = module {
     single<PlaylistRepository>{
         PlaylistRepositoryImpl(
             apiService = get(),
-            apiPlaylistMapper = get(named("PlaylistApiMapper")),
+            apiPlaylistMapper = get(QualifiersConstants.PLAYLIST_MAPPER),
             userLocalDataSource = get(),
-            ioDispatcher = Dispatchers.IO
+            ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO)
         )
     }
 }
