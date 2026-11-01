@@ -6,7 +6,7 @@ import com.example.musicapp.domain.model.User
 
 class UserApiMapperImpl : ApiMapper<UserEntity, User> {
 
-    override fun mapToDomain(apiDto: UserEntity): User {
+    override fun mapTo(apiDto: UserEntity): User {
         return User(
             token = apiDto.token ?: "",
             id = apiDto.id,

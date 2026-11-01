@@ -38,7 +38,7 @@ class PlaylistRepositoryImpl(
 
         if (response.isSuccessful) {
             val playlistData = response.body()?.let { res ->
-                res.map { apiPlaylistMapper.mapToDomain(apiDto = it) }
+                res.map { apiPlaylistMapper.mapTo(apiDto = it) }
             } ?: emptyList()
             emit(Resource.Success(data = playlistData))
         } else {
@@ -61,7 +61,7 @@ class PlaylistRepositoryImpl(
 
                 if (response.isSuccessful) {
                     val playlistData = response.body()?.let { res ->
-                        apiPlaylistMapper.mapToDomain(apiDto = res)
+                        apiPlaylistMapper.mapTo(apiDto = res)
                     } ?: Playlist()
                     Resource.Success(data = playlistData)
                 } else {
@@ -140,7 +140,7 @@ class PlaylistRepositoryImpl(
 
         if (response.isSuccessful) {
             val playlistData = response.body()?.let { res ->
-                apiPlaylistMapper.mapToDomain(apiDto = res)
+                apiPlaylistMapper.mapTo(apiDto = res)
             } ?: Playlist()
             emit(Resource.Success(data = playlistData))
         } else {

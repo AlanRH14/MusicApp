@@ -10,7 +10,7 @@ class PlaylistApiMapperImpl(
     private val apiSongMapper: ApiMapper<SongDto, Song>
 ): ApiMapper<PlaylistDto, Playlist> {
 
-    override fun mapToDomain(apiDto: PlaylistDto): Playlist {
+    override fun mapTo(apiDto: PlaylistDto): Playlist {
         return Playlist(
             id = apiDto.id ?: "",
             name = apiDto.name ?: "",
@@ -18,7 +18,7 @@ class PlaylistApiMapperImpl(
             coverImage = apiDto.coverImage ?: "",
             userId = apiDto.userId ?: "",
             songs = apiDto.songs?.map { song ->
-                apiSongMapper.mapToDomain(apiDto = song)
+                apiSongMapper.mapTo(apiDto = song)
             } ?: emptyList(),
             songCount = apiDto.songCount ?: 0,
             createdAt = apiDto.createdAt ?: 0L,

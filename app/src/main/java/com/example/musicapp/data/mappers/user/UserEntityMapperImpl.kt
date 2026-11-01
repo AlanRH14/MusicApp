@@ -6,7 +6,7 @@ import com.example.musicapp.data.model.reponse.LoginResponse
 
 class UserEntityMapperImpl : ApiMapper<LoginResponse, UserEntity> {
 
-    override fun mapToDomain(apiDto: LoginResponse): UserEntity {
+    override fun mapTo(apiDto: LoginResponse): UserEntity {
         return UserEntity(
             token = apiDto.token ?: "",
             id = apiDto.user?.id ?: "",

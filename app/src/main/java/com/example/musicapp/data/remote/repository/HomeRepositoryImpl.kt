@@ -34,7 +34,7 @@ class HomeRepositoryImpl(
 
         if (response.isSuccessful) {
             val homeData = response.body()?.let { res ->
-                apiHomeMapper.mapToDomain(apiDto = res)
+                apiHomeMapper.mapTo(apiDto = res)
             } ?: Home()
             emit(Resource.Success(data = homeData))
         } else {

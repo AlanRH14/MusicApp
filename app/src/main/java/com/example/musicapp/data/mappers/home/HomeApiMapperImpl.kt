@@ -13,16 +13,16 @@ class HomeApiMapperImpl(
     private val apiAlbumMapper: ApiMapper<AlbumDto, Album>
 ) : ApiMapper<HomeResponse, Home> {
 
-    override fun mapToDomain(apiDto: HomeResponse): Home {
+    override fun mapTo(apiDto: HomeResponse): Home {
         return Home(
             continueListening = apiDto.continueListening?.map { song ->
-                apiSongMapper.mapToDomain(song)
+                apiSongMapper.mapTo(song)
             } ?: emptyList(),
             topMixes = apiDto.topMixes?.map { album ->
-                apiAlbumMapper.mapToDomain(album)
+                apiAlbumMapper.mapTo(album)
             } ?: emptyList(),
             recommendedSong = apiDto.recommendedSong?.map { song ->
-                apiSongMapper.mapToDomain(song)
+                apiSongMapper.mapTo(song)
             } ?: emptyList(),
         )
     }

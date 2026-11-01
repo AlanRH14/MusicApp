@@ -13,8 +13,6 @@ import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.model.User
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
-import retrofit2.Response
 
 class AuthenticationRepositoryImpl(
     private val remoteDataSource: RemoteAuthDataSource,
@@ -28,13 +26,13 @@ class AuthenticationRepositoryImpl(
         withContext(ioDispatcher) {
             try {
                 val response = remoteDataSource.login(loginRequest)
-                val entity = userMapper.mapToDomain(apiDto = response)
+                val entity = userMapper.mapTo(apiDto = response)
                 if (entity.token.isNullOrEmpty()) {
                     return@withContext Resource.Error(throwable = AuthException.NullTokenException())
                 }
 
                 localDataSource.saveUser(user = entity)
-                Resource.Success(userEntityMapper.mapToDomain(apiDto = entity))
+                Resource.Success(userEntityMapper.mapTo(apiDto = entity))
             } catch (e: Exception) {
                 Resource.Error(throwable = e)
             }
@@ -44,13 +42,13 @@ class AuthenticationRepositoryImpl(
         withContext(ioDispatcher) {
             try {
                 val response = remoteDataSource.register(registerRequest)
-                val entity = userMapper.mapToDomain(apiDto = response)
+                val entity = userMapper.mapTo(apiDto = response)
                 if (entity.token.isNullOrEmpty()) {
                     return@withContext Resource.Error(throwable = AuthException.NullTokenException())
                 }
 
                 localDataSource.saveUser(user = entity)
-                Resource.Success(userEntityMapper.mapToDomain(apiDto = entity))
+                Resource.Success(userEntityMapper.mapTo(apiDto = entity))
             } catch (e: Exception) {
                 Resource.Error(throwable = e)
             }
@@ -66,6 +64,6 @@ class AuthenticationRepositoryImpl(
             return@withContext Resource.Error(AuthException.NullTokenException)
         }
 
-        val domainUser = userMapper.mapToDomain(aresponse)
+        val domainUser = userMapper.mapTo(aresponse)
     }
 }

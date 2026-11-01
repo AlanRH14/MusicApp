@@ -6,7 +6,7 @@ import com.example.musicapp.domain.model.Artist
 
 class ArtistApiMapperImpl : ApiMapper<ArtistDto, Artist> {
 
-    override fun mapToDomain(apiDto: ArtistDto): Artist {
+    override fun mapTo(apiDto: ArtistDto): Artist {
         return Artist(
             bio = apiDto.bio ?: "",
             createdAt = apiDto.createdAt ?: 0L,

@@ -36,7 +36,7 @@ class MusicRepositoryImpl(
 
         if (response.isSuccessful) {
             val songData = response.body()?.let { res ->
-                apiSongMapper.mapToDomain(apiDto = res)
+                apiSongMapper.mapTo(apiDto = res)
             } ?: Song()
             emit(Resource.Success(data = songData))
         } else {
