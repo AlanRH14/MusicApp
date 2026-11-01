@@ -40,7 +40,7 @@ fun LoginScreen(
                 }
 
                 is LoginEffect.NavigateToHome -> {
-                    navController.navigate(HomeRoute)
+                    navController.navigate(NavRoutes.HomeRoute)
                 }
             }
         }
