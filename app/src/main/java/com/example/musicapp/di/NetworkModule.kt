@@ -5,7 +5,6 @@ import com.example.musicapp.data.remote.api.HomeApiService
 import com.example.musicapp.data.remote.api.PlaylistApiService
 import com.example.musicapp.utils.Constants.BASE_URL
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
