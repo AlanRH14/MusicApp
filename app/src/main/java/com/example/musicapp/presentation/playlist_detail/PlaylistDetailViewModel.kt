@@ -57,7 +57,7 @@ class PlaylistDetailViewModel(
                         _state.update {
                             it.copy(
                                 isLoading = false,
-                                error = details.message
+                                error = details.throwable?.message
                             )
                         }
                     }
@@ -91,7 +91,7 @@ class PlaylistDetailViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            error = response.message
+                            error = response.throwable?.message
                         )
                     }
                 }
