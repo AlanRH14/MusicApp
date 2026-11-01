@@ -13,17 +13,17 @@ class AlbumMapperImpl(
     private val apiSongMapper: Mapper<SongDto, Song>
 ) : Mapper<AlbumDto, Album> {
 
-    override fun mapTo(apiDto: AlbumDto): Album {
+    override fun mapTo(input: AlbumDto): Album {
         return Album(
-            artist = apiArtistMapper.mapTo(apiDto = apiDto.artist ?: ArtistDto()),
-            coverImage = apiDto.coverImage ?: "",
-            genre = apiDto.genre ?: "",
-            id = apiDto.id ?: "",
-            releaseDate = apiDto.releaseDate ?: 0L,
-            songs = apiDto.song?.map { song ->
-                apiSongMapper.mapTo(apiDto = song)
+            artist = apiArtistMapper.mapTo(input = input.artist ?: ArtistDto()),
+            coverImage = input.coverImage ?: "",
+            genre = input.genre ?: "",
+            id = input.id ?: "",
+            releaseDate = input.releaseDate ?: 0L,
+            songs = input.song?.map { song ->
+                apiSongMapper.mapTo(input = song)
             } ?: emptyList(),
-            title = apiDto.title ?: ""
+            title = input.title ?: ""
         )
     }
 }

@@ -10,19 +10,19 @@ class PlaylistMapperImpl(
     private val apiSongMapper: Mapper<SongDto, Song>
 ): Mapper<PlaylistDto, Playlist> {
 
-    override fun mapTo(apiDto: PlaylistDto): Playlist {
+    override fun mapTo(input: PlaylistDto): Playlist {
         return Playlist(
-            id = apiDto.id ?: "",
-            name = apiDto.name ?: "",
-            description = apiDto.description ?: "",
-            coverImage = apiDto.coverImage ?: "",
-            userId = apiDto.userId ?: "",
-            songs = apiDto.songs?.map { song ->
-                apiSongMapper.mapTo(apiDto = song)
+            id = input.id ?: "",
+            name = input.name ?: "",
+            description = input.description ?: "",
+            coverImage = input.coverImage ?: "",
+            userId = input.userId ?: "",
+            songs = input.songs?.map { song ->
+                apiSongMapper.mapTo(input = song)
             } ?: emptyList(),
-            songCount = apiDto.songCount ?: 0,
-            createdAt = apiDto.createdAt ?: 0L,
-            updateAt = apiDto.updateAt ?: 0L
+            songCount = input.songCount ?: 0,
+            createdAt = input.createdAt ?: 0L,
+            updateAt = input.updateAt ?: 0L
         )
     }
 }

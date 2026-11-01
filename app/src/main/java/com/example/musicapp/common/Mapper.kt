@@ -1,5 +1,5 @@
 package com.example.musicapp.common
 
-interface Mapper<ApiDto, Domain> {
-    fun mapTo(apiDto: ApiDto): Domain
+interface Mapper<Input, Out> {
+    fun mapTo(input: Input): Out
 }

@@ -13,15 +13,15 @@ class HomeMapperImpl(
     private val apiAlbumMapper: Mapper<AlbumDto, Album>
 ) : Mapper<HomeResponse, Home> {
 
-    override fun mapTo(apiDto: HomeResponse): Home {
+    override fun mapTo(input: HomeResponse): Home {
         return Home(
-            continueListening = apiDto.continueListening?.map { song ->
+            continueListening = input.continueListening?.map { song ->
                 apiSongMapper.mapTo(song)
             } ?: emptyList(),
-            topMixes = apiDto.topMixes?.map { album ->
+            topMixes = input.topMixes?.map { album ->
                 apiAlbumMapper.mapTo(album)
             } ?: emptyList(),
-            recommendedSong = apiDto.recommendedSong?.map { song ->
+            recommendedSong = input.recommendedSong?.map { song ->
                 apiSongMapper.mapTo(song)
             } ?: emptyList(),
         )

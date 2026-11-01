@@ -6,15 +6,15 @@ import com.example.musicapp.domain.model.User
 
 class UserMapperImpl : Mapper<UserEntity, User> {
 
-    override fun mapTo(apiDto: UserEntity): User {
+    override fun mapTo(input: UserEntity): User {
         return User(
-            token = apiDto.token ?: "",
-            id = apiDto.id,
-            email = apiDto.email ?: "",
-            name = apiDto.name ?: "",
-            profilePicture = apiDto.profilePicture ?: "",
-            createdAt = apiDto.updateAt ?: 0L,
-            updateAt = apiDto.updateAt ?: 0L,
+            token = input.token ?: "",
+            id = input.id,
+            email = input.email ?: "",
+            name = input.name ?: "",
+            profilePicture = input.profilePicture ?: "",
+            createdAt = input.updateAt ?: 0L,
+            updateAt = input.updateAt ?: 0L,
         )
     }
 }

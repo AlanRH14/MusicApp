@@ -39,7 +39,7 @@ class AuthenticationRepositoryImpl(
                 return@withContext Resource.Error(throwable = AuthException.NullTokenException())
             }
 
-            val domainUser = userMapper.mapTo(apiDto = response)
+            val domainUser = userMapper.mapTo(input = response)
             localDataSource.saveUser(userEntityMapper.mapTo(domainUser))
             Resource.Success(domainUser)
         } catch (error: Exception) {
