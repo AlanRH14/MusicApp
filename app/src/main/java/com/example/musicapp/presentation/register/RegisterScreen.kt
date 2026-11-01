@@ -7,7 +7,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.musicapp.R
-import com.example.musicapp.navigation.LoginRoute
+import com.example.musicapp.navigation.NavRoutes
 import com.example.musicapp.presentation.register.widgets.RegisterScreenContent
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
@@ -31,7 +31,7 @@ fun RegisterScreen(
                 }
 
                 is RegisterEffect.NavigateToHome -> {
-                    navController.navigate(LoginRoute)
+                    navController.navigate(NavRoutes.LoginRoute)
                 }
             }
         }
