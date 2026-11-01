@@ -18,52 +18,32 @@ class AuthenticationRepositoryImpl(
     private val remoteDataSource: RemoteAuthDataSource,
     private val localDataSource: UserLocalDataSource,
     private val userMapper: Mapper<LoginResponse, User>,
-    private val userEntityMapper: Mapper<UserEntity, UserEntity>,
+    private val userEntityMapper: Mapper<User, UserEntity>,
     private val ioDispatcher: CoroutineDispatcher
 ) : AuthenticationRepository {
 
     override suspend fun login(loginRequest: LoginRequest): Resource<User> =
-        withContext(ioDispatcher) {
-            try {
-                val response = remoteDataSource.login(loginRequest)
-                val entity = userMapper.mapTo(apiDto = response)
-                if (entity.token.isNullOrEmpty()) {
-                    return@withContext Resource.Error(throwable = AuthException.NullTokenException())
-                }
-
-                localDataSource.saveUser(user = entity)
-                Resource.Success(userEntityMapper.mapTo(apiDto = entity))
-            } catch (e: Exception) {
-                Resource.Error(throwable = e)
-            }
-        }
+        authenticate { remoteDataSource.login(loginRequest = loginRequest) }
 
     override suspend fun register(registerRequest: RegisterRequest): Resource<User> =
-        withContext(ioDispatcher) {
-            try {
-                val response = remoteDataSource.register(registerRequest)
-                val entity = userMapper.mapTo(apiDto = response)
-                if (entity.token.isNullOrEmpty()) {
-                    return@withContext Resource.Error(throwable = AuthException.NullTokenException())
-                }
-
-                localDataSource.saveUser(user = entity)
-                Resource.Success(userEntityMapper.mapTo(apiDto = entity))
-            } catch (e: Exception) {
-                Resource.Error(throwable = e)
-            }
-        }
+        authenticate { remoteDataSource.register(registerRequest = registerRequest) }
 
     private suspend fun authenticate(
         apiCall: suspend () -> LoginResponse
     ): Resource<User> = withContext(ioDispatcher) {
-        val response = apiCall()
+        try {
+            val response = apiCall()
 
-        val token = response.token
-        if (token.isNullOrEmpty()) {
-            return@withContext Resource.Error(AuthException.NullTokenException)
+            val token = response.token
+            if (token.isNullOrEmpty()) {
+                return@withContext Resource.Error(throwable = AuthException.NullTokenException())
+            }
+
+            val domainUser = userMapper.mapTo(apiDto = response)
+            localDataSource.saveUser(userEntityMapper.mapTo(domainUser))
+            Resource.Success(domainUser)
+        } catch (error: Exception) {
+            Resource.Error(throwable = error)
         }
-
-        val domainUser = userMapper.mapTo(aresponse)
     }
 }
