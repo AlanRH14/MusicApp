@@ -46,7 +46,7 @@ fun AppNavGraph(
             PlaylistScreen(navController = navController)
         }
 
-        composable<CreatePlaylist> {
+        composable<NavRoutes.CreatePlaylist> {
             CreatePlaylistScreen(navController = navController)
         }
 
