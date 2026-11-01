@@ -33,7 +33,8 @@ val repositoryModule = module {
         HomeRepositoryImpl(
             homeApiService = get(),
             apiHomeMapper = get(named("HomeApiMapper")),
-            userLocalDataSource = get()
+            userLocalDataSource = get(),
+            ioDispatcher = Dispatchers.IO
         )
     }
 
