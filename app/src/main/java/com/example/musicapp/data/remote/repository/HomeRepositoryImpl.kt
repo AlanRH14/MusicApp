@@ -1,6 +1,6 @@
 package com.example.musicapp.data.remote.repository
 
-import com.example.musicapp.common.ApiMapper
+import com.example.musicapp.common.Mapper
 import com.example.musicapp.data.model.reponse.HomeResponse
 import com.example.musicapp.data.remote.api.HomeApiService
 import com.example.musicapp.domain.model.Home
@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.flowOn
 
 class HomeRepositoryImpl(
     private val homeApiService: HomeApiService,
-    private val apiHomeMapper: ApiMapper<HomeResponse, Home>,
+    private val apiHomeMapper: Mapper<HomeResponse, Home>,
     private val userLocalDataSource: UserLocalDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : HomeRepository {

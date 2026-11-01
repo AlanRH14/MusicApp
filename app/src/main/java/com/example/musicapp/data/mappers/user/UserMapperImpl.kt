@@ -1,10 +1,10 @@
 package com.example.musicapp.data.mappers.user
 
-import com.example.musicapp.common.ApiMapper
+import com.example.musicapp.common.Mapper
 import com.example.musicapp.data.local.database.entities.UserEntity
 import com.example.musicapp.domain.model.User
 
-class UserApiMapperImpl : ApiMapper<UserEntity, User> {
+class UserMapperImpl : Mapper<UserEntity, User> {
 
     override fun mapTo(apiDto: UserEntity): User {
         return User(

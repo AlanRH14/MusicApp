@@ -1,6 +1,6 @@
 package com.example.musicapp.data.remote.repository
 
-import com.example.musicapp.common.ApiMapper
+import com.example.musicapp.common.Mapper
 import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.datasource.UserLocalDataSource
 import com.example.musicapp.data.model.PlaylistDto
@@ -22,7 +22,7 @@ import kotlinx.coroutines.withContext
 
 class PlaylistRepositoryImpl(
     private val apiService: PlaylistApiService,
-    private val apiPlaylistMapper: ApiMapper<PlaylistDto, Playlist>,
+    private val apiPlaylistMapper: Mapper<PlaylistDto, Playlist>,
     private val userLocalDataSource: UserLocalDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : PlaylistRepository {

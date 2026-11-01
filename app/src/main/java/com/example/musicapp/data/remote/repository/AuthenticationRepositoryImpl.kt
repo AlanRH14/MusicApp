@@ -1,6 +1,6 @@
 package com.example.musicapp.data.remote.repository
 
-import com.example.musicapp.common.ApiMapper
+import com.example.musicapp.common.Mapper
 import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.reponse.LoginResponse
 import com.example.musicapp.data.model.request.RegisterRequest
@@ -17,8 +17,8 @@ import kotlinx.coroutines.withContext
 class AuthenticationRepositoryImpl(
     private val remoteDataSource: RemoteAuthDataSource,
     private val localDataSource: UserLocalDataSource,
-    private val userMapper: ApiMapper<LoginResponse, User>,
-    private val userEntityMapper: ApiMapper<UserEntity, UserEntity>,
+    private val userMapper: Mapper<LoginResponse, User>,
+    private val userEntityMapper: Mapper<UserEntity, UserEntity>,
     private val ioDispatcher: CoroutineDispatcher
 ) : AuthenticationRepository {
 

@@ -1,14 +1,14 @@
 package com.example.musicapp.data.mappers.playlist
 
-import com.example.musicapp.common.ApiMapper
+import com.example.musicapp.common.Mapper
 import com.example.musicapp.data.model.PlaylistDto
 import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.domain.model.Song
 
-class PlaylistApiMapperImpl(
-    private val apiSongMapper: ApiMapper<SongDto, Song>
-): ApiMapper<PlaylistDto, Playlist> {
+class PlaylistMapperImpl(
+    private val apiSongMapper: Mapper<SongDto, Song>
+): Mapper<PlaylistDto, Playlist> {
 
     override fun mapTo(apiDto: PlaylistDto): Playlist {
         return Playlist(
