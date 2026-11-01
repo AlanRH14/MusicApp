@@ -33,7 +33,7 @@ fun AppNavGraph(
             RegisterScreen(navController = navController)
         }
 
-        composable<HomeRoute> {
+        composable<NavRoutes.HomeRoute> {
             HomeScreen(navController = navController)
         }
 
