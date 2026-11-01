@@ -110,7 +110,7 @@ class RegisterViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            error = response.message
+                            error = response.throwable?.message
                         )
                     }
                 }

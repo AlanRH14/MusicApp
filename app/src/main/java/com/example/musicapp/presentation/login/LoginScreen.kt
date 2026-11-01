@@ -8,8 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
-import com.example.musicapp.navigation.HomeRoute
-import com.example.musicapp.navigation.RegisterRoute
+import com.example.musicapp.navigation.NavRoutes
 import com.example.musicapp.presentation.login.widgets.LoginScreenContent
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
@@ -33,7 +32,7 @@ fun LoginScreen(
                 }
 
                 is LoginEffect.NavigateToRegister -> {
-                    navController.navigate(RegisterRoute)
+                    navController.navigate(NavRoutes.RegisterRoute)
                 }
 
                 is LoginEffect.NavigateToBack -> {
@@ -41,7 +40,7 @@ fun LoginScreen(
                 }
 
                 is LoginEffect.NavigateToHome -> {
-                    navController.navigate(HomeRoute)
+                    navController.navigate(NavRoutes.HomeRoute)
                 }
             }
         }

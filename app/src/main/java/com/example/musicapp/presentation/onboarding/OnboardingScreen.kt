@@ -22,8 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
-import com.example.musicapp.navigation.HomeRoute
-import com.example.musicapp.navigation.LoginRoute
+import com.example.musicapp.navigation.NavRoutes
 import com.example.musicapp.presentation.onboarding.components.OnboardingCard
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import com.example.musicapp.presentation.onboarding.mvi.OnboardingEffect
@@ -46,11 +45,11 @@ fun OnboardingScreen(
         viewModel.effect.collectLatest {
             when (it) {
                 is OnboardingEffect.NavigateToLogin -> {
-                    navController.navigate(LoginRoute)
+                    navController.navigate(NavRoutes.LoginRoute)
                 }
 
                 is OnboardingEffect.NavigateToHome -> {
-                    navController.navigate(HomeRoute)
+                    navController.navigate(NavRoutes.HomeRoute)
                 }
             }
         }

@@ -7,7 +7,7 @@ class UserLocalDataSourceImpl(
     private val userDao: UserDao
 ): UserLocalDataSource {
 
-    override suspend fun savaUser(user: UserEntity) {
+    override suspend fun saveUser(user: UserEntity) {
         userDao.insert(entities = user)
     }
 

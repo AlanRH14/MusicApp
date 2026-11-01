@@ -21,44 +21,43 @@ import com.example.musicapp.domain.model.Home
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.domain.model.User
-import org.koin.core.qualifier.named
+import com.example.musicapp.utils.QualifiersConstants
 import org.koin.dsl.module
 
 val apiMapperModule = module {
-    single<ApiMapper<UserEntity, User>>(named("UserApiMapper")) {
+    single<ApiMapper<UserEntity, User>>(QualifiersConstants.USER_MAPPER) {
         UserApiMapperImpl()
     }
 
-    single<ApiMapper<LoginResponse, UserEntity>>(named("LoginApiMapper")) {
+    single<ApiMapper<LoginResponse, UserEntity>>(QualifiersConstants.LOGIN_MAPPER) {
         UserEntityMapperImpl()
     }
 
-
-    single<ApiMapper<ArtistDto, Artist>>(named("ArtistApiMapper")) {
+    single<ApiMapper<ArtistDto, Artist>>(QualifiersConstants.ARTIST_MAPPER) {
         ArtistApiMapperImpl()
     }
 
-    single<ApiMapper<SongDto, Song>>(named("SongApiMapper")) {
-        SongApiMapperImpl(get(named("ArtistApiMapper")))
+    single<ApiMapper<SongDto, Song>>(QualifiersConstants.SONG_MAPPER) {
+        SongApiMapperImpl(apiArtistMapper = get(QualifiersConstants.ARTIST_MAPPER))
     }
 
-    single<ApiMapper<AlbumDto, Album>>(named("AlbumApiMapper")) {
+    single<ApiMapper<AlbumDto, Album>>(QualifiersConstants.ALBUM_MAPPER) {
         AlbumApiMapperImpl(
-            get(named("ArtistApiMapper")),
-            get(named("SongApiMapper"))
+            apiArtistMapper = get(QualifiersConstants.ARTIST_MAPPER),
+            apiSongMapper = get(QualifiersConstants.SONG_MAPPER)
         )
     }
 
-    single<ApiMapper<HomeResponse, Home>>(named("HomeApiMapper")) {
+    single<ApiMapper<HomeResponse, Home>>(QualifiersConstants.HOME_MAPPER) {
         HomeApiMapperImpl(
-            get(named("SongApiMapper")),
-            get(named("AlbumApiMapper"))
+            apiSongMapper = get(QualifiersConstants.SONG_MAPPER),
+            apiAlbumMapper = get(QualifiersConstants.ALBUM_MAPPER)
         )
     }
 
-    single<ApiMapper<PlaylistDto, Playlist>>(named("PlaylistApiMapper")) {
+    single<ApiMapper<PlaylistDto, Playlist>>(QualifiersConstants.PLAYLIST_MAPPER) {
         PlaylistApiMapperImpl(
-            get(named("SongApiMapper"))
+            get(QualifiersConstants.SONG_MAPPER)
         )
     }
 }

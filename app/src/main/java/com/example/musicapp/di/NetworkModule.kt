@@ -4,6 +4,9 @@ import com.example.musicapp.data.remote.api.AuthApiService
 import com.example.musicapp.data.remote.api.HomeApiService
 import com.example.musicapp.data.remote.api.PlaylistApiService
 import com.example.musicapp.utils.Constants.BASE_URL
+import com.example.musicapp.utils.QualifiersConstants
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -20,6 +23,8 @@ private val json = Json {
 private val contentType = "application/json".toMediaType()
 
 val networkModule = module {
+    single<CoroutineDispatcher>(QualifiersConstants.DISPATCHERS_IO) { Dispatchers.IO }
+
     single {
         HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY

@@ -55,7 +55,7 @@ class PlaylistViewModel(
                         _state.update {
                             it.copy(
                                 isLoading = false,
-                                error = playlist.message
+                                error = playlist.throwable?.message
                             )
                         }
                     }

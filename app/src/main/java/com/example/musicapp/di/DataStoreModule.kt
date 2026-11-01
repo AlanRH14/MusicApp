@@ -7,6 +7,8 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import com.example.musicapp.data.local.preferences.DataStoreHandleImpl
+import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.utils.PreferencesConstants.PREFERENCES_NAME
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,5 +26,9 @@ val dataStoreModule = module {
             scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
             produceFile = { context.preferencesDataStoreFile(PREFERENCES_NAME) }
         )
+    }
+
+    single<DataStoreHandle> {
+        DataStoreHandleImpl(get())
     }
 }

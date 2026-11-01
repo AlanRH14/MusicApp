@@ -21,37 +21,37 @@ fun AppNavGraph(
 ) {
 
     NavHost(navController = navController, startDestination = startDestination) {
-        composable<OnboardingRoute> {
+        composable<NavRoutes.OnboardingRoute> {
             OnboardingScreen(navController = navController)
         }
 
-        composable<LoginRoute> {
+        composable<NavRoutes.LoginRoute> {
             LoginScreen(navController = navController)
         }
 
-        composable<RegisterRoute> {
+        composable<NavRoutes.RegisterRoute> {
             RegisterScreen(navController = navController)
         }
 
-        composable<HomeRoute> {
+        composable<NavRoutes.HomeRoute> {
             HomeScreen(navController = navController)
         }
 
-        composable<PlaySong> { songID ->
-            val route = songID.toRoute<PlaySong>().songID
+        composable<NavRoutes.PlaySong> { songID ->
+            val route = songID.toRoute<NavRoutes.PlaySong>().songID
             PlaySongScreen(navController = navController, songID = route)
         }
 
-        composable<Playlist> {
+        composable<NavRoutes.Playlist> {
             PlaylistScreen(navController = navController)
         }
 
-        composable<CreatePlaylist> {
+        composable<NavRoutes.CreatePlaylist> {
             CreatePlaylistScreen(navController = navController)
         }
 
-        composable<PlaylistDetail> { playlistID ->
-            val route = playlistID.toRoute<PlaylistDetail>().playlistID
+        composable<NavRoutes.PlaylistDetail> { playlistID ->
+            val route = playlistID.toRoute<NavRoutes.PlaylistDetail>().playlistID
             PlaylistDetailScreen(navController = navController, playlistID = route)
         }
     }

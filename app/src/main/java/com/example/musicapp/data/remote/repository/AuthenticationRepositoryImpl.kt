@@ -9,6 +9,7 @@ import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.database.entities.UserEntity
 import com.example.musicapp.data.local.datasource.UserLocalDataSource
 import com.example.musicapp.data.remote.datasource.RemoteAuthDataSource
+import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.model.User
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -26,14 +27,14 @@ class AuthenticationRepositoryImpl(
             try {
                 val response = remoteDataSource.login(loginRequest)
                 val entity = apiLoginMapper.mapToDomain(apiDto = response)
-                if (entity.token != null) {
-                    localDataSource.savaUser(user = entity)
-                    Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
-                } else {
-                    throw Exception("Token null")
+                if (entity.token.isNullOrEmpty()) {
+                    return@withContext Resource.Error(throwable = AuthException.NullTokenException())
                 }
+
+                localDataSource.saveUser(user = entity)
+                Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
             } catch (e: Exception) {
-                Resource.Error(message = "Error: ${e.message}")
+                Resource.Error(throwable = e)
             }
         }
 
@@ -42,13 +43,14 @@ class AuthenticationRepositoryImpl(
             try {
                 val response = remoteDataSource.register(registerRequest)
                 val entity = apiLoginMapper.mapToDomain(apiDto = response)
-                if (entity.token != null) {
-                    Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
-                } else {
-                    throw Exception("Token null")
+                if (entity.token.isNullOrEmpty()) {
+                    return@withContext Resource.Error(throwable = AuthException.NullTokenException())
                 }
+
+                localDataSource.saveUser(user = entity)
+                Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
             } catch (e: Exception) {
-                Resource.Error(message = "Error: ${e.message}")
+                Resource.Error(throwable = e)
             }
         }
 }

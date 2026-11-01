@@ -2,28 +2,28 @@ package com.example.musicapp.navigation
 
 import kotlinx.serialization.Serializable
 
-interface NavRoutes
+sealed class NavRoutes {
+    @Serializable
+    data object OnboardingRoute : NavRoutes()
 
-@Serializable
-object OnboardingRoute : NavRoutes
+    @Serializable
+    data object LoginRoute : NavRoutes()
 
-@Serializable
-object LoginRoute : NavRoutes
+    @Serializable
+    data object RegisterRoute : NavRoutes()
 
-@Serializable
-object RegisterRoute : NavRoutes
+    @Serializable
+    data object HomeRoute : NavRoutes()
 
-@Serializable
-object HomeRoute : NavRoutes
+    @Serializable
+    data class PlaySong(val songID: String) : NavRoutes()
 
-@Serializable
-data class PlaySong(val songID: String) : NavRoutes
+    @Serializable
+    data object Playlist : NavRoutes()
 
-@Serializable
-object Playlist : NavRoutes
+    @Serializable
+    data object CreatePlaylist : NavRoutes()
 
-@Serializable
-object CreatePlaylist : NavRoutes
-
-@Serializable
-data class PlaylistDetail(val playlistID: String) : NavRoutes
+    @Serializable
+    data class PlaylistDetail(val playlistID: String) : NavRoutes()
+}
