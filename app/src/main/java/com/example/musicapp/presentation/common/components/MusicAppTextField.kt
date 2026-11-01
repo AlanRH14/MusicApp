@@ -27,7 +27,8 @@ fun MusicAppTextField(
     trailingIcon: Painter? = null,
     trailingDescription: String? = null,
     isPasswordVisible: Boolean = true,
-    onShowPasswordClicked: () -> Unit = {},
+    isPasswordTextField: Boolean = false,
+    onTrailingIconClicked: () -> Unit = {},
     singleLine: Boolean = true,
     isError: Boolean = false,
     errorMessage: String? = null,
@@ -53,10 +54,14 @@ fun MusicAppTextField(
         trailingIcon = trailingIcon?.let { icon ->
             {
                 IconButton(
-                    onClick = onShowPasswordClicked,
+                    onClick = onTrailingIconClicked,
                 ) {
                     Icon(
-                        painter = if (isPasswordVisible) icon else painterResource(id = R.drawable.ic_eye),
+                        painter = if (isPasswordTextField) {
+                            if (isPasswordVisible) icon else painterResource(id = R.drawable.ic_eye)
+                        } else {
+                            icon
+                        },
                         contentDescription = trailingDescription
                     )
                 }
@@ -69,7 +74,11 @@ fun MusicAppTextField(
             }
         },
         singleLine = singleLine,
-        visualTransformation = visualTransformation,
+        visualTransformation = if (isPasswordVisible) {
+            VisualTransformation.None
+        } else {
+            visualTransformation
+        },
         shape = Shapes.medium,
         colors = colors,
     )
