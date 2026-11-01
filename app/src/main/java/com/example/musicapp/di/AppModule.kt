@@ -19,8 +19,14 @@ val appModule = module {
     viewModel { LoginViewModel(repository = get(), dataStoreHandle = get()) }
     viewModel { RegisterViewModel(repository = get()) }
     viewModel { HomeViewModel(repository = get()) }
-    viewModel { PlaySongViewModel(mContext = get(), repository = get(), playlistRepository = get()) }
-    viewModel { PlaylistViewModel(get()) }
-    viewModel { CreatePlaylistViewModel(get()) }
-    viewModel { PlaylistDetailViewModel(get()) }
+    viewModel {
+        PlaySongViewModel(
+            mContext = get(),
+            repository = get(),
+            playlistRepository = get()
+        )
+    }
+    viewModel { PlaylistViewModel(playlistRepository = get()) }
+    viewModel { CreatePlaylistViewModel(playlistRepository = get()) }
+    viewModel { PlaylistDetailViewModel(repository = get()) }
 }
