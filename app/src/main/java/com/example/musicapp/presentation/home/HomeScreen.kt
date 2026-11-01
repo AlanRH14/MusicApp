@@ -38,7 +38,7 @@ fun HomeScreen(
                 }
 
                 is HomeEffect.NavigateToPlaylist -> {
-                    navController.navigate(Playlist)
+                    navController.navigate(NavRoutes.Playlist)
                 }
             }
         }
