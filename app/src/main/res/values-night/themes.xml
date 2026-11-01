@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.MusicApp" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.StartScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/animated_icon_splash</item>
+        <item name="postSplashScreenTheme">@style/Theme.MusicApp</item>
+    </style>
+</resources>

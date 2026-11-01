@@ -1,7 +1,9 @@
 package com.example.musicapp
 
+import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -12,53 +14,60 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.example.musicapp.navigation.AppNavGraph
 import com.example.musicapp.navigation.NavRoutes
+import com.example.musicapp.presentation.splash.SplashViewModel
 import com.example.musicapp.ui.theme.MusicAppTheme
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
-    private var isSplashScreenVisible = true
+    private val splashViewModel: SplashViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
-        installSplashScreen().apply {
-            setKeepOnScreenCondition { isSplashScreenVisible }
-            setOnExitAnimationListener { splashProvider ->
-                val zoomX = ObjectAnimator.ofFloat(
-                    splashProvider.iconView,
-                    "scaleX",
-                    0.4F,
-                    0F
-                )
 
-                val zoomY = ObjectAnimator.ofFloat(
-                    splashProvider.iconView,
-                    "scaleY",
-                    0.4F,
-                    0F
-                )
+        var isReady = false
 
-                zoomX.apply {
-                    duration = 300
-                    doOnEnd {
-                        splashProvider.remove()
-                    }
-                    start()
-                }
-                zoomY.apply {
-                    duration = 300
-                    doOnEnd {
-                        splashProvider.remove()
-                    }
-                    start()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                splashViewModel.uiState.collectLatest { state ->
+                    isReady = !state.isLoading
                 }
             }
         }
+
+        splashScreen.setKeepOnScreenCondition { !isReady }
+
+        splashScreen.setOnExitAnimationListener { splashProvider ->
+            val scaleX = ObjectAnimator.ofFloat(
+                splashProvider.iconView,
+                View.SCALE_X,
+                0.4F,
+                0F
+            )
+
+            val scaleY = ObjectAnimator.ofFloat(
+                splashProvider.iconView,
+                View.SCALE_Y,
+                0.4F,
+                0F
+            )
+
+            AnimatorSet().apply {
+                playTogether(scaleX, scaleY)
+                duration = 300
+                doOnEnd { splashProvider.remove() }
+                start()
+            }
+        }
+
         enableEdgeToEdge()
         setContent {
             MusicAppTheme {
@@ -76,11 +85,6 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
-        }
-
-        CoroutineScope(Dispatchers.IO).launch {
-            delay(2000)
-            isSplashScreenVisible = false
         }
     }
 }

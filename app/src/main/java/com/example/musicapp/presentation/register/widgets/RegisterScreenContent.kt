@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -71,6 +72,7 @@ fun RegisterScreenContent(
         Spacer(modifier = Modifier.size(16.dp))
 
         MusicAppTextField(
+            modifier = Modifier.padding(horizontal = PaddingLarge),
             value = state.name ?: "",
             onValueChange = { onEvent(RegisterUIEvent.OnNameUpdate(it)) },
             label = stringResource(id = R.string.name),
@@ -81,6 +83,7 @@ fun RegisterScreenContent(
         )
 
         MusicAppTextField(
+            modifier = Modifier.padding(horizontal = PaddingLarge),
             value = state.email ?: "",
             onValueChange = { onEvent(RegisterUIEvent.OnEmailUpdate(it)) },
             label = stringResource(id = R.string.email),
@@ -91,6 +94,7 @@ fun RegisterScreenContent(
         )
 
         MusicAppTextField(
+            modifier = Modifier.padding(horizontal = PaddingLarge),
             value = state.password ?: "",
             onValueChange = { onEvent(RegisterUIEvent.OnPasswordUpdate(it)) },
             label = stringResource(id = R.string.password),
@@ -99,12 +103,15 @@ fun RegisterScreenContent(
             leadingDescription = stringResource(id = R.string.email_icon),
             trailingIcon = painterResource(id = R.drawable.ic_eye_off),
             isPasswordVisible = state.isPasswordVisible,
+            isPasswordTextField = true,
             trailingDescription = stringResource(id = R.string.icon_eye_off),
-            onShowPasswordClicked = { onEvent(RegisterUIEvent.OnTogglePasswordVisibility) },
-            isError = state.isPasswordValid
+            onTrailingIconClicked = { onEvent(RegisterUIEvent.OnTogglePasswordVisibility) },
+            isError = state.isPasswordValid,
+            visualTransformation = PasswordVisualTransformation(),
         )
 
         MusicAppTextField(
+            modifier = Modifier.padding(horizontal = PaddingLarge),
             value = state.confirmPassword ?: "",
             onValueChange = { onEvent(RegisterUIEvent.OnConfirmPasswordUpdate(it)) },
             label = stringResource(id = R.string.confirm_password),
@@ -113,9 +120,11 @@ fun RegisterScreenContent(
             leadingDescription = stringResource(id = R.string.email_icon),
             trailingIcon = painterResource(id = R.drawable.ic_eye_off),
             isPasswordVisible = state.isConfirmPasswordVisible,
+            isPasswordTextField = true,
             trailingDescription = stringResource(id = R.string.icon_eye_off),
-            onShowPasswordClicked = { onEvent(RegisterUIEvent.OnToggleConfirmPasswordVisibility) },
-            isError = state.isConfirmPasswordValid
+            onTrailingIconClicked = { onEvent(RegisterUIEvent.OnToggleConfirmPasswordVisibility) },
+            isError = state.isConfirmPasswordValid,
+            visualTransformation = PasswordVisualTransformation(),
         )
 
         Spacer(modifier = Modifier.size(16.dp))

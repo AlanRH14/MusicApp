@@ -16,6 +16,7 @@ import com.example.musicapp.presentation.common.components.MusicAppTextField
 import com.example.musicapp.presentation.create_playlist.mvi.CreatePlaylistState
 import com.example.musicapp.presentation.create_playlist.mvi.CreatePlaylistUIEvent
 import com.example.musicapp.ui.theme.PaddingDefault
+import com.example.musicapp.ui.theme.PaddingLarge
 
 @Composable
 fun CreatePlaylistContent(
@@ -31,6 +32,7 @@ fun CreatePlaylistContent(
     ) {
 
         MusicAppTextField(
+            modifier = Modifier.padding(horizontal = PaddingLarge),
             value = state.name,
             onValueChange = { onEvent(CreatePlaylistUIEvent.OnNameUpdate(name = it)) },
             label = stringResource(id = R.string.playlist_name),
@@ -39,6 +41,7 @@ fun CreatePlaylistContent(
         )
 
         MusicAppTextField(
+            modifier = Modifier.padding(horizontal = PaddingLarge),
             value = state.description,
             onValueChange = { onEvent(CreatePlaylistUIEvent.OnDescriptionUpdate(description = it)) },
             label = stringResource(id = R.string.description),

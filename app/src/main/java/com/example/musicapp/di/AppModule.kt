@@ -8,16 +8,25 @@ import com.example.musicapp.presentation.play_song.PlaySongViewModel
 import com.example.musicapp.presentation.playlist.PlaylistViewModel
 import com.example.musicapp.presentation.playlist_detail.PlaylistDetailViewModel
 import com.example.musicapp.presentation.register.RegisterViewModel
+import com.example.musicapp.presentation.splash.SplashViewModel
+import com.example.musicapp.utils.QualifiersConstants
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    viewModel { OnboardingViewModel(get()) }
-    viewModel { LoginViewModel(get(), get()) }
-    viewModel { RegisterViewModel(get()) }
-    viewModel { HomeViewModel(get()) }
-    viewModel { PlaySongViewModel(get(), get(), get()) }
-    viewModel { PlaylistViewModel(get()) }
-    viewModel { CreatePlaylistViewModel(get()) }
-    viewModel { PlaylistDetailViewModel(get()) }
+    viewModel { SplashViewModel(ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO)) }
+    viewModel { OnboardingViewModel(dataStoreHandle = get()) }
+    viewModel { LoginViewModel(repository = get(), dataStoreHandle = get()) }
+    viewModel { RegisterViewModel(repository = get()) }
+    viewModel { HomeViewModel(repository = get()) }
+    viewModel {
+        PlaySongViewModel(
+            mContext = get(),
+            repository = get(),
+            playlistRepository = get()
+        )
+    }
+    viewModel { PlaylistViewModel(playlistRepository = get()) }
+    viewModel { CreatePlaylistViewModel(playlistRepository = get()) }
+    viewModel { PlaylistDetailViewModel(repository = get()) }
 }
