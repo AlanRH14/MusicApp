@@ -71,7 +71,7 @@ fun RegisterScreenContent(
         Spacer(modifier = Modifier.size(16.dp))
 
         MusicAppTextField(
-            
+            modifier = Modifier.padding(horizontal = PaddingLarge),
             value = state.name ?: "",
             onValueChange = { onEvent(RegisterUIEvent.OnNameUpdate(it)) },
             label = stringResource(id = R.string.name),
