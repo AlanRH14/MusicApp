@@ -25,7 +25,7 @@ fun AppNavGraph(
             OnboardingScreen(navController = navController)
         }
 
-        composable<LoginRoute> {
+        composable<NavRoutes.LoginRoute> {
             LoginScreen(navController = navController)
         }
 
