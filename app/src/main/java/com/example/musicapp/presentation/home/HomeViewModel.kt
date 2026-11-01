@@ -55,7 +55,7 @@ class HomeViewModel(
                     is Resource.Error -> {
                         _state.update {
                             it.copy(
-                                error = data.message,
+                                error = data.throwable?.message,
                                 isLoading = false
                             )
                         }
