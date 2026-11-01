@@ -11,16 +11,15 @@ import com.example.musicapp.presentation.register.RegisterViewModel
 import com.example.musicapp.presentation.splash.SplashViewModel
 import com.example.musicapp.utils.QualifiersConstants
 import org.koin.core.module.dsl.viewModel
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val appModule = module {
     viewModel { SplashViewModel(ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO)) }
-    viewModel { OnboardingViewModel(get()) }
-    viewModel { LoginViewModel(get(), get()) }
-    viewModel { RegisterViewModel(get()) }
-    viewModel { HomeViewModel(get()) }
-    viewModel { PlaySongViewModel(get(), get(), get()) }
+    viewModel { OnboardingViewModel(dataStoreHandle = get()) }
+    viewModel { LoginViewModel(repository = get(), dataStoreHandle = get()) }
+    viewModel { RegisterViewModel(repository = get()) }
+    viewModel { HomeViewModel(repository = get()) }
+    viewModel { PlaySongViewModel(mContext = get(), repository = get(), playlistRepository = get()) }
     viewModel { PlaylistViewModel(get()) }
     viewModel { CreatePlaylistViewModel(get()) }
     viewModel { PlaylistDetailViewModel(get()) }
