@@ -64,6 +64,7 @@ fun LoginScreenContent(
             leadingDescription = stringResource(id = R.string.icon_eye_off),
             trailingIcon = painterResource(id = R.drawable.ic_eye_off),
             isPasswordVisible = state.isPasswordVisible,
+            isPasswordTextField = true,
             trailingDescription = stringResource(id = R.string.icon_eye_off),
             onTrailingIconClicked = { onEvent(LoginUIEvent.OnTogglePasswordVisibility) },
             isError = state.isPasswordError,

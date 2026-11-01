@@ -102,6 +102,7 @@ fun RegisterScreenContent(
             leadingDescription = stringResource(id = R.string.email_icon),
             trailingIcon = painterResource(id = R.drawable.ic_eye_off),
             isPasswordVisible = state.isPasswordVisible,
+            isPasswordTextField = true,
             trailingDescription = stringResource(id = R.string.icon_eye_off),
             onTrailingIconClicked = { onEvent(RegisterUIEvent.OnTogglePasswordVisibility) },
             isError = state.isPasswordValid
@@ -117,6 +118,7 @@ fun RegisterScreenContent(
             leadingDescription = stringResource(id = R.string.email_icon),
             trailingIcon = painterResource(id = R.drawable.ic_eye_off),
             isPasswordVisible = state.isConfirmPasswordVisible,
+            isPasswordTextField = true,
             trailingDescription = stringResource(id = R.string.icon_eye_off),
             onTrailingIconClicked = { onEvent(RegisterUIEvent.OnToggleConfirmPasswordVisibility) },
             isError = state.isConfirmPasswordValid
