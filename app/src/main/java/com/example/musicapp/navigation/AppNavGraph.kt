@@ -29,7 +29,7 @@ fun AppNavGraph(
             LoginScreen(navController = navController)
         }
 
-        composable<RegisterRoute> {
+        composable<NavRoutes.RegisterRoute> {
             RegisterScreen(navController = navController)
         }
 
