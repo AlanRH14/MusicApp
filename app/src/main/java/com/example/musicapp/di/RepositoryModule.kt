@@ -1,12 +1,10 @@
 package com.example.musicapp.di
 
-import com.example.musicapp.data.local.preferences.DataStoreHandleImpl
 import com.example.musicapp.data.remote.repository.AuthenticationRepositoryImpl
 import com.example.musicapp.data.remote.repository.HomeRepositoryImpl
 import com.example.musicapp.data.remote.repository.MusicRepositoryImpl
 import com.example.musicapp.data.remote.repository.PlaylistRepositoryImpl
 import com.example.musicapp.domain.repository.AuthenticationRepository
-import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.domain.repository.HomeRepository
 import com.example.musicapp.domain.repository.MusicRepository
 import com.example.musicapp.domain.repository.PlaylistRepository
@@ -23,10 +21,6 @@ val repositoryModule = module {
             apiUserMapper = get(named("UserApiMapper")),
             ioDispatcher = Dispatchers.IO,
         )
-    }
-
-    single<DataStoreHandle> {
-        DataStoreHandleImpl(get())
     }
 
     single<HomeRepository> {
