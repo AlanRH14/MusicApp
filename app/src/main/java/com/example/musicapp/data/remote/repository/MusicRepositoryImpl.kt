@@ -5,7 +5,7 @@ import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.datasource.UserLocalDataSource
 import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.remote.api.HomeApiService
-import com.example.musicapp.domain.AuthException
+import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.domain.repository.MusicRepository
 import com.example.musicapp.utils.Constants.AUTHENTICATION_HEADER_TYPE

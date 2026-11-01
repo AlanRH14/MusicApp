@@ -9,7 +9,7 @@ import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.database.entities.UserEntity
 import com.example.musicapp.data.local.datasource.UserLocalDataSource
 import com.example.musicapp.data.remote.datasource.RemoteAuthDataSource
-import com.example.musicapp.domain.AuthException
+import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.model.User
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

@@ -8,7 +8,7 @@ import com.example.musicapp.data.model.reponse.UpdatePlaylistSongResponse
 import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.data.model.request.UpdatePlaylistSongRequest
 import com.example.musicapp.data.remote.api.PlaylistApiService
-import com.example.musicapp.domain.AuthException
+import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.domain.repository.PlaylistRepository
 import com.example.musicapp.utils.Constants.AUTHENTICATION_HEADER_TYPE

@@ -1,4 +1,4 @@
-package com.example.musicapp.domain
+package com.example.musicapp.domain.exception
 
 sealed class AuthException(override val message: String): Exception(message) {
     class NullTokenException: AuthException("El token recibido es nulo o vacío")

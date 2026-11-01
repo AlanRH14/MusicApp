@@ -7,7 +7,7 @@ import com.example.musicapp.domain.model.Home
 import com.example.musicapp.domain.repository.HomeRepository
 import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.datasource.UserLocalDataSource
-import com.example.musicapp.domain.AuthException
+import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.utils.Constants.AUTHENTICATION_HEADER_TYPE
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
