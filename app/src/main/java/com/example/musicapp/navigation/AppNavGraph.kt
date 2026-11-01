@@ -42,7 +42,7 @@ fun AppNavGraph(
             PlaySongScreen(navController = navController, songID = route)
         }
 
-        composable<Playlist> {
+        composable<NavRoutes.Playlist> {
             PlaylistScreen(navController = navController)
         }
 
