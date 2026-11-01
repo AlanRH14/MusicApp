@@ -37,7 +37,7 @@ fun AppNavGraph(
             HomeScreen(navController = navController)
         }
 
-        composable<PlaySong> { songID ->
+        composable<NavRoutes.PlaySong> { songID ->
             val route = songID.toRoute<PlaySong>().songID
             PlaySongScreen(navController = navController, songID = route)
         }
