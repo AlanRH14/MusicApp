@@ -49,7 +49,7 @@ fun OnboardingScreen(
                 }
 
                 is OnboardingEffect.NavigateToHome -> {
-                    navController.navigate(HomeRoute)
+                    navController.navigate(NavRoutes.HomeRoute)
                 }
             }
         }
