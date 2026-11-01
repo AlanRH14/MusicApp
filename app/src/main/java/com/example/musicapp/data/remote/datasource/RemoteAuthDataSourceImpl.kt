@@ -4,31 +4,28 @@ import com.example.musicapp.data.model.reponse.LoginResponse
 import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.data.model.request.RegisterRequest
 import com.example.musicapp.data.remote.api.AuthApiService
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
+import com.example.musicapp.domain.exception.NetworkException
+import retrofit2.Response
 
 class RemoteAuthDataSourceImpl(
     private val apiService: AuthApiService,
-    private val ioDispatcher: CoroutineDispatcher
 ) : RemoteAuthDataSource {
 
-    override suspend fun login(loginRequest: LoginRequest): LoginResponse =
-        withContext(ioDispatcher) {
-            val response = apiService.login(loginRequest = loginRequest)
-            if (response.isSuccessful) {
-                response.body() ?: throw Exception("Login not processed")
-            } else {
-                throw Exception(response.message())
-            }
-        }
+    override suspend fun login(loginRequest: LoginRequest): LoginResponse {
+        return handleApiResponse { apiService.login(loginRequest) }
+    }
 
-    override suspend fun register(registerRequest: RegisterRequest): LoginResponse =
-        withContext(ioDispatcher) {
-            val response = apiService.register(registerRequest = registerRequest)
-            if (response.isSuccessful) {
-                response.body() ?: throw Exception("Register not processed")
-            } else {
-                throw Exception(response.message())
-            }
+    override suspend fun register(registerRequest: RegisterRequest): LoginResponse {
+        return handleApiResponse { apiService.register(registerRequest) }
+    }
+
+    private inline fun <T> handleApiResponse(request: () -> Response<T>): T {
+        val response = request()
+        if (response.isSuccessful) {
+            return response.body() ?: throw NetworkException.EmptyBodyException()
+        } else {
+            val errorBody = response.errorBody()?.string()
+            throw NetworkException.HttpException(code = response.code(), message = errorBody ?: response.message())
         }
+    }
 }
