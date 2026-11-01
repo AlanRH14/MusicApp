@@ -42,6 +42,7 @@ fun LoginScreenContent(
         Spacer(modifier = Modifier.size(16.dp))
 
         MusicAppTextField(
+            modifier = Modifier.padding(horizontal = PaddingLarge),
             value = state.email ?: "",
             onValueChange = { onEvent(LoginUIEvent.OnEmailUpdate(it)) },
             label = stringResource(id = R.string.email),
@@ -54,6 +55,7 @@ fun LoginScreenContent(
         Spacer(modifier = Modifier.size(8.dp))
 
         MusicAppTextField(
+            modifier = Modifier.padding(horizontal = PaddingLarge),
             value = state.password ?: "",
             onValueChange = { onEvent(LoginUIEvent.OnPasswordUpdate(it)) },
             label = stringResource(id = R.string.password),

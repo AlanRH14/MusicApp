@@ -1,31 +1,27 @@
 package com.example.musicapp.presentation.common.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import com.example.musicapp.R
-import com.example.musicapp.ui.theme.PaddingLarge
 import com.example.musicapp.ui.theme.Shapes
 
 @Composable
 fun MusicAppTextField(
+    modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    label: String,
-    placeholder: String,
+    label: String? = null,
+    placeholder: String? = null,
     leadingIcon: Painter? = null,
     leadingDescription: String? = null,
     trailingIcon: Painter? = null,
@@ -34,21 +30,17 @@ fun MusicAppTextField(
     onShowPasswordClicked: () -> Unit = {},
     singleLine: Boolean = true,
     isError: Boolean = false,
-    colors: TextFieldColors = OutlinedTextFieldDefaults.colors().copy(
-        unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
-        focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-        focusedIndicatorColor = Color.LightGray
-    )
+    errorMessage: String? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors()
 ) {
     OutlinedTextField(
-        modifier = Modifier
-            .padding(horizontal = PaddingLarge)
+        modifier = modifier
             .fillMaxWidth(),
         value = value,
         onValueChange = onValueChange,
-        label = { Text(label) },
-        singleLine = singleLine,
-        placeholder = { Text(placeholder) },
+        label = { label?.let { Text(label) } },
+        placeholder = { placeholder?.let { Text(placeholder) } },
         leadingIcon =
             leadingIcon?.let { icon ->
                 {
@@ -58,12 +50,6 @@ fun MusicAppTextField(
                     )
                 }
             },
-        isError = isError,
-        supportingText = {
-            if (isError) {
-                Text(placeholder)
-            }
-        },
         trailingIcon = trailingIcon?.let { icon ->
             {
                 IconButton(
@@ -76,11 +62,14 @@ fun MusicAppTextField(
                 }
             }
         },
-        visualTransformation = if (isPasswordVisible) {
-            VisualTransformation.None
-        } else {
-            PasswordVisualTransformation()
+        isError = isError,
+        supportingText = {
+            if (isError && errorMessage != null) {
+                Text(errorMessage)
+            }
         },
+        singleLine = singleLine,
+        visualTransformation = visualTransformation,
         shape = Shapes.medium,
         colors = colors,
     )

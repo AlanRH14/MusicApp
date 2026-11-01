@@ -71,6 +71,7 @@ fun RegisterScreenContent(
         Spacer(modifier = Modifier.size(16.dp))
 
         MusicAppTextField(
+            
             value = state.name ?: "",
             onValueChange = { onEvent(RegisterUIEvent.OnNameUpdate(it)) },
             label = stringResource(id = R.string.name),
@@ -81,6 +82,7 @@ fun RegisterScreenContent(
         )
 
         MusicAppTextField(
+            modifier = Modifier.padding(horizontal = PaddingLarge),
             value = state.email ?: "",
             onValueChange = { onEvent(RegisterUIEvent.OnEmailUpdate(it)) },
             label = stringResource(id = R.string.email),
@@ -91,6 +93,7 @@ fun RegisterScreenContent(
         )
 
         MusicAppTextField(
+            modifier = Modifier.padding(horizontal = PaddingLarge),
             value = state.password ?: "",
             onValueChange = { onEvent(RegisterUIEvent.OnPasswordUpdate(it)) },
             label = stringResource(id = R.string.password),
@@ -105,6 +108,7 @@ fun RegisterScreenContent(
         )
 
         MusicAppTextField(
+            modifier = Modifier.padding(horizontal = PaddingLarge),
             value = state.confirmPassword ?: "",
             onValueChange = { onEvent(RegisterUIEvent.OnConfirmPasswordUpdate(it)) },
             label = stringResource(id = R.string.confirm_password),
