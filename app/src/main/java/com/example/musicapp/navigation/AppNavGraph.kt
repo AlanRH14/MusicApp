@@ -51,7 +51,7 @@ fun AppNavGraph(
         }
 
         composable<NavRoutes.PlaylistDetail> { playlistID ->
-            val route = playlistID.toRoute<PlaylistDetail>().playlistID
+            val route = playlistID.toRoute<NavRoutes.PlaylistDetail>().playlistID
             PlaylistDetailScreen(navController = navController, playlistID = route)
         }
     }
