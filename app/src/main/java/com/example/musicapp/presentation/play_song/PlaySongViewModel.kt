@@ -113,7 +113,7 @@ class PlaySongViewModel(
                         _state.update {
                             it.copy(
                                 isLoading = false,
-                                error = response.message
+                                error = response.throwable?.message
                             )
                         }
                     }
@@ -190,7 +190,7 @@ class PlaySongViewModel(
                         _state.update {
                             it.copy(
                                 isLoading = false,
-                                error = playlist.message
+                                error = playlist.throwable?.message
                             )
                         }
                     }
@@ -224,7 +224,7 @@ class PlaySongViewModel(
                         it.copy(
                             isLoading = false,
                             shouldShowSheet = false,
-                            error = response.message
+                            error = response.throwable?.message
                         )
                     }
                 }
