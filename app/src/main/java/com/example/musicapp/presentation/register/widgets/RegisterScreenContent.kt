@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -105,7 +106,8 @@ fun RegisterScreenContent(
             isPasswordTextField = true,
             trailingDescription = stringResource(id = R.string.icon_eye_off),
             onTrailingIconClicked = { onEvent(RegisterUIEvent.OnTogglePasswordVisibility) },
-            isError = state.isPasswordValid
+            isError = state.isPasswordValid,
+            visualTransformation = PasswordVisualTransformation(),
         )
 
         MusicAppTextField(
@@ -121,7 +123,8 @@ fun RegisterScreenContent(
             isPasswordTextField = true,
             trailingDescription = stringResource(id = R.string.icon_eye_off),
             onTrailingIconClicked = { onEvent(RegisterUIEvent.OnToggleConfirmPasswordVisibility) },
-            isError = state.isConfirmPasswordValid
+            isError = state.isConfirmPasswordValid,
+            visualTransformation = PasswordVisualTransformation(),
         )
 
         Spacer(modifier = Modifier.size(16.dp))
