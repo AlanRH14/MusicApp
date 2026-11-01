@@ -72,6 +72,8 @@ class LoginViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             if (invalidateInputs()) return@launch
 
+            _state.update { it.copy(isLoading = true) }
+
             val response = repository.login(
                 LoginRequest(
                     email = state.value.email,
@@ -80,10 +82,6 @@ class LoginViewModel(
             )
 
             when (response) {
-                is Resource.Loading -> {
-                    _state.update { it.copy(isLoading = true) }
-                }
-
                 is Resource.Success -> {
                     _state.update { it.copy(isLoading = false) }
                     if (response.data.token.isNotEmpty() && _state.value.rememberMeActive) {
@@ -102,6 +100,10 @@ class LoginViewModel(
                             error = response.message,
                         )
                     }
+                }
+
+                else -> {
+                    _state.update { it.copy(isLoading = false) }
                 }
             }
         }
