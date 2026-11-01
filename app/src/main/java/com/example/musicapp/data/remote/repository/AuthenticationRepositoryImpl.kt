@@ -26,12 +26,12 @@ class AuthenticationRepositoryImpl(
             try {
                 val response = remoteDataSource.login(loginRequest)
                 val entity = apiLoginMapper.mapToDomain(apiDto = response)
-                if (entity.token != null) {
-                    localDataSource.savaUser(user = entity)
-                    Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
-                } else {
-                    throw Exception("Token null")
+                if (entity.token.isNullOrEmpty()) {
+                    return@withContext Resource.Error("Error: Token recibido es nulo o vacío")
                 }
+
+                localDataSource.savaUser(user = entity)
+                Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
             } catch (e: Exception) {
                 Resource.Error(message = "Error: ${e.message}")
             }
@@ -42,11 +42,12 @@ class AuthenticationRepositoryImpl(
             try {
                 val response = remoteDataSource.register(registerRequest)
                 val entity = apiLoginMapper.mapToDomain(apiDto = response)
-                if (entity.token != null) {
-                    Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
-                } else {
-                    throw Exception("Token null")
+                if (entity.token.isNullOrEmpty()) {
+                    return@withContext Resource.Error("Error: Token recibido es nulo o vacío")
                 }
+
+                localDataSource.savaUser(user = entity)
+                Resource.Success(apiUserMapper.mapToDomain(apiDto = entity))
             } catch (e: Exception) {
                 Resource.Error(message = "Error: ${e.message}")
             }
