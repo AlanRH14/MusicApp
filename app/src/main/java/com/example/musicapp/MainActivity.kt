@@ -14,27 +14,36 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.example.musicapp.navigation.AppNavGraph
 import com.example.musicapp.navigation.NavRoutes
+import com.example.musicapp.presentation.splash.SplashViewModel
 import com.example.musicapp.ui.theme.MusicAppTheme
-import com.example.musicapp.utils.QualifiersConstants
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import kotlin.time.Duration.Companion.milliseconds
 
 class MainActivity : ComponentActivity() {
-    private var isSplashScreenVisible = false
-    private val ioDispatcher: CoroutineDispatcher by inject(qualifier = QualifiersConstants.DISPATCHERS_IO)
+    private val splashViewModel: SplashViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        splashScreen.setKeepOnScreenCondition { !isSplashScreenVisible }
+        var isReady = false
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                splashViewModel.uiState.collectLatest { state ->
+                    isReady = !state.isLoading
+                }
+            }
+        }
+
+        splashScreen.setKeepOnScreenCondition { !isReady }
 
         splashScreen.setOnExitAnimationListener { splashProvider ->
             val scaleX = ObjectAnimator.ofFloat(
@@ -76,11 +85,6 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
-        }
-
-        lifecycleScope.launch(ioDispatcher) {
-            delay(2000.milliseconds)
-            isSplashScreenVisible = true
         }
     }
 }
