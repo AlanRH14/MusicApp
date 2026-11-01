@@ -37,7 +37,7 @@ fun PlaylistScreen(
                 }
 
                 is PlaylistEffect.NavigateToDetailPlaylist -> {
-                    navController.navigate(PlaylistDetail(playlistID = effect.playlistID))
+                    navController.navigate(NavRoutes.PlaylistDetail(playlistID = effect.playlistID))
                 }
             }
         }
