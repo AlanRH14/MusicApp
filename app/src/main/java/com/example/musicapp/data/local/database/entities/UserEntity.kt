@@ -9,7 +9,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Entity(tableName = USER_TABLE)
 data class UserEntity(
-    @SerialName("token") val token: String? = null,
     @PrimaryKey
     @SerialName("id") val id: String,
     @SerialName("email") val email: String? = null,

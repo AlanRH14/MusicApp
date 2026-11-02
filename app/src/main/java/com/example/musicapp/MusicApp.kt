@@ -2,7 +2,7 @@ package com.example.musicapp
 
 import android.app.Application
 import com.example.musicapp.data.service.helper.MusicAppNotificationHelper
-import com.example.musicapp.di.apiMapperModule
+import com.example.musicapp.di.mapperModule
 import com.example.musicapp.di.appModule
 import com.example.musicapp.di.dataStoreModule
 import com.example.musicapp.di.databaseModule
@@ -24,7 +24,7 @@ class MusicApp : Application() {
             androidLogger(Level.DEBUG)
             modules(
                 networkModule,
-                apiMapperModule,
+                mapperModule,
                 databaseModule,
                 datasourceModule,
                 musicModule,

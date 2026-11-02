@@ -16,8 +16,9 @@ val repositoryModule = module {
         AuthenticationRepositoryImpl(
             remoteDataSource = get(),
             localDataSource = get(),
-            apiLoginMapper = get(QualifiersConstants.LOGIN_MAPPER),
-            apiUserMapper = get(QualifiersConstants.USER_MAPPER),
+            dataStore = get(),
+            userMapper = get(QualifiersConstants.USER_MAPPER),
+            userEntityMapper = get(QualifiersConstants.USER_ENTITY_MAPPER),
             ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO),
         )
     }
@@ -25,8 +26,8 @@ val repositoryModule = module {
     single<HomeRepository> {
         HomeRepositoryImpl(
             homeApiService = get(),
+            dataStore = get(),
             apiHomeMapper = get(QualifiersConstants.HOME_MAPPER),
-            userLocalDataSource = get(),
             ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO)
         )
     }
@@ -34,17 +35,17 @@ val repositoryModule = module {
     single<MusicRepository> {
         MusicRepositoryImpl(
             homeApiService = get(),
+            dataStore = get(),
             apiSongMapper = get(QualifiersConstants.SONG_MAPPER),
-            userLocalDataSource = get(),
             ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO)
         )
     }
 
-    single<PlaylistRepository>{
+    single<PlaylistRepository> {
         PlaylistRepositoryImpl(
             apiService = get(),
+            dataStore = get(),
             apiPlaylistMapper = get(QualifiersConstants.PLAYLIST_MAPPER),
-            userLocalDataSource = get(),
             ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO)
         )
     }
