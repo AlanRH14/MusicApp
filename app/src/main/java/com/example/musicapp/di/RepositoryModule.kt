@@ -26,8 +26,8 @@ val repositoryModule = module {
     single<HomeRepository> {
         HomeRepositoryImpl(
             homeApiService = get(),
+            dataStore = get(),
             apiHomeMapper = get(QualifiersConstants.HOME_MAPPER),
-            userLocalDataSource = get(),
             ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO)
         )
     }
