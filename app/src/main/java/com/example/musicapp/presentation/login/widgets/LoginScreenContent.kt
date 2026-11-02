@@ -97,7 +97,7 @@ fun LoginScreenContent(
             Text(
                 stringResource(id = R.string.login),
                 fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.onPrimary
+                color = MaterialTheme.colorScheme.onSecondary
             )
         }
 
