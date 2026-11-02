@@ -73,7 +73,9 @@ class PlaylistRepositoryImpl(
                     } ?: Playlist()
                     Resource.Success(data = playlistData)
                 } else {
-                    Resource.Error(Exception(response.message()))
+                    val errorBody = response.errorBody()?.string()
+                    val errorMessage = errorBody.takeIf { !it.isNullOrEmpty() } ?: response.message()
+                    Resource.Error(Exception(errorMessage))
                 }
             } catch (error: Exception) {
                 Resource.Error(throwable = error)
