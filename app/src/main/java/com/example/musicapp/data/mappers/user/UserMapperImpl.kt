@@ -8,7 +8,6 @@ class UserEntityMapperImpl : Mapper<User, UserEntity> {
 
     override fun mapTo(input: User): UserEntity {
         return UserEntity(
-            token = input.token,
             id = input.id,
             email = input.email,
             name = input.name,
