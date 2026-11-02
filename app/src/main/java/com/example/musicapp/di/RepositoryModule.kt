@@ -35,8 +35,8 @@ val repositoryModule = module {
     single<MusicRepository> {
         MusicRepositoryImpl(
             homeApiService = get(),
+            dataStore = get(),
             apiSongMapper = get(QualifiersConstants.SONG_MAPPER),
-            userLocalDataSource = get(),
             ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO)
         )
     }
