@@ -8,15 +8,19 @@ import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.database.entities.UserEntity
 import com.example.musicapp.data.local.datasource.UserLocalDataSource
+import com.example.musicapp.data.local.preferences.ConstantsPreferences
 import com.example.musicapp.data.remote.datasource.RemoteAuthDataSource
 import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.model.User
+import com.example.musicapp.domain.repository.DataStoreHandle
+import com.example.musicapp.utils.Constants
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 class AuthenticationRepositoryImpl(
     private val remoteDataSource: RemoteAuthDataSource,
     private val localDataSource: UserLocalDataSource,
+    private val dataStore: DataStoreHandle,
     private val userMapper: Mapper<LoginResponse, User>,
     private val userEntityMapper: Mapper<User, UserEntity>,
     private val ioDispatcher: CoroutineDispatcher
@@ -38,6 +42,8 @@ class AuthenticationRepositoryImpl(
             if (token.isNullOrEmpty()) {
                 return@withContext Resource.Error(throwable = AuthException.NullTokenException())
             }
+
+            dataStore.saveState(ConstantsPreferences.AuthTokenPreferences, token)
 
             val domainUser = userMapper.mapTo(input = response)
             localDataSource.saveUser(userEntityMapper.mapTo(domainUser))

@@ -16,6 +16,7 @@ val repositoryModule = module {
         AuthenticationRepositoryImpl(
             remoteDataSource = get(),
             localDataSource = get(),
+            dataStore = get(),
             userMapper = get(QualifiersConstants.USER_MAPPER),
             userEntityMapper = get(QualifiersConstants.USER_ENTITY_MAPPER),
             ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO),
