@@ -81,7 +81,8 @@ fun OnboardingCard(
         ) {
             Text(
                 text = stringResource(id = R.string.get_started),
-                style = MaterialTheme.typography.labelLarge
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.secondary
             )
         }
     }
