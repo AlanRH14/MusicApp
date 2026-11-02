@@ -74,7 +74,8 @@ class PlaylistRepositoryImpl(
                     Resource.Success(data = playlistData)
                 } else {
                     val errorBody = response.errorBody()?.string()
-                    val errorMessage = errorBody.takeIf { !it.isNullOrEmpty() } ?: response.message()
+                    val errorMessage =
+                        errorBody.takeIf { !it.isNullOrEmpty() } ?: response.message()
                     Resource.Error(Exception(errorMessage))
                 }
             } catch (error: Exception) {
@@ -105,7 +106,10 @@ class PlaylistRepositoryImpl(
                     } ?: UpdatePlaylistSongResponse()
                     Resource.Success(data = playlistData)
                 } else {
-                    Resource.Error(throwable = Exception(response.message()))
+                    val errorBody = response.errorBody()?.string()
+                    val errorMessage =
+                        errorBody.takeIf { !it.isNullOrEmpty() } ?: response.message()
+                    Resource.Error(throwable = Exception(errorMessage))
                 }
             } catch (error: Exception) {
                 Resource.Error(throwable = error)
@@ -134,7 +138,9 @@ class PlaylistRepositoryImpl(
                 } ?: UpdatePlaylistSongResponse()
                 Resource.Success(data = playlistData)
             } else {
-                Resource.Error(throwable = Exception(response.message()))
+                val errorBody = response.errorBody()?.string()
+                val errorMessage = errorBody.takeIf { !it.isNullOrEmpty() } ?: response.message()
+                Resource.Error(throwable = Exception(errorMessage))
             }
         } catch (error: Exception) {
             Resource.Error(throwable = error)
