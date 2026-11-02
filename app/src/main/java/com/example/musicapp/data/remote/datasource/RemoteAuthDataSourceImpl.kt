@@ -25,7 +25,8 @@ class RemoteAuthDataSourceImpl(
             return response.body() ?: throw NetworkException.EmptyBodyException()
         } else {
             val errorBody = response.errorBody()?.string()
-            throw NetworkException.HttpException(code = response.code(), message = errorBody ?: response.message())
+            val errorMessage = errorBody.takeIf { !it.isNullOrEmpty() } ?: response.message()
+            throw NetworkException.HttpException(code = response.code(), message = errorMessage)
         }
     }
 }
