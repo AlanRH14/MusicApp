@@ -9,10 +9,7 @@ import org.koin.dsl.module
 
 val datasourceModule = module {
     single<RemoteAuthDataSource> {
-        RemoteAuthDataSourceImpl(
-            apiService = get(),
-            ioDispatcher = Dispatchers.IO
-        )
+        RemoteAuthDataSourceImpl(apiService = get())
     }
 
     single<UserLocalDataSource> {
