@@ -41,11 +41,11 @@ val repositoryModule = module {
         )
     }
 
-    single<PlaylistRepository>{
+    single<PlaylistRepository> {
         PlaylistRepositoryImpl(
             apiService = get(),
+            dataStore = get(),
             apiPlaylistMapper = get(QualifiersConstants.PLAYLIST_MAPPER),
-            userLocalDataSource = get(),
             ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO)
         )
     }
