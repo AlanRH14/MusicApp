@@ -13,7 +13,6 @@ import com.example.musicapp.data.remote.datasource.RemoteAuthDataSource
 import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.model.User
 import com.example.musicapp.domain.repository.DataStoreHandle
-import com.example.musicapp.utils.Constants
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
