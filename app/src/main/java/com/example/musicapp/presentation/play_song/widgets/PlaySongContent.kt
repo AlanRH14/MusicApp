@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -37,7 +38,7 @@ fun PlaySongContent(
             isPlayList = state.isPlaying
         )
 
-        Spacer(modifier = Modifier.padding(PaddingDefault))
+        Spacer(modifier = Modifier.height(PaddingDefault))
 
         SongContent(
             title = state.currentSong?.title ?: "",
@@ -45,7 +46,7 @@ fun PlaySongContent(
             image = state.currentSong?.coverImage ?: "",
         )
 
-        Spacer(modifier = Modifier.padding(PaddingDefault))
+        Spacer(modifier = Modifier.height(PaddingDefault))
 
         SongSlide(
             duration = state.duration,
@@ -54,7 +55,7 @@ fun PlaySongContent(
             onSeekChange = { onEvent(PlaySongUIEvent.OnSeekTo(position = it)) },
         )
 
-        Spacer(modifier = Modifier.padding(PaddingDefault))
+        Spacer(modifier = Modifier.height(PaddingDefault))
 
         SongActions(
             isPlaying = state.isPlaying,
