@@ -6,19 +6,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -31,10 +24,10 @@ import com.example.musicapp.presentation.common.components.MusicAppTextField
 import com.example.musicapp.presentation.login.mvi.LoginState
 import com.example.musicapp.presentation.login.mvi.LoginUIEvent
 import com.example.musicapp.presentation.login.components.LoginCheckBox
+import com.example.musicapp.presentation.login.components.LoginTopAppBar
 import com.example.musicapp.ui.theme.MusicAppTheme
 import com.example.musicapp.ui.theme.PaddingLarge
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreenContent(
     state: LoginState,
@@ -42,26 +35,7 @@ fun LoginScreenContent(
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {},
-                navigationIcon = {
-                    IconButton(
-                        colors = IconButtonDefaults.iconButtonColors(
-                            containerColor = Color.Transparent
-                        ),
-                        onClick = { onEvent(LoginUIEvent.OnBackClicked) },
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_back),
-                            contentDescription = stringResource(id = R.string.image_back),
-                            tint = MaterialTheme.colorScheme.onPrimary,
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Transparent
-                )
-            )
+            LoginTopAppBar(onBackPress = { onEvent(LoginUIEvent.OnBackClicked) })
         }
     ) { innerPadding ->
         Column(
