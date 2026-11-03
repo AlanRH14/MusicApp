@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,41 +20,43 @@ import com.example.musicapp.ui.theme.PaddingLarge
 
 @Composable
 fun CreatePlaylistContent(
-    state: CreatePlaylistState,
-    onEvent: (CreatePlaylistUIEvent) -> Unit
+    state: CreatePlaylistState, onEvent: (CreatePlaylistUIEvent) -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(PaddingDefault),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
 
-        MusicAppTextField(
-            modifier = Modifier.padding(horizontal = PaddingLarge),
-            value = state.name,
-            onValueChange = { onEvent(CreatePlaylistUIEvent.OnNameUpdate(name = it)) },
-            label = stringResource(id = R.string.playlist_name),
-            placeholder = stringResource(id = R.string.enter_playlist_name),
-            isError = state.isNameEmpty
-        )
+    Scaffold { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(PaddingDefault),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
 
-        MusicAppTextField(
-            modifier = Modifier.padding(horizontal = PaddingLarge),
-            value = state.description,
-            onValueChange = { onEvent(CreatePlaylistUIEvent.OnDescriptionUpdate(description = it)) },
-            label = stringResource(id = R.string.description),
-            placeholder = stringResource(id = R.string.enter_playlist_description),
-            isError = state.isDescriptionEmpty
-        )
+            MusicAppTextField(
+                modifier = Modifier.padding(horizontal = PaddingLarge),
+                value = state.name,
+                onValueChange = { onEvent(CreatePlaylistUIEvent.OnNameUpdate(name = it)) },
+                label = stringResource(id = R.string.playlist_name),
+                placeholder = stringResource(id = R.string.enter_playlist_name),
+                isError = state.isNameEmpty
+            )
 
-        Spacer(modifier = Modifier.weight(1F))
+            MusicAppTextField(
+                modifier = Modifier.padding(horizontal = PaddingLarge),
+                value = state.description,
+                onValueChange = { onEvent(CreatePlaylistUIEvent.OnDescriptionUpdate(description = it)) },
+                label = stringResource(id = R.string.description),
+                placeholder = stringResource(id = R.string.enter_playlist_description),
+                isError = state.isDescriptionEmpty
+            )
 
-        MusicAppButton(
-            modifier = Modifier.padding(PaddingLarge),
-            text =  stringResource(id = R.string.create_playlist),
-            onClick = { onEvent(CreatePlaylistUIEvent.OnCreatePlaylistClicked) }
-        )
+            Spacer(modifier = Modifier.weight(1F))
+
+            MusicAppButton(
+                modifier = Modifier.padding(PaddingLarge),
+                text = stringResource(id = R.string.create_playlist),
+                onClick = { onEvent(CreatePlaylistUIEvent.OnCreatePlaylistClicked) })
+        }
     }
 }
