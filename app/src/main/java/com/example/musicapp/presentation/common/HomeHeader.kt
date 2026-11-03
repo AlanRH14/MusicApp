@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.home.components
+package com.example.musicapp.presentation.common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
