@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,7 +33,10 @@ fun LoadingScreen() {
 
         Spacer(modifier = Modifier.size(16.dp))
 
-        Text(text = stringResource(id = R.string.loading))
+        Text(
+            text = stringResource(id = R.string.loading),
+            color = MaterialTheme.colorScheme.onSecondary
+        )
     }
 }
 

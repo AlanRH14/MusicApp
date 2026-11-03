@@ -9,7 +9,6 @@ import com.example.musicapp.presentation.register.mvi.RegisterEffect
 import com.example.musicapp.presentation.register.mvi.RegisterState
 import com.example.musicapp.presentation.register.mvi.RegisterUIEvent
 import com.example.musicapp.utils.ValidateFormat.emailFormatValid
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -87,7 +86,7 @@ class RegisterViewModel(
     }
 
     private fun register() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             if (invalidateTextFields()) return@launch
 
             _state.update { it.copy(isLoading = true) }

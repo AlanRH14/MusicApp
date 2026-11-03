@@ -12,13 +12,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.musicapp.common.Resource
 import com.example.musicapp.data.service.MusicAppPlaybackService
 import com.example.musicapp.data.service.MusicAppPlaybackService.Companion.KEY_SONG
-import com.example.musicapp.domain.model.Song
-import com.example.musicapp.domain.repository.MusicRepository
 import com.example.musicapp.domain.repository.PlaylistRepository
 import com.example.musicapp.presentation.play_song.mvi.PlaySongEffect
 import com.example.musicapp.presentation.play_song.mvi.PlaySongState
 import com.example.musicapp.presentation.play_song.mvi.PlaySongUIEvent
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -29,8 +26,7 @@ import kotlinx.coroutines.launch
 
 class PlaySongViewModel(
     private val mContext: Application,
-    private val repository: MusicRepository,
-    private val playlistRepository: PlaylistRepository,
+    private val playlistRepository: PlaylistRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(PlaySongState())
@@ -39,12 +35,12 @@ class PlaySongViewModel(
     private val _effect = MutableSharedFlow<PlaySongEffect>()
     val effect = _effect.asSharedFlow()
 
-    private var playbackService: MusicAppPlaybackService? = null
+    private var musicBinder: MusicAppPlaybackService.MusicBinder? = null
     private var isServiceBound = false
 
     fun onEvent(event: PlaySongUIEvent) {
         when (event) {
-            is PlaySongUIEvent.GetSongByID -> getSongByID(event.songID)
+            is PlaySongUIEvent.GetSongByID -> startServiceAndBind(songID = event.songID)
             is PlaySongUIEvent.OnToggleToPause -> toggleToPause()
             is PlaySongUIEvent.OnSeekTo -> seekTo(event.position)
             is PlaySongUIEvent.OnAddPlaylistClicked -> getPlaylist()
@@ -60,94 +56,63 @@ class PlaySongViewModel(
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
             isServiceBound = true
             if (binder is MusicAppPlaybackService.MusicBinder) {
-                playbackService = binder.getService()
+                musicBinder = binder
                 observerPlaybackService()
             }
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
             isServiceBound = false
-            playbackService = null
+            musicBinder = null
         }
     }
 
     private fun observerPlaybackService() {
-        playbackService?.let { service ->
-            viewModelScope.launch(Dispatchers.IO) {
-                service.player.collectLatest { player ->
-                    _state.update {
-                        it.copy(
-                            isPlaying = player.isPlaying,
-                            currentSong = player.currentSong ?: it.currentSong,
-                            currentPosition = player.currentPosition.coerceAtLeast(0),
-                            duration = player.duration.coerceAtLeast(0),
-                            isBuffering = player.isBuffering,
-                            error = player.error ?: it.error
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    private fun getSongByID(id: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.getSongById(id = id).collect { response ->
-                when (response) {
-                    is Resource.Loading -> {
-                        _state.update { it.copy(isLoading = true) }
-                    }
-
-                    is Resource.Success -> {
-                        _state.update { state ->
-                            state.copy(
-                                isLoading = false,
-                                song = response.data,
-                                currentSong = response.data
-                            )
-                        }
-                        startServiceAndBind(song = response.data)
-                    }
-
-                    is Resource.Error -> {
-                        _state.update {
-                            it.copy(
-                                isLoading = false,
-                                error = response.throwable?.message
-                            )
-                        }
-                    }
+        val service = musicBinder?.getService() ?: return
+        viewModelScope.launch {
+            service.player.collectLatest { player ->
+                _state.update {
+                    it.copy(
+                        isPlaying = player.isPlaying,
+                        currentSong = player.currentSong ?: it.currentSong,
+                        currentPosition = player.currentPosition.coerceAtLeast(0),
+                        duration = player.duration.coerceAtLeast(0),
+                        isBuffering = player.isBuffering,
+                        error = player.error ?: it.error
+                    )
                 }
             }
         }
     }
 
     private fun toggleToPause() {
-        playbackService?.let { service ->
+        val service = musicBinder?.getService()
+        if (service != null) {
             if (service.player.value.isPlaying) {
                 service.pauseSong()
             } else {
                 service.resumeSong()
             }
-        } ?: run {
+        } else {
             _state.update { it.copy(error = "Playback service not bound") }
         }
     }
 
     private fun seekTo(position: Long) {
-        playbackService?.let { service ->
+        val service = musicBinder?.getService()
+        if (service != null) {
             service.seekTo(position)
-        } ?: run {
+        } else {
             _state.update { it.copy(error = "Playback service not bound") }
         }
     }
 
-    private fun startServiceAndBind(song: Song) {
+    private fun startServiceAndBind(songID: String) {
         val intent = Intent(
             mContext, MusicAppPlaybackService::class.java
         ).apply {
             action = MusicAppPlaybackService.ACTION_PLAY
-            putExtra(KEY_SONG, song)
+            putExtra(KEY_SONG, songID)
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -169,7 +134,7 @@ class PlaySongViewModel(
     }
 
     private fun getPlaylist() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             playlistRepository.getPlaylist().collect { playlist ->
                 when (playlist) {
                     is Resource.Loading -> {
@@ -200,7 +165,7 @@ class PlaySongViewModel(
     }
 
     private fun addSongToPlaylist(playlistID: String, songID: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
 
             val response = playlistRepository.addSongToPlaylist(
@@ -241,7 +206,6 @@ class PlaySongViewModel(
     }
 
     override fun onCleared() {
-        super.onCleared()
         if (isServiceBound) {
             try {
                 mContext.unbindService(serviceConnection)

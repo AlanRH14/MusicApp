@@ -7,7 +7,6 @@ import com.example.musicapp.domain.repository.PlaylistRepository
 import com.example.musicapp.presentation.playlist_detail.mvi.PlaylistDetailEffect
 import com.example.musicapp.presentation.playlist_detail.mvi.PlaylistDetailState
 import com.example.musicapp.presentation.playlist_detail.mvi.PlaylistDetailUIEvent
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -37,7 +36,7 @@ class PlaylistDetailViewModel(
     }
 
     private fun getPlaylistDetails(playlistID: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             repository.getPlaylistDetails(playlistID = playlistID).collect { details ->
                 when (details) {
                     is Resource.Loading -> {
@@ -70,7 +69,7 @@ class PlaylistDetailViewModel(
         playlistID: String,
         songID: String,
     ) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val response = repository.deleteSongFromPlaylist(
                 playlistID = playlistID,
                 songID = songID

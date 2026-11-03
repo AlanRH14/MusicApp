@@ -24,8 +24,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.net.URL
 import androidx.media3.session.MediaStyleNotificationHelper
+import kotlinx.coroutines.CoroutineDispatcher
+import java.net.HttpURLConnection
 
-class MusicAppNotificationHelper(private val mContext: Context) {
+class MusicAppNotificationHelper(
+    private val mContext: Context,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+) {
 
     companion object {
         private const val CHANNEL_ID = "musicapp_notification_channel"
@@ -171,16 +176,21 @@ class MusicAppNotificationHelper(private val mContext: Context) {
         url: String,
         callback: (Notification) -> Unit
     ) {
+        var connection: HttpURLConnection? = null
         try {
             scope.launch {
-                val bitmap = withContext(Dispatchers.IO) {
+                val bitmap = withContext(ioDispatcher) {
                     try {
                         val uri = URL(url)
-                        val connection = uri.openConnection()
+                        connection = (uri.openConnection() as HttpURLConnection).apply {
+                            connectTimeout = 5000
+                            readTimeout = 5000
+                            doInput = true
+                        }
                         connection.connect()
                         val input = connection.getInputStream()
                         BitmapFactory.decodeStream(input)
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         null
                     }
                 }
@@ -192,6 +202,8 @@ class MusicAppNotificationHelper(private val mContext: Context) {
             }
         } catch (e: Exception) {
             e.printStackTrace()
+        } finally {
+            connection?.disconnect()
         }
     }
 
