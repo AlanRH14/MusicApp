@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.PlaylistAdd
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -61,7 +63,7 @@ fun SongActions(
                         android.R.drawable.ic_media_play
                     },
                 ),
-                tint = MaterialTheme.colorScheme.onPrimary,
+                tint = MaterialTheme.colorScheme.onSecondary,
                 contentDescription = stringResource(id = R.string.play_pause),
             )
         }
@@ -76,7 +78,7 @@ fun SongActions(
 
         IconButton(onClick = onAddPlaylistClicked) {
             Icon(
-                painter = painterResource(id = androidx.media3.session.R.drawable.media3_icon_playlist_add),
+                imageVector = Icons.AutoMirrored.Default.PlaylistAdd,
                 contentDescription = stringResource(id = R.string.playlist_add),
                 tint = MaterialTheme.colorScheme.onPrimary
             )
