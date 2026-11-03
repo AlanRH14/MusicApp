@@ -16,8 +16,6 @@ import com.example.musicapp.domain.repository.PlaylistRepository
 import com.example.musicapp.presentation.play_song.mvi.PlaySongEffect
 import com.example.musicapp.presentation.play_song.mvi.PlaySongState
 import com.example.musicapp.presentation.play_song.mvi.PlaySongUIEvent
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -28,8 +26,7 @@ import kotlinx.coroutines.launch
 
 class PlaySongViewModel(
     private val mContext: Application,
-    private val playlistRepository: PlaylistRepository,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val playlistRepository: PlaylistRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(PlaySongState())
@@ -137,7 +134,7 @@ class PlaySongViewModel(
     }
 
     private fun getPlaylist() {
-        viewModelScope.launch(ioDispatcher) {
+        viewModelScope.launch {
             playlistRepository.getPlaylist().collect { playlist ->
                 when (playlist) {
                     is Resource.Loading -> {
@@ -168,7 +165,7 @@ class PlaySongViewModel(
     }
 
     private fun addSongToPlaylist(playlistID: String, songID: String) {
-        viewModelScope.launch(ioDispatcher) {
+        viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
 
             val response = playlistRepository.addSongToPlaylist(
