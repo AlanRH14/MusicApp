@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.musicapp.R
 import com.example.musicapp.presentation.common.components.MusicAppButton
+import com.example.musicapp.presentation.home.components.HomeHeader
 import com.example.musicapp.presentation.playlist.components.PlaylistItem
 import com.example.musicapp.presentation.playlist.mvi.PlaylistState
 import com.example.musicapp.presentation.playlist.mvi.PlaylistUIEvent
@@ -27,6 +28,14 @@ fun PlaylistContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+
+        HomeHeader(
+            title = stringResource(id = R.string.create_playlist),
+            userImage = "",
+            userImageDefault = R.drawable.ic_profile,
+            onPlaylistButtonClicked = {  }
+        )
+
         MusicAppButton(
             modifier = Modifier.padding(PaddingLarge),
             text = stringResource(id = R.string.create_playlist),

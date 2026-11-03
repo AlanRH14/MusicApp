@@ -1,5 +1,6 @@
 package com.example.musicapp.presentation.home.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
@@ -26,7 +28,8 @@ import com.example.musicapp.ui.theme.PaddingSmall
 
 @Composable
 fun HomeHeader(
-    userName: String,
+    title: String = stringResource(id = R.string.welcome_back),
+    subtitle: String = "",
     userImage: String,
     userImageDefault: Int,
     onPlaylistButtonClicked: () -> Unit
@@ -35,7 +38,9 @@ fun HomeHeader(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(PaddingLarge)
+            .padding(PaddingLarge),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         MusicAppImage(
             modifier = Modifier
@@ -49,23 +54,29 @@ fun HomeHeader(
 
         Spacer(modifier = Modifier.size(PaddingLarge))
 
-        Column {
+        Column(
+            modifier = Modifier.weight(1F),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
             Text(
-                text = stringResource(id = R.string.welcome_back),
+                modifier = Modifier.fillMaxWidth(),
+                text = title,
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.titleMedium
             )
 
-            Spacer(modifier = Modifier.size(PaddingSmall))
+            if (subtitle.isNotEmpty()) {
+                Spacer(modifier = Modifier.size(PaddingSmall))
 
-            Text(
-                text = userName,
-                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7F),
-                style = MaterialTheme.typography.titleMedium
-            )
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = subtitle,
+                    color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7F),
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
         }
-
-        Spacer(modifier = Modifier.weight(1F))
 
         IconButton(onClick = onPlaylistButtonClicked) {
             Icon(
@@ -81,7 +92,18 @@ fun HomeHeader(
 @Composable
 fun HomeHeaderPreview() {
     HomeHeader(
-        userName = "LordMiau",
+        subtitle = "LordMiau",
+        userImage = "",
+        userImageDefault = R.drawable.ic_profile,
+        onPlaylistButtonClicked = {}
+    )
+}
+
+@Preview
+@Composable
+fun HomeHeaderNoSubtitlePreview() {
+    HomeHeader(
+        title = "LordMiau",
         userImage = "",
         userImageDefault = R.drawable.ic_profile,
         onPlaylistButtonClicked = {}

@@ -25,7 +25,7 @@ fun HomeContent(
             .fillMaxSize()
     ) {
         HomeHeader(
-            userName = state.user.name,
+            subtitle = state.user.name,
             userImage = state.user.profilePicture,
             userImageDefault = R.drawable.ic_profile,
             onPlaylistButtonClicked = { onEvent(HomeUIEvent.OnPlaylistClicked) }
