@@ -38,7 +38,7 @@ class PlaySongViewModel(
     private val _effect = MutableSharedFlow<PlaySongEffect>()
     val effect = _effect.asSharedFlow()
 
-    private var playbackService: MusicAppPlaybackService? = null
+    private var musicBinder: MusicAppPlaybackService.MusicBinder? = null
     private var isServiceBound = false
 
     fun onEvent(event: PlaySongUIEvent) {
@@ -59,52 +59,53 @@ class PlaySongViewModel(
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
             isServiceBound = true
             if (binder is MusicAppPlaybackService.MusicBinder) {
-                playbackService = binder.getService()
+                musicBinder = binder
                 observerPlaybackService()
             }
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
             isServiceBound = false
-            playbackService = null
+            musicBinder = null
         }
     }
 
     private fun observerPlaybackService() {
-        playbackService?.let { service ->
-            viewModelScope.launch {
-                service.player.collectLatest { player ->
-                    _state.update {
-                        it.copy(
-                            isPlaying = player.isPlaying,
-                            currentSong = player.currentSong ?: it.currentSong,
-                            currentPosition = player.currentPosition.coerceAtLeast(0),
-                            duration = player.duration.coerceAtLeast(0),
-                            isBuffering = player.isBuffering,
-                            error = player.error ?: it.error
-                        )
-                    }
+        val service = musicBinder?.getService() ?: return
+        viewModelScope.launch {
+            service.player.collectLatest { player ->
+                _state.update {
+                    it.copy(
+                        isPlaying = player.isPlaying,
+                        currentSong = player.currentSong ?: it.currentSong,
+                        currentPosition = player.currentPosition.coerceAtLeast(0),
+                        duration = player.duration.coerceAtLeast(0),
+                        isBuffering = player.isBuffering,
+                        error = player.error ?: it.error
+                    )
                 }
             }
         }
     }
 
     private fun toggleToPause() {
-        playbackService?.let { service ->
+        val service = musicBinder?.getService()
+        if (service != null) {
             if (service.player.value.isPlaying) {
                 service.pauseSong()
             } else {
                 service.resumeSong()
             }
-        } ?: run {
+        } else {
             _state.update { it.copy(error = "Playback service not bound") }
         }
     }
 
     private fun seekTo(position: Long) {
-        playbackService?.let { service ->
+        val service = musicBinder?.getService()
+        if (service != null) {
             service.seekTo(position)
-        } ?: run {
+        } else {
             _state.update { it.copy(error = "Playback service not bound") }
         }
     }
@@ -208,7 +209,6 @@ class PlaySongViewModel(
     }
 
     override fun onCleared() {
-        super.onCleared()
         if (isServiceBound) {
             try {
                 mContext.unbindService(serviceConnection)
