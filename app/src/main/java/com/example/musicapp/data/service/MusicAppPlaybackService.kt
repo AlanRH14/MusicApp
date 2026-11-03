@@ -19,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -45,6 +46,7 @@ class MusicAppPlaybackService : MediaSessionService() {
 
     private val binder = MusicBinder()
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    private var fetchSongJob: Job? = null
     private lateinit var exoPlayer: ExoPlayer
     private var mediaSession: MediaSession? = null
     private val notificationHelper: MusicAppNotificationHelper by inject()
@@ -179,7 +181,8 @@ class MusicAppPlaybackService : MediaSessionService() {
     }
 
     private fun playSong(songID: String) {
-        serviceScope.launch {
+        fetchSongJob?.cancel()
+        fetchSongJob = serviceScope.launch {
             repository.getSongById(id = songID).collect { response ->
                 when (response) {
                     is Resource.Success -> {
@@ -304,6 +307,7 @@ class MusicAppPlaybackService : MediaSessionService() {
     }
 
     override fun onDestroy() {
+        serviceScope.cancel()
         exoPlayer.release()
         mediaSession?.release()
         mediaSession = null

@@ -72,7 +72,7 @@ class PlaySongViewModel(
 
     private fun observerPlaybackService() {
         playbackService?.let { service ->
-            viewModelScope.launch(ioDispatcher) {
+            viewModelScope.launch {
                 service.player.collectLatest { player ->
                     _state.update {
                         it.copy(
