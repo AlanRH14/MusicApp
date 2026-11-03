@@ -19,21 +19,8 @@ import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
 
 @Composable
-fun LoginHeader(
-    onBackClicked: () -> Unit
-) {
+fun LoginHeader() {
     Column {
-        IconButton(
-            onClick = onBackClicked,
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_back),
-                contentDescription = stringResource(id = R.string.image_back),
-            )
-        }
-
-        Spacer(modifier = Modifier.size(16.dp))
-
         Image(
             modifier = Modifier
                 .size(120.dp)
