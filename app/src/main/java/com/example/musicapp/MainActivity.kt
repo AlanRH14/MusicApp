@@ -7,11 +7,6 @@ import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.ui.Modifier
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
@@ -71,19 +66,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MusicAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    val navController = rememberNavController()
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding)
-                    ) {
-                        AppNavGraph(
-                            navController = navController,
-                            startDestination = NavRoutes.OnboardingRoute,
-                        )
-                    }
-                }
+                val navController = rememberNavController()
+
+                AppNavGraph(
+                    navController = navController,
+                    startDestination = NavRoutes.OnboardingRoute,
+                )
             }
         }
     }

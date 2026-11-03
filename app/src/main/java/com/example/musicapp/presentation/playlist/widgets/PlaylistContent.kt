@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.musicapp.R
-import com.example.musicapp.presentation.common.widgets.HomeHeader
+import com.example.musicapp.presentation.common.widgets.MusicAppTopAppBar
 import com.example.musicapp.presentation.playlist.components.PlaylistItem
 import com.example.musicapp.presentation.playlist.mvi.PlaylistState
 import com.example.musicapp.presentation.playlist.mvi.PlaylistUIEvent
@@ -28,7 +28,7 @@ fun PlaylistContent(
             .padding(horizontal = PaddingLarge),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        HomeHeader(
+        MusicAppTopAppBar(
             title = stringResource(id = R.string.create_playlist),
             userImage = "",
             userImageDefault = R.drawable.ic_profile,
