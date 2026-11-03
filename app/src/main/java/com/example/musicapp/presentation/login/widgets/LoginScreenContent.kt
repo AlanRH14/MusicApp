@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -29,8 +28,6 @@ import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
 import com.example.musicapp.presentation.common.components.MusicAppButton
 import com.example.musicapp.presentation.common.components.MusicAppTextField
-import com.example.musicapp.presentation.common.widgets.MusicAppTopAppBar
-import com.example.musicapp.presentation.home.mvi.HomeUIEvent
 import com.example.musicapp.presentation.login.mvi.LoginState
 import com.example.musicapp.presentation.login.mvi.LoginUIEvent
 import com.example.musicapp.presentation.login.components.LoginCheckBox
