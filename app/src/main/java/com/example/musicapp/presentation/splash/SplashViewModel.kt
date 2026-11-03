@@ -3,7 +3,6 @@ package com.example.musicapp.presentation.splash
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.presentation.splash.mvi.SplashState
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -11,9 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 
-class SplashViewModel(
-    private val ioDispatcher: CoroutineDispatcher
-) : ViewModel() {
+class SplashViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow(SplashState())
     val uiState: StateFlow<SplashState> = _uiState.asStateFlow()
@@ -23,7 +20,7 @@ class SplashViewModel(
     }
 
     private fun initializeAp() {
-        viewModelScope.launch(ioDispatcher) {
+        viewModelScope.launch {
             try {
                 delay(2000.milliseconds)
                 _uiState.value = _uiState.value.copy(isLoading = false)
