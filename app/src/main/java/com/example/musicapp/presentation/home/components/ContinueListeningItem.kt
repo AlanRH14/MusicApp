@@ -48,9 +48,10 @@ fun ContinueListeningItem(
         Spacer(modifier = Modifier.size(4.dp))
 
         Text(
+            modifier = Modifier.padding(PaddingDefault),
             text = song.title,
             maxLines = 1,
-            style = MaterialTheme.typography.titleSmall,
+            style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSecondary
         )
     }
