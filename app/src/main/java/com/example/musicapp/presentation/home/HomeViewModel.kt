@@ -7,7 +7,6 @@ import com.example.musicapp.common.Resource
 import com.example.musicapp.presentation.home.mvi.HomeEffect
 import com.example.musicapp.presentation.home.mvi.HomeState
 import com.example.musicapp.presentation.home.mvi.HomeUIEvent
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -36,7 +35,7 @@ class HomeViewModel(
     }
 
     private fun getHome() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             repository.getHomeData().collect { data ->
                 when (data) {
                     is Resource.Loading -> {
