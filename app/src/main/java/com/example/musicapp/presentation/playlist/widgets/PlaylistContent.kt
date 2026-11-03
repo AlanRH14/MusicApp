@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,30 +23,35 @@ fun PlaylistContent(
     state: PlaylistState,
     onEvent: (PlaylistUIEvent) -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = PaddingLarge),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        MusicAppTopAppBar(
-            title = stringResource(id = R.string.create_playlist),
-            userImage = "",
-            userImageDefault = R.drawable.ic_profile,
-            onPlaylistButtonClicked = { onEvent(PlaylistUIEvent.OnCreatePlaylistClicked) }
-        )
-
-        if (state.playlist.isEmpty()) {
-            Text(stringResource(id = R.string.no_playlist_found))
-        } else {
-            LazyColumn {
-                items(state.playlist, key = { playlist -> playlist.id }) { playlist ->
-                    PlaylistItem(
-                        playlist = playlist,
-                        onItemClicked = {
-                            onEvent(PlaylistUIEvent.OnPlaylistDetailClicked(playlistID = playlist.id))
-                        }
-                    )
+    Scaffold(
+        topBar = {
+            MusicAppTopAppBar(
+                title = stringResource(id = R.string.create_playlist),
+                userImage = "",
+                userImageDefault = R.drawable.ic_profile,
+                onPlaylistButtonClicked = { onEvent(PlaylistUIEvent.OnCreatePlaylistClicked) }
+            )
+        }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(horizontal = PaddingLarge),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            if (state.playlist.isEmpty()) {
+                Text(stringResource(id = R.string.no_playlist_found))
+            } else {
+                LazyColumn {
+                    items(state.playlist, key = { playlist -> playlist.id }) { playlist ->
+                        PlaylistItem(
+                            playlist = playlist,
+                            onItemClicked = {
+                                onEvent(PlaylistUIEvent.OnPlaylistDetailClicked(playlistID = playlist.id))
+                            }
+                        )
+                    }
                 }
             }
         }
