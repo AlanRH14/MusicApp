@@ -5,13 +5,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.musicapp.R
+import com.example.musicapp.presentation.common.components.MusicAppButton
 import com.example.musicapp.presentation.playlist.components.PlaylistItem
 import com.example.musicapp.presentation.playlist.mvi.PlaylistState
 import com.example.musicapp.presentation.playlist.mvi.PlaylistUIEvent
@@ -25,12 +25,11 @@ fun PlaylistContent(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(
+        MusicAppButton(
             modifier = Modifier.fillMaxWidth(),
+            text = stringResource(id = R.string.create_playlist),
             onClick = { onEvent(PlaylistUIEvent.OnCreatePlaylistClicked) }
-        ) {
-            Text(text = stringResource(id = R.string.create_playlist))
-        }
+        )
 
         if (state.playlist.isEmpty()) {
             Text(stringResource(id = R.string.no_playlist_found))
