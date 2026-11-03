@@ -44,9 +44,9 @@ fun PlaylistItem(
                 modifier = Modifier.padding(start = PaddingDefault),
                 text = "${playlist.songCount} ${
                     if (playlist.songCount > 1) {
-                        "songs"
+                        stringResource(R.string.songs)
                     } else {
-                        "song"
+                        stringResource(R.string.song)
                     }
                 }"
             )

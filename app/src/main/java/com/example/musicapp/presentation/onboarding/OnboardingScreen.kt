@@ -48,7 +48,6 @@ fun OnboardingScreen(
             }
         }
     }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
