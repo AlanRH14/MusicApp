@@ -2,7 +2,6 @@ package com.example.musicapp.data.service
 
 import android.content.Intent
 import android.os.Binder
-import android.os.Build
 import android.os.IBinder
 import androidx.core.net.toUri
 import androidx.media3.common.MediaItem
@@ -12,8 +11,10 @@ import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
+import com.example.musicapp.common.Resource
 import com.example.musicapp.data.service.helper.MusicAppNotificationHelper
 import com.example.musicapp.domain.model.Song
+import com.example.musicapp.domain.repository.MusicRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -47,6 +48,7 @@ class MusicAppPlaybackService : MediaSessionService() {
     private lateinit var exoPlayer: ExoPlayer
     private var mediaSession: MediaSession? = null
     private val notificationHelper: MusicAppNotificationHelper by inject()
+    private val repository: MusicRepository by inject()
     private val _player = MutableStateFlow(PlayerState())
     val player = _player.asStateFlow()
     private var positionUpdateJob: Job? = null
@@ -161,12 +163,12 @@ class MusicAppPlaybackService : MediaSessionService() {
 
         when (intent?.action) {
             ACTION_PLAY -> {
-                val song = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    intent.getParcelableExtra(KEY_SONG, Song::class.java)
+                val songID = intent.getStringExtra(KEY_SONG)
+                if (!songID.isNullOrEmpty()) {
+                    playSong(songID = songID)
                 } else {
-                    intent.getParcelableExtra(KEY_SONG)
+                    resumeSong()
                 }
-                song?.let { playSong(it) } ?: resumeSong()
             }
 
             ACTION_PAUSE -> pauseSong()
@@ -176,7 +178,32 @@ class MusicAppPlaybackService : MediaSessionService() {
         return START_STICKY
     }
 
-    private fun playSong(song: Song) {
+    private fun playSong(songID: String) {
+        serviceScope.launch {
+            repository.getSongById(id = songID).collect { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        startPlayback(song = response.data)
+                    }
+
+                    is Resource.Error -> {
+                        _player.update {
+                            it.copy(
+                                error = response.throwable?.message ?: "Error loading song",
+                                isBuffering = false
+                            )
+                        }
+                    }
+
+                    is Resource.Loading -> {
+                        _player.update { it.copy(isBuffering = true, error = null) }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun startPlayback(song: Song) {
         try {
             android.util.Log.d("PlaybackService", "Cargando audio desde: ${song.audioUrl}")
             _player.update { it.copy(currentSong = song, isBuffering = true, error = null) }

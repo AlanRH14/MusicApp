@@ -22,8 +22,8 @@ val appModule = module {
     viewModel {
         PlaySongViewModel(
             mContext = get(),
-            repository = get(),
-            playlistRepository = get()
+            playlistRepository = get(),
+            ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO)
         )
     }
     viewModel { PlaylistViewModel(playlistRepository = get()) }
