@@ -2,6 +2,7 @@ package com.example.musicapp.presentation.play_song.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,7 +39,10 @@ fun SongActions(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
+        Box(modifier = Modifier.size(40.dp))
+
         Spacer(modifier = Modifier.weight(1F))
+
         IconButton(onClick = onPreviousClicked) {
             Icon(
                 modifier = Modifier
