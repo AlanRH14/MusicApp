@@ -1,5 +1,6 @@
 package com.example.musicapp.presentation.onboarding.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -42,6 +43,7 @@ fun HighlightedText(
         modifier = modifier,
         text = annotatedString,
         style = textStyle,
-        textAlign = textAlign
+        textAlign = textAlign,
+        color = MaterialTheme.colorScheme.onPrimary
     )
 }

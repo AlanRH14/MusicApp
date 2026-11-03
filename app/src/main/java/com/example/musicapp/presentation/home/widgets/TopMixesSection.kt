@@ -24,7 +24,8 @@ fun TopMixesSection(
 
     Text(
         text = stringResource(id = R.string.top_mixes),
-        style = MaterialTheme.typography.titleLarge
+        style = MaterialTheme.typography.titleLarge,
+        color = MaterialTheme.colorScheme.onPrimary
     )
 
     Spacer(modifier = Modifier.size(PaddingDefault))

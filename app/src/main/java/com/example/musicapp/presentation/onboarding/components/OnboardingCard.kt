@@ -29,7 +29,7 @@ import com.example.musicapp.ui.theme.Shapes
 
 @Composable
 fun OnboardingCard(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     onEvent: (OnboardingUIEvent) -> Unit
 ) {
     Column(

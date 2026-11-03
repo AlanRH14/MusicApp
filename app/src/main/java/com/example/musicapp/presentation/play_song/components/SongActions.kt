@@ -4,10 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.PlaylistAdd
+import androidx.compose.material.icons.filled.SkipNext
+import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -34,13 +39,16 @@ fun SongActions(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
+        Box(modifier = Modifier.size(40.dp))
 
-        Box(modifier = Modifier.size(24.dp))
+        Spacer(modifier = Modifier.weight(1F))
 
         IconButton(onClick = onPreviousClicked) {
             Icon(
-                painter = painterResource(id = android.R.drawable.ic_media_previous),
-                tint = MaterialTheme.colorScheme.onPrimary,
+                modifier = Modifier
+                    .size(80.dp),
+                imageVector = Icons.Default.SkipPrevious,
+                tint = MaterialTheme.colorScheme.primary,
                 contentDescription = stringResource(id = R.string.media_previous),
             )
         }
@@ -61,22 +69,28 @@ fun SongActions(
                         android.R.drawable.ic_media_play
                     },
                 ),
-                tint = MaterialTheme.colorScheme.onPrimary,
+                tint = MaterialTheme.colorScheme.onSecondary,
                 contentDescription = stringResource(id = R.string.play_pause),
             )
         }
 
         IconButton(onClick = onNextClicked) {
             Icon(
-                painter = painterResource(id = android.R.drawable.ic_media_next),
-                tint = MaterialTheme.colorScheme.onPrimary,
+                modifier = Modifier
+                    .size(80.dp),
+                imageVector = Icons.Default.SkipNext,
+                tint = MaterialTheme.colorScheme.primary,
                 contentDescription = stringResource(id = R.string.next),
             )
         }
 
+        Spacer(modifier = Modifier.weight(1F))
+
         IconButton(onClick = onAddPlaylistClicked) {
             Icon(
-                painter = painterResource(id = androidx.media3.session.R.drawable.media3_icon_playlist_add),
+                modifier = Modifier
+                    .size(80.dp),
+                imageVector = Icons.AutoMirrored.Filled.PlaylistAdd,
                 contentDescription = stringResource(id = R.string.playlist_add),
                 tint = MaterialTheme.colorScheme.onPrimary
             )

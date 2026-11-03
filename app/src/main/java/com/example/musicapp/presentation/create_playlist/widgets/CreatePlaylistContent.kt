@@ -5,13 +5,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.musicapp.R
+import com.example.musicapp.presentation.common.components.MusicAppButton
 import com.example.musicapp.presentation.common.components.MusicAppTextField
 import com.example.musicapp.presentation.create_playlist.mvi.CreatePlaylistState
 import com.example.musicapp.presentation.create_playlist.mvi.CreatePlaylistUIEvent
@@ -51,8 +50,10 @@ fun CreatePlaylistContent(
 
         Spacer(modifier = Modifier.weight(1F))
 
-        Button(onClick = { onEvent(CreatePlaylistUIEvent.OnCreatePlaylistClicked) }) {
-            Text(text = stringResource(id = R.string.create_playlist))
-        }
+        MusicAppButton(
+            modifier = Modifier.padding(PaddingLarge),
+            text =  stringResource(id = R.string.create_playlist),
+            onClick = { onEvent(CreatePlaylistUIEvent.OnCreatePlaylistClicked) }
+        )
     }
 }

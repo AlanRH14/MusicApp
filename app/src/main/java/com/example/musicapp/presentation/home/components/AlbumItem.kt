@@ -53,7 +53,7 @@ fun AlbumItem(
             text = album.title,
             maxLines = 1,
             style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = MaterialTheme.colorScheme.onSecondary,
         )
 
         Box(

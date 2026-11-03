@@ -2,6 +2,7 @@ package com.example.musicapp.presentation.onboarding
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
@@ -9,14 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -36,8 +32,6 @@ fun OnboardingScreen(
     viewModel: OnboardingViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
-    var cardHeight by remember { mutableStateOf(0.dp) }
-    val density = LocalDensity.current
 
     LaunchedEffect(key1 = true) {
         viewModel.onEvent(OnboardingUIEvent.CheckAuthStatus)
@@ -66,28 +60,23 @@ fun OnboardingScreen(
             contentScale = ContentScale.FillBounds
         )
 
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .align(Alignment.BottomCenter)
+                .align(Alignment.BottomCenter),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .offset(y = (-cardHeight.minus(20.dp))),
+                    .offset(y = 20.dp),
                 painter = painterResource(id = R.drawable.ic_girl),
                 contentScale = ContentScale.Crop,
                 contentDescription = stringResource(id = R.string.image_onboarding),
             )
+
             OnboardingCard(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .onGloballyPositioned {
-                        val heightPX = it.size.height
-                        cardHeight = with(density) {
-                            heightPX.toDp()
-                        }
-                    },
+                modifier = Modifier.fillMaxWidth(),
                 onEvent = viewModel::onEvent
             )
         }

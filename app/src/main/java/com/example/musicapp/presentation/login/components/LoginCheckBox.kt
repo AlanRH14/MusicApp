@@ -20,7 +20,7 @@ fun LoginCheckBox(
     colors: CheckboxColors = CheckboxDefaults.colors(
         checkedColor = MaterialTheme.colorScheme.primary,
         uncheckedColor = MaterialTheme.colorScheme.primary,
-        checkmarkColor = MaterialTheme.colorScheme.onPrimary
+        checkmarkColor = MaterialTheme.colorScheme.onSecondary
     ),
     onCheckedChange: (Boolean) -> Unit,
 ) {
@@ -34,7 +34,7 @@ fun LoginCheckBox(
 
         Text(
             text = text,
-            fontSize = 14.sp,
+            fontSize = 16.sp,
             color = MaterialTheme.colorScheme.onPrimary
         )
     }
