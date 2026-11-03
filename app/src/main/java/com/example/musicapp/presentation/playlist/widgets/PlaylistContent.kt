@@ -1,8 +1,8 @@
 package com.example.musicapp.presentation.playlist.widgets
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
@@ -15,6 +15,7 @@ import com.example.musicapp.presentation.common.components.MusicAppButton
 import com.example.musicapp.presentation.playlist.components.PlaylistItem
 import com.example.musicapp.presentation.playlist.mvi.PlaylistState
 import com.example.musicapp.presentation.playlist.mvi.PlaylistUIEvent
+import com.example.musicapp.ui.theme.PaddingLarge
 
 @Composable
 fun PlaylistContent(
@@ -22,11 +23,12 @@ fun PlaylistContent(
     onEvent: (PlaylistUIEvent) -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier.padding(PaddingLarge),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         MusicAppButton(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.padding(PaddingLarge),
             text = stringResource(id = R.string.create_playlist),
             onClick = { onEvent(PlaylistUIEvent.OnCreatePlaylistClicked) }
         )
