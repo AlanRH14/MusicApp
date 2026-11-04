@@ -1,7 +1,5 @@
 package com.example.musicapp.presentation.register.widgets
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,11 +18,11 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
+import com.example.musicapp.presentation.common.components.AuthenticationHeader
 import com.example.musicapp.presentation.common.components.MusicAppTextField
 import com.example.musicapp.presentation.login.components.LoginTopAppBar
 import com.example.musicapp.presentation.login.widgets.SocialCard
@@ -40,40 +38,18 @@ fun RegisterScreenContent(
     onEvent: (RegisterUIEvent) -> Unit,
 ) {
     Scaffold(
-        topBar = { LoginTopAppBar { } }
+        topBar = {
+            LoginTopAppBar { onEvent(RegisterUIEvent.OnBackClicked) }
+        }
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(PaddingLarge)
+                .padding(PaddingLarge),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Image(
-                modifier = Modifier
-                    .clickable { onEvent(RegisterUIEvent.OnBackClicked) },
-                painter = painterResource(id = R.drawable.ic_back),
-                contentDescription = stringResource(id = R.string.image_back)
-            )
-
-            Spacer(modifier = Modifier.size(16.dp))
-
-            Image(
-                modifier = Modifier
-                    .size(120.dp)
-                    .align(Alignment.CenterHorizontally),
-                painter = painterResource(id = R.drawable.ic_logo),
-                contentDescription = stringResource(id = R.string.image_logo)
-            )
-
-            Spacer(modifier = Modifier.size(16.dp))
-
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(id = R.string.register_your_account),
-                color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Center,
-            )
+            AuthenticationHeader(title = stringResource(id = R.string.register_your_account))
 
             Spacer(modifier = Modifier.size(16.dp))
 

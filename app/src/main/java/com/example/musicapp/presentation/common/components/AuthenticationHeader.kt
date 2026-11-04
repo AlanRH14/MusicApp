@@ -1,9 +1,11 @@
 package com.example.musicapp.presentation.common.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,8 +19,17 @@ import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
 
 @Composable
-fun LoginHeader() {
-    Column {
+fun AuthenticationHeader(
+    modifier: Modifier = Modifier,
+    title: String
+) {
+    Column(
+        modifier = modifier
+            .padding(all = 32.dp)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
         Image(
             modifier = Modifier
                 .size(120.dp)
@@ -31,7 +42,7 @@ fun LoginHeader() {
 
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.login_text),
+            text = title,
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
