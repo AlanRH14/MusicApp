@@ -27,6 +27,7 @@ fun PlaySongContent(
     state: PlaySongState,
     onEvent: (PlaySongUIEvent) -> Unit,
 ) {
+
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
@@ -69,7 +70,6 @@ fun PlaySongContent(
             )
         }
     }
-
 }
 
 @Preview(uiMode = UI_MODE_NIGHT_YES)
