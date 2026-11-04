@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.example.musicapp.R
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.presentation.common.components.MusicAppImage
-import com.example.musicapp.presentation.playlist_detail.components.PlaylistBigItem
+import com.example.musicapp.presentation.playlist_detail.components.PlaylistDetailBigItem
 import com.example.musicapp.presentation.playlist_detail.mvi.PlaylistDetailUIEvent
 import com.example.musicapp.ui.theme.PaddingDefault
 import com.example.musicapp.ui.theme.PaddingSmall
@@ -38,7 +38,7 @@ fun PlaylistDetailContent(
         ) {
             item {
                 playlist.songs.firstOrNull()?.let { song ->
-                    PlaylistBigItem(
+                    PlaylistDetailBigItem(
                         title = song.title,
                         coverImage = song.coverImage
                     )

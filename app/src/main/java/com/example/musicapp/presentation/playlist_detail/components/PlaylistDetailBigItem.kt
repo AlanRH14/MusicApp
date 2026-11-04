@@ -17,7 +17,7 @@ import com.example.musicapp.ui.theme.PaddingDefault
 import com.example.musicapp.ui.theme.PaddingLarge
 
 @Composable
-fun PlaylistBigItem(
+fun PlaylistDetailBigItem(
     title: String? = null,
     coverImage: String? = null,
 ) {
