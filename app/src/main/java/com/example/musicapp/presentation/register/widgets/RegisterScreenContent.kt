@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
@@ -44,8 +45,6 @@ fun RegisterScreenContent(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             AuthenticationHeader(title = stringResource(id = R.string.register_your_account))
-
-            Spacer(modifier = Modifier.size(16.dp))
 
             MusicAppTextField(
                 modifier = Modifier.padding(horizontal = PaddingLarge),
@@ -111,7 +110,7 @@ fun RegisterScreenContent(
                 onClick = { onEvent(RegisterUIEvent.OnRegisterClicked) }
             )
 
-            Box(modifier = Modifier.weight(1F))
+            Spacer(modifier = Modifier.height(PaddingLarge))
 
             SocialCard(
                 stringRes = stringResource(id = R.string.already_have_an_account),
@@ -121,7 +120,6 @@ fun RegisterScreenContent(
             )
         }
     }
-
 }
 
 @Preview

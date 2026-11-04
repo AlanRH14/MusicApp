@@ -11,6 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -43,7 +44,8 @@ fun LoginScreenContent(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(PaddingLarge)
+                .padding(PaddingLarge),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AuthenticationHeader(title = stringResource(id = R.string.login_text))
 
