@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
 import com.example.musicapp.presentation.common.components.AuthenticationHeader
+import com.example.musicapp.presentation.common.components.MusicAppButton
 import com.example.musicapp.presentation.common.components.MusicAppTextField
 import com.example.musicapp.presentation.login.components.LoginTopAppBar
 import com.example.musicapp.presentation.login.widgets.SocialCard
@@ -111,24 +112,11 @@ fun RegisterScreenContent(
 
             Spacer(modifier = Modifier.size(16.dp))
 
-            Button(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth()
-                    .shadow(
-                        elevation = 8.dp,
-                        shape = Shapes.extraLarge,
-                        ambientColor = MaterialTheme.colorScheme.primary,
-                        spotColor = MaterialTheme.colorScheme.primary
-                    ),
-                onClick = { onEvent(RegisterUIEvent.OnRegisterClicked) },
-            ) {
-                Text(
-                    text = stringResource(id = R.string.register),
-                    fontSize = 16.sp,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            }
+            MusicAppButton(
+                modifier = Modifier.padding(horizontal = PaddingLarge),
+                text = stringResource(id = R.string.register),
+                onClick = { onEvent(RegisterUIEvent.OnRegisterClicked) }
+            )
 
             Box(modifier = Modifier.weight(1F))
 
