@@ -18,7 +18,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.musicapp.R
-import com.example.musicapp.presentation.login.components.SocialButton
+import com.example.musicapp.presentation.common.components.SocialButton
 import com.example.musicapp.presentation.login.components.SocialDivider
 import com.example.musicapp.presentation.onboarding.components.HighlightedText
 import com.example.musicapp.ui.theme.PaddingLarge
