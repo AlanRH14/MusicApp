@@ -25,7 +25,7 @@ fun AuthenticationHeader(
 ) {
     Column(
         modifier = modifier
-            .padding(all = 32.dp)
+            .padding(all = 16.dp)
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center

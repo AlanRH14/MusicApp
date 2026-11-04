@@ -45,6 +45,8 @@ fun RegisterScreenContent(
         ) {
             AuthenticationHeader(title = stringResource(id = R.string.register_your_account))
 
+            Spacer(modifier = Modifier.height(16.dp))
+
             MusicAppTextField(
                 modifier = Modifier.padding(horizontal = PaddingLarge),
                 value = state.name ?: "",
