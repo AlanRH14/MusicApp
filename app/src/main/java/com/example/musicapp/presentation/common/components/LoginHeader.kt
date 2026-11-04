@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.login.widgets
+package com.example.musicapp.presentation.common.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
