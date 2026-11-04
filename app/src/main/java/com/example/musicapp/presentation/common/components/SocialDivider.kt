@@ -1,4 +1,4 @@
-package com.example.musicapp.presentation.login.components
+package com.example.musicapp.presentation.common.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
