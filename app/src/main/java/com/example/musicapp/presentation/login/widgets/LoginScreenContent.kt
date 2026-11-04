@@ -44,8 +44,7 @@ fun LoginScreenContent(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(PaddingLarge),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(PaddingLarge)
         ) {
             AuthenticationHeader(title = stringResource(id = R.string.login_text))
 
@@ -61,8 +60,6 @@ fun LoginScreenContent(
                 leadingDescription = stringResource(id = R.string.email_icon),
                 isError = state.isEmailError,
             )
-
-            Spacer(modifier = Modifier.size(8.dp))
 
             MusicAppTextField(
                 modifier = Modifier.padding(horizontal = PaddingLarge),
@@ -80,8 +77,6 @@ fun LoginScreenContent(
                 isError = state.isPasswordError,
                 visualTransformation = PasswordVisualTransformation(),
             )
-
-            Spacer(modifier = Modifier.size(16.dp))
 
             LoginCheckBox(
                 checked = state.rememberMeActive,
