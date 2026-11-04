@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,44 +27,48 @@ fun PlaySongContent(
     state: PlaySongState,
     onEvent: (PlaySongUIEvent) -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(PaddingLarge),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        HeaderPlaySong(
-            title = state.currentSong?.title ?: "",
-            isPlayList = state.isPlaying
-        )
 
-        Spacer(modifier = Modifier.height(PaddingDefault))
+    Scaffold { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(innerPadding)
+                .padding(PaddingLarge),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            HeaderPlaySong(
+                title = state.currentSong?.title ?: "",
+                isPlayList = state.isPlaying
+            )
 
-        SongContent(
-            title = state.currentSong?.title ?: "",
-            genre = state.currentSong?.genre ?: "",
-            image = state.currentSong?.coverImage ?: "",
-        )
+            Spacer(modifier = Modifier.height(PaddingDefault))
 
-        Spacer(modifier = Modifier.height(PaddingDefault))
+            SongContent(
+                title = state.currentSong?.title ?: "",
+                genre = state.currentSong?.genre ?: "",
+                image = state.currentSong?.coverImage ?: "",
+            )
 
-        SongSlide(
-            duration = state.duration,
-            currentPosition = state.currentPosition,
-            isBuffering = state.isBuffering,
-            onSeekChange = { onEvent(PlaySongUIEvent.OnSeekTo(position = it)) },
-        )
+            Spacer(modifier = Modifier.height(PaddingDefault))
 
-        Spacer(modifier = Modifier.height(PaddingDefault))
+            SongSlide(
+                duration = state.duration,
+                currentPosition = state.currentPosition,
+                isBuffering = state.isBuffering,
+                onSeekChange = { onEvent(PlaySongUIEvent.OnSeekTo(position = it)) },
+            )
 
-        SongActions(
-            isPlaying = state.isPlaying,
-            onPlayPauseToggle = { onEvent(PlaySongUIEvent.OnToggleToPause) },
-            onNextClicked = {},
-            onPreviousClicked = {},
-            onAddPlaylistClicked = { onEvent(PlaySongUIEvent.OnAddPlaylistClicked) }
-        )
+            Spacer(modifier = Modifier.height(PaddingDefault))
+
+            SongActions(
+                isPlaying = state.isPlaying,
+                onPlayPauseToggle = { onEvent(PlaySongUIEvent.OnToggleToPause) },
+                onNextClicked = {},
+                onPreviousClicked = {},
+                onAddPlaylistClicked = { onEvent(PlaySongUIEvent.OnAddPlaylistClicked) }
+            )
+        }
     }
 }
 

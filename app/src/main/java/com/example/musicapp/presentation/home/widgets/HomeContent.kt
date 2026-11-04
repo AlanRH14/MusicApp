@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.musicapp.R
 import com.example.musicapp.presentation.home.mvi.HomeState
-import com.example.musicapp.presentation.common.widgets.MusicAppTopAppBar
+import com.example.musicapp.presentation.common.components.MusicAppTopAppBar
 import com.example.musicapp.presentation.home.mvi.HomeUIEvent
 import com.example.musicapp.ui.theme.PaddingDefault
 import com.example.musicapp.ui.theme.PaddingLarge
