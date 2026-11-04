@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,73 +34,78 @@ fun PlaylistDetailContent(
     playlist: Playlist,
     onEvent: (PlaylistDetailUIEvent) -> Unit
 ) {
-    LazyColumn {
-        item {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(PaddingLarge),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                playlist.songs.firstOrNull()?.title?.let { title ->
-                    Text(
-                        modifier = Modifier.padding(PaddingDefault),
-                        text = title,
-                        style = MaterialTheme.typography.headlineMedium,
-                    )
-                }
+    Scaffold { innerPadding ->
+        LazyColumn(
+            modifier = Modifier
+                .padding(innerPadding)
+        ) {
+            item {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(PaddingLarge),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    playlist.songs.firstOrNull()?.title?.let { title ->
+                        Text(
+                            modifier = Modifier.padding(PaddingDefault),
+                            text = title,
+                            style = MaterialTheme.typography.headlineMedium,
+                        )
+                    }
 
-                playlist.songs.firstOrNull()?.coverImage?.let { image ->
-                    MusicAppImage(
-                        modifier = Modifier.size(200.dp),
-                        pathImage = image,
-                        imageDefault = R.drawable.ic_profile,
-                        placeHolder = {},
-                        contentDescription = "Playlist Image",
-                    )
+                    playlist.songs.firstOrNull()?.coverImage?.let { image ->
+                        MusicAppImage(
+                            modifier = Modifier.size(200.dp),
+                            pathImage = image,
+                            imageDefault = R.drawable.ic_profile,
+                            placeHolder = {},
+                            contentDescription = "Playlist Image",
+                        )
+                    }
                 }
             }
-        }
 
-        items(playlist.songs, key = { song -> song.id }) { song ->
-            Row(modifier = Modifier.padding(PaddingSmall)) {
-                MusicAppImage(
-                    modifier = Modifier.size(50.dp),
-                    pathImage = song.coverImage,
-                    imageDefault = R.drawable.ic_logo,
-                    placeHolder = {},
-                    contentDescription = "Song Image"
-                )
-
-                Column {
-                    Text(
-                        modifier = Modifier.padding(start = PaddingDefault),
-                        text = song.title,
-                        style = MaterialTheme.typography.bodyLarge,
+            items(playlist.songs, key = { song -> song.id }) { song ->
+                Row(modifier = Modifier.padding(PaddingSmall)) {
+                    MusicAppImage(
+                        modifier = Modifier.size(50.dp),
+                        pathImage = song.coverImage,
+                        imageDefault = R.drawable.ic_logo,
+                        placeHolder = {},
+                        contentDescription = "Song Image"
                     )
-                    Text(
-                        modifier = Modifier.padding(start = PaddingDefault),
-                        text = song.artist.name,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
 
-                Spacer(modifier = Modifier.weight(1F))
-
-                IconButton(onClick = {
-                    onEvent(
-                        PlaylistDetailUIEvent.OnDeleteSongOfPlaylist(
-                            playlistID = playlist.id,
-                            songID = song.id
+                    Column {
+                        Text(
+                            modifier = Modifier.padding(start = PaddingDefault),
+                            text = song.title,
+                            style = MaterialTheme.typography.bodyLarge,
                         )
-                    )
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete Song of Playlist Icon",
-                        tint = Color.Red
-                    )
+                        Text(
+                            modifier = Modifier.padding(start = PaddingDefault),
+                            text = song.artist.name,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.weight(1F))
+
+                    IconButton(onClick = {
+                        onEvent(
+                            PlaylistDetailUIEvent.OnDeleteSongOfPlaylist(
+                                playlistID = playlist.id,
+                                songID = song.id
+                            )
+                        )
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "Delete Song of Playlist Icon",
+                            tint = Color.Red
+                        )
+                    }
                 }
             }
         }
