@@ -22,6 +22,7 @@ import com.example.musicapp.R
 import com.example.musicapp.presentation.common.components.AuthenticationHeader
 import com.example.musicapp.presentation.common.components.MusicAppButton
 import com.example.musicapp.presentation.common.components.MusicAppTextField
+import com.example.musicapp.presentation.common.widgets.SocialCard
 import com.example.musicapp.presentation.login.mvi.LoginState
 import com.example.musicapp.presentation.login.mvi.LoginUIEvent
 import com.example.musicapp.presentation.login.components.LoginCheckBox
