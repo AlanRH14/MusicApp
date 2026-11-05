@@ -29,11 +29,24 @@ class AuthenticationRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : AuthenticationRepository {
 
-    override suspend fun login(loginRequest: LoginRequest): Resource<User> =
-        authenticate { apiService.login(loginRequest = loginRequest) }
+    override suspend fun login(email: String?, password: String?): Resource<User> =
+        authenticate {
+            apiService.login(
+                loginRequest = LoginRequest(
+                    email = email,
+                    password = password
+                )
+            )
+        }
 
-    override suspend fun register(registerRequest: RegisterRequest): Resource<User> =
-        authenticate { apiService.register(registerRequest = registerRequest) }
+    override suspend fun register(
+        email: String?,
+        password: String?,
+        name: String?
+    ): Resource<User> =
+        authenticate {
+            apiService.register(registerRequest = registerRequest)
+        }
 
     private suspend fun authenticate(
         apiCall: suspend () -> Response<LoginResponse>
