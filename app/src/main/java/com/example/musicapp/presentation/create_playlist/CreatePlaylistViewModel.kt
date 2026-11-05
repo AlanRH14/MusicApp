@@ -3,7 +3,7 @@ package com.example.musicapp.presentation.create_playlist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.common.Resource
-import com.example.musicapp.domain.model.CreatePlaylist
+import com.example.musicapp.domain.model.PlaylistData
 import com.example.musicapp.domain.repository.PlaylistRepository
 import com.example.musicapp.presentation.create_playlist.mvi.CreatePlaylistEffect
 import com.example.musicapp.presentation.create_playlist.mvi.CreatePlaylistState
@@ -48,7 +48,7 @@ class CreatePlaylistViewModel(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
             val response = playlistRepository.createPlaylist(
-                CreatePlaylist(
+                PlaylistData(
                     name = _state.value.name,
                     description = _state.value.description,
                 )

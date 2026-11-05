@@ -2,15 +2,14 @@ package com.example.musicapp.domain.repository
 
 import com.example.musicapp.common.Resource
 import com.example.musicapp.data.model.response.UpdatePlaylistSongResponse
-
-import com.example.musicapp.domain.model.CreatePlaylist
+import com.example.musicapp.domain.model.PlaylistData
 import com.example.musicapp.domain.model.Playlist
 import kotlinx.coroutines.flow.Flow
 
 interface PlaylistRepository {
     fun getPlaylist(): Flow<Resource<List<Playlist>>>
 
-    suspend fun createPlaylist(playlistData: CreatePlaylist): Resource<Playlist>
+    suspend fun createPlaylist(playlistData: PlaylistData): Resource<Playlist>
 
     suspend fun addSongToPlaylist(
         playlistID: String,
