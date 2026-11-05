@@ -3,8 +3,8 @@ package com.example.musicapp.presentation.playlist_detail
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
@@ -20,7 +20,7 @@ fun PlaylistDetailScreen(
     playlistID: String,
     viewModel: PlaylistDetailViewModel = koinViewModel()
 ) {
-    val state by viewModel.state.collectAsState()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = true) {
         viewModel.onEvent(PlaylistDetailUIEvent.OnGetPlaylistDetail(playlistID = playlistID))
