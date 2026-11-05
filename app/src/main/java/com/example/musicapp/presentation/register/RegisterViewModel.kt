@@ -92,7 +92,7 @@ class RegisterViewModel(
             _state.update { it.copy(isLoading = true) }
 
             val response = repository.register(
-                AuthenticationData(
+                authData = AuthenticationData(
                     email = _state.value.email,
                     password = _state.value.password,
                     name = _state.value.name

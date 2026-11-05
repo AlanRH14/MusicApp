@@ -74,7 +74,7 @@ class LoginViewModel(
             _state.update { it.copy(isLoading = true) }
 
             val response = repository.login(
-                AuthenticationData(
+                authData = AuthenticationData(
                     email = state.value.email,
                     password = state.value.password
                 )
