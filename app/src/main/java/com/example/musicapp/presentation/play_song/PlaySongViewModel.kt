@@ -181,7 +181,7 @@ class PlaySongViewModel(
                             shouldShowSheet = false
                         )
                     }
-                    _effect.emit(PlaySongEffect.ShowMessage("Song added to playlist successfully"))
+                    _effect.emit(PlaySongEffect.ShowMessage(response.data.message))
                 }
 
                 is Resource.Error -> {
