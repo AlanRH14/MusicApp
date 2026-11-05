@@ -12,6 +12,7 @@ import com.example.musicapp.data.remote.api.getErrorMessage
 import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.exception.NetworkException
 import com.example.musicapp.domain.model.Playlist
+import com.example.musicapp.domain.model.PlaylistData
 import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.domain.repository.PlaylistRepository
 import com.example.musicapp.utils.constants.AppConstants.AUTHENTICATION_HEADER_TYPE
@@ -54,7 +55,7 @@ class PlaylistRepositoryImpl(
         emit(Resource.Error(throwable = error))
     }.flowOn(ioDispatcher)
 
-    override suspend fun createPlaylist(playlistRequest: CreatePlaylistRequest): Resource<Playlist> =
+    override suspend fun createPlaylist(playlistData: PlaylistData): Resource<Playlist> =
         withContext(ioDispatcher) {
             try {
                 val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
@@ -64,7 +65,12 @@ class PlaylistRepositoryImpl(
 
                 val response = apiService.createPlaylist(
                     token = "$AUTHENTICATION_HEADER_TYPE $token",
-                    playlistRequest = playlistRequest
+                    playlistRequest = CreatePlaylistRequest(
+                        name = playlistData.name,
+                        description = playlistData.description,
+                        coverImage = playlistData.coverImage,
+                        songIds = playlistData.songIds
+                    )
                 )
 
                 if (response.isSuccessful) {
