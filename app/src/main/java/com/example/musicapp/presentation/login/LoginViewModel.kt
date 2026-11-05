@@ -6,6 +6,7 @@ import com.example.musicapp.data.local.preferences.ConstantsPreferences
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.common.Resource
+import com.example.musicapp.domain.model.AuthData
 import com.example.musicapp.presentation.login.mvi.LoginEffect
 import com.example.musicapp.presentation.login.mvi.LoginState
 import com.example.musicapp.presentation.login.mvi.LoginUIEvent
@@ -73,8 +74,10 @@ class LoginViewModel(
             _state.update { it.copy(isLoading = true) }
 
             val response = repository.login(
+                AuthData(
                     email = state.value.email,
                     password = state.value.password
+                )
             )
 
             when (response) {
