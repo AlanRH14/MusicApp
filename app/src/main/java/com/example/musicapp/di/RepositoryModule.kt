@@ -14,7 +14,7 @@ import org.koin.dsl.module
 val repositoryModule = module {
     single<AuthenticationRepository> {
         AuthenticationRepositoryImpl(
-            remoteDataSource = get(),
+            apiService = get(),
             localDataSource = get(),
             dataStore = get(),
             userMapper = get(QualifiersConstants.USER_MAPPER),

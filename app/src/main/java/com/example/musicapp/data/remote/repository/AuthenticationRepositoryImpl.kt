@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 class AuthenticationRepositoryImpl(
-    private val remoteDataSource: AuthApiService,
+    private val apiService: AuthApiService,
     private val localDataSource: UserLocalDataSource,
     private val dataStore: DataStoreHandle,
     private val userMapper: Mapper<LoginResponse, User>,
@@ -29,10 +29,10 @@ class AuthenticationRepositoryImpl(
 ) : AuthenticationRepository {
 
     override suspend fun login(loginRequest: LoginRequest): Resource<User> =
-        authenticate { remoteDataSource.login(loginRequest = loginRequest) }
+        authenticate { apiService.login(loginRequest = loginRequest) }
 
     override suspend fun register(registerRequest: RegisterRequest): Resource<User> =
-        authenticate { remoteDataSource.register(registerRequest = registerRequest) }
+        authenticate { apiService.register(registerRequest = registerRequest) }
 
     private suspend fun authenticate(
         apiCall: suspend () -> Response<LoginResponse>
