@@ -19,8 +19,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
+import com.example.musicapp.presentation.common.components.AuthenticationHeader
 import com.example.musicapp.presentation.common.components.MusicAppButton
 import com.example.musicapp.presentation.common.components.MusicAppTextField
+import com.example.musicapp.presentation.common.widgets.SocialCard
 import com.example.musicapp.presentation.login.mvi.LoginState
 import com.example.musicapp.presentation.login.mvi.LoginUIEvent
 import com.example.musicapp.presentation.login.components.LoginCheckBox
@@ -44,7 +46,7 @@ fun LoginScreenContent(
                 .padding(innerPadding)
                 .padding(PaddingLarge)
         ) {
-            LoginHeader()
+            AuthenticationHeader(title = stringResource(id = R.string.login_text))
 
             Spacer(modifier = Modifier.size(16.dp))
 
@@ -58,8 +60,6 @@ fun LoginScreenContent(
                 leadingDescription = stringResource(id = R.string.email_icon),
                 isError = state.isEmailError,
             )
-
-            Spacer(modifier = Modifier.size(8.dp))
 
             MusicAppTextField(
                 modifier = Modifier.padding(horizontal = PaddingLarge),
@@ -77,8 +77,6 @@ fun LoginScreenContent(
                 isError = state.isPasswordError,
                 visualTransformation = PasswordVisualTransformation(),
             )
-
-            Spacer(modifier = Modifier.size(16.dp))
 
             LoginCheckBox(
                 checked = state.rememberMeActive,

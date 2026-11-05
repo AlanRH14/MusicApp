@@ -9,15 +9,18 @@ import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.database.entities.UserEntity
 import com.example.musicapp.data.local.datasource.UserLocalDataSource
 import com.example.musicapp.data.local.preferences.ConstantsPreferences
-import com.example.musicapp.data.remote.datasource.RemoteAuthDataSource
+import com.example.musicapp.data.remote.api.AuthApiService
 import com.example.musicapp.domain.exception.AuthException
+import com.example.musicapp.domain.exception.NetworkException
 import com.example.musicapp.domain.model.User
 import com.example.musicapp.domain.repository.DataStoreHandle
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 
 class AuthenticationRepositoryImpl(
-    private val remoteDataSource: RemoteAuthDataSource,
+    private val remoteDataSource: AuthApiService,
     private val localDataSource: UserLocalDataSource,
     private val dataStore: DataStoreHandle,
     private val userMapper: Mapper<LoginResponse, User>,
@@ -32,21 +35,30 @@ class AuthenticationRepositoryImpl(
         authenticate { remoteDataSource.register(registerRequest = registerRequest) }
 
     private suspend fun authenticate(
-        apiCall: suspend () -> LoginResponse
+        apiCall: suspend () -> Response<LoginResponse>
     ): Resource<User> = withContext(ioDispatcher) {
         try {
             val response = apiCall()
 
-            val token = response.token
+            if (!response.isSuccessful) {
+                val errorBody = response.errorBody()?.string()
+                val errorMessage = errorBody.takeIf { !it.isNullOrEmpty() } ?: response.message()
+                throw NetworkException.HttpException(code = response.code(), message = errorMessage)
+            }
+
+            val loginResponse = response.body() ?: throw NetworkException.EmptyBodyException()
+            val token = loginResponse.token
             if (token.isNullOrEmpty()) {
                 return@withContext Resource.Error(throwable = AuthException.NullTokenException())
             }
 
             dataStore.saveState(ConstantsPreferences.AuthTokenPreferences, token)
 
-            val domainUser = userMapper.mapTo(input = response)
+            val domainUser = userMapper.mapTo(input = loginResponse)
             localDataSource.saveUser(userEntityMapper.mapTo(domainUser))
             Resource.Success(domainUser)
+        } catch (e: CancellationException) {
+            throw e
         } catch (error: Exception) {
             Resource.Error(throwable = error)
         }
