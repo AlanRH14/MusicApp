@@ -3,7 +3,7 @@ package com.example.musicapp.di
 import com.example.musicapp.data.remote.api.AuthApiService
 import com.example.musicapp.data.remote.api.HomeApiService
 import com.example.musicapp.data.remote.api.PlaylistApiService
-import com.example.musicapp.utils.constants.Constants.BASE_URL
+import com.example.musicapp.utils.constants.AppConstants.BASE_URL
 import com.example.musicapp.utils.constants.QualifiersConstants
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
