@@ -1,7 +1,7 @@
 package com.example.musicapp.domain.repository
 
 import com.example.musicapp.common.Resource
-import com.example.musicapp.data.model.reponse.UpdatePlaylistSongResponse
+import com.example.musicapp.data.model.response.UpdatePlaylistSongResponse
 import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.domain.model.Playlist
 import kotlinx.coroutines.flow.Flow

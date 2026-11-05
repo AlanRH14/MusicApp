@@ -2,7 +2,7 @@ package com.example.musicapp.data.remote.repository
 
 import com.example.musicapp.common.Mapper
 import com.example.musicapp.data.model.request.LoginRequest
-import com.example.musicapp.data.model.reponse.LoginResponse
+import com.example.musicapp.data.model.response.LoginResponse
 import com.example.musicapp.data.model.request.RegisterRequest
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.common.Resource

@@ -13,8 +13,8 @@ import com.example.musicapp.data.model.AlbumDto
 import com.example.musicapp.data.model.ArtistDto
 import com.example.musicapp.data.model.PlaylistDto
 import com.example.musicapp.data.model.SongDto
-import com.example.musicapp.data.model.reponse.HomeResponse
-import com.example.musicapp.data.model.reponse.LoginResponse
+import com.example.musicapp.data.model.response.HomeResponse
+import com.example.musicapp.data.model.response.LoginResponse
 import com.example.musicapp.domain.model.Album
 import com.example.musicapp.domain.model.Artist
 import com.example.musicapp.domain.model.Home

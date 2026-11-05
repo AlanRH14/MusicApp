@@ -1,4 +1,4 @@
-package com.example.musicapp.data.model.reponse
+package com.example.musicapp.data.model.response
 
 import com.example.musicapp.data.model.AlbumDto
 import com.example.musicapp.data.model.SongDto

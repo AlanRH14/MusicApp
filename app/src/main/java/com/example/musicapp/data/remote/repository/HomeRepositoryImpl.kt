@@ -1,7 +1,7 @@
 package com.example.musicapp.data.remote.repository
 
 import com.example.musicapp.common.Mapper
-import com.example.musicapp.data.model.reponse.HomeResponse
+import com.example.musicapp.data.model.response.HomeResponse
 import com.example.musicapp.data.remote.api.HomeApiService
 import com.example.musicapp.domain.model.Home
 import com.example.musicapp.domain.repository.HomeRepository

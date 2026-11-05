@@ -1,7 +1,7 @@
 package com.example.musicapp.data.remote.api
 
 import com.example.musicapp.data.model.PlaylistDto
-import com.example.musicapp.data.model.reponse.UpdatePlaylistSongResponse
+import com.example.musicapp.data.model.response.UpdatePlaylistSongResponse
 import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.data.model.request.UpdatePlaylistSongRequest
 import retrofit2.Response

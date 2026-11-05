@@ -1,4 +1,4 @@
-package com.example.musicapp.data.model.reponse
+package com.example.musicapp.data.model.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

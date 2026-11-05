@@ -4,7 +4,7 @@ import com.example.musicapp.common.Mapper
 import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.preferences.ConstantsPreferences
 import com.example.musicapp.data.model.PlaylistDto
-import com.example.musicapp.data.model.reponse.UpdatePlaylistSongResponse
+import com.example.musicapp.data.model.response.UpdatePlaylistSongResponse
 import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.data.model.request.UpdatePlaylistSongRequest
 import com.example.musicapp.data.remote.api.PlaylistApiService
