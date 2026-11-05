@@ -1,4 +1,4 @@
-package com.example.musicapp.utils
+package com.example.musicapp.utils.constants
 
 object Constants {
     const val BASE_URL = "http://192.168.100.29:8080/"

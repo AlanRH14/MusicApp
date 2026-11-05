@@ -1,4 +1,4 @@
-package com.example.musicapp.utils
+package com.example.musicapp.utils.constants
 
 object PreferencesConstants {
     const val PREFERENCES_NAME = "musicapp_preferences"

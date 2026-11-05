@@ -21,7 +21,7 @@ import com.example.musicapp.domain.model.Home
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.domain.model.User
-import com.example.musicapp.utils.QualifiersConstants
+import com.example.musicapp.utils.constants.QualifiersConstants
 import org.koin.dsl.module
 
 val mapperModule = module {

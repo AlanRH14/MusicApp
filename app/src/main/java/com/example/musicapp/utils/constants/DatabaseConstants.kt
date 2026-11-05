@@ -1,4 +1,4 @@
-package com.example.musicapp.utils
+package com.example.musicapp.utils.constants
 
 object DatabaseConstants {
     const val DATABASE = "music_app_database"

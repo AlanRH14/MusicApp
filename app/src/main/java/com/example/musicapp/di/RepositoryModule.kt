@@ -8,7 +8,7 @@ import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.domain.repository.HomeRepository
 import com.example.musicapp.domain.repository.MusicRepository
 import com.example.musicapp.domain.repository.PlaylistRepository
-import com.example.musicapp.utils.QualifiersConstants
+import com.example.musicapp.utils.constants.QualifiersConstants
 import org.koin.dsl.module
 
 val repositoryModule = module {

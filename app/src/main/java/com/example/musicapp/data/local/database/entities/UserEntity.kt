@@ -2,7 +2,7 @@ package com.example.musicapp.data.local.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.musicapp.utils.DatabaseConstants.USER_TABLE
+import com.example.musicapp.utils.constants.DatabaseConstants.USER_TABLE
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

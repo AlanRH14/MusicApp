@@ -12,7 +12,7 @@ import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.domain.repository.PlaylistRepository
-import com.example.musicapp.utils.Constants.AUTHENTICATION_HEADER_TYPE
+import com.example.musicapp.utils.constants.Constants.AUTHENTICATION_HEADER_TYPE
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

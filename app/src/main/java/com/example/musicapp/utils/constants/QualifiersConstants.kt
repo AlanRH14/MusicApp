@@ -1,4 +1,4 @@
-package com.example.musicapp.utils
+package com.example.musicapp.utils.constants
 
 import org.koin.core.qualifier.named
 
