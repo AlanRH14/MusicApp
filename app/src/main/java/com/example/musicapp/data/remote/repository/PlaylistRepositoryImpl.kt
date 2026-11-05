@@ -48,7 +48,7 @@ class PlaylistRepositoryImpl(
             } ?: emptyList()
             emit(Resource.Success(data = playlistData))
         } else {
-            throw NetworkException.HttpException(code = response.code(), message = response.extractErrorMessage())
+            throw NetworkException.Http(code = response.code(), message = response.extractErrorMessage())
         }
     }.catch { error ->
         emit(Resource.Error(throwable = error))

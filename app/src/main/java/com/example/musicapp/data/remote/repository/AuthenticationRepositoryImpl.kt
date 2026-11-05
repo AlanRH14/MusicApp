@@ -42,7 +42,7 @@ class AuthenticationRepositoryImpl(
             val response = apiCall()
 
             if (!response.isSuccessful) {
-                throw NetworkException.HttpException(
+                throw NetworkException.Http(
                     code = response.code(),
                     message = response.extractErrorMessage()
                 )

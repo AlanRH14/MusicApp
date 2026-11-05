@@ -46,7 +46,7 @@ class MusicRepositoryImpl(
             } ?: Song()
             emit(Resource.Success(data = songData))
         } else {
-            throw NetworkException.HttpException(
+            throw NetworkException.Http(
                 code = response.code(),
                 message = response.extractErrorMessage()
             )

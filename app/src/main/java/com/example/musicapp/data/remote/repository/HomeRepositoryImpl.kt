@@ -43,7 +43,7 @@ class HomeRepositoryImpl(
             } ?: Home()
             emit(Resource.Success(data = homeData))
         } else {
-            throw NetworkException.HttpException(
+            throw NetworkException.Http(
                 code = response.code(),
                 message = response.extractErrorMessage()
             )
