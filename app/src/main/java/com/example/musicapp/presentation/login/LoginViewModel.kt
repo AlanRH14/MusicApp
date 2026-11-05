@@ -3,7 +3,6 @@ package com.example.musicapp.presentation.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.data.local.preferences.ConstantsPreferences
-import com.example.musicapp.data.model.request.LoginRequest
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.common.Resource
@@ -74,10 +73,8 @@ class LoginViewModel(
             _state.update { it.copy(isLoading = true) }
 
             val response = repository.login(
-                LoginRequest(
                     email = state.value.email,
                     password = state.value.password
-                )
             )
 
             when (response) {
