@@ -13,6 +13,7 @@ import com.example.musicapp.data.remote.api.AuthApiService
 import com.example.musicapp.data.remote.api.getErrorMessage
 import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.exception.NetworkException
+import com.example.musicapp.domain.model.AuthenticationData
 import com.example.musicapp.domain.model.User
 import com.example.musicapp.domain.repository.DataStoreHandle
 import kotlinx.coroutines.CancellationException
@@ -29,23 +30,25 @@ class AuthenticationRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : AuthenticationRepository {
 
-    override suspend fun login(email: String?, password: String?): Resource<User> =
+    override suspend fun login(authData: AuthenticationData): Resource<User> =
         authenticate {
             apiService.login(
                 loginRequest = LoginRequest(
-                    email = email,
-                    password = password
+                    email = authData.email,
+                    password = authData.password
                 )
             )
         }
 
-    override suspend fun register(
-        email: String?,
-        password: String?,
-        name: String?
-    ): Resource<User> =
+    override suspend fun register(authData: AuthenticationData): Resource<User> =
         authenticate {
-            apiService.register(registerRequest = registerRequest)
+            apiService.register(
+                registerRequest = RegisterRequest(
+                    email = authData.email,
+                    password = authData.password,
+                    name = authData.name,
+                )
+            )
         }
 
     private suspend fun authenticate(
