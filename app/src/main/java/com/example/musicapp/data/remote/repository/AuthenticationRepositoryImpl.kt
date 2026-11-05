@@ -48,7 +48,7 @@ class AuthenticationRepositoryImpl(
                 )
             }
 
-            val loginResponse = response.body() ?: throw NetworkException.EmptyBodyException()
+            val loginResponse = response.body() ?: throw NetworkException.EmptyBody()
             val token = loginResponse.token
             if (token.isNullOrEmpty()) {
                 return@withContext Resource.Error(throwable = AuthException.NullTokenException())
