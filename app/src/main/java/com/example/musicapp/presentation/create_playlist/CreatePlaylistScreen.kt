@@ -2,9 +2,9 @@ package com.example.musicapp.presentation.create_playlist
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
@@ -21,7 +21,7 @@ fun CreatePlaylistScreen(
     viewModel: CreatePlaylistViewModel = koinViewModel()
 ) {
 
-    val state by viewModel.state.collectAsState()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = true) {
         viewModel.effect.collectLatest { effect ->

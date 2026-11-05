@@ -4,15 +4,18 @@ import com.example.musicapp.common.Mapper
 import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.preferences.ConstantsPreferences
 import com.example.musicapp.data.model.PlaylistDto
-import com.example.musicapp.data.model.reponse.UpdatePlaylistSongResponse
 import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.data.model.request.UpdatePlaylistSongRequest
 import com.example.musicapp.data.remote.api.PlaylistApiService
+import com.example.musicapp.data.remote.api.getErrorMessage
 import com.example.musicapp.domain.exception.AuthException
+import com.example.musicapp.domain.exception.NetworkException
+import com.example.musicapp.domain.model.ActionMessage
 import com.example.musicapp.domain.model.Playlist
+import com.example.musicapp.domain.model.PlaylistData
 import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.domain.repository.PlaylistRepository
-import com.example.musicapp.utils.Constants.AUTHENTICATION_HEADER_TYPE
+import com.example.musicapp.utils.constants.AppConstants.AUTHENTICATION_HEADER_TYPE
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -46,15 +49,16 @@ class PlaylistRepositoryImpl(
             } ?: emptyList()
             emit(Resource.Success(data = playlistData))
         } else {
-            val errorBody = response.errorBody()?.string()
-            val errorMessage = errorBody.takeIf { !it.isNullOrEmpty() } ?: response.message()
-            throw Exception(errorMessage)
+            throw NetworkException.Http(
+                code = response.code(),
+                message = response.getErrorMessage()
+            )
         }
     }.catch { error ->
         emit(Resource.Error(throwable = error))
     }.flowOn(ioDispatcher)
 
-    override suspend fun createPlaylist(playlistRequest: CreatePlaylistRequest): Resource<Playlist> =
+    override suspend fun createPlaylist(playlistData: PlaylistData): Resource<Playlist> =
         withContext(ioDispatcher) {
             try {
                 val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
@@ -64,7 +68,12 @@ class PlaylistRepositoryImpl(
 
                 val response = apiService.createPlaylist(
                     token = "$AUTHENTICATION_HEADER_TYPE $token",
-                    playlistRequest = playlistRequest
+                    playlistRequest = CreatePlaylistRequest(
+                        name = playlistData.name,
+                        description = playlistData.description,
+                        coverImage = playlistData.coverImage,
+                        songIds = playlistData.songIds
+                    )
                 )
 
                 if (response.isSuccessful) {
@@ -86,7 +95,7 @@ class PlaylistRepositoryImpl(
     override suspend fun addSongToPlaylist(
         playlistID: String,
         songID: String
-    ): Resource<UpdatePlaylistSongResponse> =
+    ): Resource<ActionMessage> =
         withContext(ioDispatcher) {
             try {
                 val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
@@ -100,17 +109,15 @@ class PlaylistRepositoryImpl(
                     request = UpdatePlaylistSongRequest(songIds = listOf(songID))
                 )
 
-                if (response.isSuccessful) {
-                    val playlistData = response.body()?.let { res ->
-                        res
-                    } ?: UpdatePlaylistSongResponse()
-                    Resource.Success(data = playlistData)
-                } else {
-                    val errorBody = response.errorBody()?.string()
-                    val errorMessage =
-                        errorBody.takeIf { !it.isNullOrEmpty() } ?: response.message()
-                    Resource.Error(throwable = Exception(errorMessage))
+                if (!response.isSuccessful) {
+                    return@withContext Resource.Error(
+                        throwable = NetworkException.Http(
+                            code = response.code(), message = response.getErrorMessage()
+                        )
+                    )
                 }
+
+                Resource.Success(data = ActionMessage(message = "Song added to playlist successfully"))
             } catch (error: Exception) {
                 Resource.Error(throwable = error)
             }
@@ -119,7 +126,7 @@ class PlaylistRepositoryImpl(
     override suspend fun deleteSongFromPlaylist(
         playlistID: String,
         songID: String
-    ): Resource<UpdatePlaylistSongResponse> = withContext(ioDispatcher) {
+    ): Resource<ActionMessage> = withContext(ioDispatcher) {
         try {
             val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
             if (token.isEmpty()) {
@@ -132,16 +139,16 @@ class PlaylistRepositoryImpl(
                 request = UpdatePlaylistSongRequest(songIds = listOf(songID))
             )
 
-            if (response.isSuccessful) {
-                val playlistData = response.body()?.let { res ->
-                    res
-                } ?: UpdatePlaylistSongResponse()
-                Resource.Success(data = playlistData)
-            } else {
-                val errorBody = response.errorBody()?.string()
-                val errorMessage = errorBody.takeIf { !it.isNullOrEmpty() } ?: response.message()
-                Resource.Error(throwable = Exception(errorMessage))
+            if (!response.isSuccessful) {
+                return@withContext Resource.Error(
+                    throwable = NetworkException.Http(
+                        code = response.code(),
+                        message = response.getErrorMessage()
+                    )
+                )
             }
+
+            Resource.Success(ActionMessage(message = "Song deleted successfully"))
         } catch (error: Exception) {
             Resource.Error(throwable = error)
         }

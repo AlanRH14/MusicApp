@@ -1,7 +1,7 @@
 package com.example.musicapp.data.mappers.user
 
 import com.example.musicapp.common.Mapper
-import com.example.musicapp.data.model.reponse.LoginResponse
+import com.example.musicapp.data.model.response.LoginResponse
 import com.example.musicapp.domain.model.User
 
 class UserMapperImpl : Mapper<LoginResponse, User> {

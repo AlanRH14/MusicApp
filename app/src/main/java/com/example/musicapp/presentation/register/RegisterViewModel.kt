@@ -2,9 +2,9 @@ package com.example.musicapp.presentation.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.musicapp.data.model.request.RegisterRequest
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.common.Resource
+import com.example.musicapp.domain.model.AuthenticationData
 import com.example.musicapp.presentation.register.mvi.RegisterEffect
 import com.example.musicapp.presentation.register.mvi.RegisterState
 import com.example.musicapp.presentation.register.mvi.RegisterUIEvent
@@ -92,7 +92,7 @@ class RegisterViewModel(
             _state.update { it.copy(isLoading = true) }
 
             val response = repository.register(
-                RegisterRequest(
+                authData = AuthenticationData(
                     email = _state.value.email,
                     password = _state.value.password,
                     name = _state.value.name

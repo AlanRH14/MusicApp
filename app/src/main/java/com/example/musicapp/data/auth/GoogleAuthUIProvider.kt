@@ -7,7 +7,7 @@ import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import com.example.musicapp.data.model.GoogleAccount
-import com.example.musicapp.utils.Constants.GOOGLE_SERVICE_CLIENT_ID
+import com.example.musicapp.utils.constants.AppConstants.GOOGLE_SERVICE_CLIENT_ID
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import kotlinx.coroutines.Dispatchers

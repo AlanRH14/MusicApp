@@ -14,7 +14,7 @@ import com.example.musicapp.R
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.presentation.home.components.ContinueListeningItem
 import com.example.musicapp.ui.theme.PaddingDefault
-import com.example.musicapp.utils.Constants.GRID_CELLS_SIZE
+import com.example.musicapp.utils.constants.AppConstants.GRID_CELLS_SIZE
 
 @Composable
 fun ContinueListeningSection(

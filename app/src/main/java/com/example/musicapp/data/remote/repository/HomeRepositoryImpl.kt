@@ -1,15 +1,17 @@
 package com.example.musicapp.data.remote.repository
 
 import com.example.musicapp.common.Mapper
-import com.example.musicapp.data.model.reponse.HomeResponse
+import com.example.musicapp.data.model.response.HomeResponse
 import com.example.musicapp.data.remote.api.HomeApiService
 import com.example.musicapp.domain.model.Home
 import com.example.musicapp.domain.repository.HomeRepository
 import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.preferences.ConstantsPreferences
+import com.example.musicapp.data.remote.api.getErrorMessage
 import com.example.musicapp.domain.exception.AuthException
+import com.example.musicapp.domain.exception.NetworkException
 import com.example.musicapp.domain.repository.DataStoreHandle
-import com.example.musicapp.utils.Constants.AUTHENTICATION_HEADER_TYPE
+import com.example.musicapp.utils.constants.AppConstants.AUTHENTICATION_HEADER_TYPE
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -41,9 +43,10 @@ class HomeRepositoryImpl(
             } ?: Home()
             emit(Resource.Success(data = homeData))
         } else {
-            val errorBody = response.errorBody()?.string()
-            val errorMessage = errorBody.takeIf { !it.isNullOrEmpty() } ?: response.message()
-            throw Exception(errorMessage)
+            throw NetworkException.Http(
+                code = response.code(),
+                message = response.getErrorMessage()
+            )
         }
     }.catch { error ->
         emit(Resource.Error(throwable = error))

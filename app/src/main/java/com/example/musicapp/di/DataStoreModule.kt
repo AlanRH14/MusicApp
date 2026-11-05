@@ -9,7 +9,7 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.example.musicapp.data.local.preferences.DataStoreHandleImpl
 import com.example.musicapp.domain.repository.DataStoreHandle
-import com.example.musicapp.utils.PreferencesConstants.PREFERENCES_NAME
+import com.example.musicapp.utils.constants.PreferencesConstants.PREFERENCES_NAME
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

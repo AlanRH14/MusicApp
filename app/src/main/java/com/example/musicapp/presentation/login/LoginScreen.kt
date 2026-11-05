@@ -3,9 +3,9 @@ package com.example.musicapp.presentation.login
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.musicapp.R
 import com.example.musicapp.navigation.NavRoutes
@@ -22,7 +22,7 @@ fun LoginScreen(
     navController: NavHostController,
     viewModel: LoginViewModel = koinViewModel()
 ) {
-    val state by viewModel.state.collectAsState()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = viewModel) {
         viewModel.effect.collectLatest {

@@ -4,7 +4,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.musicapp.common.PreferencesKey
-import com.example.musicapp.utils.PreferencesConstants
+import com.example.musicapp.utils.constants.PreferencesConstants
 
 internal sealed class ConstantsPreferences<T> : PreferencesKey<T> {
     data object UserIsLoggedPreferences : ConstantsPreferences<Boolean>() {

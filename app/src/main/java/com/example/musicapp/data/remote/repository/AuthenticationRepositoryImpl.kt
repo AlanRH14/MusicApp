@@ -2,7 +2,7 @@ package com.example.musicapp.data.remote.repository
 
 import com.example.musicapp.common.Mapper
 import com.example.musicapp.data.model.request.LoginRequest
-import com.example.musicapp.data.model.reponse.LoginResponse
+import com.example.musicapp.data.model.response.LoginResponse
 import com.example.musicapp.data.model.request.RegisterRequest
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.common.Resource
@@ -10,8 +10,10 @@ import com.example.musicapp.data.local.database.entities.UserEntity
 import com.example.musicapp.data.local.datasource.UserLocalDataSource
 import com.example.musicapp.data.local.preferences.ConstantsPreferences
 import com.example.musicapp.data.remote.api.AuthApiService
+import com.example.musicapp.data.remote.api.getErrorMessage
 import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.exception.NetworkException
+import com.example.musicapp.domain.model.AuthenticationData
 import com.example.musicapp.domain.model.User
 import com.example.musicapp.domain.repository.DataStoreHandle
 import kotlinx.coroutines.CancellationException
@@ -20,7 +22,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 class AuthenticationRepositoryImpl(
-    private val remoteDataSource: AuthApiService,
+    private val apiService: AuthApiService,
     private val localDataSource: UserLocalDataSource,
     private val dataStore: DataStoreHandle,
     private val userMapper: Mapper<LoginResponse, User>,
@@ -28,11 +30,26 @@ class AuthenticationRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : AuthenticationRepository {
 
-    override suspend fun login(loginRequest: LoginRequest): Resource<User> =
-        authenticate { remoteDataSource.login(loginRequest = loginRequest) }
+    override suspend fun login(authData: AuthenticationData): Resource<User> =
+        authenticate {
+            apiService.login(
+                loginRequest = LoginRequest(
+                    email = authData.email,
+                    password = authData.password
+                )
+            )
+        }
 
-    override suspend fun register(registerRequest: RegisterRequest): Resource<User> =
-        authenticate { remoteDataSource.register(registerRequest = registerRequest) }
+    override suspend fun register(authData: AuthenticationData): Resource<User> =
+        authenticate {
+            apiService.register(
+                registerRequest = RegisterRequest(
+                    email = authData.email,
+                    password = authData.password,
+                    name = authData.name,
+                )
+            )
+        }
 
     private suspend fun authenticate(
         apiCall: suspend () -> Response<LoginResponse>
@@ -41,12 +58,13 @@ class AuthenticationRepositoryImpl(
             val response = apiCall()
 
             if (!response.isSuccessful) {
-                val errorBody = response.errorBody()?.string()
-                val errorMessage = errorBody.takeIf { !it.isNullOrEmpty() } ?: response.message()
-                throw NetworkException.HttpException(code = response.code(), message = errorMessage)
+                throw NetworkException.Http(
+                    code = response.code(),
+                    message = response.getErrorMessage()
+                )
             }
 
-            val loginResponse = response.body() ?: throw NetworkException.EmptyBodyException()
+            val loginResponse = response.body() ?: throw NetworkException.EmptyBody()
             val token = loginResponse.token
             if (token.isNullOrEmpty()) {
                 return@withContext Resource.Error(throwable = AuthException.NullTokenException())
