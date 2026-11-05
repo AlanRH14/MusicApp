@@ -16,7 +16,7 @@ class UserLocalDataSourceImpl(
         return userDao.getUserLocalData()
     }
 
-    override fun cleanAllUsers() {
+    override suspend fun cleanAllUsers() {
         userDao.deleteAllUsers()
     }
 }
