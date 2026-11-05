@@ -9,4 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface UserDao: MusicAppDao<UserEntity> {
     @Query("SELECT * FROM user_table")
     fun getUserLocalData(): Flow<UserEntity?>
+
+    @Query("DELETE FROM user_table")
+    fun deleteAllUsers()
 }

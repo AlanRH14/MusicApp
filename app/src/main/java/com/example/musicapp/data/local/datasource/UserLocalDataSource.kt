@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface UserLocalDataSource {
     suspend fun saveUser(user: UserEntity)
     fun getUser(): Flow<UserEntity?>
+    fun cleanAllUsers()
 }

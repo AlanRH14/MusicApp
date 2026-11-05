@@ -15,4 +15,8 @@ class UserLocalDataSourceImpl(
     override fun getUser(): Flow<UserEntity?> {
         return userDao.getUserLocalData()
     }
+
+    override fun cleanAllUsers() {
+        userDao.deleteAllUsers()
+    }
 }
