@@ -10,6 +10,7 @@ import com.example.musicapp.data.local.database.entities.UserEntity
 import com.example.musicapp.data.local.datasource.UserLocalDataSource
 import com.example.musicapp.data.local.preferences.ConstantsPreferences
 import com.example.musicapp.data.remote.api.AuthApiService
+import com.example.musicapp.data.remote.api.extractErrorMessage
 import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.exception.NetworkException
 import com.example.musicapp.domain.model.User
@@ -41,9 +42,10 @@ class AuthenticationRepositoryImpl(
             val response = apiCall()
 
             if (!response.isSuccessful) {
-                val errorBody = response.errorBody()?.string()
-                val errorMessage = errorBody.takeIf { !it.isNullOrEmpty() } ?: response.message()
-                throw NetworkException.HttpException(code = response.code(), message = errorMessage)
+                throw NetworkException.HttpException(
+                    code = response.code(),
+                    message = response.extractErrorMessage()
+                )
             }
 
             val loginResponse = response.body() ?: throw NetworkException.EmptyBodyException()

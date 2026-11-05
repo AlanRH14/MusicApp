@@ -7,7 +7,9 @@ import com.example.musicapp.domain.model.Home
 import com.example.musicapp.domain.repository.HomeRepository
 import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.preferences.ConstantsPreferences
+import com.example.musicapp.data.remote.api.extractErrorMessage
 import com.example.musicapp.domain.exception.AuthException
+import com.example.musicapp.domain.exception.NetworkException
 import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.utils.constants.AppConstants.AUTHENTICATION_HEADER_TYPE
 import kotlinx.coroutines.CoroutineDispatcher
@@ -41,9 +43,10 @@ class HomeRepositoryImpl(
             } ?: Home()
             emit(Resource.Success(data = homeData))
         } else {
-            val errorBody = response.errorBody()?.string()
-            val errorMessage = errorBody.takeIf { !it.isNullOrEmpty() } ?: response.message()
-            throw Exception(errorMessage)
+            throw NetworkException.HttpException(
+                code = response.code(),
+                message = response.extractErrorMessage()
+            )
         }
     }.catch { error ->
         emit(Resource.Error(throwable = error))

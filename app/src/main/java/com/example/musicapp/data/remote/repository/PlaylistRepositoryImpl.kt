@@ -8,7 +8,9 @@ import com.example.musicapp.data.model.response.UpdatePlaylistSongResponse
 import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.data.model.request.UpdatePlaylistSongRequest
 import com.example.musicapp.data.remote.api.PlaylistApiService
+import com.example.musicapp.data.remote.api.extractErrorMessage
 import com.example.musicapp.domain.exception.AuthException
+import com.example.musicapp.domain.exception.NetworkException
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.domain.repository.PlaylistRepository
@@ -46,9 +48,7 @@ class PlaylistRepositoryImpl(
             } ?: emptyList()
             emit(Resource.Success(data = playlistData))
         } else {
-            val errorBody = response.errorBody()?.string()
-            val errorMessage = errorBody.takeIf { !it.isNullOrEmpty() } ?: response.message()
-            throw Exception(errorMessage)
+            throw NetworkException.HttpException(code = response.code(), message = response.extractErrorMessage())
         }
     }.catch { error ->
         emit(Resource.Error(throwable = error))
