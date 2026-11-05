@@ -10,7 +10,7 @@ import com.example.musicapp.data.local.database.entities.UserEntity
 import com.example.musicapp.data.local.datasource.UserLocalDataSource
 import com.example.musicapp.data.local.preferences.ConstantsPreferences
 import com.example.musicapp.data.remote.api.AuthApiService
-import com.example.musicapp.data.remote.api.extractErrorMessage
+import com.example.musicapp.data.remote.api.getErrorMessage
 import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.exception.NetworkException
 import com.example.musicapp.domain.model.User
@@ -44,7 +44,7 @@ class AuthenticationRepositoryImpl(
             if (!response.isSuccessful) {
                 throw NetworkException.Http(
                     code = response.code(),
-                    message = response.extractErrorMessage()
+                    message = response.getErrorMessage()
                 )
             }
 

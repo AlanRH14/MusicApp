@@ -5,7 +5,7 @@ import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.preferences.ConstantsPreferences
 import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.remote.api.HomeApiService
-import com.example.musicapp.data.remote.api.extractErrorMessage
+import com.example.musicapp.data.remote.api.getErrorMessage
 import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.exception.NetworkException
 import com.example.musicapp.domain.model.Song
@@ -48,7 +48,7 @@ class MusicRepositoryImpl(
         } else {
             throw NetworkException.Http(
                 code = response.code(),
-                message = response.extractErrorMessage()
+                message = response.getErrorMessage()
             )
         }
     }.catch { error ->
