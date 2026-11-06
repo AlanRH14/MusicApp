@@ -1,4 +1,4 @@
-package com.example.musicapp.data.remote.api
+package com.example.musicapp.data.remote.api.utils
 
 import retrofit2.Response
 

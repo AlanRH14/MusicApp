@@ -1,4 +1,4 @@
-package com.example.musicapp.data.remote.api
+package com.example.musicapp.data.remote.api.utils
 
 import com.example.musicapp.common.Resource
 import com.example.musicapp.domain.exception.NetworkException

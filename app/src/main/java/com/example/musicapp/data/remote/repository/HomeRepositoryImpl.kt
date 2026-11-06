@@ -7,7 +7,7 @@ import com.example.musicapp.domain.model.Home
 import com.example.musicapp.domain.repository.HomeRepository
 import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.preferences.ConstantsPreferences
-import com.example.musicapp.data.remote.api.getErrorMessage
+import com.example.musicapp.data.remote.api.utils.getErrorMessage
 import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.exception.NetworkException
 import com.example.musicapp.domain.repository.DataStoreHandle

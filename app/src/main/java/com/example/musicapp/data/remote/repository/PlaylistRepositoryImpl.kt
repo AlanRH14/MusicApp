@@ -7,8 +7,8 @@ import com.example.musicapp.data.model.PlaylistDto
 import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.data.model.request.UpdatePlaylistSongRequest
 import com.example.musicapp.data.remote.api.PlaylistApiService
-import com.example.musicapp.data.remote.api.getErrorMessage
-import com.example.musicapp.data.remote.api.safeApiCall
+import com.example.musicapp.data.remote.api.utils.getErrorMessage
+import com.example.musicapp.data.remote.api.utils.safeApiCall
 import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.exception.NetworkException
 import com.example.musicapp.domain.model.ActionMessage
