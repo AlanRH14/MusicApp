@@ -33,13 +33,7 @@ class PlaylistRepositoryImpl(
     override fun getPlaylist(): Flow<Resource<List<Playlist>>> =
         safeFlowApiCall(
             ioDispatcher = ioDispatcher,
-            apiCall = {
-                val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
-                if (token.isEmpty()) {
-                    throw AuthException.UserNotFoundException()
-                }
-                apiService.getPlaylist(token = "$AUTHENTICATION_HEADER_TYPE $token")
-            },
+            apiCall = { apiService.getPlaylist() },
             transform = { playlistData ->
                 playlistData.map { apiPlaylistMapper.mapTo(input = it) }
             }
@@ -49,13 +43,7 @@ class PlaylistRepositoryImpl(
         withContext(ioDispatcher) {
             safeApiCall(
                 apiCall = {
-                    val token =
-                        dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
-                    if (token.isEmpty()) {
-                        throw AuthException.UserNotFoundException()
-                    }
                     apiService.createPlaylist(
-                        token = "$AUTHENTICATION_HEADER_TYPE $token",
                         playlistRequest = CreatePlaylistRequest(
                             name = playlistData.name,
                             description = playlistData.description,
