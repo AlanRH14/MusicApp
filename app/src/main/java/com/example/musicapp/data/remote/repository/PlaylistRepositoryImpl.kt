@@ -7,10 +7,9 @@ import com.example.musicapp.data.model.PlaylistDto
 import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.data.model.request.UpdatePlaylistSongRequest
 import com.example.musicapp.data.remote.api.PlaylistApiService
-import com.example.musicapp.data.remote.api.utils.getErrorMessage
 import com.example.musicapp.data.remote.api.utils.safeApiCall
+import com.example.musicapp.data.remote.api.utils.safeFlowApiCall
 import com.example.musicapp.domain.exception.AuthException
-import com.example.musicapp.domain.exception.NetworkException
 import com.example.musicapp.domain.model.ActionMessage
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.domain.model.PlaylistData
@@ -20,11 +19,9 @@ import com.example.musicapp.utils.constants.AppConstants.AUTHENTICATION_HEADER_T
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import kotlin.collections.map
 
 class PlaylistRepositoryImpl(
     private val apiService: PlaylistApiService,
@@ -33,37 +30,27 @@ class PlaylistRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : PlaylistRepository {
 
-    override fun getPlaylist(): Flow<Resource<List<Playlist>>> = flow {
-        emit(Resource.Loading)
-
-        val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
-        if (token.isEmpty()) {
-            throw AuthException.UserNotFoundException()
-        }
-
-        val response =
-            apiService.getPlaylist(token = "$AUTHENTICATION_HEADER_TYPE $token")
-
-        if (response.isSuccessful) {
-            val playlistData = response.body()?.let { res ->
-                res.map { apiPlaylistMapper.mapTo(input = it) }
-            } ?: emptyList()
-            emit(Resource.Success(data = playlistData))
-        } else {
-            throw NetworkException.Http(
-                code = response.code(),
-                message = response.getErrorMessage()
-            )
-        }
-    }.catch { error ->
-        emit(Resource.Error(throwable = error))
-    }.flowOn(ioDispatcher)
+    override fun getPlaylist(): Flow<Resource<List<Playlist>>> =
+        safeFlowApiCall(
+            ioDispatcher = ioDispatcher,
+            apiCall = {
+                val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
+                if (token.isEmpty()) {
+                    throw AuthException.UserNotFoundException()
+                }
+                apiService.getPlaylist(token = "$AUTHENTICATION_HEADER_TYPE $token")
+            },
+            transform = { playlistData ->
+                playlistData.map { apiPlaylistMapper.mapTo(input = it) }
+            }
+        )
 
     override suspend fun createPlaylist(playlistData: PlaylistData): Resource<Playlist> =
         withContext(ioDispatcher) {
             safeApiCall(
                 apiCall = {
-                    val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
+                    val token =
+                        dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
                     if (token.isEmpty()) {
                         throw AuthException.UserNotFoundException()
                     }
@@ -127,30 +114,19 @@ class PlaylistRepositoryImpl(
         )
     }
 
-    override fun getPlaylistDetails(playlistID: String): Flow<Resource<Playlist>> = flow {
-        emit(Resource.Loading)
-
-        val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
-        if (token.isEmpty()) {
-            throw AuthException.UserNotFoundException()
-        }
-
-        val response = apiService.getPlaylistById(
-            token = "$AUTHENTICATION_HEADER_TYPE $token",
-            id = playlistID
+    override fun getPlaylistDetails(playlistID: String): Flow<Resource<Playlist>> =
+        safeFlowApiCall(
+            ioDispatcher = ioDispatcher,
+            apiCall = {
+                val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
+                if (token.isEmpty()) {
+                    throw AuthException.UserNotFoundException()
+                }
+                apiService.getPlaylistById(
+                    token = "$AUTHENTICATION_HEADER_TYPE $token",
+                    id = playlistID
+                )
+            },
+            transform = { res -> apiPlaylistMapper.mapTo(input = res) }
         )
-
-        if (response.isSuccessful) {
-            val playlistData = response.body()?.let { res ->
-                apiPlaylistMapper.mapTo(input = res)
-            } ?: Playlist()
-            emit(Resource.Success(data = playlistData))
-        } else {
-            val errorBody = response.errorBody()?.string()
-            val errorMessage = errorBody.takeIf { !it.isNullOrEmpty() } ?: response.message()
-            throw Exception(errorMessage)
-        }
-    }.catch { error ->
-        emit(Resource.Error(throwable = error))
-    }.flowOn(ioDispatcher)
 }
