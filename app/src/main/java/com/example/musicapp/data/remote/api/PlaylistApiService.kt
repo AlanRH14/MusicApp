@@ -34,8 +34,5 @@ interface PlaylistApiService {
     ): Response<UpdatePlaylistSongResponse>
 
     @GET("/playlists/{id}")
-    suspend fun getPlaylistById(
-        @Header("Authorization") token: String,
-        @Path("id") id: String
-    ): Response<PlaylistDto>
+    suspend fun getPlaylistById(@Path("id") id: String): Response<PlaylistDto>
 }
