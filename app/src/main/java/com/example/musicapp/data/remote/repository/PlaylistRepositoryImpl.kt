@@ -61,36 +61,26 @@ class PlaylistRepositoryImpl(
 
     override suspend fun createPlaylist(playlistData: PlaylistData): Resource<Playlist> =
         withContext(ioDispatcher) {
-            try {
-                val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
-                if (token.isEmpty()) {
-                    return@withContext Resource.Error(throwable = AuthException.UserNotFoundException())
-                }
-
-                val response = apiService.createPlaylist(
-                    token = "$AUTHENTICATION_HEADER_TYPE $token",
-                    playlistRequest = CreatePlaylistRequest(
-                        name = playlistData.name,
-                        description = playlistData.description,
-                        coverImage = playlistData.coverImage,
-                        songIds = playlistData.songIds
+            safeApiCall(
+                apiCall = {
+                    val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
+                    if (token.isEmpty()) {
+                        throw AuthException.UserNotFoundException()
+                    }
+                    apiService.createPlaylist(
+                        token = "$AUTHENTICATION_HEADER_TYPE $token",
+                        playlistRequest = CreatePlaylistRequest(
+                            name = playlistData.name,
+                            description = playlistData.description,
+                            coverImage = playlistData.coverImage,
+                            songIds = playlistData.songIds
+                        )
                     )
-                )
-
-                if (response.isSuccessful) {
-                    val playlistData = response.body()?.let { res ->
-                        apiPlaylistMapper.mapTo(input = res)
-                    } ?: Playlist()
-                    Resource.Success(data = playlistData)
-                } else {
-                    val errorBody = response.errorBody()?.string()
-                    val errorMessage =
-                        errorBody.takeIf { !it.isNullOrEmpty() } ?: response.message()
-                    Resource.Error(Exception(errorMessage))
+                },
+                transform = { playlistData ->
+                    apiPlaylistMapper.mapTo(input = playlistData)
                 }
-            } catch (error: Exception) {
-                Resource.Error(throwable = error)
-            }
+            )
         }
 
     override suspend fun addSongToPlaylist(
@@ -119,31 +109,22 @@ class PlaylistRepositoryImpl(
         playlistID: String,
         songID: String
     ): Resource<ActionMessage> = withContext(ioDispatcher) {
-        try {
-            val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
-            if (token.isEmpty()) {
-                return@withContext Resource.Error(throwable = AuthException.UserNotFoundException())
-            }
-
-            val response = apiService.removeSongsFromPlaylist(
-                token = "$AUTHENTICATION_HEADER_TYPE $token",
-                playlistId = playlistID,
-                request = UpdatePlaylistSongRequest(songIds = listOf(songID))
-            )
-
-            if (!response.isSuccessful) {
-                return@withContext Resource.Error(
-                    throwable = NetworkException.Http(
-                        code = response.code(),
-                        message = response.getErrorMessage()
-                    )
+        safeApiCall(
+            apiCall = {
+                val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
+                if (token.isEmpty()) {
+                    throw AuthException.UserNotFoundException()
+                }
+                apiService.removeSongsFromPlaylist(
+                    token = "$AUTHENTICATION_HEADER_TYPE $token",
+                    playlistId = playlistID,
+                    request = UpdatePlaylistSongRequest(songIds = listOf(songID))
                 )
+            },
+            transform = {
+                ActionMessage(message = "Song deleted successfully")
             }
-
-            Resource.Success(ActionMessage(message = "Song deleted successfully"))
-        } catch (error: Exception) {
-            Resource.Error(throwable = error)
-        }
+        )
     }
 
     override fun getPlaylistDetails(playlistID: String): Flow<Resource<Playlist>> = flow {
