@@ -9,13 +9,8 @@ import retrofit2.http.Path
 
 interface HomeApiService {
     @GET("/home")
-    suspend fun getHome(
-        @Header("Authorization") token: String
-    ): Response<HomeResponse>
+    suspend fun getHome(): Response<HomeResponse>
 
     @GET("/songs/{id}")
-    suspend fun getSongByID(
-        @Header("Authorization") token: String,
-        @Path("id") id: String
-    ): Response<SongDto>
+    suspend fun getSongByID(@Path("id") id: String): Response<SongDto>
 }

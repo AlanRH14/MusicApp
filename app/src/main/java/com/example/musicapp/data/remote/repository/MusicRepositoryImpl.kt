@@ -31,10 +31,7 @@ class MusicRepositoryImpl(
                 if (token.isEmpty()) {
                     throw AuthException.UserNotFoundException()
                 }
-                homeApiService.getSongByID(
-                    token = "$AUTHENTICATION_HEADER_TYPE $token",
-                    id = id
-                )
+                homeApiService.getSongByID(id = id)
             },
             transform = { res -> apiSongMapper.mapTo(input = res) }
         )
