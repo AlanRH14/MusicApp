@@ -14,19 +14,15 @@ import retrofit2.http.Path
 
 interface PlaylistApiService {
     @GET("/playlists")
-    suspend fun getPlaylist(
-        @Header("Authorization") token: String
-    ): Response<List<PlaylistDto>>
+    suspend fun getPlaylist(): Response<List<PlaylistDto>>
 
     @POST("/playlists")
     suspend fun createPlaylist(
-        @Header("Authorization") token: String,
         @Body playlistRequest: CreatePlaylistRequest
     ): Response<PlaylistDto>
 
     @POST("/playlists/{id}/songs")
     suspend fun addSongToPlaylist(
-        @Header("Authorization") token: String,
         @Path("id") playlistId: String,
         @Body request: UpdatePlaylistSongRequest
     ): Response<UpdatePlaylistSongResponse>
