@@ -4,18 +4,12 @@ import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.model.response.HomeResponse
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Path
 
 interface HomeApiService {
     @GET("/home")
-    suspend fun getHome(
-        @Header("Authorization") token: String
-    ): Response<HomeResponse>
+    suspend fun getHome(): Response<HomeResponse>
 
     @GET("/songs/{id}")
-    suspend fun getSongByID(
-        @Header("Authorization") token: String,
-        @Path("id") id: String
-    ): Response<SongDto>
+    suspend fun getSongByID(@Path("id") id: String): Response<SongDto>
 }

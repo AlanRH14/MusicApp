@@ -1,8 +1,10 @@
 package com.example.musicapp.di
 
+import com.example.musicapp.data.local.preferences.TokenProvider
 import com.example.musicapp.data.remote.api.AuthApiService
 import com.example.musicapp.data.remote.api.HomeApiService
 import com.example.musicapp.data.remote.api.PlaylistApiService
+import com.example.musicapp.data.remote.api.interceptors.AuthInterceptor
 import com.example.musicapp.utils.constants.AppConstants.BASE_URL
 import com.example.musicapp.utils.constants.QualifiersConstants
 import kotlinx.coroutines.CoroutineDispatcher
@@ -25,6 +27,10 @@ private val contentType = "application/json".toMediaType()
 val networkModule = module {
     single<CoroutineDispatcher>(QualifiersConstants.DISPATCHERS_IO) { Dispatchers.IO }
 
+    single { TokenProvider(dataStore = get()) }
+
+    single { AuthInterceptor(tokenProvider = get()) }
+
     single {
         HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -34,6 +40,7 @@ val networkModule = module {
     single {
         OkHttpClient.Builder()
             .addInterceptor(get<HttpLoggingInterceptor>())
+            .addInterceptor(get<AuthInterceptor>())
             .build()
     }
 
