@@ -5,10 +5,8 @@ import com.example.musicapp.common.Resource
 import com.example.musicapp.data.local.preferences.ConstantsPreferences
 import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.remote.api.HomeApiService
-import com.example.musicapp.data.remote.api.utils.getErrorMessage
 import com.example.musicapp.data.remote.api.utils.safeFlowApiCall
 import com.example.musicapp.domain.exception.AuthException
-import com.example.musicapp.domain.exception.NetworkException
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.domain.repository.MusicRepository
@@ -16,10 +14,7 @@ import com.example.musicapp.utils.constants.AppConstants.AUTHENTICATION_HEADER_T
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 
 class MusicRepositoryImpl(
     private val homeApiService: HomeApiService,
