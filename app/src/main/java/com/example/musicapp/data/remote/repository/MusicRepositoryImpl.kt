@@ -6,6 +6,7 @@ import com.example.musicapp.data.local.preferences.ConstantsPreferences
 import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.remote.api.HomeApiService
 import com.example.musicapp.data.remote.api.utils.getErrorMessage
+import com.example.musicapp.data.remote.api.utils.safeFlowApiCall
 import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.exception.NetworkException
 import com.example.musicapp.domain.model.Song
@@ -27,31 +28,19 @@ class MusicRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : MusicRepository {
 
-    override fun getSongById(id: String): Flow<Resource<Song>> = flow {
-        emit(Resource.Loading)
-
-        val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
-        if (token.isEmpty()) {
-            throw AuthException.UserNotFoundException()
-        }
-
-        val response = homeApiService.getSongByID(
-            token = "$AUTHENTICATION_HEADER_TYPE $token",
-            id = id
+    override fun getSongById(id: String): Flow<Resource<Song>> =
+        safeFlowApiCall(
+            ioDispatcher = ioDispatcher,
+            apiCall = {
+                val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
+                if (token.isEmpty()) {
+                    throw AuthException.UserNotFoundException()
+                }
+                homeApiService.getSongByID(
+                    token = "$AUTHENTICATION_HEADER_TYPE $token",
+                    id = id
+                )
+            },
+            transform = { res -> apiSongMapper.mapTo(input = res) }
         )
-
-        if (response.isSuccessful) {
-            val songData = response.body()?.let { res ->
-                apiSongMapper.mapTo(input = res)
-            } ?: Song()
-            emit(Resource.Success(data = songData))
-        } else {
-            throw NetworkException.Http(
-                code = response.code(),
-                message = response.getErrorMessage()
-            )
-        }
-    }.catch { error ->
-        emit(Resource.Error(throwable = error))
-    }.flowOn(ioDispatcher)
 }
