@@ -10,7 +10,6 @@ import com.example.musicapp.data.local.preferences.ConstantsPreferences
 import com.example.musicapp.data.remote.api.utils.safeFlowApiCall
 import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.repository.DataStoreHandle
-import com.example.musicapp.utils.constants.AppConstants.AUTHENTICATION_HEADER_TYPE
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -31,7 +30,7 @@ class HomeRepositoryImpl(
                 if (token.isEmpty()) {
                     throw AuthException.NullTokenException()
                 }
-                homeApiService.getHome(token = "$AUTHENTICATION_HEADER_TYPE $token")
+                homeApiService.getHome()
             },
             transform = { res ->
                 apiHomeMapper.mapTo(input = res)
