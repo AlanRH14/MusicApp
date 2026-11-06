@@ -65,13 +65,7 @@ class PlaylistRepositoryImpl(
         withContext(ioDispatcher) {
             safeApiCall(
                 apiCall = {
-                    val token =
-                        dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
-                    if (token.isEmpty()) {
-                        throw AuthException.UserNotFoundException()
-                    }
                     apiService.addSongToPlaylist(
-                        token = "$AUTHENTICATION_HEADER_TYPE $token",
                         playlistId = playlistID,
                         request = UpdatePlaylistSongRequest(songIds = listOf(songID))
                     )
@@ -86,12 +80,7 @@ class PlaylistRepositoryImpl(
     ): Resource<ActionMessage> = withContext(ioDispatcher) {
         safeApiCall(
             apiCall = {
-                val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
-                if (token.isEmpty()) {
-                    throw AuthException.UserNotFoundException()
-                }
                 apiService.removeSongsFromPlaylist(
-                    token = "$AUTHENTICATION_HEADER_TYPE $token",
                     playlistId = playlistID,
                     request = UpdatePlaylistSongRequest(songIds = listOf(songID))
                 )
@@ -105,16 +94,7 @@ class PlaylistRepositoryImpl(
     override fun getPlaylistDetails(playlistID: String): Flow<Resource<Playlist>> =
         safeFlowApiCall(
             ioDispatcher = ioDispatcher,
-            apiCall = {
-                val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
-                if (token.isEmpty()) {
-                    throw AuthException.UserNotFoundException()
-                }
-                apiService.getPlaylistById(
-                    token = "$AUTHENTICATION_HEADER_TYPE $token",
-                    id = playlistID
-                )
-            },
+            apiCall = { apiService.getPlaylistById(id = playlistID) },
             transform = { res -> apiPlaylistMapper.mapTo(input = res) }
         )
 }
