@@ -8,6 +8,7 @@ import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.data.model.request.UpdatePlaylistSongRequest
 import com.example.musicapp.data.remote.api.PlaylistApiService
 import com.example.musicapp.data.remote.api.getErrorMessage
+import com.example.musicapp.data.remote.api.safeApiCall
 import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.exception.NetworkException
 import com.example.musicapp.domain.model.ActionMessage
@@ -97,30 +98,21 @@ class PlaylistRepositoryImpl(
         songID: String
     ): Resource<ActionMessage> =
         withContext(ioDispatcher) {
-            try {
-                val token = dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
-                if (token.isEmpty()) {
-                    return@withContext Resource.Error(throwable = AuthException.UserNotFoundException())
-                }
-
-                val response = apiService.addSongToPlaylist(
-                    token = "$AUTHENTICATION_HEADER_TYPE $token",
-                    playlistId = playlistID,
-                    request = UpdatePlaylistSongRequest(songIds = listOf(songID))
-                )
-
-                if (!response.isSuccessful) {
-                    return@withContext Resource.Error(
-                        throwable = NetworkException.Http(
-                            code = response.code(), message = response.getErrorMessage()
-                        )
+            safeApiCall(
+                apiCall = {
+                    val token =
+                        dataStore.readState(ConstantsPreferences.AuthTokenPreferences).first()
+                    if (token.isEmpty()) {
+                        throw AuthException.UserNotFoundException()
+                    }
+                    apiService.addSongToPlaylist(
+                        token = "$AUTHENTICATION_HEADER_TYPE $token",
+                        playlistId = playlistID,
+                        request = UpdatePlaylistSongRequest(songIds = listOf(songID))
                     )
-                }
-
-                Resource.Success(data = ActionMessage(message = "Song added to playlist successfully"))
-            } catch (error: Exception) {
-                Resource.Error(throwable = error)
-            }
+                },
+                transform = { ActionMessage(message = "Song added to playlist successfully") }
+            )
         }
 
     override suspend fun deleteSongFromPlaylist(
