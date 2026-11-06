@@ -29,7 +29,6 @@ interface PlaylistApiService {
 
     @HTTP(method = "DELETE", path = "playlists/{id}/songs", hasBody = true)
     suspend fun removeSongsFromPlaylist(
-        @Header("Authorization") token: String,
         @Path("id") playlistId: String,
         @Body request: UpdatePlaylistSongRequest
     ): Response<UpdatePlaylistSongResponse>
