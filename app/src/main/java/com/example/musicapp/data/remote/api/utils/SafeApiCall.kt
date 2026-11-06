@@ -2,7 +2,7 @@ package com.example.musicapp.data.remote.api.utils
 
 import com.example.musicapp.common.Resource
 import com.example.musicapp.domain.exception.NetworkException
-import io.ktor.utils.io.CancellationException
+import kotlinx.coroutines.CancellationException
 import retrofit2.Response
 
 suspend inline fun <T, R> safeApiCall(
