@@ -2,30 +2,24 @@ package com.example.musicapp.data.remote.repository
 
 import com.example.musicapp.common.Mapper
 import com.example.musicapp.common.Resource
-import com.example.musicapp.data.local.preferences.ConstantsPreferences
 import com.example.musicapp.data.model.PlaylistDto
 import com.example.musicapp.data.model.request.CreatePlaylistRequest
 import com.example.musicapp.data.model.request.UpdatePlaylistSongRequest
 import com.example.musicapp.data.remote.api.PlaylistApiService
 import com.example.musicapp.data.remote.api.utils.safeApiCall
 import com.example.musicapp.data.remote.api.utils.safeFlowApiCall
-import com.example.musicapp.domain.exception.AuthException
 import com.example.musicapp.domain.model.ActionMessage
 import com.example.musicapp.domain.model.Playlist
 import com.example.musicapp.domain.model.PlaylistData
-import com.example.musicapp.domain.repository.DataStoreHandle
 import com.example.musicapp.domain.repository.PlaylistRepository
-import com.example.musicapp.utils.constants.AppConstants.AUTHENTICATION_HEADER_TYPE
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import kotlin.collections.map
 
 class PlaylistRepositoryImpl(
     private val apiService: PlaylistApiService,
-    private val dataStore: DataStoreHandle,
     private val apiPlaylistMapper: Mapper<PlaylistDto, Playlist>,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : PlaylistRepository {
