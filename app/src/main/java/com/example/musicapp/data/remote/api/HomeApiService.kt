@@ -4,7 +4,6 @@ import com.example.musicapp.data.model.SongDto
 import com.example.musicapp.data.model.response.HomeResponse
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Path
 
 interface HomeApiService {
