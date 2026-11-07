@@ -74,13 +74,16 @@ class MusicAppPlaybackService : MediaSessionService() {
         override fun onIsPlayingChanged(isPlaying: Boolean) {
             _player.update { it.copy(isPlaying = isPlaying) }
             if (isPlaying) {
+                startPositionUpdate()
                 startForegroundServiceIfNeeded()
             } else {
+                stopPositionUpdate()
                 updateNotification()
             }
         }
 
         override fun onPlayerError(error: PlaybackException) {
+            stopPositionUpdate()
             _player.update {
                 it.copy(
                     isPlaying = false,
@@ -100,7 +103,6 @@ class MusicAppPlaybackService : MediaSessionService() {
         }
 
         mediaSession = MediaSession.Builder(this, exoPlayer).build()
-        startPositionUpdate()
     }
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? =
@@ -109,18 +111,21 @@ class MusicAppPlaybackService : MediaSessionService() {
     private fun startPositionUpdate() {
         positionUpdateJob?.cancel()
         positionUpdateJob = serviceScope.launch {
-            while (true) {
-                if (exoPlayer.isPlaying) {
-                    _player.update {
-                        it.copy(
-                            currentPosition = exoPlayer.currentPosition,
-                            duration = exoPlayer.duration,
-                        )
-                    }
+            while (exoPlayer.isPlaying) {
+                _player.update {
+                    it.copy(
+                        currentPosition = exoPlayer.currentPosition.coerceAtLeast(0),
+                        duration = exoPlayer.duration.coerceAtLeast(0),
+                    )
                 }
                 delay(500.milliseconds)
             }
         }
+    }
+
+    private fun stopPositionUpdate() {
+        positionUpdateJob?.cancel()
+        positionUpdateJob = null
     }
 
     fun startForegroundServiceIfNeeded() {
