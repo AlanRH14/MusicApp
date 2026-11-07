@@ -10,6 +10,7 @@ import android.os.IBinder
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.common.Resource
+import com.example.musicapp.data.service.AudioPlayerManager
 import com.example.musicapp.data.service.MusicAppPlaybackService
 import com.example.musicapp.data.service.MusicAppPlaybackService.Companion.KEY_SONG
 import com.example.musicapp.domain.repository.PlaylistRepository
@@ -25,23 +26,26 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class PlaySongViewModel(
-    private val mContext: Application,
+    private val audioPlayerManager: AudioPlayerManager,
     private val playlistRepository: PlaylistRepository
 ) : ViewModel() {
 
-
+    private val _state = MutableStateFlow(PlaySongState())
+    val state = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<PlaySongEffect>()
     val effect = _effect.asSharedFlow()
 
-    private var musicBinder: MusicAppPlaybackService.MusicBinder? = null
-    private var isServiceBound = false
+
+    init {
+        observePlayerState()
+    }
 
     fun onEvent(event: PlaySongUIEvent) {
         when (event) {
-            is PlaySongUIEvent.GetSongByID -> startServiceAndBind(songID = event.songID)
-            is PlaySongUIEvent.OnToggleToPause -> toggleToPause()
-            is PlaySongUIEvent.OnSeekTo -> seekTo(event.position)
+            is PlaySongUIEvent.GetSongByID -> audioPlayerManager.playSong(songID = event.songID)
+            is PlaySongUIEvent.OnToggleToPause -> audioPlayerManager.toggleToPause()
+            is PlaySongUIEvent.OnSeekTo -> audioPlayerManager.seekTo(event.position)
             is PlaySongUIEvent.OnAddPlaylistClicked -> getPlaylist()
             is PlaySongUIEvent.OnToggleToBottomSheet -> onToggleToBottomSheet()
             is PlaySongUIEvent.OnAddSongToPlaylist -> addSongToPlaylist(
@@ -51,9 +55,22 @@ class PlaySongViewModel(
         }
     }
 
-
-
-
+    private fun observePlayerState() {
+        viewModelScope.launch {
+            audioPlayerManager.playerState.collect { player ->
+                _state.update {
+                    it.copy(
+                        isPlaying = player.isPlaying,
+                        currentSong = player.currentSong ?: it.currentSong,
+                        currentPosition = player.currentPosition,
+                        duration = player.duration,
+                        isBuffering = player.isBuffering,
+                        error = player.error ?: it.error
+                    )
+                }
+            }
+        }
+    }
 
 
 
@@ -130,13 +147,6 @@ class PlaySongViewModel(
     }
 
     override fun onCleared() {
-        if (isServiceBound) {
-            try {
-                mContext.unbindService(serviceConnection)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            isServiceBound = false
-        }
+        audioPlayerManager.unbind()
     }
 }

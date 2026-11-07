@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Build
 import android.os.IBinder
-import androidx.lifecycle.viewModelScope
 import com.example.musicapp.data.service.MusicAppPlaybackService.Companion.KEY_SONG
 import com.example.musicapp.presentation.play_song.mvi.PlaySongState
 import kotlinx.coroutines.CoroutineScope
@@ -17,7 +16,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlin.collections.copy
 
 class AudioPlayerManager(
     private val context: Context
@@ -27,8 +25,8 @@ class AudioPlayerManager(
     private var musicBinder: MusicAppPlaybackService.MusicBinder? = null
     private var isServiceBound = false
 
-    private val _state = MutableStateFlow(PlaySongState())
-    val state = _state.asStateFlow()
+    private val _playerState = MutableStateFlow(PlaySongState())
+    val playerState = _playerState.asStateFlow()
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
@@ -70,7 +68,7 @@ class AudioPlayerManager(
         }
     }
 
-    private fun toggleToPause() {
+    fun toggleToPause() {
         val service = musicBinder?.getService()
         if (service != null) {
             if (service.player.value.isPlaying) {
@@ -79,16 +77,16 @@ class AudioPlayerManager(
                 service.resumeSong()
             }
         } else {
-            _state.update { it.copy(error = "Playback service not bound") }
+            _playerState.update { it.copy(error = "Playback service not bound") }
         }
     }
 
-    private fun seekTo(position: Long) {
+    fun seekTo(position: Long) {
         val service = musicBinder?.getService()
         if (service != null) {
             service.seekTo(position)
         } else {
-            _state.update { it.copy(error = "Playback service not bound") }
+            _playerState.update { it.copy(error = "Playback service not bound") }
         }
     }
 
@@ -96,7 +94,7 @@ class AudioPlayerManager(
         val service = musicBinder?.getService() ?: return
         scope.launch {
             service.player.collectLatest { player ->
-                _state.update {
+                _playerState.update {
                     it.copy(
                         isPlaying = player.isPlaying,
                         currentSong = player.currentSong ?: it.currentSong,
