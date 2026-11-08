@@ -1,6 +1,6 @@
 package com.example.musicapp.di
 
-import com.example.musicapp.data.local.preferences.TokenProvider
+import com.example.musicapp.data.local.preferences.SessionManager
 import com.example.musicapp.data.remote.api.AuthApiService
 import com.example.musicapp.data.remote.api.HomeApiService
 import com.example.musicapp.data.remote.api.PlaylistApiService
@@ -27,9 +27,9 @@ private val contentType = "application/json".toMediaType()
 val networkModule = module {
     single<CoroutineDispatcher>(QualifiersConstants.DISPATCHERS_IO) { Dispatchers.IO }
 
-    single { TokenProvider(dataStore = get()) }
+    single { SessionManager(dataStore = get()) }
 
-    single { AuthInterceptor(tokenProvider = get()) }
+    single { AuthInterceptor(sessionManager = get()) }
 
     single {
         HttpLoggingInterceptor().apply {
