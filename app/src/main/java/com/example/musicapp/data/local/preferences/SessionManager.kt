@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 
-class TokenProvider(
+class SessionManager(
     dataStore: DataStoreHandle,
     scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
 ) {
