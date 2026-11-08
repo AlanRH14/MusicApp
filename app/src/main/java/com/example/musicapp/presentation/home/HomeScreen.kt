@@ -24,9 +24,7 @@ fun HomeScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(key1 = true) {
-        viewModel.onEvent(HomeUIEvent.GetHomeData)
-
+    LaunchedEffect(key1 = viewModel.effect) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
                 is HomeEffect.ShowMessage -> {
