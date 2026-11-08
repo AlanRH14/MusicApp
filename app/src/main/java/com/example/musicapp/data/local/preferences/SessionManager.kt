@@ -19,12 +19,4 @@ class SessionManager(
             started = SharingStarted.Eagerly,
             initialValue = ""
         )
-
-    val sessionManager: StateFlow<Boolean> = dataStore
-        .readState(ConstantsPreferences.UserIsLoggedPreferences)
-        .stateIn(
-            scope = scope,
-            started = SharingStarted.Eagerly,
-            initialValue = false
-        )
 }
