@@ -2,6 +2,7 @@ package com.example.musicapp.data.remote.api.interceptors
 
 import com.example.musicapp.data.local.preferences.TokenProvider
 import com.example.musicapp.utils.constants.NetworkConstants.AUTHENTICATION_HEADER_TYPE
+import com.example.musicapp.utils.constants.NetworkConstants.AUTH_KEY
 import com.example.musicapp.utils.constants.NetworkConstants.NO_AUTH_KEY
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -26,7 +27,7 @@ class AuthInterceptor(
         }
 
         val authenticatedRequest = originalRequest.newBuilder()
-            .header(NO_AUTH_KEY, "$AUTHENTICATION_HEADER_TYPE $token")
+            .header(AUTH_KEY, "$AUTHENTICATION_HEADER_TYPE $token")
             .build()
 
         return chain.proceed(authenticatedRequest)
