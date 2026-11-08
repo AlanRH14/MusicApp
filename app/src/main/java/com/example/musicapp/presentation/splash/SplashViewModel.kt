@@ -39,7 +39,7 @@ class SplashViewModel(
                 } else {
                     NavRoutes.OnboardingRoute
                 }
-                delay(2000.milliseconds)
+
                 _uiState.update {
                     it.copy(
                         isLoading = false,

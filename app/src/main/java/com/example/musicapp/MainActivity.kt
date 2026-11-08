@@ -7,9 +7,11 @@ import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.getValue
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.compose.rememberNavController
@@ -28,19 +30,9 @@ class MainActivity : ComponentActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        var isReady = false
-        var startDestination: NavRoutes = NavRoutes.OnboardingRoute
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                splashViewModel.uiState.collectLatest { state ->
-                    isReady = !state.isLoading
-                    startDestination = state.destination
-                }
-            }
+        splashScreen.setKeepOnScreenCondition {
+            splashViewModel.uiState.value.isLoading
         }
-
-        splashScreen.setKeepOnScreenCondition { !isReady }
 
         splashScreen.setOnExitAnimationListener { splashProvider ->
             val scaleX = ObjectAnimator.ofFloat(
@@ -68,12 +60,15 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MusicAppTheme {
-                val navController = rememberNavController()
+                val uiState by splashViewModel.uiState.collectAsStateWithLifecycle()
 
-                AppNavGraph(
-                    navController = navController,
-                    startDestination = startDestination,
-                )
+                if (!uiState.isLoading) {
+                    val navController = rememberNavController()
+                    AppNavGraph(
+                        navController = navController,
+                        startDestination = uiState.destination,
+                    )
+                }
             }
         }
     }
