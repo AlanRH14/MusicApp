@@ -15,6 +15,7 @@ interface AuthApiService {
         @Body loginRequest: LoginRequest
     ): Response<LoginResponse>
 
+    @Headers("No-Authorization: true")
     @POST("/auth/register")
     suspend fun register(
         @Body registerRequest: RegisterRequest
