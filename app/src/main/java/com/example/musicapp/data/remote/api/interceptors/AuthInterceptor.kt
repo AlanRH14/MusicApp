@@ -1,7 +1,8 @@
 package com.example.musicapp.data.remote.api.interceptors
 
 import com.example.musicapp.data.local.preferences.TokenProvider
-import com.example.musicapp.utils.constants.AppConstants.AUTHENTICATION_HEADER_TYPE
+import com.example.musicapp.utils.constants.NetworkConstants.AUTHENTICATION_HEADER_TYPE
+import com.example.musicapp.utils.constants.NetworkConstants.NO_AUTH_KEY
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -12,9 +13,9 @@ class AuthInterceptor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
 
-        if (originalRequest.header("No-Authorization") != null) {
+        if (originalRequest.header(NO_AUTH_KEY) != null) {
             val requestWithoutHeader = originalRequest.newBuilder()
-                .removeHeader("No-Authorization")
+                .removeHeader(NO_AUTH_KEY)
                 .build()
             return chain.proceed(requestWithoutHeader)
         }
@@ -25,7 +26,7 @@ class AuthInterceptor(
         }
 
         val authenticatedRequest = originalRequest.newBuilder()
-            .header("Authorization", "$AUTHENTICATION_HEADER_TYPE $token")
+            .header(NO_AUTH_KEY, "$AUTHENTICATION_HEADER_TYPE $token")
             .build()
 
         return chain.proceed(authenticatedRequest)
