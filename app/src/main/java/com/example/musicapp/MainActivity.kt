@@ -29,11 +29,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         var isReady = false
+        var startDestination: NavRoutes = NavRoutes.OnboardingRoute
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 splashViewModel.uiState.collectLatest { state ->
                     isReady = !state.isLoading
+                    startDestination = state.destination
                 }
             }
         }
@@ -70,7 +72,7 @@ class MainActivity : ComponentActivity() {
 
                 AppNavGraph(
                     navController = navController,
-                    startDestination = NavRoutes.OnboardingRoute,
+                    startDestination = startDestination,
                 )
             }
         }
