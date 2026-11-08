@@ -27,7 +27,7 @@ fun HomeScreen(
     val context = LocalContext.current
 
     LaunchedEffect(key1 = Unit) {
-
+        viewModel.onEvent(HomeUIEvent.GetHomeData)
     }
 
     LaunchedEffect(key1 = viewModel.effect) {

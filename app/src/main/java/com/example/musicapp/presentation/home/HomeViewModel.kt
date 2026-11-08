@@ -30,6 +30,7 @@ class HomeViewModel(
 
     fun onEvent(event: HomeUIEvent) {
         when (event) {
+            is HomeUIEvent.GetHomeData -> getHome()
             is HomeUIEvent.OnSongClicked -> navigateToPlaySong(songID = event.songID)
             is HomeUIEvent.OnAlbumClicked -> showMessageTest("OnAlbumClicked")
             is HomeUIEvent.OnSongRecommendationClicked -> showMessageTest("OnSongRecommendationClicked")
