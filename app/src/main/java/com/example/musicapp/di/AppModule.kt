@@ -16,7 +16,7 @@ import org.koin.dsl.module
 
 val appModule = module {
     single { AudioPlayerManager(context = androidContext()) }
-    viewModel { SplashViewModel() }
+    viewModel { SplashViewModel(sessionManager = get()) }
     viewModel { OnboardingViewModel(dataStoreHandle = get()) }
     viewModel { LoginViewModel(repository = get(), dataStoreHandle = get()) }
     viewModel { RegisterViewModel(repository = get()) }
