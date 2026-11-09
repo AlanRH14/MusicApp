@@ -2,8 +2,9 @@ package com.example.musicapp.data.local.preferences
 
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
-import java.security.Key
+import java.io.OutputStream
 import java.security.KeyStore
+import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 
@@ -28,9 +29,26 @@ object CryptoManager {
             init(
                 KeyGenParameterSpec.Builder(
                     KEY_ALIAS,
-                    KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_ENCRYPT
+                    KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
                 )
+                    .setBlockModes(BLOCK_MODE)
+                    .setEncryptionPaddings(PADDING)
+                    .setUserAuthenticationRequired(false)
+                    .setRandomizedEncryptionRequired(true)
+                    .build()
             )
-        }
+        }.generateKey()
+    }
+
+    fun encrypt(bytes: ByteArray, outputStream: OutputStream): ByteArray {
+        val cipher = Cipher.getInstance(TRANSFORMATION)
+        cipher.init(Cipher.ENCRYPT_MODE, getKey())
+        val iv = cipher.iv
+        outputStream.write(iv.size)
+        outputStream.write(iv)
+        val encryptedBytes = cipher.doFinal(bytes)
+        outputStream.write(encryptedBytes.size)
+        outputStream.write(encryptedBytes)
+        return encryptedBytes
     }
 }
