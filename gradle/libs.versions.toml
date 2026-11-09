@@ -28,7 +28,7 @@ roomVersion = "2.8.5"
 googleCredentials = "1.6.0"
 googleID = "1.2.1"
 
-androidCrypto = "1.1.0"
+androidxCrypto = "1.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -80,7 +80,7 @@ androidx-credentials = { module = "androidx.credentials:credentials", version.re
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "googleCredentials" }
 android-googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleID" }
 
-android-crypto = { module = "androidx.security:security-crypto", version.ref = "androidCrypto" }
+androidx-crypto = { module = "androidx.security:security-crypto", version.ref = "androidxCrypto" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
