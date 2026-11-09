@@ -2,8 +2,9 @@ package com.example.musicapp.data.local.preferences
 
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
-import java.io.InputStream
-import java.io.OutputStream
+import android.util.Base64
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
@@ -42,22 +43,31 @@ object CryptoManager {
         }.generateKey()
     }
 
-    fun encrypt(bytes: ByteArray, outputStream: OutputStream): ByteArray {
+    fun encrypt(plainText: String): String {
+        if (plainText.isEmpty()) return ""
+
         val cipher = Cipher.getInstance(TRANSFORMATION)
         cipher.init(Cipher.ENCRYPT_MODE, getKey())
         val iv = cipher.iv
+        val encryptedBytes = cipher.doFinal(plainText.toByteArray(Charsets.UTF_8))
+
+        val outputStream = ByteArrayOutputStream()
         outputStream.write(iv.size)
         outputStream.write(iv)
-        val encryptedBytes = cipher.doFinal(bytes)
         outputStream.write(encryptedBytes.size)
         outputStream.write(encryptedBytes)
-        return encryptedBytes
+        return Base64.encodeToString(outputStream.toByteArray(), Base64.NO_WRAP)
     }
 
-    fun decrypt(inputStream: InputStream): ByteArray {
+    fun decrypt(encryptedBase64: String): String {
+        if (encryptedBase64.isEmpty()) return ""
+
+        val decodedBytes = Base64.decode(encryptedBase64, Base64.NO_WRAP)
+        val inputStream = ByteArrayInputStream(decodedBytes)
         val ivSize = inputStream.read()
         val iv = ByteArray(ivSize)
         inputStream.read(iv)
+
         val encryptedBytesSize = inputStream.read()
         val encryptedBytes = ByteArray(encryptedBytesSize)
         inputStream.read(encryptedBytes)
@@ -65,6 +75,7 @@ object CryptoManager {
         val cipher = Cipher.getInstance(TRANSFORMATION)
         val spec = GCMParameterSpec(128, iv)
         cipher.init(Cipher.DECRYPT_MODE, getKey(), spec)
-        return cipher.doFinal(encryptedBytes)
+
+        return String(decodedBytes, Charsets.UTF_8)
     }
 }
