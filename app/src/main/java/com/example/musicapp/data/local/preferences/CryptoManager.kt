@@ -2,11 +2,13 @@ package com.example.musicapp.data.local.preferences
 
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
+import java.io.InputStream
 import java.io.OutputStream
 import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
+import javax.crypto.spec.GCMParameterSpec
 
 object CryptoManager {
     private const val ALGORITHM = KeyProperties.KEY_ALGORITHM_AES
@@ -50,5 +52,19 @@ object CryptoManager {
         outputStream.write(encryptedBytes.size)
         outputStream.write(encryptedBytes)
         return encryptedBytes
+    }
+
+    fun decrypt(inputStream: InputStream): ByteArray {
+        val ivSize = inputStream.read()
+        val iv = ByteArray(ivSize)
+        inputStream.read(iv)
+        val encryptedBytesSize = inputStream.read()
+        val encryptedBytes = ByteArray(encryptedBytesSize)
+        inputStream.read(encryptedBytes)
+
+        val cipher = Cipher.getInstance(TRANSFORMATION)
+        val spec = GCMParameterSpec(128, iv)
+        cipher.init(Cipher.DECRYPT_MODE, getKey(), spec)
+        return cipher.doFinal(encryptedBytes)
     }
 }
