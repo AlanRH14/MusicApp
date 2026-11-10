@@ -23,9 +23,12 @@ class OnboardingViewModel(
     private val _effect = MutableSharedFlow<OnboardingEffect>()
     val effect = _effect.asSharedFlow()
 
+    init {
+        isUserLoggedIn()
+    }
+
     fun onEvent(event: OnboardingUIEvent) {
         when (event) {
-            is OnboardingUIEvent.CheckAuthStatus -> isUserLoggedIn()
             is OnboardingUIEvent.OnGetStartedClicked -> navigationToLogin()
         }
     }
