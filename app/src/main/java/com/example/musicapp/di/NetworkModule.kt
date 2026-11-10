@@ -35,7 +35,7 @@ val networkModule = module {
         )
     }
 
-    single { AuthInterceptor(sessionManagerImpl = get()) }
+    single { AuthInterceptor(sessionManager = get()) }
 
     single {
         HttpLoggingInterceptor().apply {
