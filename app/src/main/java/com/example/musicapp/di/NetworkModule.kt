@@ -27,7 +27,12 @@ private val contentType = "application/json".toMediaType()
 val networkModule = module {
     single<CoroutineDispatcher>(QualifiersConstants.DISPATCHERS_IO) { Dispatchers.IO }
 
-    single { SessionManager(dataStore = get()) }
+    single<SessionManager> {
+        SessionManager(
+            dataStore = get(),
+            ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO)
+        )
+    }
 
     single { AuthInterceptor(sessionManager = get()) }
 
