@@ -26,10 +26,6 @@ fun HomeScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
-    LaunchedEffect(key1 = Unit) {
-        viewModel.onEvent(HomeUIEvent.GetHomeData)
-    }
-
     LaunchedEffect(key1 = viewModel.effect) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
