@@ -17,6 +17,7 @@ object CryptoManager {
     private const val PADDING = KeyProperties.ENCRYPTION_PADDING_NONE
     private const val TRANSFORMATION = "$ALGORITHM/$BLOCK_MODE/$PADDING"
     private const val KEY_ALIAS = "musicapp_encrypt"
+    private const val GCM_TAG_LENGTH = 128
 
     private val keyStore = KeyStore.getInstance("AndroidKeyStore").apply {
         load(null)
@@ -46,36 +47,50 @@ object CryptoManager {
     fun encrypt(plainText: String): String {
         if (plainText.isEmpty()) return ""
 
-        val cipher = Cipher.getInstance(TRANSFORMATION)
-        cipher.init(Cipher.ENCRYPT_MODE, getKey())
-        val iv = cipher.iv
-        val encryptedBytes = cipher.doFinal(plainText.toByteArray(Charsets.UTF_8))
+        return try {
+            val cipher = Cipher.getInstance(TRANSFORMATION)
+            cipher.init(Cipher.ENCRYPT_MODE, getKey())
+            val iv = cipher.iv
+            val encryptedBytes = cipher.doFinal(plainText.toByteArray(Charsets.UTF_8))
 
-        val outputStream = ByteArrayOutputStream()
-        outputStream.write(iv.size)
-        outputStream.write(iv)
-        outputStream.write(encryptedBytes.size)
-        outputStream.write(encryptedBytes)
-        return Base64.encodeToString(outputStream.toByteArray(), Base64.NO_WRAP)
+            val outputStream = ByteArrayOutputStream()
+            outputStream.write(iv.size)
+            outputStream.write(iv)
+            outputStream.write(encryptedBytes)
+            outputStream.write(encryptedBytes)
+            Base64.encodeToString(outputStream.toByteArray(), Base64.NO_WRAP)
+        } catch (_: Exception) {
+            plainText
+        }
     }
 
     fun decrypt(encryptedBase64: String): String {
         if (encryptedBase64.isEmpty()) return ""
 
-        val decodedBytes = Base64.decode(encryptedBase64, Base64.NO_WRAP)
-        val inputStream = ByteArrayInputStream(decodedBytes)
-        val ivSize = inputStream.read()
-        val iv = ByteArray(ivSize)
-        inputStream.read(iv)
+        return try {
+            val decodedBytes = Base64.decode(encryptedBase64, Base64.NO_WRAP)
+            val inputStream = ByteArrayInputStream(decodedBytes)
+            val ivSize = inputStream.read()
 
-        val encryptedBytesSize = inputStream.read()
-        val encryptedBytes = ByteArray(encryptedBytesSize)
-        inputStream.read(encryptedBytes)
+            if (ivSize != 12) {
+                return encryptedBase64
+            }
 
-        val cipher = Cipher.getInstance(TRANSFORMATION)
-        val spec = GCMParameterSpec(128, iv)
-        cipher.init(Cipher.DECRYPT_MODE, getKey(), spec)
+            val iv = ByteArray(ivSize)
+            inputStream.read(iv)
 
-        return String(decodedBytes, Charsets.UTF_8)
+            val encryptedBytesSize = inputStream.read()
+            val encryptedBytes = ByteArray(encryptedBytesSize)
+            inputStream.read(encryptedBytes)
+
+            val cipher = Cipher.getInstance(TRANSFORMATION)
+            val spec = GCMParameterSpec(GCM_TAG_LENGTH, iv)
+            cipher.init(Cipher.DECRYPT_MODE, getKey(), spec)
+
+            val decryptedBytes = cipher.doFinal(encryptedBytes)
+            String(decryptedBytes, Charsets.UTF_8)
+        } catch (_: Exception) {
+            encryptedBase64
+        }
     }
 }
