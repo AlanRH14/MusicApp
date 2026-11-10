@@ -8,7 +8,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class SessionManager(
+class SessionManagerImpl(
     private val dataStore: DataStoreHandle,
     ioDispatcher: CoroutineDispatcher,
 ) : SessionManager {

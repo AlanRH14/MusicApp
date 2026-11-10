@@ -1,10 +1,11 @@
 package com.example.musicapp.di
 
-import com.example.musicapp.data.local.preferences.SessionManager
+import com.example.musicapp.data.local.preferences.SessionManagerImpl
 import com.example.musicapp.data.remote.api.AuthApiService
 import com.example.musicapp.data.remote.api.HomeApiService
 import com.example.musicapp.data.remote.api.PlaylistApiService
 import com.example.musicapp.data.remote.api.interceptors.AuthInterceptor
+import com.example.musicapp.domain.repository.SessionManager
 import com.example.musicapp.utils.constants.AppConstants.BASE_URL
 import com.example.musicapp.utils.constants.QualifiersConstants
 import kotlinx.coroutines.CoroutineDispatcher
@@ -28,13 +29,13 @@ val networkModule = module {
     single<CoroutineDispatcher>(QualifiersConstants.DISPATCHERS_IO) { Dispatchers.IO }
 
     single<SessionManager> {
-        SessionManager(
+        SessionManagerImpl(
             dataStore = get(),
             ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO)
         )
     }
 
-    single { AuthInterceptor(sessionManager = get()) }
+    single { AuthInterceptor(sessionManagerImpl = get()) }
 
     single {
         HttpLoggingInterceptor().apply {
