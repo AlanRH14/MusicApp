@@ -33,7 +33,7 @@ fun PlaySongScreen(
         viewModel.onEvent(PlaySongUIEvent.GetSongByID(songID = songID))
     }
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = viewModel.effect) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
                 is PlaySongEffect.ShowMessage -> {
