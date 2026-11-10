@@ -24,9 +24,12 @@ class PlaylistViewModel(
     private val _effect = MutableSharedFlow<PlaylistEffect>()
     val effect = _effect.asSharedFlow()
 
+    init {
+        getPlaylist()
+    }
+
     fun onEvent(event: PlaylistUIEvent) {
         when (event) {
-            is PlaylistUIEvent.GetPlaylist -> getPlaylist()
             is PlaylistUIEvent.OnRetryClicked -> getPlaylist()
             is PlaylistUIEvent.OnCreatePlaylistClicked -> navigateToCreatePlaylist()
             is PlaylistUIEvent.OnPlaylistDetailClicked -> navigateToPlaylistDetail(playlistID = event.playlistID)

@@ -22,7 +22,6 @@ import com.example.musicapp.navigation.NavRoutes
 import com.example.musicapp.presentation.onboarding.components.OnboardingCard
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import com.example.musicapp.presentation.onboarding.mvi.OnboardingEffect
-import com.example.musicapp.presentation.onboarding.mvi.OnboardingUIEvent
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
@@ -32,10 +31,6 @@ fun OnboardingScreen(
     viewModel: OnboardingViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-
-    LaunchedEffect(key1 = Unit) {
-        viewModel.onEvent(OnboardingUIEvent.CheckAuthStatus)
-    }
 
     LaunchedEffect(key1 = viewModel.effect) {
         viewModel.effect.collectLatest {

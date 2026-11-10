@@ -11,7 +11,6 @@ import com.example.musicapp.navigation.NavRoutes
 import com.example.musicapp.presentation.common.widgets.ErrorScreen
 import com.example.musicapp.presentation.common.widgets.LoadingScreen
 import com.example.musicapp.presentation.playlist.mvi.PlaylistEffect
-import com.example.musicapp.presentation.playlist.mvi.PlaylistUIEvent
 import com.example.musicapp.presentation.playlist.widgets.PlaylistContent
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
@@ -23,10 +22,6 @@ fun PlaylistScreen(
 ) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
-
-    LaunchedEffect(key1 = Unit) {
-        viewModel.onEvent(PlaylistUIEvent.GetPlaylist)
-    }
 
     LaunchedEffect(key1 = viewModel.effect) {
         viewModel.effect.collectLatest { effect ->
