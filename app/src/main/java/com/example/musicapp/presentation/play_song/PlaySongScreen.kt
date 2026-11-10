@@ -29,9 +29,11 @@ fun PlaySongScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(songID) {
         viewModel.onEvent(PlaySongUIEvent.GetSongByID(songID = songID))
+    }
 
+    LaunchedEffect(key1 = true) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
                 is PlaySongEffect.ShowMessage -> {
