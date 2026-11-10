@@ -13,9 +13,12 @@ internal sealed class ConstantsPreferences<T> : PreferencesKey<T> {
         override val preferencesKey: Preferences.Key<Boolean> = booleanPreferencesKey(key)
     }
 
-    data object AuthTokenPreferences: ConstantsPreferences<String>() {
+    data object AuthTokenPreferences : ConstantsPreferences<String>() {
         override val key: String = PreferencesConstants.TOKEN_PREFERENCES_KEY
         override val defaultValue: String = ""
         override val preferencesKey: Preferences.Key<String> = stringPreferencesKey(key)
+
+        override fun encrypt(value: String): String = CryptoManager.encrypt(value)
+        override fun decrypt(value: String): String = CryptoManager.decrypt(value)
     }
 }

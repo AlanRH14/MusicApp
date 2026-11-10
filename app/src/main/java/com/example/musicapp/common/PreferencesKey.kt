@@ -6,4 +6,7 @@ interface PreferencesKey<T> {
     val key: String
     val defaultValue: T
     val preferencesKey: Preferences.Key<T>
+
+    fun encrypt(value: T): T = value
+    fun decrypt(value: T): T = value
 }
