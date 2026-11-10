@@ -21,7 +21,7 @@ class AuthInterceptor(
             return chain.proceed(requestWithoutHeader)
         }
 
-        val token = sessionManager.token.value
+        val token = sessionManager.getToken()
         if (token.isEmpty()) {
             return chain.proceed(originalRequest)
         }
