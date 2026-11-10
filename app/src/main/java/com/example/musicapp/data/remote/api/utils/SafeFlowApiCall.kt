@@ -2,6 +2,7 @@ package com.example.musicapp.data.remote.api.utils
 
 import com.example.musicapp.common.Resource
 import com.example.musicapp.domain.exception.NetworkException
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -32,5 +33,8 @@ inline fun <T, R> safeFlowApiCall(
         )
     }
 }.catch { error ->
+    if (error is CancellationException) {
+        throw error
+    }
     emit(Resource.Error(throwable = error))
 }.flowOn(ioDispatcher)

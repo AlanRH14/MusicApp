@@ -17,7 +17,6 @@ class DataStoreHandleImpl(
 
     override suspend fun <T> saveState(key: PreferencesKey<T>, value: T) {
         dataStore.edit { preferences ->
-            preferences[key.preferencesKey] = value
             preferences[key.preferencesKey] = key.encrypt(value)
         }
     }

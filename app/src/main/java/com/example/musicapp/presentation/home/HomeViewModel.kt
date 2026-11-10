@@ -24,10 +24,6 @@ class HomeViewModel(
     private val _effect = MutableSharedFlow<HomeEffect>()
     val effect = _effect.asSharedFlow()
 
-    init {
-        getHome()
-    }
-
     fun onEvent(event: HomeUIEvent) {
         when (event) {
             is HomeUIEvent.GetHomeData -> getHome()
