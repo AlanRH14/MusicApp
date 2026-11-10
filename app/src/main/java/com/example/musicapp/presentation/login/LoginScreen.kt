@@ -24,7 +24,7 @@ fun LoginScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(key1 = viewModel) {
+    LaunchedEffect(key1 = viewModel.effect) {
         viewModel.effect.collectLatest {
             when (it) {
                 is LoginEffect.ShowMessage -> {
