@@ -30,6 +30,6 @@ suspend inline fun <T, R> safeApiCall(
     } catch (error: CancellationException) {
         throw error
     } catch (error: Exception) {
-        Resource.Error(throwable = Exception(error))
+        Resource.Error(throwable = error)
     }
 }

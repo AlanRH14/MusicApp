@@ -58,8 +58,9 @@ object CryptoManager {
             outputStream.write(iv)
             outputStream.write(encryptedBytes)
             Base64.encodeToString(outputStream.toByteArray(), Base64.NO_WRAP)
-        } catch (_: Exception) {
-            plainText
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ""
         }
     }
 
