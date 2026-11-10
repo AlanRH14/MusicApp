@@ -23,8 +23,8 @@ class RegisterViewModel(
     private val _state = MutableStateFlow(RegisterState())
     val state = _state.asStateFlow()
 
-    private val _event = MutableSharedFlow<RegisterEffect>()
-    val event = _event.asSharedFlow()
+    private val _effect = MutableSharedFlow<RegisterEffect>()
+    val effect = _effect.asSharedFlow()
 
     fun onEvent(event: RegisterUIEvent) {
         when (event) {
@@ -102,7 +102,7 @@ class RegisterViewModel(
             when (response) {
                 is Resource.Success -> {
                     _state.update { it.copy(isLoading = false) }
-                    _event.emit(RegisterEffect.NavigateToHome)
+                    _effect.emit(RegisterEffect.NavigateToHome)
                 }
 
                 is Resource.Error -> {
@@ -123,7 +123,7 @@ class RegisterViewModel(
 
     private fun navigateBack() {
         viewModelScope.launch {
-            _event.emit(RegisterEffect.NavigateToLogin)
+            _effect.emit(RegisterEffect.NavigateToLogin)
         }
     }
 

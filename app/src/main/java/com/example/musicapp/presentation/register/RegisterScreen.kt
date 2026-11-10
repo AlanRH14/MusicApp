@@ -23,8 +23,8 @@ fun RegisterScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(key1 = true) {
-        viewModel.event.collectLatest { event ->
+    LaunchedEffect(key1 = viewModel.effect) {
+        viewModel.effect.collectLatest { event ->
             when (event) {
                 is RegisterEffect.NavigateToLogin -> {
                     navController.popBackStack()

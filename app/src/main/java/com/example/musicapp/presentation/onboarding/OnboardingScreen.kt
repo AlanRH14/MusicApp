@@ -33,9 +33,11 @@ fun OnboardingScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = Unit) {
         viewModel.onEvent(OnboardingUIEvent.CheckAuthStatus)
+    }
 
+    LaunchedEffect(key1 = viewModel.effect) {
         viewModel.effect.collectLatest {
             when (it) {
                 is OnboardingEffect.NavigateToLogin -> {

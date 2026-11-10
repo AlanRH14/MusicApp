@@ -24,9 +24,11 @@ fun PlaylistScreen(
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = Unit) {
         viewModel.onEvent(PlaylistUIEvent.GetPlaylist)
+    }
 
+    LaunchedEffect(key1 = viewModel.effect) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
                 is PlaylistEffect.NavigateToCreatePlaylist -> {

@@ -20,9 +20,14 @@ suspend inline fun <T, R> safeApiCall(
                 Resource.Error(throwable = NetworkException.EmptyBody())
             }
         } else {
-            Resource.Error(throwable = Exception("Error: ${response.code()} - ${response.message()}"))
+            Resource.Error(
+                throwable = NetworkException.Http(
+                    code = response.code(),
+                    message = response.getErrorMessage()
+                )
+            )
         }
-    } catch (error : CancellationException) {
+    } catch (error: CancellationException) {
         throw error
     } catch (error: Exception) {
         Resource.Error(throwable = Exception(error))

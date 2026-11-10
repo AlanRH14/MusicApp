@@ -1,6 +1,6 @@
 package com.example.musicapp.data.remote.api.interceptors
 
-import com.example.musicapp.data.local.preferences.SessionManager
+import com.example.musicapp.domain.repository.SessionManager
 import com.example.musicapp.utils.constants.NetworkConstants.AUTHENTICATION_HEADER_TYPE
 import com.example.musicapp.utils.constants.NetworkConstants.AUTH_KEY
 import com.example.musicapp.utils.constants.NetworkConstants.NO_AUTH_KEY
@@ -21,7 +21,7 @@ class AuthInterceptor(
             return chain.proceed(requestWithoutHeader)
         }
 
-        val token = sessionManager.token.value
+        val token = sessionManager.getToken()
         if (token.isEmpty()) {
             return chain.proceed(originalRequest)
         }
