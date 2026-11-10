@@ -22,8 +22,11 @@ fun PlaylistDetailScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = playlistID) {
         viewModel.onEvent(PlaylistDetailUIEvent.OnGetPlaylistDetail(playlistID = playlistID))
+    }
+
+    LaunchedEffect(key1 = viewModel.effect) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
                 is PlaylistDetailEffect.ShowMessage -> {
