@@ -57,7 +57,6 @@ object CryptoManager {
             outputStream.write(iv.size)
             outputStream.write(iv)
             outputStream.write(encryptedBytes)
-            outputStream.write(encryptedBytes)
             Base64.encodeToString(outputStream.toByteArray(), Base64.NO_WRAP)
         } catch (_: Exception) {
             plainText
@@ -77,11 +76,12 @@ object CryptoManager {
             }
 
             val iv = ByteArray(ivSize)
-            inputStream.read(iv)
+            val readBytes = inputStream.read(iv)
+            if (readBytes != ivSize) {
+                return encryptedBase64
+            }
 
-            val encryptedBytesSize = inputStream.read()
-            val encryptedBytes = ByteArray(encryptedBytesSize)
-            inputStream.read(encryptedBytes)
+            val encryptedBytes = inputStream.readBytes()
 
             val cipher = Cipher.getInstance(TRANSFORMATION)
             val spec = GCMParameterSpec(GCM_TAG_LENGTH, iv)
