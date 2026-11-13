@@ -4,11 +4,14 @@ import com.example.musicapp.data.remote.repository.AuthenticationRepositoryImpl
 import com.example.musicapp.data.remote.repository.HomeRepositoryImpl
 import com.example.musicapp.data.remote.repository.MusicRepositoryImpl
 import com.example.musicapp.data.remote.repository.PlaylistRepositoryImpl
+import com.example.musicapp.data.service.AudioPlayerManager
+import com.example.musicapp.domain.repository.AudioPlayerRepository
 import com.example.musicapp.domain.repository.AuthenticationRepository
 import com.example.musicapp.domain.repository.HomeRepository
 import com.example.musicapp.domain.repository.MusicRepository
 import com.example.musicapp.domain.repository.PlaylistRepository
 import com.example.musicapp.utils.constants.QualifiersConstants
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val repositoryModule = module {
@@ -46,4 +49,6 @@ val repositoryModule = module {
             ioDispatcher = get(QualifiersConstants.DISPATCHERS_IO)
         )
     }
+
+    single<AudioPlayerRepository> { AudioPlayerManager(context = androidContext()) }
 }
