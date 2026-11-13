@@ -1,6 +1,7 @@
 package com.example.musicapp.di
 
 import com.example.musicapp.data.service.AudioPlayerManager
+import com.example.musicapp.domain.repository.AudioPlayerRepository
 import com.example.musicapp.presentation.create_playlist.CreatePlaylistViewModel
 import com.example.musicapp.presentation.home.HomeViewModel
 import com.example.musicapp.presentation.login.LoginViewModel
@@ -15,7 +16,7 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    single { AudioPlayerManager(context = androidContext()) }
+    single<AudioPlayerRepository> { AudioPlayerManager(context = androidContext()) }
     viewModel { SplashViewModel(dataStore = get()) }
     viewModel { OnboardingViewModel(dataStoreHandle = get()) }
     viewModel { LoginViewModel(repository = get(), dataStoreHandle = get()) }
