@@ -3,7 +3,6 @@ package com.example.musicapp.presentation.play_song
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.common.Resource
-import com.example.musicapp.data.service.AudioPlayerManager
 import com.example.musicapp.domain.repository.AudioPlayerRepository
 import com.example.musicapp.domain.repository.PlaylistRepository
 import com.example.musicapp.presentation.play_song.mvi.PlaySongEffect
@@ -47,7 +46,7 @@ class PlaySongViewModel(
 
     private fun observePlayerState() {
         viewModelScope.launch {
-            audioPlayerManager.audioStatus.collect { player ->
+            audioPlayerManager.audioState.collect { player ->
                 _state.update {
                     it.copy(audioStatus = player)
                 }

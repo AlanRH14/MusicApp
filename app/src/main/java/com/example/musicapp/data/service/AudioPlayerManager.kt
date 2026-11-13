@@ -28,7 +28,7 @@ class AudioPlayerManager(
     private var isServiceBound = false
 
     private val _playerState = MutableStateFlow(AudioStatus())
-    override val audioStatus: StateFlow<AudioStatus>
+    override val audioState: StateFlow<AudioStatus>
         get() = _playerState.asStateFlow()
 
     private val serviceConnection = object : ServiceConnection {
