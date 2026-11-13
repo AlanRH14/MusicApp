@@ -103,21 +103,6 @@ class AudioPlayerManager(
         }
     }
 
-    private val serviceConnection = object : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
-            isServiceBound = true
-            if (binder is MusicAppPlaybackService.MusicBinder) {
-                musicBinder = binder
-                observerPlaybackService()
-            }
-        }
-
-        override fun onServiceDisconnected(name: ComponentName?) {
-            isServiceBound = false
-            musicBinder = null
-        }
-    }
-
     override fun playSong(songID: String) {
         val intent = Intent(
             context, MusicAppPlaybackService::class.java
@@ -131,26 +116,15 @@ class AudioPlayerManager(
         } else {
             context.startService(intent)
         }
-
-        if (!isServiceBound) {
-            val bindIntent = Intent(context, MusicAppPlaybackService::class.java).apply {
-                action = MusicAppPlaybackService.ACTION_BIND_CUSTOM
-            }
-            context.bindService(
-                bindIntent,
-                serviceConnection,
-                Context.BIND_AUTO_CREATE
-            )
-        }
     }
 
     override fun togglePlayPause() {
-        val service = musicBinder?.getService()
-        if (service != null) {
-            if (service.player.value.isPlaying) {
-                service.pauseSong()
+        val controller = mediaController
+        if (controller != null) {
+            if (controller.isPlaying) {
+                controller.pause()
             } else {
-                service.resumeSong()
+                controller.play()
             }
         } else {
             _audioState.update { it.copy(error = "Playback service not bound") }
