@@ -20,13 +20,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import kotlin.time.Duration.Companion.milliseconds
 
 class MusicAppPlaybackService : MediaSessionService() {
 
@@ -53,7 +51,6 @@ class MusicAppPlaybackService : MediaSessionService() {
     private val repository: MusicRepository by inject()
     private val _player = MutableStateFlow(PlayerState())
     val player = _player.asStateFlow()
-    private var positionUpdateJob: Job? = null
     private var isForegroundService = false
 
     private val playerListener = object : Player.Listener {
@@ -74,16 +71,13 @@ class MusicAppPlaybackService : MediaSessionService() {
         override fun onIsPlayingChanged(isPlaying: Boolean) {
             _player.update { it.copy(isPlaying = isPlaying) }
             if (isPlaying) {
-                startPositionUpdate()
                 startForegroundServiceIfNeeded()
             } else {
-                stopPositionUpdate()
                 updateNotification()
             }
         }
 
         override fun onPlayerError(error: PlaybackException) {
-            stopPositionUpdate()
             _player.update {
                 it.copy(
                     isPlaying = false,
@@ -107,26 +101,6 @@ class MusicAppPlaybackService : MediaSessionService() {
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? =
         mediaSession
-
-    private fun startPositionUpdate() {
-        positionUpdateJob?.cancel()
-        positionUpdateJob = serviceScope.launch {
-            while (exoPlayer.isPlaying) {
-                _player.update {
-                    it.copy(
-                        currentPosition = exoPlayer.currentPosition.coerceAtLeast(0),
-                        duration = exoPlayer.duration.coerceAtLeast(0),
-                    )
-                }
-                delay(500.milliseconds)
-            }
-        }
-    }
-
-    private fun stopPositionUpdate() {
-        positionUpdateJob?.cancel()
-        positionUpdateJob = null
-    }
 
     fun startForegroundServiceIfNeeded() {
         val song = player.value.currentSong ?: return

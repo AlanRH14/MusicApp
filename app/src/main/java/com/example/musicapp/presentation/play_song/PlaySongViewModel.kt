@@ -62,8 +62,6 @@ class PlaySongViewModel(
         }
     }
 
-
-
     private fun getPlaylist() {
         viewModelScope.launch {
             playlistRepository.getPlaylist().collect { playlist ->
