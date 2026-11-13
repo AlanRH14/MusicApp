@@ -27,9 +27,9 @@ class AudioPlayerManager(
     private var musicBinder: MusicAppPlaybackService.MusicBinder? = null
     private var isServiceBound = false
 
-    private val _playerState = MutableStateFlow(AudioStatus())
+    private val _audioState = MutableStateFlow(AudioStatus())
     override val audioState: StateFlow<AudioStatus>
-        get() = _playerState.asStateFlow()
+        get() = _audioState.asStateFlow()
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
@@ -80,7 +80,7 @@ class AudioPlayerManager(
                 service.resumeSong()
             }
         } else {
-            _playerState.update { it.copy(error = "Playback service not bound") }
+            _audioState.update { it.copy(error = "Playback service not bound") }
         }
     }
 
@@ -89,7 +89,7 @@ class AudioPlayerManager(
         if (service != null) {
             service.seekTo(position)
         } else {
-            _playerState.update { it.copy(error = "Playback service not bound") }
+            _audioState.update { it.copy(error = "Playback service not bound") }
         }
     }
 
@@ -97,7 +97,7 @@ class AudioPlayerManager(
         val service = musicBinder?.getService() ?: return
         scope.launch {
             service.player.collectLatest { player ->
-                _playerState.update {
+                _audioState.update {
                     it.copy(
                         isPlaying = player.isPlaying,
                         currentSong = player.currentSong ?: it.currentSong,
