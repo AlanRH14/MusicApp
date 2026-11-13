@@ -55,11 +55,7 @@ fun SongSlide(
     } else {
         Slider(
             modifier = Modifier.fillMaxWidth(),
-            value = if (isUserDragging) {
-                sliderPosition.toFloat()
-            } else {
-                currentPosition.toFloat()
-            },
+            value = sliderPosition.coerceIn(0L, duration.coerceAtLeast(1L)).toFloat(),
             onValueChange = { newValue ->
                 isUserDragging = true
                 sliderPosition = newValue.toLong()
@@ -95,11 +91,7 @@ fun SongSlide(
                 .padding(horizontal = PaddingSmall)
         ) {
             Text(
-                text = if (isUserDragging) {
-                    sliderPosition.toFormattedTime()
-                } else {
-                    currentPosition.toFormattedTime()
-                },
+                text = sliderPosition.toFormattedTime(),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onPrimary
             )
