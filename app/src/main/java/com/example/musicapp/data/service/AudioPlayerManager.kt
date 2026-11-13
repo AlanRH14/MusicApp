@@ -130,7 +130,6 @@ class AudioPlayerManager(
         }
     }
 
-
     override fun unbindService() {
         mediaController?.removeListener(playerListener)
         mediaController = null
