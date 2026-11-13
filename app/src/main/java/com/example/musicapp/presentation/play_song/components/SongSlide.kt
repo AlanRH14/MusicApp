@@ -63,7 +63,6 @@ fun SongSlide(
             onValueChange = { newValue ->
                 isUserDragging = true
                 sliderPosition = newValue.toLong()
-                onSeekChange(newValue.toLong())
             },
             onValueChangeFinished = {
                 isUserDragging = false
@@ -96,7 +95,11 @@ fun SongSlide(
                 .padding(horizontal = PaddingSmall)
         ) {
             Text(
-                text = currentPosition.toFormattedTime(),
+                text = if (isUserDragging) {
+                    sliderPosition.toFormattedTime()
+                } else {
+                    currentPosition.toFormattedTime()
+                },
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onPrimary
             )
