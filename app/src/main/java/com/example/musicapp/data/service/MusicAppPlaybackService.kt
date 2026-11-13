@@ -187,7 +187,6 @@ class MusicAppPlaybackService : MediaSessionService() {
 
     private fun startPlayback(song: Song) {
         try {
-            android.util.Log.d("PlaybackService", "Cargando audio desde: ${song.audioUrl}")
             _player.update { it.copy(currentSong = song, isBuffering = true, error = null) }
 
             val mediaItem = MediaItem.Builder()
