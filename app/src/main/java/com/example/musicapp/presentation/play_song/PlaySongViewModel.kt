@@ -48,14 +48,7 @@ class PlaySongViewModel(
         viewModelScope.launch {
             audioPlayerManager.playerState.collect { player ->
                 _state.update {
-                    it.copy(
-                        isPlaying = player.isPlaying,
-                        currentSong = player.currentSong ?: it.currentSong,
-                        currentPosition = player.currentPosition,
-                        duration = player.duration,
-                        isBuffering = player.isBuffering,
-                        error = player.error ?: it.error
-                    )
+                    it.copy(audioStatus = player)
                 }
             }
         }
