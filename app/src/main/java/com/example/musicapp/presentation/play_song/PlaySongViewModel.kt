@@ -127,6 +127,6 @@ class PlaySongViewModel(
     }
 
     override fun onCleared() {
-        audioPlayerManager.unbind()
+        audioPlayerManager.unbindService()
     }
 }
