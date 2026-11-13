@@ -22,17 +22,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 class AudioPlayerManager(
     private val context: Context
 ) : AudioPlayerRepository {
-
-    private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
-    private var isServiceBound = false
-
     private val _audioState = MutableStateFlow(AudioStatus())
     override val audioState: StateFlow<AudioStatus>
         get() = _audioState.asStateFlow()
@@ -132,37 +126,20 @@ class AudioPlayerManager(
     }
 
     override fun seekTo(position: Long) {
-        val service = musicBinder?.getService()
-        if (service != null) {
-            service.seekTo(position)
+        val controller = mediaController
+        if (controller != null) {
+            controller.seekTo(position)
+            _audioState.update { it.copy(currentPosition = position) }
         } else {
             _audioState.update { it.copy(error = "Playback service not bound") }
         }
     }
 
-    private fun observerPlaybackService() {
-        val service = musicBinder?.getService() ?: return
-        scope.launch {
-            service.player.collectLatest { player ->
-                _audioState.update {
-                    it.copy(
-                        isPlaying = player.isPlaying,
-                        currentSong = player.currentSong ?: it.currentSong,
-                        currentPosition = player.currentPosition.coerceAtLeast(0),
-                        duration = player.duration.coerceAtLeast(0),
-                        isBuffering = player.isBuffering,
-                        error = player.error ?: it.error
-                    )
-                }
-            }
-        }
-    }
 
     override fun unbindService() {
-        if (isServiceBound) {
-            context.unbindService(serviceConnection)
-            isServiceBound = false
-            musicBinder = null
-        }
+        mediaController?.removeListener(playerListener)
+        mediaController = null
+        controllerFuture?.let { MediaController.releaseFuture(it) }
+        controllerFuture = null
     }
 }
