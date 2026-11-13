@@ -1,7 +1,5 @@
 package com.example.musicapp.di
 
-import com.example.musicapp.data.service.AudioPlayerManager
-import com.example.musicapp.domain.repository.AudioPlayerRepository
 import com.example.musicapp.presentation.create_playlist.CreatePlaylistViewModel
 import com.example.musicapp.presentation.home.HomeViewModel
 import com.example.musicapp.presentation.login.LoginViewModel
@@ -11,7 +9,6 @@ import com.example.musicapp.presentation.playlist.PlaylistViewModel
 import com.example.musicapp.presentation.playlist_detail.PlaylistDetailViewModel
 import com.example.musicapp.presentation.register.RegisterViewModel
 import com.example.musicapp.presentation.splash.SplashViewModel
-import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
