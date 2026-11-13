@@ -1,8 +1,6 @@
 package com.example.musicapp.data.service
 
 import android.content.Intent
-import android.os.Binder
-import android.os.IBinder
 import androidx.core.net.toUri
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
@@ -38,11 +36,6 @@ class MusicAppPlaybackService : MediaSessionService() {
         const val KEY_SONG = "SONG"
     }
 
-    inner class MusicBinder : Binder() {
-        fun getService(): MusicAppPlaybackService = this@MusicAppPlaybackService
-    }
-
-    private val binder = MusicBinder()
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var fetchSongJob: Job? = null
     private lateinit var exoPlayer: ExoPlayer
@@ -274,14 +267,6 @@ class MusicAppPlaybackService : MediaSessionService() {
             e.printStackTrace()
         }
         updateNotification()
-    }
-
-    override fun onBind(intent: Intent?): IBinder? {
-        return if (intent?.action == ACTION_BIND_CUSTOM) {
-            binder
-        } else {
-            super.onBind(intent)
-        }
     }
 
     override fun onDestroy() {
