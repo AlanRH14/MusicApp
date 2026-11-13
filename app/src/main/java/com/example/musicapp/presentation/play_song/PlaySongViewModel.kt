@@ -3,7 +3,7 @@ package com.example.musicapp.presentation.play_song
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.common.Resource
-import com.example.musicapp.data.service.AudioPlayerManager
+import com.example.musicapp.domain.repository.AudioPlayerRepository
 import com.example.musicapp.domain.repository.PlaylistRepository
 import com.example.musicapp.presentation.play_song.mvi.PlaySongEffect
 import com.example.musicapp.presentation.play_song.mvi.PlaySongState
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class PlaySongViewModel(
-    private val audioPlayerManager: AudioPlayerManager,
+    private val audioPlayerManager: AudioPlayerRepository,
     private val playlistRepository: PlaylistRepository
 ) : ViewModel() {
 
@@ -26,7 +26,6 @@ class PlaySongViewModel(
     private val _effect = MutableSharedFlow<PlaySongEffect>()
     val effect = _effect.asSharedFlow()
 
-
     init {
         observePlayerState()
     }
@@ -34,7 +33,7 @@ class PlaySongViewModel(
     fun onEvent(event: PlaySongUIEvent) {
         when (event) {
             is PlaySongUIEvent.GetSongByID -> audioPlayerManager.playSong(songID = event.songID)
-            is PlaySongUIEvent.OnToggleToPause -> audioPlayerManager.toggleToPause()
+            is PlaySongUIEvent.OnToggleToPause -> audioPlayerManager.togglePlayPause()
             is PlaySongUIEvent.OnSeekTo -> audioPlayerManager.seekTo(event.position)
             is PlaySongUIEvent.OnAddPlaylistClicked -> getPlaylist()
             is PlaySongUIEvent.OnToggleToBottomSheet -> onToggleToBottomSheet()
@@ -47,22 +46,13 @@ class PlaySongViewModel(
 
     private fun observePlayerState() {
         viewModelScope.launch {
-            audioPlayerManager.playerState.collect { player ->
+            audioPlayerManager.audioState.collect { player ->
                 _state.update {
-                    it.copy(
-                        isPlaying = player.isPlaying,
-                        currentSong = player.currentSong ?: it.currentSong,
-                        currentPosition = player.currentPosition,
-                        duration = player.duration,
-                        isBuffering = player.isBuffering,
-                        error = player.error ?: it.error
-                    )
+                    it.copy(audioStatus = player)
                 }
             }
         }
     }
-
-
 
     private fun getPlaylist() {
         viewModelScope.launch {
@@ -137,6 +127,6 @@ class PlaySongViewModel(
     }
 
     override fun onCleared() {
-        audioPlayerManager.unbind()
+        audioPlayerManager.unbindService()
     }
 }

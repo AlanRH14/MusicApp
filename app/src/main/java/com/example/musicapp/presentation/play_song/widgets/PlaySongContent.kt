@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.musicapp.domain.model.AudioStatus
 import com.example.musicapp.domain.model.Song
 import com.example.musicapp.presentation.play_song.components.SongActions
 import com.example.musicapp.presentation.play_song.components.SongSlide
@@ -38,31 +39,32 @@ fun PlaySongContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             HeaderPlaySong(
-                title = state.currentSong?.title ?: "",
-                isPlayList = state.isPlaying
+                title = state.audioStatus.currentSong?.title ?: "",
+                isPlayList = state.audioStatus.isPlaying
             )
 
             Spacer(modifier = Modifier.height(PaddingDefault))
 
             SongContent(
-                title = state.currentSong?.title ?: "",
-                genre = state.currentSong?.genre ?: "",
-                image = state.currentSong?.coverImage ?: "",
+                title = state.audioStatus.currentSong?.title ?: "",
+                genre = state.audioStatus.currentSong?.genre ?: "",
+                image = state.audioStatus.currentSong?.coverImage ?: "",
             )
 
             Spacer(modifier = Modifier.height(PaddingDefault))
 
             SongSlide(
-                duration = state.duration,
-                currentPosition = state.currentPosition,
-                isBuffering = state.isBuffering,
+                isPlaying = state.audioStatus.isPlaying,
+                duration = state.audioStatus.duration,
+                currentPosition = state.audioStatus.currentPosition,
+                isBuffering = state.audioStatus.isBuffering,
                 onSeekChange = { onEvent(PlaySongUIEvent.OnSeekTo(position = it)) },
             )
 
             Spacer(modifier = Modifier.height(PaddingDefault))
 
             SongActions(
-                isPlaying = state.isPlaying,
+                isPlaying = state.audioStatus.isPlaying,
                 onPlayPauseToggle = { onEvent(PlaySongUIEvent.OnToggleToPause) },
                 onNextClicked = {},
                 onPreviousClicked = {},
@@ -83,10 +85,12 @@ fun PlaySongContentPreview() {
                     genre = "Pop",
                     coverImage = "http://example.com/image.jpg"
                 ),
-                currentPosition = 300000L,
-                duration = 300000L,
-                isBuffering = false,
-                isPlaying = true,
+                audioStatus = AudioStatus(
+                    currentPosition = 300000L,
+                    duration = 300000L,
+                    isBuffering = false,
+                    isPlaying = true,
+                ),
             ),
             onEvent = {}
         )
