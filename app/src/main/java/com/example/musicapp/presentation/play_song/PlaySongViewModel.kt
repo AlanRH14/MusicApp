@@ -26,7 +26,6 @@ class PlaySongViewModel(
     private val _effect = MutableSharedFlow<PlaySongEffect>()
     val effect = _effect.asSharedFlow()
 
-
     init {
         observePlayerState()
     }
