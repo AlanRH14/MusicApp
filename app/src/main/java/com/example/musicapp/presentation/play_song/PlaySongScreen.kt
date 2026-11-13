@@ -43,7 +43,7 @@ fun PlaySongScreen(
         }
     }
 
-    state.currentSong?.let {
+    state.audioStatus.currentSong?.let {
         PlaySongContent(
             state = state,
             onEvent = viewModel::onEvent
