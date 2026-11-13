@@ -32,7 +32,6 @@ class MusicAppPlaybackService : MediaSessionService() {
         const val ACTION_STOP = "com.example.musicapp.ACTION_STOP"
         const val ACTION_PREVIOUS = "com.example.musicapp.ACTION_PREVIOUS"
         const val ACTION_NEXT = "com.example.musicapp.ACTION_NEXT"
-        const val ACTION_BIND_CUSTOM = "com.example.musicapp.ACTION_BIND_CUSTOM"
         const val KEY_SONG = "SONG"
     }
 
@@ -190,6 +189,7 @@ class MusicAppPlaybackService : MediaSessionService() {
                         .setTitle(song.title)
                         .setArtist(song.artist.name)
                         .setArtworkUri(song.coverImage.toUri())
+                        .setGenre(song.genre)
                         .build()
                 ).build()
 

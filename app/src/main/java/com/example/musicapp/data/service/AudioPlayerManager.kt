@@ -4,13 +4,14 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.example.musicapp.data.service.MusicAppPlaybackService.Companion.KEY_SONG
+import com.example.musicapp.domain.model.Artist
 import com.example.musicapp.domain.model.AudioStatus
+import com.example.musicapp.domain.model.Song
 import com.example.musicapp.domain.repository.AudioPlayerRepository
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
@@ -54,20 +55,11 @@ class AudioPlayerManager(
                 MoreExecutors.directExecutor()
             )
         }
-
     }
 
     private val playerListener = object : Player.Listener {
-        override fun onIsPlayingChanged(isPlaying: Boolean) {
-            mediaController?.let { updateStateFromController(it) }
-        }
-
-        override fun onPlaybackStateChanged(playbackState: Int) {
-            mediaController?.let { updateStateFromController(it) }
-        }
-
-        override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
-            mediaController?.let { updateStateFromController(it) }
+        override fun onEvents(player: Player, events: Player.Events) {
+            mediaController?.let { updateStateFromController(player) }
         }
 
         override fun onPlayerError(error: PlaybackException) {
@@ -82,10 +74,24 @@ class AudioPlayerManager(
     }
 
     private fun updateStateFromController(controller: Player) {
+        val mediaItem = controller.currentMediaItem
+        val currentSong = if (mediaItem != null) {
+            Song(
+                id = mediaItem.mediaId,
+                title = mediaItem.mediaMetadata.title?.toString().orEmpty(),
+                artist = Artist(name = mediaItem.mediaMetadata.artist?.toString().orEmpty()),
+                coverImage = mediaItem.mediaMetadata.artworkUri?.toString().orEmpty(),
+                genre = mediaItem.mediaMetadata.genre?.toString().orEmpty(),
+                audioUrl = mediaItem.localConfiguration?.uri?.toString().orEmpty()
+            )
+        } else {
+            _audioState.value.currentSong
+        }
         _audioState.update {
             it.copy(
                 isPlaying = controller.isPlaying,
                 currentPosition = controller.currentPosition.coerceAtLeast(0),
+                currentSong = currentSong ?: it.currentSong,
                 duration = controller.duration.coerceAtLeast(0),
                 isBuffering = controller.playbackState == Player.STATE_BUFFERING
             )
@@ -93,6 +99,7 @@ class AudioPlayerManager(
     }
 
     override fun playSong(songID: String) {
+        _audioState.update { it.copy(isBuffering = true, currentPosition = 0L) }
         val intent = Intent(
             context, MusicAppPlaybackService::class.java
         ).apply {
