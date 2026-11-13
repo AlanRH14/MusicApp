@@ -53,6 +53,7 @@ fun PlaySongContent(
             Spacer(modifier = Modifier.height(PaddingDefault))
 
             SongSlide(
+                isPlaying = state.isPlaying,
                 duration = state.duration,
                 currentPosition = state.currentPosition,
                 isBuffering = state.isBuffering,
