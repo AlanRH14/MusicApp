@@ -7,11 +7,13 @@ import android.content.ServiceConnection
 import android.os.Build
 import android.os.IBinder
 import com.example.musicapp.data.service.MusicAppPlaybackService.Companion.KEY_SONG
-import com.example.musicapp.presentation.play_song.mvi.PlaySongState
+import com.example.musicapp.domain.model.AudioStatus
+import com.example.musicapp.domain.repository.AudioPlayerRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
@@ -19,14 +21,15 @@ import kotlinx.coroutines.launch
 
 class AudioPlayerManager(
     private val context: Context
-) {
+): AudioPlayerRepository {
 
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var musicBinder: MusicAppPlaybackService.MusicBinder? = null
     private var isServiceBound = false
 
-    private val _playerState = MutableStateFlow(PlaySongState())
-    val playerState = _playerState.asStateFlow()
+    private val _playerState = MutableStateFlow(AudioStatus())
+    override val audioStatus: StateFlow<AudioStatus>
+        get() = _playerState.asStateFlow()
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
@@ -43,7 +46,7 @@ class AudioPlayerManager(
         }
     }
 
-    fun playSong(songID: String) {
+    override fun playSong(songID: String) {
         val intent = Intent(
             context, MusicAppPlaybackService::class.java
         ).apply {
@@ -68,7 +71,7 @@ class AudioPlayerManager(
         }
     }
 
-    fun toggleToPause() {
+    override fun togglePlayPause() {
         val service = musicBinder?.getService()
         if (service != null) {
             if (service.player.value.isPlaying) {
@@ -81,7 +84,7 @@ class AudioPlayerManager(
         }
     }
 
-    fun seekTo(position: Long) {
+    override fun seekTo(position: Long) {
         val service = musicBinder?.getService()
         if (service != null) {
             service.seekTo(position)
@@ -108,7 +111,7 @@ class AudioPlayerManager(
         }
     }
 
-    fun unbind() {
+    override fun unbindService() {
         if (isServiceBound) {
             context.unbindService(serviceConnection)
             isServiceBound = false
